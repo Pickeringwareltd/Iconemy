@@ -1,0 +1,22 @@
+{
+  "name": "iconemy",
+  "version": "1.0.0",
+  "description": "Web application for creating cryptocurrencies and crowdsales",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pickeringwareltd/Iconemy.git"
+  },
+  "author": "Jack Pickering <jackpickering@protonmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pickeringwareltd/Iconemy/issues"
+  },
+  "homepage": "https://github.com/Pickeringwareltd/Iconemy#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
