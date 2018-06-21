@@ -1,0 +1,67 @@
+.sale-box {
+	margin-top: -80px;
+}
+
+.token-bar {
+	background-color: #EBEEFE;
+}
+
+.token-percent {
+	position: absolute;
+	background-color: #3453F9;
+	z-index: 5 !important;
+}
+
+.countdown-time {
+	color: #3453F9 !important;
+	font-weight: 400 !important;
+}
+
+.token-point:after {
+	position: absolute;
+	background-color: #3453F9 !important;
+	z-index: 1 !important;
+}
+
+.token-point {
+	white-space: nowrap;
+    overflow: hidden;
+}
+
+.eth {
+	font-weight: lighter;
+	font-size: 20px;
+	color: white !important;
+
+	position: relative;
+	float: left;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.eth span {
+	color: white !important; 
+	font-size: 40px;
+}
+
+#withdraw, #stop {
+	height: 170px;
+	margin-top: 30px;
+}
+
+#withdraw .balance .title, #stop .balance .title {
+	margin-top: 20px;
+}
+
+#withdraw_btn, #stop_btn {
+	margin-top: 50px;
+	width: 100%;
+	color: #fff;
+}
+
+@media only screen and (max-width: 768px) { .sale-box { margin-top: 5px; } #center_detail { display: none; } }
+
+@media only screen and (max-width: 574px) { #buy_btn { margin-top: 15px; } }
+

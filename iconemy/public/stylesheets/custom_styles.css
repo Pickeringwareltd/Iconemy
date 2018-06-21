@@ -1,0 +1,149 @@
+.center_logo {
+	border: 3px solid #fff;
+	border-radius: 500px;
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+}
+
+.token_name{
+	padding: 20px 0px 0px 0px;
+}
+
+.token_symbol {
+	margin-top: -20px;
+}
+
+.card , .card_large{
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    border-width: 0px;
+    background-color: #4159FB;
+}
+
+@media only screen and (max-width: 991px) { .card { margin-top: 25px; } }
+
+/* On mouse-over, add a deeper shadow */
+.card:hover, .card_large:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.card > .container {
+    padding: 2px 16px;
+}
+
+.card .title, .card_large .title {
+	color: white;
+	padding: 10px 0px 0px 10px;
+}
+
+.card h4 > b {
+	color: white;
+	text-align: center;
+	font-size: 40px;
+
+	position: relative;
+	float: left;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.card_large {
+	margin-top: 30px;
+	padding-bottom: 30px;
+	position: relative;
+}
+
+.card_large .transfer_btn, .card_large .mint_btn {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.balance h4 > b {
+	color: white;
+	font-size: 40px;
+	padding: 0px 0px 0px 10px;
+}
+
+.balance h4 {
+	font-weight: lighter;
+}
+
+.token_balance {
+	color: white;
+	margin-top: -10px;
+}
+
+.status {
+	position: absolute;
+	top: 25px;
+	right: 40px;
+}
+
+.status .title {
+	float: left;
+}
+
+.status_dot {
+  float: right;
+  height: 30px;
+  width: 30px;
+  background-color: #94C11F;
+  border-radius: 50%;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 430px) { .status { right: 20px; } .status .title { display: none; } }
+
+.input_fields {
+	padding: 30px 0px 10px 10px;
+}
+
+.card_large input, select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 3px solid #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
+	color: white;
+}
+
+#transfer_btn, #buynow_btn, #stop_btn, #release_btn, #sale_btn, #mint_btn{
+	color: #fff;
+}
+
+#loading_gif,  #complete_img, #withdraw_loading_gif,  #withdraw_complete_img, #stop_loading_gif,  #stop_complete_img, #release_loading_gif,  #release_complete_img, #mint_loading_gif,  #mint_complete_img  {
+	display: none;
+	height: 50px;
+	width: auto;
+	margin: auto;
+}
+
+#withdraw_loading_gif,  #withdraw_complete_img,  #stop_loading_gif, #stop_complete_img, #release_loading_gif, #release_complete_img {
+	margin-top: 50px;
+}
+
+#release, #newsale {
+	margin-top: 30px;
+	height: 170px;
+}
+
+#release .balance .title, #newsale .balance .title {
+	margin-top: 20px;
+}
+
+#release_btn, #sale_btn {
+	margin-top: 50px;
+	width: 100%;
+	color: #fff;
+}
+

@@ -1,0 +1,62 @@
+.header-angle-bg { transform: skewY(0deg); padding-bottom: 0px; }
+
+#footers { margin-top: 0px !important; }
+
+#sign_up {
+	color: white;
+}
+
+#username_form {
+	text-align: left;
+	padding: 15px 0px 5px 5px;
+	font-size: 25px;
+	color: #524F4F;
+}
+
+#password_form {
+	text-align: left;
+	padding: 15px 0px 5px 5px;
+	font-size: 25px;
+	color: #524F4F;
+}
+
+#forgot_password {
+	text-align: center !important;
+	color: #4159FB;
+	font-size: 12px;
+}
+
+#token-form {
+	padding: 5% 10% 0px 10%;
+	position: relative;
+}
+
+.token-box button {
+	position: relative;
+	float: left;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#login_btn {
+	color: #4159FB;
+	border-color: #4159FB;
+}
+
+.submit {
+	padding-top: 5%;
+}
+
+#footers {
+	position: relative;
+	margin-top: 5%;
+}
+
+@media only screen and (max-width: 990px) { #min_message { float: left; padding-right: 0px; padding-top: 0px; } }
+@media only screen and (max-width: 770px) { .sale-box { margin-top: 0px; } .banner-content { padding-bottom: 10px !important;} #username_form {font-size: 20px;} #password_form {font-size: 20px;} }
+@media only screen and (max-width: 400px) { .banner-content { padding-bottom: 0px !important;} #username_form {font-size: 15px;} #password_form {font-size: 15px;} }
+
+.form-message .input-field.input-focused .input-title { top: -10px; transform: scale(0.8); color: #4159FB; }
+.form-message .input-field.input-focused .txtarea + label + .input-title { top: -10px; transform: scale(0.8); }
+
+

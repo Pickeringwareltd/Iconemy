@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Iconemy">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Iconemy allows your to create your own cryptocurrency in less than 10 minutes!">
+
+	<meta property="og:title" content="Iconemy - Create your own crowdsale"/>
+    <meta property="og:description" content="Create a cryptocurrency in less than 10 minutes."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://iconemy.io"/>
+    <meta property="og:image" content="http://iconemy.io/images/promo_img.png"/>
+
+	<!-- Fav Icon  -->
+	<link rel="shortcut icon" href="/images/logo_favicon.png">
+	<!-- Site Title  -->
+	<title>Iconemy | Create your own crowdsale</title>
+	<!-- Vendor Bundle CSS -->
+	<link rel="stylesheet" href="/stylesheets/vendor.bundle.css?ver=122">
+
+	<!-- For the calendar -->
+	<link rel="stylesheet" type="text/css" href="/stylesheets/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/jquery.timepicker.css" />
+
+	<!-- For the slider -->
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-slider.css" />
+
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" href="/stylesheets/style.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_styles.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_sale.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_sale_form.css?ver=122">
+
+</head>
+
+<body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
+
+	<!-- Header --> 
+	<header class="site-header is-sticky">
+
+		<!-- Navbar -->
+		<div class="navbar navbar-expand-lg is-transparent" id="mainnav">
+			<nav class="container">
+			
+				<a class="navbar-brand animated" data-animate="fadeInDown" data-delay=".65" href="./">
+					<img class="logo logo-dark" alt="logo" src="/images/logo_dark_custom.png">
+					<img class="logo logo-light" alt="logo" src="/images/logo_light_custom.png">
+				</a>
+				
+<!-- 				<div class="language-switcher animated" data-animate="fadeInDown" data-delay=".75">
+					<a href="#" data-toggle="dropdown">EN</a>
+					<div class="dropdown-menu" >
+						<a class="dropdown-item" href="#">FR</a>
+						<a class="dropdown-item" href="#">CH</a>
+						<a class="dropdown-item" href="#">BR</a>
+					</div>
+				</div> -->
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+					<span class="navbar-toggler-icon">
+						<span class="ti ti-align-justify"></span>
+					</span>
+				</button>
+
+				<div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
+					<ul class="navbar-nav animated remove-animation" data-animate="fadeInDown" data-delay=".9">
+						<li class="nav-item"><a class="nav-link menu-link" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link menu-link" href="/projects">Projects</a></li>
+						<li class="nav-item"><a class="nav-link menu-link" href="https://docs.iconemy.io">Docs</a></li>
+					</ul>
+					<ul class="navbar-nav navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
+						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/">Log out</a></li>
+					</ul>
+				</div>
+				
+			</nav>
+		</div>
+		<!-- End Navbar -->
+
+		<!-- Banner/Slider -->
+		<div id="header" class="banner banner-tokensale d-flex align-items-center">
+			<div class="header-angle-bg">
+				<div class="overlay-bubble">
+					<div class="overlay-bubble-1"></div>
+					<div class="overlay-bubble-2"></div>
+					<div class="overlay-bubble-3"></div>
+					<div class="overlay-bubble-4"></div>
+					<div class="overlay-bubble-5"></div>
+					<div class="overlay-bubble-6"></div>
+				</div>
+				<div id="particles-js" class="particles-container particles-js"></div>
+			</div>
+			<div class="container">
+				<div class="banner-content">
+					<div class="gaps size-3x"></div>
+					<div class="row align-items-center mobile-center">
+						<div class="col-lg-12 text-center res-m-bttm">
+							<div class="header-txt">
+								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25">Create a crowdsale</h1>
+								<p class="animated token_description" data-animate="fadeInUp" data-delay="1.50">Enter the details of your ERC-20 compliant crowdsale</p>
+							</div>
+						</div><!-- .col  -->
+					</div><!-- .row  -->
+				</div><!-- .banner-content  -->
+				<div class="row justify-content-center text-center sale-box">
+					<div class="col-lg-12">
+						<div class="token-box shadow">
+							<form id="token-form" class="form-message text-left">
+								<div class="form-row justify-content-center">
+									<div class="form-group col-lg-8 col-sm-12">
+										<div class="input-field animated token-name" data-animate="fadeInUp" data-delay=".5">
+											<input name="sale-name" type="text" id="sale_name" class="input-line required" placeholder="My token sale">
+											<label class="input-title">Crowdsale name *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-4 col-sm-12">
+										<div class="input-field animated input-focused" data-animate="fadeInUp" data-delay=".6">
+											<p name="sale_token" type="text" id="sale_token" class="input-line">Donut</p>
+											<label class="input-title" id="token_select_label">Token for sale</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".7">
+											<label class="input-title" id="sale_type_label">Type of sale *</label>
+											<br />
+											<br />
+											<select id="sale_type">
+											  	<option value="pre-sale">Pre-sale</option>
+											  	<option value="public-sale">Public-sale</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-lg-6 col-sm-12">
+										<p id="min_message">This means you can <b>create more crowdsales</b> with this token in the future.</p>
+									</div>
+								</div>
+
+								<div class="form-row" id="duration_row">
+									<div class="form-group col-lg-6 col-sm-12">
+										<div class="input-field animated input-focused" data-animate="fadeInUp" data-delay=".5">
+											<input name="sale_duration" type="text" id="sale_duration" class="input-line required">
+											<label class="input-title">Sale duration *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-6 col-sm-12">
+										<p id="time_message">Please note, <b>times are in GMT.</b></p>
+									</div>
+								</div>
+
+								<div class="form-row justify-content-center">
+									<div class="form-group col-lg-6 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
+											<input name="start_time" type="text" id="start_time" class="input-line required">
+											<label class="input-title">Start time *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-6 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
+											<input name="end_time" type="text" id="end_time" class="input-line required">
+											<label class="input-title">End time *</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-row" id="price_row">
+									<div class="form-group col-lg-4 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".5">
+											<input name="token_price" type="text" id="token_price" class="input-line required" placeholder="0.0014 ETH">
+											<label class="input-title">Token price (ETH) *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-8 col-sm-12 prices">
+										<p id="tokens_in_eth">1 ETH = <b>0 DON</b></p>
+										<p id="tokens_in_dollar">$1 = <b>0 DON</b></p>
+										<p id="dollar_price">1 DON = <b>$0.00</b></p>
+
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-8 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".5">
+											<input name="admin_wallet" type="text" id="admin_wallet" class="input-line required" placeholder="0xc697F04Dcb807A0be4E1ffe78Fb5325bE112502d">
+											<label class="input-title">Admin wallet address *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-4 col-sm-12">
+										<p id="admin_message">This account will be able to <b>control</b> your sale.</p>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-8 col-sm-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
+											<input name="beneficiary_wallet" type="text" id="beneficiary_wallet" class="input-line required" placeholder="0x0178E000eE973bDC505116De7DE6dF05e1E42747">
+											<label class="input-title">Beneficiary wallet address *</label>
+										</div>
+									</div>
+									<div class="form-group col-lg-4 col-sm-12">
+										<p id="beneficiary_message">This is where the <b>funds collected are sent.</b></p>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="row">
+										<div class="col-12">
+											<h1 id="commission_title">Commission *</h1>
+											<p id="commission_info">Choose how many of your tokens you would like Iconemy to collect at the end of the sale, increasing the commision will reduce the initial cost. 
+										</div>
+									</div>
+									<div class="form-group col-12">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
+											<input id="commission_selector" type="text" data-slider-ticks="[1, 2, 3, 4, 5]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='[1%", "2%", "3%", "4%", "5%"]'/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row justify-content-center">
+									<div class="col-lg-6 col-sm-12">
+										<div class="animated" data-animate="fadeInUp" data-delay=".6">
+											<h3 id="commission_cost">Cost of deployment:</h3>
+										</div>
+									</div>
+									<div class="col-lg-6 col-sm-12">
+										<div class="animated" data-animate="fadeInUp" data-delay=".6">
+											<h3 id="commision_cost_value"><b>$999.99</b></h3>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-row submit">
+									<div class="form-group col-12">
+										<input type="text" class="d-none" name="form-anti-honeypot" value="">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
+											<button type="submit" class="btn btn-outline" id="submit_btn">Order now</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!-- .container  -->
+		</div>
+	</header>
+	<!-- End Header -->
+
+
+	<!-- Start Section -->
+	<div class="section section-bg-muscari section-muscari section-pad-sm footer-fix" id="footers">
+		<div class="container">
+			<div class="gaps size-6x"></div>
+			
+			<div class="row" id="footer">
+				<div class="col-sm-6 col-xl-4 res-l-bttm">
+					<a class="footer-brand animated" data-animate="fadeInUp" data-delay="0" href="./">
+						<img class="logo logo-light" alt="logo" src="/images/logo_light_custom.png" style="width: 80%; height: auto;">
+					</a>
+					<ul class="social social-center">
+						<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="#"><em class="fa fa-facebook"></em></a></li>
+						<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="#"><em class="fa fa-twitter"></em></a></li>
+						<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="#"><em class="fa fa-youtube-play"></em></a></li>
+						<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="#"><em class="fa fa-github"></em></a></li>
+						<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="#"><em class="fa fa-bitcoin"></em></a></li>
+						<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="#"><em class="fa fa-medium"></em></a></li>
+					</ul>
+				</div><!-- .col  -->
+				<div class="col-sm-6 col-xl-4 res-l-bttm">
+					<div class="footer-subscription">
+						<h6 class="animated" data-animate="fadeInUp" data-delay=".6">Create your own crowdsale now</h6>
+						<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form animated" data-animate="fadeInUp" data-delay=".7">
+							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email" >
+							<input type="text" class="d-none" name="form-anti-honeypot" value="">
+							<button type="submit" class="btn btn-plane">Subscribe</button>
+							<div class="subscribe-results"></div>
+						</form>
+					</div>
+				</div><!-- .col  -->
+				<div class="col-xl-4">
+					<ul class="link-widget animated" data-animate="fadeInUp" data-delay=".8">
+						<li><a href="#" class="menu-link">Product</a></li>
+						<li><a href="#" class="menu-link">Join Us</a></li>
+						<li><a href="#" class="menu-link">Contact</a></li>
+						<li><a href="#" class="menu-link">Roadmap</a></li>
+						<li><a href="#" class="menu-link">FAQ</a></li>
+					</ul>
+				</div><!-- .col  -->
+			</div><!-- .row  -->
+			<div class="gaps size-2x"></div>
+			<div class="row">
+				<div class="col-md-7">
+					<span class="copyright-text">
+						<span>All trademarks and copyrights belong to their respective owners.</span>
+					</span>
+				</div><!-- .col  -->
+				<div class="col-md-5 text-right mobile-left">
+					<ul class="footer-links">
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Conditions</a></li>
+					</ul>
+				</div><!-- .col  -->
+			</div><!-- .row  -->
+		</div><!-- .container  -->
+	</div>
+	<!-- End Section -->
+
+	<!-- Preloader !remove please if you do not want -->
+	<div id="preloader">
+		<div id="loader"></div>
+		<div class="loader-section loader-top"></div>
+   		<div class="loader-section loader-bottom"></div>
+	</div>
+	<!-- Preloader End -->
+
+	<!-- JavaScript (include all script here) -->
+	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
+	<script src="/javascripts/script_sale.js?ver=122"></script>
+	<script src="/javascripts/script_sale_form.js?ver=122"></script>
+	<script src="/javascripts/custom_new_sale.js?ver=122"></script>
+
+	<!-- For calendar -->
+	<script src="/javascripts/moment.min.js"></script>
+	<script src="/javascripts/daterangepicker.js"></script>
+
+	<!--  For time selector -->
+	<script src="/javascripts/jquery.timepicker.js"></script>
+
+	<!-- For the slider -->
+	<script src="/javascripts/bootstrap-slider.js"></script>
+
+</body>
+</html>

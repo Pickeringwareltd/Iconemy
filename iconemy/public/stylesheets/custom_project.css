@@ -1,0 +1,546 @@
+ #marketting_title {
+	color: #524F4F;
+	padding-bottom: 50px;
+	font-size: 30px;
+}
+
+#page-description {
+	color: #524F4F;
+	padding-top: 15px;
+}
+
+.social_row {
+	padding-top: 30px;
+}
+
+#social_title {
+	color: #4159FB;
+	font-size: 15px;
+}
+
+.social {
+	padding-top: 40px;
+	position: absolute;
+	left: 0px;
+}
+
+#page_website_title {
+	padding-top: 50px;
+	color: #4159FB;
+	font-size: 15px;
+}
+
+#page_website {
+	padding-top: 90px;
+	color: #524F4F;
+	position: absolute;
+	left: 15px;
+}
+
+.documents {
+	padding-top: 50px;
+}
+
+.document_button {
+	color: #4159FB;
+	border: 1px solid #4159FB;
+	border-radius: 5px;
+	padding: 10px 40px 10px 40px;
+	margin-top: 20px;
+	margin-right: 30px;
+}
+
+.document_button:hover {
+	color: #fff;
+	background-color: #4159FB;
+}
+
+.buynow_button {
+	color: #fff;
+	background-color: #4159FB;
+	border: 1px solid #4159FB;
+	border-radius: 5px;
+	padding: 10px 40px 10px 40px;
+	margin-top: 20px;
+	margin-right: 30px;
+	display: none;
+}
+
+.buynow_button:hover {
+	color: #4159FB;
+	background-color: #fff;
+}
+
+#tokens_title, #token_symbol, #token_supply { 
+	color: #524F4F;
+	padding-top: 60px;
+}
+
+#token_logo {
+	height: 70px;
+	width: 70px;
+	margin-top: 10px;
+	margin-left: 10px;
+
+}
+
+#token_symbol {
+	padding-top: 130px;
+} 
+
+#token_supply { 
+	padding-top: 0px;
+	position: relative;
+	bottom: 20px;
+}
+
+.title {
+	color: #4159FB;
+}
+
+#project_logo {
+	height: 100%;
+	width: auto;
+	max-height: 400px;
+}
+
+.subdomain_section {
+	padding-left: 50px;
+}
+
+.subdomain {
+	margin-top: 30px;
+	position: relative;
+	right: 80px;
+	color: #524F4F;
+}
+
+.buynow_section {
+	background-color: #4159FB;
+	border-radius: 10px;
+	margin-top: 30px;
+	height: 100px;
+}
+
+.buynow_section > .title {
+	color: #fff;
+	padding-left: 50px;
+	padding-top: 15px;
+}
+
+.buynow_section > .buynow {
+	padding-top: 40px;
+	position: relative;
+	right: 50px;
+}
+
+@media only screen and (max-width: 1200px) { 
+	.buynow_section > .title {
+		color: #fff;
+		padding-left: 50px;
+		padding-top: 15px;
+	}
+
+	.buynow_section > .buynow {
+   	 	padding-top: 40px;
+    	position: absolute;
+    	right: 0px;
+    	margin-right: 30px;
+	}
+}
+
+.admin_section {
+	margin-top: 30px;
+	padding-left: 50px;
+}
+
+.admin_section > .admin {
+	padding-top: 30px;
+	position: relative;
+	right: 40px;
+	color: #524F4F;
+}
+
+.token_section {
+	margin-top: 30px;
+	padding-left: 50px;
+}
+
+.token_section > .token {
+	padding-top: 30px;
+	position: relative;
+	right: 40px;
+	color: #524F4F;
+}
+
+.marketting-section #ico_listing { background-color: #4159FB; color: #fff; }
+#ico_listing h4 { color: #fff; }
+
+.marketting-section #press_release { background-color: #4159FB; color: #fff;}
+#press_release h4 { color: #fff; }
+
+.marketting-section #banner_ads { background-color: #4159FB; color: #fff;}
+#banner_ads h4 { color: #fff; }
+
+.marketting-section a { width: 100%;}
+
+@media only screen and (max-width: 991px) { 
+	.marketing-box { padding-top: 20px; }
+}
+
+.crowdsales {
+	padding-top: 50px;
+}
+
+.crowdsale_title h3 {
+	color: #524F4F;
+	padding-bottom: 30px;
+}
+
+/* Horizontal scroll on crowdsales */
+.scrolling-wrapper{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  .custom_card {
+    flex: 0 0 auto;
+  }
+}
+
+.scrolling-wrapper {
+  height: 300px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Crowdsale cards */
+.custom_card {
+	background-color: #fff;
+	border-color: #524F4F;
+	border-width: 1px;
+	border-radius: 10px;
+	height: 200px;
+	width: 300px;
+	margin-right: 20px;
+	margin-top: 0px;
+}
+
+.custom_card #title {
+	font-size: 20px;
+	padding-top: 5px;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+
+.custom_card #status {
+	position: relative;
+	float: right;
+	text-align: right;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+.current_sale #status {
+	color: green;
+}
+
+.current_sale {
+	border-color: green;
+}
+
+.custom_card #title, .custom_card #status {
+	display: inline-block;
+}
+
+.custom_card #start_date, .custom_card #end_date {
+	display: inline-block;
+	margin-bottom: 15px;
+}
+
+#price_value {
+	font-size: 18px;
+}
+
+#eth_symbol {
+	color: #524F4F;
+	font-size: 15px;
+}
+
+#price_value {
+	text-align: right;
+	padding-left: 55%;
+}
+
+#tokens_sold, #token_price {
+	margin-bottom: 10px;
+}
+
+#sold_value, #investors_value {
+	color: #524F4F;
+	font-size: 15px;
+	float: right;
+	text-align: right;
+}
+
+#sold_value {
+	font-size: 18px;
+}
+
+/* New project card */
+
+#new_crowdsale {
+	background-color: #fff;
+	border-color: #4159FB;
+	border-width: 1px;
+	margin-top: 0px;
+}
+
+#new_crowdsale h1 {
+	text-align: center;
+	font-size: 100px;
+	color: #4159FB;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+#new_crowdsale p {
+	text-align: center;
+	font-size: 15px;
+	color: #4159FB;
+}
+
+#new_token {
+	margin-top: 50px;
+	margin-left: 15%;
+	max-height: 100px;
+	width: 250px;
+	background-color: #fff;
+	border-color: #4159FB;
+	border-width: 1px;
+	margin-top: 0px;
+}
+
+#new_token h1 {
+	text-align: center;
+	font-size: 50px;
+	color: #4159FB;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+#new_token p {
+	text-align: center;
+	font-size: 13px;
+	color: #4159FB;
+}
+
+#footers {
+	margin-top: 2%;
+}
+
+
+@media only screen and (max-width: 991px) { 
+	
+
+	.buynow_button {
+		display: block;
+    	margin: auto;
+    	margin-top: 30px;
+	}
+
+	.buynow_section > .buynow {
+		width: 100%;
+    	text-align: center;
+	}
+
+	.buynow_section {
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+
+	.crowdsales {
+		position: relative;
+		bottom: 200px;
+	}
+
+	.links_section {
+		position: relative;
+		top:  150px;
+	}
+
+	.social_row {
+		margin-top:  200px;
+	}
+
+	.container {
+		max-height: 1800px;
+	}
+
+	.links_section {
+		display: none;
+	}
+
+	#social_title, #page_website_title {
+		display: none;
+	}
+
+	.social {
+		padding-top: 0px;
+		width: 100%;
+		display: flex;
+ 		justify-content: center;
+	}
+
+	#page_website {
+		padding-top: 60px;
+		width: 100%;
+		text-align: center;
+		left: 0;
+	}
+
+	.documents {
+		padding-top: 100px;
+		display: flex;
+ 		justify-content: center;
+	}
+
+	#onepager {
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+
+	#whitepaper {
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+
+	#project_logo {
+		position: relative;
+		bottom: 820px;
+		max-height: 200px;
+		margin: auto;
+	}
+
+	#page-title {
+	    margin: auto;
+	}
+
+	.title, .description {
+		position: relative;
+		top: 180px;
+		padding-left: 15px;
+		padding-right: 15px;
+		text-align: center;
+	}
+
+}
+
+@media only screen and (max-width: 638px){
+	.social_row {
+		margin-top:  220px;
+	}
+
+	#project_logo {
+		/*position: absolute;*/
+		bottom: 850px;
+		max-height: 200px;
+		margin: auto;
+	}
+}
+
+
+@media only screen and (max-width: 482px) {
+	#token_symbol {
+		padding-top: 120px;
+	}
+
+	.buynow_section > .buynow {
+		width: 100%;
+    	text-align: center;
+    	margin-right: 0px !important;
+	}
+
+	.buynow_section {
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
+	.buynow_section > .title {
+		padding-left: 10px;
+	}
+
+	.admin_section > .admin {
+		padding-top: 0px;
+		right: 0px;
+	}
+
+	#project_logo {
+		/*position: absolute;*/
+		bottom: 820px;
+		max-height: 200px;
+	}
+
+	.title, .description {
+		position: relative;
+		top: 180px;
+		padding-left: 15px;
+		padding-right: 15px;
+		text-align: center;
+	}
+
+	.social_row {
+		margin-top: 180px;
+	}
+
+	.social {
+		padding-top: 0px;
+		width: 100%;
+		display: flex;
+ 		justify-content: center;
+	}
+
+	#page_website {
+		padding-top: 60px;
+		width: 100%;
+		text-align: center;
+		left: 0;
+	}
+
+	.crowdsales {
+    	position: relative;
+    	bottom: 200px;
+	}
+
+}
+
+
+@media only screen and (max-width: 440px) {
+	#project_logo {
+		bottom: 860px;
+	}
+}
+
+@media only screen and (max-width: 388px) {
+	#project_logo {
+		bottom: 950px;
+	}
+}
+
+
+
+@media only screen and (max-width: 306px) {
+	#token_symbol {
+		padding-top: 110px;
+	}
+} 
+
+#footers .social {
+	padding-top: 0px;
+	padding-left: 25px;
+	justify-content: left;
+}
+

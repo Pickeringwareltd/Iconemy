@@ -1,0 +1,173 @@
+.header-angle-bg { transform: skewY(0deg); padding-bottom: 0px; }
+
+#footers { margin-top: 0px !important; }
+
+.token_description {
+	padding-top: -10px;
+}
+
+.form-row {
+	padding-top: 50px;
+}
+
+#sale_name {
+	padding: 25px 0px 5px 5px;
+	font-size: 30px;
+	color: #524F4F;
+	font-weight: bold;
+}
+
+#sale_name::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 20px;
+}
+
+#sale_name:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-size: 20px;
+}
+
+#sale_name::-ms-input-placeholder { /* Microsoft Edge */
+    font-size: 20px;
+}
+
+#sale_token {
+	padding: 25px 0px 5px 5px;
+	font-size: 20px;
+	color: #524F4F;
+}
+
+#sale_type_label {
+	font-size: 15px;
+	color: #524F4F;
+}
+
+#sale_duration, #start_time, #end_time {
+	font-size: 20px;
+	color: #524F4F;
+}
+
+#token_price {
+	font-size: 30px;
+	color: #524F4F;
+	padding-top: 30px;
+}
+
+#token_price::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 20px;
+}
+
+#token_price:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-size: 20px;
+}
+
+#token_price::-ms-input-placeholder { /* Microsoft Edge */
+    font-size: 20px;
+}
+
+#admin_wallet, #beneficiary_wallet {
+	padding-top: 30px;
+	color: #524F4F;
+}
+
+#admin_wallet::placeholder, #beneficiary_wallet::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 20px;
+}
+
+#admin_wallet::placeholder, #beneficiary_wallet::placeholder { /* Internet Explorer 10-11 */
+    font-size: 20px;
+}
+
+#admin_wallet::placeholder, #beneficiary_wallet::placeholder { /* Microsoft Edge */
+    font-size: 20px;
+}
+
+/* Dropdown box for sale-type (closed box)	*/
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+	color: #524F4F;
+	font-size: 15px;
+}
+
+#token-form {
+	padding: 5% 10% 0px 10%;
+	position: relative;
+}
+
+#min_message {
+	float: right;
+	text-align: right;
+	padding-top: 50px;
+}
+
+#admin_message, #beneficiary_message {
+	float: right;
+	text-align: right;
+	padding-top: 50px;
+}
+
+#time_message {
+	float: right;
+	padding-top: 40px;
+}
+
+.prices {
+	text-align: right;
+	float: right;
+}
+
+.token-box button {
+	position: relative;
+	float: left;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+#commission_title {
+	font-size: 20px;
+	color: #524F4F;
+}
+
+#commission_info {
+	margin-bottom: 40px;
+	font-size: 13px;
+	color: #524F4F;
+}
+
+#commission_cost {
+	font-size: 20px;
+	color: #524F4F;
+	font-weight: lighter;
+}
+
+#commision_cost_value {
+	color: #524F4F;
+	font-size: 25px;
+	float: right;
+	text-align: right;
+}
+
+@media only screen and (max-width: 990px) { #commission_cost { font-size: 15px; text-align: center; float: none; padding-bottom: 10px; } #commision_cost_value { text-align: center; float: none; padding-bottom: 20px; } }
+
+#submit_btn {
+	color: #4159FB;
+	border-color: #4159FB;
+}
+
+.submit {
+	padding-top: 10%;
+}
+
+#footers {
+	position: relative;
+	margin-top: 10%;
+}
+
+@media only screen and (max-width: 990px) { #min_message, #time_message, #admin_message, #beneficiary_message { float: left; padding-right: 0px; padding-top: 0px; } .prices { text-align: left; float: left; display: inline; width: 100%; text-align: center; } .prices p { display: inline-block; padding-left: 5%; padding-right: 5%;} }
+@media only screen and (max-width: 770px) { #footers { margin-top: 0px; } #token_name { font-size: 30px; } }
+@media only screen and (max-width: 400px) { #footers { margin-top: 0px; } #token_name { font-size: 25px; } }
+
+.form-message .input-field.input-focused .input-title { transform: scale(0.8); color: #4159FB; }
+.form-message .input-field.input-focused .txtarea + label + .input-title { transform: scale(0.8); color: #4159FB; }
+

@@ -1,0 +1,139 @@
+.header-angle-bg { transform: skewY(0deg); padding-bottom: 0px; }
+
+#footers { margin-top: 0px; }
+
+#description_label {
+	color: #8284a5;
+}
+
+#description {
+	margin-top: 35px;
+	border-width: 0px 0px 1px 0px;
+	border-color: #43B2E6;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;	
+	width: 100%;
+}
+
+#facebook_input, #twitter_input, #youtube_input, #bitcoin_input , #telegram_input , #medium_input , #whitepaper, #onepager {
+	color: #8284a5;
+}
+
+#social_left {
+	padding-right: 25px;
+}
+
+#social_right {
+	padding-left: 25px;
+}
+
+.social_row, .document_row , .subdomain_row {
+	display: flex;
+}
+
+.social_column_image, .document_column_image , .subdomain_column_https {
+	flex: 20%;
+	padding: 5px;
+}
+
+.social_column_input, .document_column_input, .subdomain_column_input {
+	flex: 80%;
+	padding: 5px;
+}
+
+#facebook_favicon_empty, #facebook_favicon_full, 
+#twitter_favicon_empty, #twitter_favicon_full, 
+#youtube_favicon_empty, #youtube_favicon_full, 
+#bitcoin_favicon_empty, #bitcoin_favicon_full, 
+#medium_favicon_empty, #medium_favicon_full, 
+#telegram_favicon_empty, #telegram_favicon_full {
+	margin-top: 15px;
+	width: 40px;
+	height: 40px;
+	float: left;
+}
+
+#facebook_favicon_full, #twitter_favicon_full, #youtube_favicon_full, #bitcoin_favicon_full, #medium_favicon_full , #telegram_favicon_full , #whitepaper_favicon_full , #onepager_favicon_full {
+	display: none;
+}
+
+#whitepaper_favicon_empty, #whitepaper_favicon_full,
+#onepager_favicon_empty, #onepager_favicon_full {
+	margin-top: 50px;
+	margin-left: 10px;
+	width: 40px;
+	height: 40px;
+	float: left;
+}
+
+#uploaded_logo, #fileselect {
+	display: none;
+}
+
+#logo_label {
+	color: #8284a5;
+}
+
+
+#filedrag
+{
+	display: none;
+	font-weight: bold;
+	text-align: center;
+	width: 90%;
+	height: 200px;
+	margin: 1em 0;
+	padding-top: 10%;
+	color: #524F4F;
+	border: 2px dashed #524F4F;
+	border-radius: 7px;
+	cursor: default;
+}
+
+@media only screen and (max-width: 990px) { #filedrag { width: 100%; } #social_right { padding-left: 0px; } #social_left { padding-right: 0px; }  }
+@media only screen and (max-width: 500px) { #filedrag { padding-top: 15%; } }
+
+
+#filedrag.hover
+{
+	color: #000;
+	border-color: #000;
+	box-shadow: inset 0 3px 4px #888;
+}
+
+img
+{
+	max-width: 100%;
+}
+
+#messages
+{
+	padding: 0 10px;
+	margin: 1em 0;
+	border: 1px solid #999;
+}
+
+#website {
+	padding: 25px 0px 5px 5px;
+	color: #524F4F;
+	font-weight: bold;
+}
+
+#white_paper, #one_pager, #subdomain {
+	padding: 25px 0px 5px 5px;
+	color: #524F4F;
+}
+
+#subdomain_https {
+	position: relative;
+	top: 45px;
+	padding-right: 5px;
+}
+
+#subdomain_message {
+	float: right;
+	text-align: right;
+	padding-left: 10px;
+}
