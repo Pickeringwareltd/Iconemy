@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <head>
-	<meta charset="utf-8">
-	<meta name="author" content="Iconemy">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Iconemy allows your to create your own cryptocurrency in less than 10 minutes!">
+	<!-- Header -->
+	<% include partials/header %>
 
-	<meta property="og:title" content="Iconemy - Create your own crowdsale"/>
-    <meta property="og:description" content="Create a cryptocurrency in less than 10 minutes."/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="http://iconemy.io"/>
-    <meta property="og:image" content="http://iconemy.io/images/promo_img.png"/>
-
-	<!-- Fav Icon  -->
-	<link rel="shortcut icon" href="images/logo_favicon.png">
-	<!-- Site Title  -->
-	<title>Iconemy | Create your own crowdsale</title>
 	<!-- Vendor Bundle CSS -->
 	<link rel="stylesheet" href="stylesheets/vendor.bundle.css?ver=122">
+	
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="stylesheets/style.css?ver=122">
 	<link rel="stylesheet" href="stylesheets/theme.css?ver=122">
@@ -100,15 +89,15 @@
 						<div class="token-box shadow">
 							<div class ="row">
 								<div class="col-12">
-									<h1 id="price">$499.99</h1>
+									<h1 id="price">$<%= payment.dollars %></h1>
 								</div>
 							</div>
 							<div class ="row">
 								<div class="col-6">
-									<h4 id="eth">0.234 ETH</h4>
+									<h4 id="eth"><%= payment.eth %> ETH</h4>
 								</div>
 								<div class="col-6">
-									<h4 id="btc">0.123 BTC</h4>
+									<h4 id="btc"><%= payment.btc %> BTC</h4>
 								</div>
 							</div>
 							<div class ="row">
@@ -119,11 +108,13 @@
 									    <th>Quantity</th> 
 									    <th>Price</th>
 									  </tr>
-									  <tr id="table_body">
-									    <td>ERC-20 Token</td>
-									    <td>1</td> 
-									    <td>$499.99</td>
-									  </tr>
+									  <% payment.items.forEach(function(item) { %>
+									  	<tr id="table_body">
+									    	<td><%= item.name %></td>
+									    	<td><%= item.quantity %></td> 
+									    	<td>$<%= item.price %></td>
+									  	</tr>
+									  <% }); %>
 									</table>
 								</div>
 							</div>
@@ -134,7 +125,7 @@
 									</div>
 									<div class="row" id="copy_address">
 										<div class="col-xl-10 col-lg-9 col-sm-12">
-											<p id="eth_address">1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX</p>
+											<p id="eth_address"><%= payment.btcaddress %></p>
 										</div>
 										<div class="col-xl-2 col-lg-3 col-sm-12">
 											<button id="btc_copy_button" type="submit" class="btn btn-outline">Copy</button>
@@ -154,7 +145,7 @@
 									</div>
 									<div class="row" id="copy_address">
 										<div class="col-xl-10 col-lg-9 col-sm-12">
-											<p id="eth_address">0xc697F04Dcb807A0be4E1ffe78Fb5325bE112502d</p>
+											<p id="eth_address"><%= payment.ethaddress %></p>
 										</div>
 										<div class="col-xl-2 col-lg-3 col-sm-12">
 											<button id="copy_button" type="submit" class="btn btn-outline">Copy</button>
@@ -192,71 +183,11 @@
 	</header>
 	<!-- End Header -->
 
+	<!-- Footer -->
+	<% include partials/footer %>
 
-	<!-- Start Section -->
-	<div class="section section-bg-muscari section-muscari section-pad-sm footer-fix" id="footers">
-		<div class="container">
-			<div class="gaps size-6x"></div>
-			<div class="row" id="footer">
-				<div class="col-sm-6 col-xl-4 res-l-bttm">
-					<a class="footer-brand animated" data-animate="fadeInUp" data-delay="0" href="./">
-						<img class="logo logo-light" alt="logo" src="images/logo_light_custom.png" style="width: 80%; height: auto;">
-					</a>
-					<ul class="social social-center">
-						<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="#"><em class="fa fa-facebook"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="#"><em class="fa fa-twitter"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="#"><em class="fa fa-github"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="#"><em class="fa fa-bitcoin"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="#"><em class="fa fa-medium"></em></a></li>
-					</ul>
-				</div><!-- .col  -->
-				<div class="col-sm-6 col-xl-4 res-l-bttm">
-					<div class="footer-subscription">
-						<h6 class="animated" data-animate="fadeInUp" data-delay=".6">Create your own crowdsale now</h6>
-						<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form animated" data-animate="fadeInUp" data-delay=".7">
-							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email" >
-							<input type="text" class="d-none" name="form-anti-honeypot" value="">
-							<button type="submit" class="btn btn-plane">Subscribe</button>
-							<div class="subscribe-results"></div>
-						</form>
-					</div>
-				</div><!-- .col  -->
-				<div class="col-xl-4">
-					<ul class="link-widget animated" data-animate="fadeInUp" data-delay=".8">
-						<li><a href="#product" class="menu-link">Product</a></li>
-						<li><a href="#subscribe" class="menu-link">Join Us</a></li>
-						<li><a href="#contact" class="menu-link">Contact</a></li>
-						<li><a href="#roadmap" class="menu-link">Roadmap</a></li>
-						<li><a href="#faq" class="menu-link">FAQ</a></li>
-					</ul>
-				</div><!-- .col  -->
-			</div><!-- .row  -->
-			<div class="gaps size-2x"></div>
-			<div class="row">
-				<div class="col-md-7">
-					<span class="copyright-text">
-						<span>All trademarks and copyrights belong to their respective owners.</span>
-					</span>
-				</div><!-- .col  -->
-				<div class="col-md-5 text-right mobile-left">
-					<ul class="footer-links">
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-					</ul>
-				</div><!-- .col  -->
-			</div><!-- .row  -->
-		</div><!-- .container  -->
-	</div>
-	<!-- End Section -->
-
-	<!-- Preloader !remove please if you do not want -->
-	<div id="preloader">
-		<div id="loader"></div>
-		<div class="loader-section loader-top"></div>
-   		<div class="loader-section loader-bottom"></div>
-	</div>
-	<!-- Preloader End -->
+	<!-- Pre-loader -->
+	<% include partials/preloader %>
 
 	<!-- JavaScript (include all script here) -->
 	<script src="javascripts/jquery.bundle.js?ver=122"></script>

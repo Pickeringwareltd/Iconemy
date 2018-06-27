@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <head>
-	<meta charset="utf-8">
-	<meta name="author" content="Iconemy">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Iconemy allows your to create your own cryptocurrency in less than 10 minutes!">
 
-	<meta property="og:title" content="Iconemy - Create your own crowdsale"/>
-    <meta property="og:description" content="Create a cryptocurrency in less than 10 minutes."/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="http://iconemy.io"/>
-    <meta property="og:image" content="http://iconemy.io/images/promo_img.png"/>
+	<!-- Header -->
+	<% include partials/header %>
 
-	<!-- Fav Icon  -->
-	<link rel="shortcut icon" href="images/logo_favicon.png">
-	<!-- Site Title  -->
-	<title>Iconemy | Create your own crowdsale</title>
 	<!-- Vendor Bundle CSS -->
 	<link rel="stylesheet" href="stylesheets/vendor.bundle.css?ver=122">
+
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="stylesheets/style.css?ver=122">
 	<link rel="stylesheet" href="stylesheets/theme.css?ver=122">
@@ -89,9 +79,9 @@
 					<div class="row align-items-center mobile-center">
 						<div class="col-lg-12 text-center res-m-bttm">
 							<div class="header-txt">
-								<img src="images/donut_logo.png" class="center_logo">
-								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25">Donut Sale</h1>
-								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35">DON</p>
+								<img src="<%= sale.logo %>" class="center_logo">
+								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= sale.name %></h1>
+								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= sale.symbol %></p>
 							</div>
 						</div><!-- .col  -->
 					</div><!-- .row  -->
@@ -118,12 +108,12 @@
 							</ul>
 							
 							<ul class="social">
-								<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="#"><em class="fa fa-facebook"></em></a></li>
-								<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="#"><em class="fa fa-twitter"></em></a></li>
-								<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-								<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="#"><em class="fa fa-github"></em></a></li>
-								<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="#"><em class="fa fa-bitcoin"></em></a></li>
-								<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="#"><em class="fa fa-medium"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="<%= sale.social.facebook %>"><em class="fa fa-facebook"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= sale.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="<%= sale.social.youtube %>"><em class="fa fa-youtube-play"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= sale.social.github %>"><em class="fa fa-github"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="<%= sale.social.bitcointalk %>"><em class="fa fa-bitcoin"></em></a></li>
+								<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="<%= sale.social.medium %>"><em class="fa fa-medium"></em></a></li>
 							</ul>
 						</div>
 					</div>
@@ -231,71 +221,11 @@
 	</div>
 	<!-- End Section -->
 
-	<!-- Start Section -->
-	<div class="section section-bg-muscari section-muscari section-pad-sm footer-fix" id="footers">
-		<div class="container">
-			<div class="gaps size-3x"></div>
-			
-			<div class="row" id="footer">
-				<div class="col-sm-6 col-xl-4 res-l-bttm">
-					<a class="footer-brand animated" data-animate="fadeInUp" data-delay="0" href="./">
-						<img class="logo logo-light" alt="logo" src="images/logo_light_custom.png" style="width: 80%; height: auto;">
-					</a>
-					<ul class="social social-center">
-						<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="#"><em class="fa fa-facebook"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="#"><em class="fa fa-twitter"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="#"><em class="fa fa-github"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="#"><em class="fa fa-bitcoin"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="#"><em class="fa fa-medium"></em></a></li>
-					</ul>
-				</div><!-- .col  -->
-				<div class="col-sm-6 col-xl-4 res-l-bttm">
-					<div class="footer-subscription">
-						<h6 class="animated" data-animate="fadeInUp" data-delay=".6">Create your own crowdsale now</h6>
-						<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form animated" data-animate="fadeInUp" data-delay=".7">
-							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email" >
-							<input type="text" class="d-none" name="form-anti-honeypot" value="">
-							<button type="submit" class="btn btn-plane">Subscribe</button>
-							<div class="subscribe-results"></div>
-						</form>
-					</div>
-				</div><!-- .col  -->
-				<div class="col-xl-4">
-					<ul class="link-widget animated" data-animate="fadeInUp" data-delay=".8">
-						<li><a href="#" class="menu-link">Product</a></li>
-						<li><a href="#" class="menu-link">Join Us</a></li>
-						<li><a href="#" class="menu-link">Contact</a></li>
-						<li><a href="#" class="menu-link">Roadmap</a></li>
-						<li><a href="#" class="menu-link">FAQ</a></li>
-					</ul>
-				</div><!-- .col  -->
-			</div><!-- .row  -->
-			<div class="gaps size-2x"></div>
-			<div class="row">
-				<div class="col-md-7">
-					<span class="copyright-text">
-						<span>All trademarks and copyrights belong to their respective owners.</span>
-					</span>
-				</div><!-- .col  -->
-				<div class="col-md-5 text-right mobile-left">
-					<ul class="footer-links">
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-					</ul>
-				</div><!-- .col  -->
-			</div><!-- .row  -->
-		</div><!-- .container  -->
-	</div>
-	<!-- End Section -->
+	<!-- Footer -->
+	<% include partials/footer %>
 
-	<!-- Preloader !remove please if you do not want -->
-	<div id="preloader">
-		<div id="loader"></div>
-		<div class="loader-section loader-top"></div>
-   		<div class="loader-section loader-bottom"></div>
-	</div>
-	<!-- Preloader End -->
+	<!-- Pre-loader -->
+	<% include partials/preloader %>
 
 	<!-- JavaScript (include all script here) -->
 	<script src="javascripts/jquery.bundle.js?ver=122"></script>
