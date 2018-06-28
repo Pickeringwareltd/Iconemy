@@ -1,5 +1,36 @@
 var mongoose = require('mongoose');
 
+var paymentSchema = new mongoose.Schema({
+	currency: {
+		type: String,
+		required: true
+	},
+	amount: {
+		type: Number,
+		required: true
+	},
+	created: {
+		type: Date,
+		required: true
+	},
+	createdBy: {
+		type: ObjectID,
+		required: true
+	},
+	paid: {
+		type: Date,
+		required: false
+	},
+	sentTo: {
+		type: String,
+		required: false
+	},
+	sentFrom: {
+		type: String,
+		required: false
+	}
+});
+
 var crowdsaleSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -39,7 +70,9 @@ var crowdsaleSchema = new mongoose.Schema({
 	createdBy: {
 		type: ObjectID,
 		required: true
-	}
+	},
+	token: tokenSchema,
+	payment: paymentSchema
 });
 
 var tokenSchema = new mongoose.Schema({
@@ -65,7 +98,8 @@ var tokenSchema = new mongoose.Schema({
 	createdBy: {
 		type: ObjectID,
 		required: true
-	}
+	},
+	payment: paymentSchema
 });
 
 // Simply holds links to all of the social sites the project is part of
