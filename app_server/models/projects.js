@@ -26,6 +26,12 @@ var crowdsaleSchema = new mongoose.Schema({
 		type: Boolean,
 		required: true
 	},
+	commission: {
+		type: Number,
+		required: true,
+		min: 0,
+		max: 5
+	},
 	created: {
 		type: Date,
 		required: true
@@ -105,3 +111,5 @@ var projectSchema = new mongoose.Schema({
 	token: tokenSchema,
 	crowdsales: [crowdsaleSchema]
 });
+
+mongoose.model('Project', 'projectSchema');
