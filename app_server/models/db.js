@@ -49,3 +49,6 @@ process.on('SIGTERM', function() {
 		process.exit(0);
 	});
 });
+
+// Require and include the projects schema
+require('./projects');

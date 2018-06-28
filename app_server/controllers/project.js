@@ -30,27 +30,27 @@ exports.index = function(req, res){
 				status: 'On-going',
 				start: '1/1/19',
 				end: '1/6/19',
-				price: '0.0014',
-				sold: '1,234,567',
-				investors: '1,234'
+				price: 0.0014,
+				sold: 1234567,
+				investors: 1234
 			},
 			{
 				name: 'Pre-sale 2',
 				status: 'Ended',
 				start: '25/9/18',
 				end: '25/11/18',
-				price: '0.0012',
-				sold: '234,567',
-				investors: '234'
+				price: 0.0012,
+				sold: 234567,
+				investors: 234
 			},
 			{
 				name: 'Pre-sale 1',
 				status: 'Ended',
 				start: '12/6/18',
 				end: '12/8/18',
-				price: '0.001',
-				sold: '4,567',
-				investors: '34'
+				price: 0.001,
+				sold: 4567,
+				investors: 34
 			}]
 		}
 	});
