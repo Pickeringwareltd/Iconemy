@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // Require the connection to the database (mongoose)
-require('./app_server/models/db');
+require('./app_api/models/db');
+var routesApi = require('./app_api/routes/index');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // require that the app sends requests to the routes folder (index.js)
 require('./routes')(app);
+app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
