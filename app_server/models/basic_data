@@ -1,0 +1,109 @@
+db.projects.save({
+	name: 'My new project',
+	description: 'This project is a new test that should sit in the database and can be correctly called from the API.', 
+	website: 'www.mynewproject.io',
+	subdomain: 'mynewproject',
+	created: new Date("Jul 16, 2013"),
+	createdBy: 'Jack'
+})
+
+db.projects.update({ name: 'My new project'
+	}, { 
+	name: 'My new project',
+	description: 'This project is a new test that should sit in the database and can be correctly called from the API.', 
+	website: 'www.mynewproject.io',
+	subdomain: 'mynewproject',
+	created: new Date("Jul 16, 2013"),
+	createdBy: 'Jack',
+	token: {
+				name: 'My Token',
+				symbol: 'MTK',
+				decimals: 5,
+				logo: 'donut_logo.png',
+				created: new Date("Jul 16, 2013"),
+				createdBy: "Jack",
+				payment: {
+					currency: 'BTC',
+					amount: 0.00123,
+					created: new Date("Jul 16, 2013"),
+					createdBy: 'Jack',
+					paid: new Date("Jul 18, 2013"),
+					sentTo: '0xCB91eD6f481cEDFC9bDCfC29D6A78DfF123e5467',
+					sentFrom: '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f'
+				}
+	} })
+
+db.projects.save({ 
+	name: 'My second project',
+	description: 'This project is a new test that should sit in the database and can be correctly called from the API.', 
+	website: 'www.secondproject.io',
+	subdomain: 'secondproject',
+	created: new Date("Jul 16, 2014"),
+	createdBy: 'Dylan',
+	token: {
+				name: 'Second Token',
+				symbol: 'STK',
+				decimals: 2,
+				logo: 'donut_logo.png',
+				created: new Date("Jul 19, 2014"),
+				createdBy: "Dylan",
+				payment: {
+					currency: 'ETH',
+					amount: 0.00234,
+					created: new Date("Jul 20, 2014"),
+					createdBy: 'Dylan',
+					paid: new Date("Jul 18, 2013"),
+					sentTo: '0xCB91eD6f481cEDFC9bDCfC29D6A78DfF123e5467',
+					sentFrom: '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f'
+				}
+	},
+	crowdsales: [{
+		name: 'Pre-sale 1',
+		status: 'Ended',
+		start: new Date("Jul 22, 2014"),
+		end: new Date("Aug 22, 2014"),
+		pricingMechanism: 'linear',
+		public: false,
+		commission: 2,
+		created: new Date("Jul 20, 2014"),
+		createdBy: 'Dylan',
+		payment: {
+			currency: 'ETH',
+			amount: 0.00345,
+			created: new Date("Jul 22, 2014"),
+			createdBy: 'Dylan',
+			paid: new Date("Jul 22, 2014"),
+			sentTo: '0xCB91eD6f481cEDFC9bDCfC29D6A78DfF123e5467',
+			sentFrom: '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f'
+		}
+	},
+	{
+		name: 'Pre-sale 2',
+		status: 'On-going',
+		start: new Date("Aug 25, 2014"),
+		end: new Date("Sep 25, 2014"),
+		pricingMechanism: 'linear',
+		public: false,
+		commission: 2,
+		created: new Date("Jul 25, 2014"),
+		createdBy: 'Dylan',
+		payment: {
+			currency: 'ETH',
+			amount: 0.00345,
+			created: new Date("Jul 25, 2014"),
+			createdBy: 'Dylan',
+			paid: new Date("Jul 25, 2014"),
+			sentTo: '0xCB91eD6f481cEDFC9bDCfC29D6A78DfF123e5467',
+			sentFrom: '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f'
+		}
+	}]
+})
+
+db.projects.save({ 
+	name: 'My third project',
+	description: 'This project is a new test that should sit in the database and can be correctly called from the API.', 
+	website: 'www.thirdproject.io',
+	subdomain: 'thirdproject',
+	created: new Date("Jul 16, 2014"),
+	createdBy: 'Dylan'
+})

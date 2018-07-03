@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 var paymentSchema = new mongoose.Schema({
 	currency: {
@@ -14,7 +15,7 @@ var paymentSchema = new mongoose.Schema({
 		required: true
 	},
 	createdBy: {
-		type: ObjectID,
+		type: String,
 		required: true
 	},
 	paid: {
@@ -29,6 +30,33 @@ var paymentSchema = new mongoose.Schema({
 		type: String,
 		required: false
 	}
+});
+
+var tokenSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true
+	},
+	symbol: {
+		type: String,
+		required: true
+	},
+	decimals: {
+		type: Number,
+		required: true,
+		min: 0,
+		max: 18
+	},
+	logo: String,
+	created: {
+		type: Date,
+		required: true
+	},
+	createdBy: {
+		type: String,
+		required: true
+	},
+	payment: paymentSchema
 });
 
 var crowdsaleSchema = new mongoose.Schema({
@@ -68,35 +96,7 @@ var crowdsaleSchema = new mongoose.Schema({
 		required: true
 	},
 	createdBy: {
-		type: ObjectID,
-		required: true
-	},
-	token: tokenSchema,
-	payment: paymentSchema
-});
-
-var tokenSchema = new mongoose.Schema({
-	name: {
 		type: String,
-		required: true
-	},
-	symbol: {
-		type: String,
-		required: true
-	},
-	decimals: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 18
-	},
-	logo: String,
-	created: {
-		type: Date,
-		required: true
-	},
-	createdBy: {
-		type: ObjectID,
 		required: true
 	},
 	payment: paymentSchema
@@ -138,7 +138,7 @@ var projectSchema = new mongoose.Schema({
 		required: true
 	},
 	createdBy: {
-		type: ObjectID,
+		type: String,
 		required: true
 	},
 	social: socialSchema,
@@ -146,4 +146,4 @@ var projectSchema = new mongoose.Schema({
 	crowdsales: [crowdsaleSchema]
 });
 
-mongoose.model('Project', 'projectSchema');
+mongoose.model('Project', projectSchema);
