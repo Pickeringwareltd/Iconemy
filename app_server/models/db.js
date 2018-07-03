@@ -1,6 +1,17 @@
 var mongoose = require('mongoose');
+
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').load();
+}
+
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/iconemy';
+
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+	dbURI = process.env.MONGOLAB_URI;
+}
+
 mongoose.connect(dbURI);
 
 // Events that will log to console when fired
