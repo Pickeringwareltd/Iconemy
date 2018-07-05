@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 var paymentSchema = new mongoose.Schema({
 	currency: {
 		type: String,
-		required: true
+		required: [true, 'Currency is required']
 	},
 	amount: {
 		type: Number,
-		required: true
+		required: [true, 'Amount is required']
 	},
 	created: {
 		type: Date,
@@ -16,7 +17,7 @@ var paymentSchema = new mongoose.Schema({
 	},
 	createdBy: {
 		type: String,
-		required: true
+		required: [true, 'We need to know who created the payment']
 	},
 	paid: {
 		type: Date,
@@ -24,10 +25,22 @@ var paymentSchema = new mongoose.Schema({
 	},
 	sentTo: {
 		type: String,
+		validate: {
+	    	validator: function(v) {
+	        	return /^0x{1}[a-fA-F0-9]{40}$/.test(v);
+	      	},
+	      	message: '{VALUE} is not a ETH valid address'
+	    },
 		required: false
 	},
 	sentFrom: {
 		type: String,
+		validate: {
+	    	validator: function(v) {
+	        	return /^0x{1}[a-fA-F0-9]{40}$/.test(v);
+	      	},
+	      	message: '{VALUE} is not a valid ETH address'
+	    },
 		required: false
 	}
 });
@@ -35,15 +48,15 @@ var paymentSchema = new mongoose.Schema({
 var tokenSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true
+		required: [true, 'Token name is required']
 	},
 	symbol: {
 		type: String,
-		required: true
+		required: [true, 'Token symbol is required']
 	},
 	decimals: {
 		type: Number,
-		required: true,
+		required: [true, 'Token decimals is required'],
 		min: 0,
 		max: 18
 	},
@@ -54,7 +67,7 @@ var tokenSchema = new mongoose.Schema({
 	},
 	createdBy: {
 		type: String,
-		required: true
+		required: [true, 'We need to know who created the token']
 	},
 	payment: paymentSchema
 });
@@ -62,7 +75,7 @@ var tokenSchema = new mongoose.Schema({
 var crowdsaleSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true
+		required: [true, 'Crowdsale name is required']
 	},
 	status: {
 		type: String,
@@ -70,24 +83,24 @@ var crowdsaleSchema = new mongoose.Schema({
 	},
 	start: {
 		type: Date,
-		required: true
+		required: [true, 'Start date is required']
 	},
 	end: {
 		type: Date,
-		required: true
+		required: [true, 'End date is required']
 	},
 	pricingMechanism: {
 		type: String,
-		required: true,
+		required: [true, 'Pricing mechanism is required'],
 		"default": 'linear'
 	},
 	public: {
 		type: Boolean,
-		required: true
+		required: [true, 'Sale type is required']
 	},
 	commission: {
 		type: Number,
-		required: true,
+		required: [true, 'Commission amount is required'],
 		min: 0,
 		max: 5
 	},
@@ -97,7 +110,7 @@ var crowdsaleSchema = new mongoose.Schema({
 	},
 	createdBy: {
 		type: String,
-		required: true
+		required: [true, 'We need to know who created the crowdsale']
 	},
 	payment: paymentSchema
 });
@@ -116,19 +129,22 @@ var socialSchema = new mongoose.Schema({
 var projectSchema = new mongoose.Schema({ 
 	name: {
 		type: String,
-		required: true
+		index: true,
+		required: [true, 'A project name is required']
 	}, 
 	description: {
 		type: String,
-		required: true
+		required: [true, 'A project description is required']
 	},
 	website: {
 		type: String,
-		required: true
+		unique: true,
+		required: [true, 'A project website URL is required, if you dont have one yet, use your facebook page']
 	},
 	subdomain: {
 		type: String,
-		required: true
+		uniqueCaseInsensitive: true,
+		required: [true, 'A subdomain is required so that investors can find your project']
 	},
 	whitepaper: String,
 	onepager: String,
@@ -139,11 +155,13 @@ var projectSchema = new mongoose.Schema({
 	},
 	createdBy: {
 		type: String,
-		required: true
+		required: [true, 'We need to know who created the project']
 	},
 	social: socialSchema,
 	token: tokenSchema,
 	crowdsales: [crowdsaleSchema]
 });
+
+projectSchema.plugin(uniqueValidator);
 
 mongoose.model('Project', projectSchema);
