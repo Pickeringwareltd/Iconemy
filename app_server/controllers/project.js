@@ -28,7 +28,7 @@ var renderProject = function(req, res, responseBody){
 	} else {
 		res.render('error', { 
 			title: 'error',
-			message: 'Sorry something have gone wrong!',
+			message: 'We couldnt find what you were looking for!',
 			error: {
 				status: 404
 			}
@@ -51,8 +51,15 @@ var renderDate =  function(_date) {
 exports.index = function(req, res){
 	var requestOptions, path;
 
+	// Make sure we are using the correct subdomain
+	var projectName =  req.params.projectname;
+
+	if(projectName == undefined){
+		projectName = req.subdomains;
+	}
+
   	// Split the path from the url so that we can call the correct server in development/production
-  	path = '/api/projects/' + req.params.subdomain;
+  	path = '/api/projects/' + projectName;
   
   	requestOptions = {
   		url: apiOptions.server + path,

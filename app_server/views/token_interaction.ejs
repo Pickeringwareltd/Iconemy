@@ -5,12 +5,12 @@
 	<% include partials/header %>
 
 	<!-- Vendor Bundle CSS -->
-	<link rel="stylesheet" href="stylesheets/vendor.bundle.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/vendor.bundle.css?ver=122">
 	
 	<!-- Custom styles for this template -->
-	<link rel="stylesheet" href="stylesheets/style.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/theme.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/custom_styles.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/style.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_styles.css?ver=122">
 </head>
 
 <body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
@@ -76,7 +76,7 @@
 					<div class="row align-items-center mobile-center">
 						<div class="col-lg-12 text-center res-m-bttm">
 							<div class="header-txt">
-								<img src="<%= token.logo %>" class="center_logo">
+								<img src="/<%= token.logo %>" class="center_logo">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= token.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= token.symbol %></p>
 								<ul class="btns animated" data-animate="fadeInUp" data-delay="1.45">
@@ -99,16 +99,24 @@
 			<div class="gaps size-2x d-lg-none"></div>
 			<div class="row">
 				<div class="col-md-6">
-					<h6 class="ex-sm-head animated" data-animate="fadeInUp" data-delay="1.65">Follow <br>
-					us here</h6>
-					<ul class="social">
-						<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="<%= token.social.facebook %>"><em class="fa fa-facebook"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= token.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="<%= token.social.youtube %>"><em class="fa fa-youtube-play"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= token.social.github %>"><em class="fa fa-github"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="<%= token.social.bitcointalk %>"><em class="fa fa-bitcoin"></em></a></li>
-						<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="<%= token.social.medium %>"><em class="fa fa-medium"></em></a></li>
-					</ul>
+					<% if (token.social) { %>
+						<h6 class="ex-sm-head animated" data-animate="fadeInUp" data-delay="1.65">Follow <br> us here</h6>
+							<ul class="social">
+								<% if (token.social.facebook) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="<%= token.social.facebook %>"><em class="fa fa-facebook"></em></a></li>
+								<% } if (token.social.twitter) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= token.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
+								<% } if (token.social.youtube) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="<%= token.social.youtube %>"><em class="fa fa-youtube-play"></em></a></li>
+								<% } if (token.social.github) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= token.social.github %>"><em class="fa fa-github"></em></a></li>
+								<% } if (token.social.bitcointalk) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="<%= token.social.bitcointalk %>"><em class="fa fa-bitcoin"></em></a></li>
+								<% } if (token.social.medium) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".6"><a href="<%= token.social.medium %>"><em class="fa fa-medium"></em></a></li>
+								<% } %>
+							</ul>
+					<% } %>
 				</div>
 			</div><!-- .row  -->
 		</div><!-- .container  -->
@@ -256,8 +264,8 @@
 	<% include partials/preloader %>
 
 	<!-- JavaScript (include all script here) -->
-	<script src="javascripts/jquery.bundle.js?ver=122"></script>
-	<script src="javascripts/script_sale.js?ver=122"></script>
-	<script src="javascripts/token_interaction.js?ver=122"></script>
+	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
+	<script src="/javascripts/script_sale.js?ver=122"></script>
+	<script src="/javascripts/token_interaction.js?ver=122"></script>
 </body>
 </html>

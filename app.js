@@ -23,6 +23,19 @@ app.use(cookieParser());
 // Specify where the static files are found
 app.use(express.static(path.join(__dirname, 'public')));
 
+// This is necessary to include subdomains wihtout having to add 'www' after
+app.set('subdomain offset', 1);
+// get dynamic subdomains for the projects (if any)
+app.use(function(req, res, next) {
+  if (!req.subdomains.length || req.subdomains.slice(-1)[0] === 'www') return next();
+  // otherwise we have subdomain here
+  var subdomain = req.subdomains.slice(-1)[0];
+  // keep it
+  req.subdomain = subdomain;
+
+  next();
+});
+
 // require that the app sends requests to the routes folder (index.js)
 require('./routes')(app);
 app.use('/api', routesApi);

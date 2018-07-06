@@ -72,7 +72,6 @@ module.exports.projectsReadOne = function (req, res) {
 		Project
 	    	.find({subdomain: req.params.projectid})
 	    	.exec(function(err, project) {
-	    		console.log('project = ' + project);
 	    		// If no project is found, return custom error message
 	      		if (!project || project == '') {
 	          		sendJsonResponse(res, 404, { "message": "projectID not found" });

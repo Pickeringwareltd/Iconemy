@@ -30,8 +30,6 @@ module.exports.crowdsalesCreate = function (req, res) {
 					if(project.crowdsales.length > 0 ){
 						var lastSale = project.crowdsales[project.crowdsales.length - 1];
 
-						console.log('End = ' + lastSale.end + ' -- Start = ' + new Date(req.body.start));
-
 						if(lastSale.end > new Date(req.body.start)){
 							sendJsonResponse(res, 404, {"message": "Your sale must start after the previous sale has finished."});
 							return;						
@@ -110,39 +108,45 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		// I.e. api/projects/123
 		// Execute the query and return a JSON response including the project found or an error
 		Project
-	    	.findById(req.params.projectid)
-	    	.select('name crowdsales')
+	    	.find({subdomain: req.params.projectid})
+	    	.select('name social crowdsales')
 	    	.exec(function(err, project) {
 	    		// If no project is found, return custom error message
 	      		if (!project) {
 	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
-	          		// MUST RETURN ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 	          		return;
 	          		// If an error was returned, return that message
 	          	} else if (err) {
 	          		sendJsonResponse(res, 404, err);
 	          		return;
-	      		}
-	      		if(project.crowdsales && project.crowdsales.length > 0){
-	      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
-
-	      			if(!crowdsale){
-	   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
-	   					return;
-	      			} else {
-	      				// If successful, build a JSON response with appropriate information
-	      				var response = {
-	      					project: {
-	      						name: project.name,
-	      						id: req.params.projectid
-	      					},
-	      					crowdsale: crowdsale
-	      				};
-	      				sendJsonResponse(res, 200, crowdsale);
-	      			}
-
 	      		} else {
-	   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+
+
+	      			// -----------------------------------------------------------------------------------------
+	      			// PROBLEM IS HERE --- PROJECT CROWDSALES IS UNDEFINED 
+		      		console.log('project = ' + project.name);
+
+		      		if(project.crowdsales && project.crowdsales.length > 0){
+		      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
+
+		      			if(!crowdsale){
+		   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
+		   					return;
+		      			} else {
+		      				// If successful, build a JSON response with appropriate information
+		      				var response = {
+		      					project: {
+		      						name: project.name,
+		      						id: req.params.projectid
+		      					},
+		      					crowdsale: crowdsale
+		      				};
+		      				sendJsonResponse(res, 200, crowdsale);
+		      			}
+
+		      		} else {
+		   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+		      		}
 	      		}
 	    	});
 	   } else {

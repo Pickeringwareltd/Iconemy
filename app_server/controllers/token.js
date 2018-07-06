@@ -9,23 +9,45 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://iconemy-start.herokuapp.com";
 }
 
-exports.index = function(req, res){
-	res.render('token_interaction', { 
-		title: 'Token',
-		token: {
-			name: 'Donut Ads',
-			symbol: 'DNT',
-			logo: 'images/donut_logo.png',
-			social: {
-				facebook: 'https://www.facebook.com/donut',
-				twitter: 'https://www.twitter.com/donut', 
-				youtube: 'https://www.youtube.com/donut',
-				github: 'https://www.github.com/donut',
-				bitcointalk: 'https://www.bitcointalk.com/donut',
-				medium: 'https://www.medium.com/donut' 
+var renderToken = function(req, res, responseBody) {
+	if(!responseBody.message){
+		res.render('token_interaction', { 
+			title: 'Token',
+			token: responseBody.token
+		});
+	} else {
+		res.render('error', { 
+			title: 'error',
+			message: responseBody.message,
+			error: {
+				status: 404
 			}
-		}
-	});
+		});
+	}
+}
+
+exports.index = function(req, res){
+	var requestOptions, path;
+
+	// Make sure we are using the correct subdomain
+	var projectName =  req.params.projectname;
+
+	if(projectName == undefined){
+		projectName = req.subdomains;
+	}
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/projects/' + projectName + '/token';
+  
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {}
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	renderToken(req, res, body);
+   	});
 };
 
 exports.create = function(req, res){

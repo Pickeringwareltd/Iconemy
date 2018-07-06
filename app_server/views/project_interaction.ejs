@@ -5,13 +5,13 @@
 	<% include partials/header %>
 
 	<!-- Vendor Bundle CSS -->
-	<link rel="stylesheet" href="../stylesheets/vendor.bundle.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/vendor.bundle.css?ver=122">
 	
 	<!-- Custom styles for this template -->
-	<link rel="stylesheet" href="../stylesheets/style.css?ver=122">
-	<link rel="stylesheet" href="../stylesheets/theme.css?ver=122">
-	<link rel="stylesheet" href="../stylesheets/custom_my_projects.css?ver=122">
-	<link rel="stylesheet" href="../stylesheets/custom_project.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/style.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_my_projects.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_project.css?ver=122">
 </head>
 
 <body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
@@ -81,7 +81,7 @@
 						<div class="social_section">
 							<ul class="social">
 								<% if (projectInfo.social.facebook) { %>
-									<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="<%= projectInfo.social.facebook || null %>"><em class="fa fa-facebook"></em></a></li>
+									<li class="animated" data-animate="fadeInUp" data-delay=".1"><a href="<%= projectInfo.social.facebook %>"><em class="fa fa-facebook"></em></a></li>
 								<% } if (projectInfo.social.twitter) { %>
 									<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= projectInfo.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
 								<% } if (projectInfo.social.youtube) { %>
@@ -212,9 +212,9 @@
 	<% include partials/preloader %>
 
 	<!-- JavaScript (include all script here) -->
-	<script src="../javascripts/jquery.bundle.js?ver=122"></script>
-	<script src="../javascripts/custom_my_projects.js?ver=122"></script>
-	<script src="../javascripts/custom_project.js?ver=122"></script>
+	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
+	<script src="/javascripts/custom_my_projects.js?ver=122"></script>
+	<script src="/javascripts/custom_project.js?ver=122"></script>
 
 </body>
 </html>

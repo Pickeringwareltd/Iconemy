@@ -7,7 +7,7 @@ module.exports = function (app) {
 	app.get('/projects', project.myprojects); 
 
 	// Projects points to actual project pages
-	app.get('/projects/:subdomain', project.index); 
+	app.get('/projects/:projectname', project.index); 
 	
 	app.get('/project/create', project.create); 
 };

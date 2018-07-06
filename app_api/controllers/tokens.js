@@ -82,23 +82,24 @@ module.exports.tokenRead = function (req, res) {
 		// I.e. api/projects/123
 		// Execute the query and return a JSON response including the project found or an error
 		Project
-	    	.findById(req.params.projectid)
-	    	.select('name token')
-	    	.exec(function(err, project) {
+	    	.find({subdomain: req.params.projectid})
+	    	.select('name social token')
+	    	.exec(function(err, _project) {
+	    		var project = _project[0];
+
 	    		// If no project is found, return custom error message
 	      		if (!project) {
 	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
-	          		// MUST RETURN ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 	          		return;
 	          		// If an error was returned, return that message
 	          	} else if (err) {
 	          		sendJsonResponse(res, 404, err);
 	          		return;
 	      		} else {
-		      		var token = project.token;
+	      			var token = project.token;
+
 		      		if(!token){
 		      			sendJsonResponse(res, 404, { "message": "Token does not exist" });
-		          		// MUST RETURN ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 		          		return;
 		      		} else {
 		      			var response = {
@@ -111,8 +112,7 @@ module.exports.tokenRead = function (req, res) {
 		      					symbol: token.symbol,
 		      					decimals: token.decimals,
 		      					logo: token.logo,
-		      					created: token.created,
-		      					createdBy: token.createdBy
+		      					social: project.social
 		      				}
 		      			}
 		      			sendJsonResponse(res, 200, response);
