@@ -72,9 +72,9 @@
 			<div class="row projects">
 				<% crowdsales.forEach(function(sale) { %>
 					<div class="col-lg-4 col-sm-12 project">
-						<div class="card animated" data-animate="fadeInUp" data-delay=".6" id="<%= sale.id %>">
+						<div class="card animated" data-animate="fadeInUp" data-delay=".6" id="<%= sale.subdomain %>">
 						  <div class="container">
-						  	<img src="<%= sale.image %>" alt="Donut logo">
+						  	<img src="<%= sale.logo %>" alt="Donut logo">
 						  	<h2 class="title"><%= sale.name %></h2> 
 						    <p><%= sale.description %></p> 
 						  </div>
@@ -106,6 +106,9 @@
 	<script src="javascripts/jquery.bundle.js?ver=122"></script>
 	<script src="javascripts/custom_my_projects.js?ver=122"></script>
 	<script src="javascripts/make_payment.js?ver=122"></script>
+
+	<!-- Error message -->
+	<% include partials/error_message %>
 
 </body>
 </html>

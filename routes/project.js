@@ -1,5 +1,4 @@
 var express = require('express');
-
 var project = require('../app_server/controllers/project');
 
 // Forward request onto the main controller
@@ -8,6 +7,7 @@ module.exports = function (app) {
 	app.get('/projects', project.myprojects); 
 
 	// Projects points to actual project pages
-	app.get('/project', project.index); 
+	app.get('/projects/:subdomain', project.index); 
+	
 	app.get('/project/create', project.create); 
 };

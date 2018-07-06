@@ -1,24 +1,20 @@
-$('#new_project').on("click",function(){
-	// Re-direct to new project form
-	window.location.href = '/project/create'
+$('.card').on("click",function(){
+	var subdomain = $(this).attr('id');
+	
+	if(subdomain == 'new_project'){
+		// Re-direct to new project form
+		window.location.href = '/project/create'
+	} else {
+		// Re-direct to that project
+		window.location.href = '/projects/' + subdomain;
+	}
 });
-
-$('#donut').on("click",function(){
-	// Re-direct to new project form
-	window.location.href = '/project'
-});
-
-$('#resauce').on("click",function(){
-	// Re-direct to new project form
-	window.location.href = '/project'
-});
-
 
 /* Template	:	ICO Crypto v1.2.2 */
 (function($){
 	'use strict';
 	var $win = $(window), $body_m = $('body'), $navbar = $('.navbar');
-	
+
 	// Touch Class
 	if (!("ontouchstart" in document.documentElement)) {
 		$body_m.addClass("no-touch");

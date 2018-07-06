@@ -15,8 +15,19 @@ module.exports.projectsCreate = function (req, res) {
 			description: req.body.description,
 			website: req.body.website,
 			subdomain: req.body.subdomain,
+			logo: req.body.logo,
 			created: Date.now(),
-			createdBy: req.body.createdBy
+			createdBy: req.body.createdBy,
+			social: {
+				facebook: req.body.facebook,
+				twitter: req.body.twitter,
+				youtube: req.body.youtube,
+				github: req.body.github,
+				bitcointalk: req.body.bitcointalk,
+				medium: req.body.medium
+			},
+			onepager: req.body.onepager,
+			whitepaper: req.body.whitepaper
 		}, function(err, project) {
 			// Callback is used to report an error or return project on successful save
     		if (err) {
@@ -59,12 +70,13 @@ module.exports.projectsReadOne = function (req, res) {
 		// I.e. api/projects/123
 		// Execute the query and return a JSON response including the project found or an error
 		Project
-	    	.findById(req.params.projectid)
+	    	.find({subdomain: req.params.projectid})
 	    	.exec(function(err, project) {
+	    		console.log('project = ' + project);
 	    		// If no project is found, return custom error message
-	      		if (!project) {
+	      		if (!project || project == '') {
 	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
-	          		// MUST RETURN ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
+	          		// MUST RETURN AFTER ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 	          		return;
 	          		// If an error was returned, return that message
 	          	} else if (err) {
@@ -104,13 +116,21 @@ module.exports.projectssUpdateOne = function (req, res) {
 				}
 				
 				// Upload information from correct values.
-				project.name = req.body.name;
-				project.description = req.body.description;
-				project.website = req.body.website;
-				project.whitepaper = req.body.whitepaper;
-				project.onepager = req.body.onepager;
-				project.subdomain = req.body.subdomain;
-				project.logo = req.body.logo;
+				project.name = req.body.name,
+				project.description = req.body.description,
+				project.website = req.body.website,
+				project.subdomain = req.body.subdomain,
+				project.logo = req.body.logo,
+				project.created = Date.now(),
+				project.createdBy = project.createdBy,
+				project.social.facebook = req.body.facebook,
+				project.social.twitter = req.body.twitter,
+				project.social.youtube = req.body.youtube,
+				project.social.github = req.body.github,
+				project.social.bitcointalk = req.body.bitcointalk,
+				project.social.medium = req.body.medium,
+				project.onepager = req.body.onepager,
+				project.whitepaper = req.body.whitepaper
 
 				// Try to save the project, return any validation errors if necessary
 				project.save( function(err, project) {

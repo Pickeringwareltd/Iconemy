@@ -39,7 +39,7 @@
 /* Project cards*/
 
 .card {
-	margin-top: 50px
+	margin-top: 50px;
 }
 
 .card {
@@ -72,6 +72,8 @@
 	-webkit-border-radius: 3px 3px 0px 0px;
 	border-radius: 3px 3px 0px 0px; 
 	width: 100%;
+	object-fit: cover;
+	max-height: 180px;
 }
 
 .card .title {
