@@ -13,9 +13,11 @@ $('#new_crowdsale').on("click",function(){
 	window.location.href = '/sale/create'
 });
 
-$('.current_sale').on("click",function(){
+$('.crowdsale').on("click",function(){
+	var index = $(this).attr('data-index');
+
 	// Re-direct to new project form
-	window.location.href = '/sale'
+	window.location.href = '/crowdsales/' + index;
 });
 
 $('#submit_btn').on("click",function(){

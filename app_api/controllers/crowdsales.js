@@ -109,8 +109,9 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		// Execute the query and return a JSON response including the project found or an error
 		Project
 	    	.find({subdomain: req.params.projectid})
-	    	.select('name social crowdsales')
-	    	.exec(function(err, project) {
+	    	.select('name social token crowdsales')
+	    	.exec(function(err, _project) {
+	    		var project = _project[0];
 	    		// If no project is found, return custom error message
 	      		if (!project) {
 	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
@@ -120,11 +121,6 @@ module.exports.crowdsalesReadOne = function (req, res) {
 	          		sendJsonResponse(res, 404, err);
 	          		return;
 	      		} else {
-
-
-	      			// -----------------------------------------------------------------------------------------
-	      			// PROBLEM IS HERE --- PROJECT CROWDSALES IS UNDEFINED 
-		      		console.log('project = ' + project.name);
 
 		      		if(project.crowdsales && project.crowdsales.length > 0){
 		      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
@@ -137,11 +133,17 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		      				var response = {
 		      					project: {
 		      						name: project.name,
-		      						id: req.params.projectid
+		      						id: req.params.projectid,
 		      					},
+		      					token: {
+		      						name: project.token.name,
+		      						symbol: project.token.symbol,
+		      						logo: project.token.logo
+		      					},
+		      					social: project.social,
 		      					crowdsale: crowdsale
 		      				};
-		      				sendJsonResponse(res, 200, crowdsale);
+		      				sendJsonResponse(res, 200, response);
 		      			}
 
 		      		} else {

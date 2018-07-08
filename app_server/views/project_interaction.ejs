@@ -170,12 +170,12 @@
 					</div>
 					<div class="scrolling-wrapper">
 					<% if(projectInfo.crowdsales){ %>
-						<% projectInfo.crowdsales.forEach(function(sale) { %>
+						<% projectInfo.crowdsales.forEach(function(sale, i) { %>
 					        <div class="col-auto">
 					        	<%if (sale.status == 'On-going') { %>
-									<div class="card custom_card current_sale">
+									<div class="card custom_card crowdsale current_sale" data-index="<%= i %>">
 								<% } else { %>
-							 		<div class="card custom_card">
+							 		<div class="card custom_card crowdsale" data-index="<%= i %>">
 							 	<% } %>
 							 		<div class="container">
 							 			<div class="toprow">
