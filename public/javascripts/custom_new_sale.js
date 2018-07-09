@@ -1,10 +1,30 @@
 var usd_eth;
 var fetched;
 
-$('#submit_btn').on("click",function(){
-	// Re-direct to new project form
-	window.location.href = '/pay'
+$("#token_symbol").keyup(function() {
+	var symbol = $("#token_symbol").val();
+	$("#min_sym").html('  ' + symbol);
 });
+
+$("#token_decimals").keyup(function() {
+
+  var answer = calculateMinimum($("#token_decimals").val());
+  $("#min_dec").html(' ' + answer);
+
+});
+
+$("#token_decimals").change(function() {
+  var answer = calculateMinimum($("#token_decimals").val());
+  $("#min_dec").html(' ' + answer);
+});
+
+function calculateMinimum(decimals) {
+	
+	var decimals = $("#token_decimals").val();
+  	var answer = 1 / 10 ** decimals;
+
+  	return answer;
+}
 
 $(function() {
 	$('input[name="sale_duration"]').daterangepicker({

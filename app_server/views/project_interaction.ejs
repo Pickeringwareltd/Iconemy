@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="zxx" class="js">
 <head>
 	<!-- Header -->
@@ -120,13 +120,22 @@
 
 					<div class="row tokens">
 						<% if (projectInfo.token) { %>
-							<div class="col-lg-2 col-4">
+							<div class="col-lg-2 col-4 token_link" data-subdomain="<%= projectInfo.subdomain %>">
 								<h3 id="tokens_title">Token</h3>
 								<img src="../<%= projectInfo.token.logo %>" alt="donut" id="token_logo">
 							</div>
 							<div class="col-lg-10 col-8">
 								<p id="token_symbol"><%= projectInfo.token.symbol %></p>
 								<p id="token_supply">Total supply:  <b>123,456,789</b></p>
+							</div>
+						<% } else if(!projectInfo.token) { %>
+							<h3 id="tokens_title">Token</h3>
+								
+							<div class="card" id="new_token" data-subdomain="<%= projectInfo.subdomain %>">
+							 	<div class="container">
+								  	<h1>+</h1>
+								    <p>Add new token</p> 
+								</div>
 							</div>
 						<% } %>
 					</div>
@@ -148,18 +157,20 @@
 							<br/ >
 							<p class="buynow"><b><%= projectInfo.subdomain %>.iconemy.io/buynow</b></p>
 						</div>
-
-						<div class="row admin_section">
-							<p class="title" id="admin">Admin</p>
-							<br/ >
-							<p class="admin"><%= projectInfo.subdomain %>.iconemy.io/<b>admin</b></p>
-						</div>
-
-						<div class="row token_section">
-							<p class="title" id="token">Token</p>
-							<br/ >
-							<p class="token"><%= projectInfo.subdomain %>.iconemy.io/<b>token</b></p>
-						</div>	
+						<% if(!projectInfo.subdomain){ %>
+							<div class="row admin_section">
+								<p class="title" id="admin">Admin</p>
+								<br/ >
+								<p class="admin"><%= projectInfo.subdomain %>.iconemy.io/<b>admin</b></p>
+							</div>
+						<% } %>
+						<% if(projectInfo.token){ %>
+							<div class="row token_section">
+								<p class="title" id="token">Token</p>
+								<br/ >
+								<p class="token"><%= projectInfo.subdomain %>.iconemy.io/<b>token</b></p>
+							</div>	
+						<% } %>
 					</div>				
 				</div>
 			</div>
@@ -194,7 +205,7 @@
 					    <% }); %>
 					<% } %>
 						<div class="col-auto">
-						 	<div class="card custom_card" id="new_crowdsale">
+						 	<div class="card custom_card" id="new_crowdsale" data-subdomain="<%= projectInfo.subdomain %>">
 						 		<div class="container">
 							  		<h1>+</h1>
 							    	<p>Add new crowdsale</p> 
@@ -203,7 +214,7 @@
 						</div>
 					</div>
 				</div>
-		</div>
+			</div>
 	</div>
 
 	<!-- Footer -->

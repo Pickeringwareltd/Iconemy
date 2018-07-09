@@ -3,14 +3,23 @@ $('.buynow_section').on("click",function(){
 	window.location.href = '/sale'
 });
 
-$('.tokens').on("click",function(){
+$('#new_token').on("click",function(){
+	var subdomain = $(this).attr('data-subdomain');
 	// Re-direct to new project form
-	window.location.href = '/token'
+	window.location.href = '/projects/' + subdomain + '/token/create';
+});
+
+$('.token_link').on("click",function(){
+	var subdomain = $(this).attr('data-subdomain');
+	
+	// Re-direct to new project form
+	window.location.href = '/projects/' + subdomain + '/token'
 });
 
 $('#new_crowdsale').on("click",function(){
+	var subdomain = $(this).attr('data-subdomain');
 	// Re-direct to new project form
-	window.location.href = '/sale/create'
+	window.location.href = '/projects/' + subdomain + '/crowdsales/create';
 });
 
 $('.crowdsale').on("click",function(){

@@ -3,11 +3,6 @@ $("#login_btn").click(function() {
 	return false;
 });
 
-$("#submit_btn").click(function() {
-	window.location.href = "/pay";
-	return false;
-});
-
 $("#token_symbol").keyup(function() {
 	var symbol = $("#token_symbol").val();
 	$("#min_sym").html('  ' + symbol);

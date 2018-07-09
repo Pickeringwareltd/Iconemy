@@ -78,7 +78,7 @@
 						<div class="col-lg-12 text-center res-m-bttm">
 							<div class="header-txt">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25">Create a token</h1>
-								<p class="animated token_description" data-animate="fadeInUp" data-delay="1.50">Enter the details of your ERC-20 token</p>
+								<p class="animated token_description"  data-animate="fadeInUp" data-delay="1.50">Enter the details of your ERC-20 token</p>
 							</div>
 						</div><!-- .col  -->
 					</div><!-- .row  -->
@@ -86,11 +86,11 @@
 				<div class="row justify-content-center text-center sale-box">
 					<div class="col-lg-12">
 						<div class="token-box shadow">
-							<form id="token-form" class="form-message text-left">
+							<form id="token-form" class="form-message text-left" action="" method="post" role="form">
 								<div class="form-row justify-content-center">
 									<div class="form-group col-12">
-										<div class="input-field animated token-name" data-animate="fadeInUp" data-delay=".5">
-											<input name="token-name" type="text" id="token_name" class="input-line required" placeholder="My token name">
+										<div class="input-field animated token-name">
+											<input name="token_name" type="text" id="token_name" class="input-line required" placeholder="My token name">
 											<label class="input-title">Token name *</label>
 										</div>
 									</div>
@@ -113,8 +113,8 @@
 									</div>
 									<div class="form-group col-lg-6 col-sm-12">
 										<div class="form-row">
-											<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
-												<input name="token-symbol" type="text" id="token_symbol" class="input-line required" placeholder="MTK">
+											<div class="input-field animated">
+												<input name="token_symbol" type="text" id="token_symbol" class="input-line required" placeholder="MTK">
 												<label class="input-title">Token symbol *</label>
 											</div>
 										</div>
@@ -126,8 +126,8 @@
 
 								<div class="form-row decimal_row">
 									<div class="form-group col-lg-4 col-sm-12">
-										<div class="input-field animated" data-animate="fadeInUp" data-delay=".7">
-											<input name="token-decimals" type="number" class="input-line required" id="token_decimals" min=0 placeholder="5">
+										<div class="input-field animated">
+											<input name="token_decimals" type="number" class="input-line required" id="token_decimals" min=0 placeholder="5">
 											<label class="input-title">Token decimals *</label>
 										</div>
 									</div>
@@ -138,7 +138,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-lg-8 col-sm-12">
-										<div class="input-field animated" data-animate="fadeInUp" data-delay=".5">
+										<div class="input-field animated">
 											<input name="owner_address" type="text" id="owner_address" class="input-line required" placeholder="0xc697F04Dcb807A0be4E1ffe78Fb5325bE112502d">
 											<label class="input-title">Owner wallet address *</label>
 										</div>
@@ -151,7 +151,7 @@
 								<div class="form-row submit">
 									<div class="form-group col-12">
 										<input type="text" class="d-none" name="form-anti-honeypot" value="">
-										<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
+										<div class="input-field animated">
 											<button type="submit" class="btn btn-outline" id="submit_btn">Order now</button>
 										</div>
 									</div>
@@ -178,6 +178,11 @@
 
 	<!-- For logo upload -->
 	<script src="/javascripts/filedrag.js"></script>
+
+	<!-- Error message -->
+	<% include partials/error_message %>
+
+	<script src="/javascripts/validate_token.js"></script>
 
 </body>
 </html>

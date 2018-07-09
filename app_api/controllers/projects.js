@@ -100,7 +100,7 @@ module.exports.projectssUpdateOne = function (req, res) {
 
 	if(projectid) {
 		Project
-			.findById(req.params.projectid)
+			.find({subdomain: req.params.projectid})
 			.exec( function(err, project) {
 				if (!project) {
 				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
@@ -154,7 +154,7 @@ module.exports.projectsDeleteOne = function (req, res) {
   	
   	if (projectid) {
     	Project
-     	.findById(projectid)
+     	.find({subdomain: req.params.projectid})
       	.exec( function(err, project) {
 
       		if(!project) {

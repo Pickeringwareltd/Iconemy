@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var WAValidator = require('wallet-address-validator');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -8,17 +9,19 @@ var sendJsonResponse = function(res, status, content) {
 
 module.exports.tokenCreate = function (req, res) { 
 	// To add a crowdsale, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
-	var project = req.params.projectid;
+	var projectID = req.params.projectid;
 
-	if(!project){
+	if(!projectID){
 		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
 		return;
 	} else {
 		// Find the project and pass the object to the addToken function (below)
 		Project
-			.findById(project)
+			.find({subdomain: projectID})
 			.select('token')
-			.exec(function(err, project) {
+			.exec(function(err, _project) {
+				var project = _project[0];
+
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -38,6 +41,12 @@ var addToken = function(req, res, project) {
     	sendJsonResponse(res, 404, { "message": "Project ID not found" });
 	} else {
 		var newToken = getToken(req);
+
+		if(!validateToken(newToken)){
+        	sendJsonResponse(res, 404, {"message": "Oops! Looks like your token data is invalid!"});
+        	return;
+		}
+
 		// Add the new token to the parent document (project)
     	project.token = newToken;
 
@@ -55,21 +64,38 @@ var addToken = function(req, res, project) {
 	} 
 };
 
+var validateToken = function(token){
+	var passedTests = true;
+
+	if(!token.name || !token.symbol || !token.decimals || !token.owner){
+		passedTests = false;
+	}
+
+	if(token.symbol.length < 3 || token.symbol.length > 4){
+		passedTests = false;
+	}
+
+	if(token.decimals < 0 || token.decimals > 18){
+		passedTests = false;
+	}
+
+	if(!WAValidator.validate(token.owner, 'ETH')){
+		passedTests = false;
+	}
+
+	return passedTests;
+}
+
 // Creates crowdsale object from form data ready to be added to a project
 var getToken = function(req) {
 	var token = {
 		name: req.body.name,
 		symbol: req.body.symbol,
 		decimals: req.body.decimals,
+		owner: req.body.owner,
 		logo: req.body.logo,
 		created: Date.now(),
-		createdBy: req.body.createdBy,
-		payment: {
-			currency: req.body.pay_currency,
-			amount: req.body.pay_amount,
-			created: Date.now(),
-			createdBy: req.body.createdBy
-		} 
+		createdBy: req.body.createdBy
 	}
 
 	return token;
@@ -141,9 +167,11 @@ module.exports.paymentUpdate = function (req, res) {
 	} else {
 		// Find the project and pass the object to the addToken function (below)
 		Project
-			.findById(project)
+			.find({subdomain: req.params.projectid})
 			.select('token')
-			.exec(function(err, project) {
+			.exec(function(err, _project) {
+				var project = _project[0];
+				
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -151,6 +179,14 @@ module.exports.paymentUpdate = function (req, res) {
 					sendJsonResponse(res, 404, {"message": "Project not found"});
 				} else {
 					if(project.token){
+
+						var createdDate;
+						if(!payment.created){
+							createdDate = Date.now();
+						} else {
+							createdDate = project.token.created;
+						}
+
 						var payment = project.token.payment;
 
 						payment.currency = req.body.currency;
@@ -158,6 +194,8 @@ module.exports.paymentUpdate = function (req, res) {
 						payment.paid = req.body.paid;
 						payment.sentTo = req.body.sentto;
 						payment.sentFrom = req.body.sentfrom;
+						payment.created = createdDate;
+						payment.createdBy = req.body.createdBy;
 
 						project.save(function(err, project) {
 						    if (err) {

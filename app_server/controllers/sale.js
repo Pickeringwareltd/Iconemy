@@ -69,8 +69,6 @@ exports.index = function(req, res){
 
 var renderCreateSale = function(req, res, responseBody) {
 
-	console.log(responseBody);
-
 	if(!responseBody.message){
 		res.render('create_sale', { 
 			title: 'Create sale',
@@ -112,4 +110,31 @@ exports.create = function(req, res){
 	request( requestOptions, function(err, response, data) {
 		renderCreateSale(req, res, data);
    	});
+};
+
+
+exports.doCreation = function(req, res){
+	var requestOptions, path, projectname, postdata;
+  	
+  	projectname = req.params.projectid;
+  	
+  	path = "/api/projects/" + projectname + '/crowdsales';
+
+  	var duration = req.body.sale_duration;
+  	var start_time = req.body.start_time;
+  	var end_time = req.body.end_time;
+
+  	console.log(duration + ' -- ' + start_time);
+
+  	postdata = { 
+    	name: req.body.sale_name,
+    	start: req.body.start,
+    	end: req.body.end,
+    	status: 'Not started',
+    	initialprice: req.body.token_price,
+    	pricingmechanism: req.body.pricing,
+    	public: req.body.public,
+    	commission: req.body.commission,
+    	createdBy: 'Jack',
+	};
 };

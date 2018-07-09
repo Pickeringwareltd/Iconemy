@@ -18,16 +18,18 @@ module.exports.crowdsalesCreate = function (req, res) {
 	} else {
 		// Find the project and pass the object to the addCrowdsale function (below)
 		Project
-			.findById(project)
+			.find({subdomain: project})
 			.select('token crowdsales')
-			.exec(function(err, project) {
+			.exec(function(err, _project) {
+				var project = _project[0];
+
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
 				} else {
 					var token = project.token;
 
-					if(project.crowdsales.length > 0 ){
+					if(project.crowdsales && project.crowdsales.length > 0){
 						var lastSale = project.crowdsales[project.crowdsales.length - 1];
 
 						if(lastSale.end > new Date(req.body.start)){
@@ -85,16 +87,11 @@ var getCrowdsale = function(req) {
 		start: req.body.start,
 		end: req.body.end,
 		pricingMechanism: req.body.pricingmechanism,
+		initialPrice: parseFloat(req.body.initialprice),
 		public: req.body.public,
-		commission: req.body.commission,
+		commission: parseInt(req.body.commission),
 		created: Date.now(),
 		createdBy: req.body.createdBy,
-		payment: {
-			currency: req.body.pay_currency,
-			amount: req.body.pay_amount,
-			created: Date.now(),
-			createdBy: req.body.createdBy
-		} 
 	}
 
 	return crowdsale;
@@ -176,9 +173,11 @@ module.exports.paymentUpdateOne = function (req, res) {
 	} else {
 		// Find the project and pass the object to the addToken function (below)
 		Project
-			.findById(projectid)
+			.find({subdomain: projectid})
 			.select('crowdsales')
-			.exec(function(err, project) {
+			.exec(function(err, _project) {
+				var project = _project[0];
+				
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -195,6 +194,8 @@ module.exports.paymentUpdateOne = function (req, res) {
 						payment.paid = req.body.paid;
 						payment.sentTo = req.body.sentto;
 						payment.sentFrom = req.body.sentfrom;
+						payment.created = createdDate;
+						payment.createdBy = req.body.createdBy;
 
 						// If they have paid, we must know what addresses to search for
 						if(payment.paid && (!payment.sentTo || !payment.sentFrom)){

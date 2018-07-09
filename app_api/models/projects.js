@@ -60,6 +60,10 @@ var tokenSchema = new mongoose.Schema({
 		min: 0,
 		max: 18
 	},
+	owner: {
+		type: String,
+		required: [true, 'Owner address is required']
+	},
 	logo: String,
 	created: {
 		type: Date,
@@ -93,6 +97,11 @@ var crowdsaleSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'Pricing mechanism is required'],
 		"default": 'linear'
+	},
+	initialPrice: {
+		type: Number,
+		required: [true, 'Initial price must be set.'],
+		min: 0
 	},
 	public: {
 		type: Boolean,
