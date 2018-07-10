@@ -116,11 +116,12 @@
 											<label class="input-title" id="sale_type_label">Type of sale *</label>
 											<br />
 											<br />
-											<select id="sale_type">
+											<select id="sale_type" name="sale_type">
 											  	<option value="pre-sale">Pre-sale</option>
 											  	<option value="public-sale">Public-sale</option>
 											</select>
 										</div>
+										<input type="checkbox" id="public_check" class="d-none" name="public">
 									</div>
 									<div class="form-group col-lg-6 col-sm-12">
 										<p id="min_message">This means you can <b>create more crowdsales</b> with this token in the future.</p>
@@ -201,7 +202,7 @@
 									</div>
 									<div class="form-group col-12">
 										<div class="input-field animated">
-											<input id="commission_selector" type="text" data-slider-ticks="[1, 2, 3, 4, 5]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='[1%", "2%", "3%", "4%", "5%"]'/>
+											<input id="commission_selector" name="commission" type="text" data-slider-ticks="[1, 2, 3, 4, 5]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='[1%", "2%", "3%", "4%", "5%"]'/>
 										</div>
 									</div>
 								</div>

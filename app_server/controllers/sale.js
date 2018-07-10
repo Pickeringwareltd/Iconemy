@@ -1,5 +1,7 @@
 var express = require('express');
 var request = require('request');
+var moment = require('moment');
+moment().format();
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -112,29 +114,110 @@ exports.create = function(req, res){
    	});
 };
 
+var formatTime = function(_time){
+	var index = _time.indexOf(':');
+	var length = _time.length;
+	var minutes = _time.substring(index + 1,length);
+
+	if(_time.search('pm') > 0){
+
+		// If the time is PM, simply add 12 to the hours
+		// I.e. 10:00 pm = 22:00 pm
+  		var hours = _time.substring(0,index);
+
+  		if(hours != '12'){
+  			hours = parseInt(hours) + 12;
+  			hours = hours.toString();
+  			_time = hours.concat(':', minutes);
+  		}
+
+  	} else if(_time.search('12') >= 0){
+  		// if the time contains 12... AM then change the 12 to 00
+  		// I.e. 12:15 am = 00:15 am
+  		var hours = '00';
+  		_time = hours.concat(':', minutes);
+
+  	}
+
+  	// Take off AM/PM
+  	_time = _time.slice(0, -2);
+
+  	return _time;
+}
+
+var formatData = function(req){
+	var duration = req.body.sale_duration;
+
+	// Find where the split between dates are
+  	var index = duration.indexOf(' - ');
+  	var length = duration.length;
+
+  	// Split the dates
+  	var start_date = duration.substring(0,index);
+  	var end_date = duration.substring(index + 3, length);
+
+  	// Format the times to 24 hours
+  	var start_time = formatTime(req.body.start_time);
+  	var end_time = formatTime(req.body.end_time);
+
+  	// Join date and time together for formtatting
+  	var start_datetime = start_date.concat(' ', start_time);
+  	var end_datetime = end_date.concat(' ', end_time);
+
+  	// Convert string to JS Date object
+  	var start = moment(start_datetime, 'DD-MM-YYYY HH:mm').utc().format();
+  	var end = moment(end_datetime, 'DD-MM-YYYY HH:mm').utc().format();
+
+  	var isPublic = true;
+
+  	if(req.body.sale_type == 'pre-sale'){
+  		isPublic = false;
+  	}
+
+  	postdata = { 
+    	name: req.body.sale_name,
+    	start: start,
+    	end: end,
+    	status: 'Not started',
+    	initialprice: parseFloat(req.body.token_price),
+    	pricingmechanism: 'linear',
+    	public: isPublic,
+    	commission: parseInt(req.body.commission),
+    	createdBy: 'Jack',
+	};
+
+	return postdata;
+}
 
 exports.doCreation = function(req, res){
 	var requestOptions, path, projectname, postdata;
   	
-  	projectname = req.params.projectid;
+  	projectname = req.params.projectname;
   	
   	path = "/api/projects/" + projectname + '/crowdsales';
 
-  	var duration = req.body.sale_duration;
-  	var start_time = req.body.start_time;
-  	var end_time = req.body.end_time;
+  	var postdata = formatData(req);
 
-  	console.log(duration + ' -- ' + start_time);
+  	console.log(postdata);
 
-  	postdata = { 
-    	name: req.body.sale_name,
-    	start: req.body.start,
-    	end: req.body.end,
-    	status: 'Not started',
-    	initialprice: req.body.token_price,
-    	pricingmechanism: req.body.pricing,
-    	public: req.body.public,
-    	commission: req.body.commission,
-    	createdBy: 'Jack',
-	};
+  	requestOptions = {
+  		url : apiOptions.server + path,
+  		method : "POST",
+  		json : postdata
+	}; 
+
+	request( requestOptions, function(err, response, body) {
+	    if (response.statusCode === 201) {
+	        res.redirect('/pay');
+	    } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+			res.redirect('/projects/' + projectname + '/crowdsales/create?err=val');
+	    } else {
+	        res.render('error', { 
+				message: body.message,
+				error: {
+					status: 404
+				}
+			});
+		} 
+	});
 };

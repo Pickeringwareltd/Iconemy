@@ -1,6 +1,10 @@
 var usd_eth;
 var fetched;
 
+$("#sale_type").change(function() {
+	$("#sale_type").toggleClass('checked');
+});
+
 $("#token_symbol").keyup(function() {
 	var symbol = $("#token_symbol").val();
 	$("#min_sym").html('  ' + symbol);
