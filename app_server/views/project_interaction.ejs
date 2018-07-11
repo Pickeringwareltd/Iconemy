@@ -184,9 +184,9 @@
 						<% projectInfo.crowdsales.forEach(function(sale, i) { %>
 					        <div class="col-auto">
 					        	<%if (sale.status == 'On-going') { %>
-									<div class="card custom_card crowdsale current_sale" data-index="<%= i %>">
+									<div class="card custom_card crowdsale current_sale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>">
 								<% } else { %>
-							 		<div class="card custom_card crowdsale" data-index="<%= i %>">
+							 		<div class="card custom_card crowdsale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>">
 							 	<% } %>
 							 		<div class="container">
 							 			<div class="toprow">

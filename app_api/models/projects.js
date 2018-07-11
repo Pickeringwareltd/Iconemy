@@ -113,6 +113,14 @@ var crowdsaleSchema = new mongoose.Schema({
 		min: 0,
 		max: 5
 	},
+	admin: {
+		type: String,
+		required: [true, 'Admin address is required']
+	},
+	beneficiary: {
+		type: String,
+		required: [true, 'Beneficiary address is required']
+	},
 	created: {
 		type: Date,
 		required: true
@@ -130,7 +138,7 @@ var socialSchema = new mongoose.Schema({
 	twitter: String,
 	youtube: String,
 	bitcointalk: String,
-	github: String,
+	telegram: String,
 	medium: String
 });
 

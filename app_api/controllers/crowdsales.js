@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var WAValidator = require('wallet-address-validator');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -36,6 +37,11 @@ module.exports.crowdsalesCreate = function (req, res) {
 							sendJsonResponse(res, 404, {"message": "Your sale must start after the previous sale has finished."});
 							return;						
 						}
+					}
+
+					if(!WAValidator.validate(req.body.admin, 'ETH') || !WAValidator.validate(req.body.beneficiary, 'ETH')){
+						sendJsonResponse(res, 404, {"message": "You must provide a valid ETH address."});
+						return;	
 					}
 
 					if(new Date(req.body.end) < new Date(req.body.start)){
@@ -90,6 +96,8 @@ var getCrowdsale = function(req) {
 		initialPrice: parseFloat(req.body.initialprice),
 		public: req.body.public,
 		commission: parseInt(req.body.commission),
+		admin: req.body.admin,
+		beneficiary: req.body.beneficiary,
 		created: Date.now(),
 		createdBy: req.body.createdBy,
 	}

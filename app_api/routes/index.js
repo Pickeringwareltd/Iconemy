@@ -8,7 +8,7 @@ var ctrlCrowdsales = require('../controllers/crowdsales');
 
 // projects
 router.get('/projects', ctrlProjects.projectsListByStartTime);
-router.post('/projects', ctrlProjects.projectsCreate);
+router.post('/projects/create', ctrlProjects.projectsCreate);
 router.get('/projects/:projectid', ctrlProjects.projectsReadOne);
 router.put('/projects/:projectid', ctrlProjects.projectssUpdateOne);
 router.delete('/projects/:projectid', ctrlProjects.projectsDeleteOne);

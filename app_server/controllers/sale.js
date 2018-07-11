@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var WAValidator = require('wallet-address-validator');
 var moment = require('moment');
 moment().format();
 
@@ -70,14 +71,25 @@ exports.index = function(req, res){
 };
 
 var renderCreateSale = function(req, res, responseBody) {
+	var message;
 
 	if(!responseBody.message){
+		if(req.query.err){
+			if(req.query.err == 'nodata'){
+				message = 'All fields marked with * are required!';
+			} else if(req.query.err == 'invalidaddress'){
+				message = 'Please provide a valid eth address';
+			} else {
+				message = 'Oops! Something has gone wrong!';
+			}
+		}
 		res.render('create_sale', { 
 			title: 'Create sale',
 			token : {
 				name: responseBody.token.name,
 				symbol: responseBody.token.symbol
-			}
+			},
+			message: message
 		});
 	} else {
 		res.render('error', { 
@@ -183,6 +195,8 @@ var formatData = function(req){
     	pricingmechanism: 'linear',
     	public: isPublic,
     	commission: parseInt(req.body.commission),
+    	admin: req.body.admin_wallet,
+		beneficiary: req.body.beneficiary_wallet,
     	createdBy: 'Jack',
 	};
 
@@ -198,26 +212,33 @@ exports.doCreation = function(req, res){
 
   	var postdata = formatData(req);
 
-  	console.log(postdata);
-
   	requestOptions = {
   		url : apiOptions.server + path,
   		method : "POST",
   		json : postdata
 	}; 
 
-	request( requestOptions, function(err, response, body) {
-	    if (response.statusCode === 201) {
-	        res.redirect('/pay');
-	    } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
-			res.redirect('/projects/' + projectname + '/crowdsales/create?err=val');
-	    } else {
-	        res.render('error', { 
-				message: body.message,
-				error: {
-					status: 404
-				}
-			});
-		} 
-	});
+	// Check the fields are present
+	if (!postdata.name || !postdata.start || !postdata.end || !postdata.initialprice || postdata.public == undefined || !postdata.commission) {
+  		res.redirect('/projects/' + projectname + '/crowdsales/create?err=nodata');
+	} else if(!WAValidator.validate(postdata.admin, 'ETH') || !WAValidator.validate(postdata.beneficiary, 'ETH')){
+  		res.redirect('/projects/' + projectname + '/crowdsales/create?err=invalidaddress');
+	} else {
+
+		request( requestOptions, function(err, response, body) {
+		    if (response.statusCode === 201) {
+		        res.redirect('/pay');
+		    } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+				res.redirect('/projects/' + projectname + '/crowdsales/create?err=val');
+		    } else {
+		        res.render('error', { 
+					message: body.message,
+					error: {
+						status: 404
+					}
+				});
+			} 
+		});
+
+	}
 };

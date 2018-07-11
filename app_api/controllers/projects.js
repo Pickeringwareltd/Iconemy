@@ -6,37 +6,115 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
-module.exports.projectsCreate = function (req, res) { 
-	
-	// Create project creates a new document in the database if the JSON object passes validation in the schema
-	Project
-		.create({
-			name: req.body.name,
-			description: req.body.description,
-			website: req.body.website,
-			subdomain: req.body.subdomain,
-			logo: req.body.logo,
-			created: Date.now(),
-			createdBy: req.body.createdBy,
-			social: {
-				facebook: req.body.facebook,
-				twitter: req.body.twitter,
-				youtube: req.body.youtube,
-				github: req.body.github,
-				bitcointalk: req.body.bitcointalk,
-				medium: req.body.medium
-			},
-			onepager: req.body.onepager,
-			whitepaper: req.body.whitepaper
-		}, function(err, project) {
-			// Callback is used to report an error or return project on successful save
-    		if (err) {
-      			sendJsonResponse(res, 400, err);
-    		} else {
-      			sendJsonResponse(res, 201, project);
-    		}
-		}); 
+var validateProject = function(data){
+  var error;
 
+  // If any required fields are missing, return appropriate error message 
+  if (!data.name || !data.description || data.description == 'Enter a basic description about your project here' || !data.website || !data.subdomain || data.subdomain == '    .iconemy.io') {
+  	error = 'All fields marked with * are required!';
+  	return error;
+  }
+
+  if(!data.website.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)){
+    error = 'Must enter a valid web address!';
+  	return error;
+  }
+
+  /* 
+   * There are various rules surrounding subdomains:
+   * One sub-domain allowed
+   * Subdomain begins with alpha-num.
+   * Optionally more than one char.
+   * Middle part may have dashes.
+   * Starts and ends with alpha-num.
+   * Subdomain length from 1 to 63.
+   * See https://stackoverflow.com/questions/7930751/regexp-for-subdomain for more details.
+  */
+  if(!data.subdomain.match(/^[a-z0-9]{0,63}$/)){
+    error = 'Your subdomain can only include lowercase characters and numbers';
+  	return error;
+  }
+
+  // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
+  if(data.facebook != ''){
+  	if(!data.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)){
+    	error = 'Must enter a valid Facebook URL';
+  		return error;
+   	}
+  }
+
+  if(data.twitter != '') {
+  	if(!data.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/)){
+    	error = 'Must enter a valid Twitter URL';
+  		return error;
+    }
+  }
+
+  if(data.youtube != ''){
+  	if(!data.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)){
+    	error = 'Must enter a valid Youtube URL';
+  		return error;
+    }
+  }
+
+  if(data.medium != ''){
+  	if(!data.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/[a-zA-Z0-9(\.\?)?]/)){
+    	error = 'Must enter a valid Medium URL';
+  		return error;	
+    }
+  }
+
+  if(data.bitcointalk != ''){
+  	if(!data.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/)){
+    	error = 'Must enter a valid Bitcointalk URL';
+    	return error;
+    }
+  }
+
+  if(data.telegram != ''){
+  	if(!data.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?/)){
+    	error = 'Must enter a valid Telegram URL';
+    	return error;
+    }
+  }
+
+  return error;
+}
+
+module.exports.projectsCreate = function (req, res) { 
+
+	Project
+	    .find({subdomain: req.body.subdomain})
+	    .exec(function(err, project) {
+	         	// Create project creates a new document in the database if the JSON object passes validation in the schema
+				Project
+					.create({
+						name: req.body.name,
+						description: req.body.description,
+						website: req.body.website,
+						subdomain: req.body.subdomain,
+						logo: req.body.logo,
+						created: Date.now(),
+						createdBy: req.body.createdBy,
+						social: {
+							facebook: req.body.facebook,
+							twitter: req.body.twitter,
+							youtube: req.body.youtube,
+							telegram: req.body.telegram,
+							bitcointalk: req.body.bitcointalk,
+							medium: req.body.medium
+						},
+						onepager: req.body.onepager,
+						whitepaper: req.body.whitepaper
+					}, function(err, project) {
+						// Callback is used to report an error or return project on successful save
+			    		if (err) {
+			      			sendJsonResponse(res, 400, err);
+			    		} else {
+			      			sendJsonResponse(res, 201, project);
+			    		}
+					}); 
+	    });
 };
 
 module.exports.projectsListByStartTime = function (req, res) { 

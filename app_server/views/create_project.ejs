@@ -38,15 +38,6 @@
 					<img class="logo logo-light" alt="logo" src="/images/logo_light_custom.png">
 				</a>
 				
-<!-- 				<div class="language-switcher animated" data-animate="fadeInDown" data-delay=".75">
-					<a href="#" data-toggle="dropdown">EN</a>
-					<div class="dropdown-menu" >
-						<a class="dropdown-item" href="#">FR</a>
-						<a class="dropdown-item" href="#">CH</a>
-						<a class="dropdown-item" href="#">BR</a>
-					</div>
-				</div> -->
-				
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
 					<span class="navbar-toggler-icon">
 						<span class="ti ti-align-justify"></span>
@@ -95,11 +86,11 @@
 				<div class="row justify-content-center text-center sale-box">
 					<div class="col-lg-12">
 						<div class="token-box shadow">
-							<form id="token-form" class="form-message text-left">
+							<form id="token-form" class="form-message text-left" action="" method="post" role="form">
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-12 col-sm-12">
 										<div class="input-field animated">
-											<input name="sale-name" type="text" id="sale_name" class="input-line required" placeholder="My new project">
+											<input name="sale_name" type="text" id="sale_name" class="input-line required" placeholder="My new project">
 											<label class="input-title">Project name *</label>
 										</div>
 									</div>
@@ -123,7 +114,7 @@
 									<div class="form-group col-lg-6 col-sm-12">
 											<label id="description_label">Description *</label>
 											
-											<textarea name="description"  rows="6" cols="50" id="description">Enter a basic description about your project here</textarea>
+											<textarea name="description" rows="6" cols="50" id="description">Enter a basic description about your project here</textarea>
 										
 									</div>
 								</div>
@@ -176,7 +167,7 @@
 												</div>
 												<div class="social_column_input">
 													<div class="input-field animated input-focused">
-														<input name="bitcoin" type="text" id="bitcoin_input" class="input-line required" placeholder="www.bitcoin.com/myproject">
+														<input name="bitcoin" type="text" id="bitcoin_input" class="input-line required" placeholder="www.bitcointalk.org/myproject">
 													</div>
 												</div>
 											</div>
@@ -198,7 +189,7 @@
 												</div>
 												<div class="social_column_input">
 													<div class="input-field animated input-focused">
-														<input name="telegram" type="text" id="telegram_input" class="input-line required" placeholder="www.telegram.com/myproject">
+														<input name="telegram" type="text" id="telegram_input" class="input-line required" placeholder="www.t.me/myproject">
 													</div>
 												</div>
 											</div>
@@ -313,6 +304,12 @@
 
 	<!-- For logo upload -->
 	<script src="/javascripts/filedrag.js"></script>
+
+	<!-- Error message -->
+	<% include partials/error_message %>
+
+	<!-- Validate project -->
+	<script src="/javascripts/validate_project.js"></script>
 
 </body>
 </html>

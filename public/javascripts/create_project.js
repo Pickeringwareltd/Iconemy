@@ -1,18 +1,11 @@
 $(document).ready(function(){
-
    $('#subdomain').readOnlySuffix('    .iconemy.io');
-
 });
 
 // getElementById
 function $id(id) {
 	return document.getElementById(id);
 }
-
-$('#submit_btn').on("click",function(){
-	// Re-direct to new project form
-	window.location.href = '/project'
-});
 
 $('#description').on("click",function(){
 	if($('#description').val() == 'Enter a basic description about your project here'){

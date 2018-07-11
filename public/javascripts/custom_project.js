@@ -24,9 +24,10 @@ $('#new_crowdsale').on("click",function(){
 
 $('.crowdsale').on("click",function(){
 	var index = $(this).attr('data-index');
+	var subdomain = $(this).attr('data-subdomain');
 
 	// Re-direct to new project form
-	window.location.href = '/crowdsales/' + index;
+	window.location.href = '/projects/' + subdomain + '/crowdsales/' + index;
 });
 
 $('#submit_btn').on("click",function(){
