@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+<head>
+	<!-- Header -->
+	<% include partials/header %>
+
+	<!-- Vendor Bundle CSS -->
+	<link rel="stylesheet" href="/stylesheets/vendor.bundle.css?ver=122">
+	
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" href="/stylesheets/style.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_styles.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_sale.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_token_form.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_payment.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/finalise_payment.css?ver=122">
+</head>
+
+<body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
+
+	<!-- Header --> 
+	<header class="site-header is-sticky">
+
+		<!-- Navbar -->
+		<div class="navbar navbar-expand-lg is-transparent" id="mainnav">
+			<nav class="container">
+			
+				<a class="navbar-brand animated" data-animate="fadeInDown" data-delay=".65" href="./">
+					<img class="logo logo-dark" alt="logo" src="/images/logo_dark_custom.png">
+					<img class="logo logo-light" alt="logo" src="/images/logo_light_custom.png">
+				</a>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+					<span class="navbar-toggler-icon">
+						<span class="ti ti-align-justify"></span>
+					</span>
+				</button>
+
+				<div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
+					<ul class="navbar-nav animated remove-animation" data-animate="fadeInDown" data-delay=".9">
+						<li class="nav-item"><a class="nav-link menu-link" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link menu-link" href="/projects">Projects</a></li>
+						<li class="nav-item"><a class="nav-link menu-link" href="https://docs.iconemy.io">Docs</a></li>
+					</ul>
+					<ul class="navbar-nav navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
+						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/">Log out</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<!-- End Navbar -->
+
+		<!-- Banner/Slider -->
+		<div id="header" class="banner banner-tokensale d-flex align-items-center">
+			<div class="header-angle-bg">
+				<div class="overlay-bubble">
+					<div class="overlay-bubble-1"></div>
+					<div class="overlay-bubble-2"></div>
+					<div class="overlay-bubble-3"></div>
+					<div class="overlay-bubble-4"></div>
+					<div class="overlay-bubble-5"></div>
+					<div class="overlay-bubble-6"></div>
+				</div>
+				<div id="particles-js" class="particles-container particles-js"></div>
+			</div>
+			<div class="container">
+				<div class="banner-content">
+					<div class="row align-items-center mobile-center">
+						<div class="col-lg-12 text-center res-m-bttm">
+							<div class="header-txt">
+								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25">Finalise payment</h1>
+								<p class="animated token_description" data-animate="fadeInUp" data-delay="1.50">To deploy your smart contract to the ethereum network</p>
+							</div>
+						</div><!-- .col  -->
+					</div><!-- .row  -->
+				</div><!-- .banner-content  -->
+				<div class="row justify-content-center text-center sale-box">
+					<div class="col-lg-12">
+						<div class="token-box shadow">
+							<div class ="row">
+								<div class="col-12">
+									<h1 id="price"><%= payment.amount %> <%= payment.currency %></h1>
+								</div>
+							</div>
+							<div class ="row" id="eth_payment_address">
+								<div class="col-12">
+									<div class="row">
+										<p id="eth_title">Please send <%= payment.currency %> to this address</p>
+									</div>
+									<div class="row" id="copy_address">
+										<div class="col-xl-10 col-lg-9 col-sm-12">
+											<p id="eth_address"><%= payment.address %></p>
+										</div>
+										<div class="col-xl-2 col-lg-3 col-sm-12">
+											<button id="copy_button" type="submit" class="btn btn-outline">Copy</button>
+										</div>
+									</div>
+									<div class="row" id="web3_message">
+										<div class="col-12">
+											<p>Please visit us with a web3 wallet attached to send <%= payment.currency %> straight from this screen.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class ="row" id="payment_address">
+								<div class="col-12">
+									<p id="balance_message">The contract will be deployed once this account has been creditted with the amount shown above.</p>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class ="row" id="address_balance">
+										<h3><b>Account</b></h3>
+										<p><b>Balance: </b> <span id="balance">0</span> <%= payment.currency %></p>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class ="row" id="refresh">
+										<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
+											<button type="submit" class="btn btn-outline" id="refresh_btn" data-item="<%= payment.item %>" data-id="<%= payment.id %>" data-project="<%= payment.project %>">Refresh</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div><!-- .container  -->
+		</div>
+	</header>
+	<!-- End Header -->
+
+	<!-- Footer -->
+	<% include partials/footer %>
+
+	<!-- Pre-loader -->
+	<% include partials/preloader %>
+
+	<!-- JavaScript (include all script here) -->
+	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
+	<script src="/javascripts/script_sale.js?ver=122"></script>
+	<script src="/javascripts/make_payment.js?ver=122"></script>
+
+	<!-- Pre-loader -->
+	<% include partials/error_message %>
+
+</body>
+</html>

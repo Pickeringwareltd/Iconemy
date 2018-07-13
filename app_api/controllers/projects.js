@@ -36,43 +36,43 @@ var validateProject = function(data){
   }
 
   // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
-  if(data.facebook != ''){
-  	if(!data.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(data.social.facebook != ''){
+  	if(!data.social.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)){
     	error = 'Must enter a valid Facebook URL';
   		return error;
    	}
   }
 
-  if(data.twitter != '') {
-  	if(!data.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(data.social.twitter != '') {
+  	if(!data.social.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/)){
     	error = 'Must enter a valid Twitter URL';
   		return error;
     }
   }
 
-  if(data.youtube != ''){
-  	if(!data.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(data.social.youtube != ''){
+  	if(!data.social.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)){
     	error = 'Must enter a valid Youtube URL';
   		return error;
     }
   }
 
-  if(data.medium != ''){
-  	if(!data.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(data.social.medium != ''){
+  	if(!data.social.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/[a-zA-Z0-9(\.\?)?]/)){
     	error = 'Must enter a valid Medium URL';
   		return error;	
     }
   }
 
-  if(data.bitcointalk != ''){
-  	if(!data.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/)){
+  if(data.social.bitcointalk != ''){
+  	if(!data.social.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/)){
     	error = 'Must enter a valid Bitcointalk URL';
     	return error;
     }
   }
 
-  if(data.telegram != ''){
-  	if(!data.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?/)){
+  if(data.social.telegram != ''){
+  	if(!data.social.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?/)){
     	error = 'Must enter a valid Telegram URL';
     	return error;
     }
@@ -81,40 +81,65 @@ var validateProject = function(data){
   return error;
 }
 
+var getData = function(req){
+	var data = {
+				name: req.body.name,
+				description: req.body.description,
+				website: req.body.website,
+				subdomain: req.body.subdomain,
+				logo: req.body.logo,
+				created: Date.now(),
+				createdBy: req.body.createdBy,
+				social: {
+					facebook: req.body.facebook,
+					twitter: req.body.twitter,
+					youtube: req.body.youtube,
+					telegram: req.body.telegram,
+					bitcointalk: req.body.bitcointalk,
+					medium: req.body.medium
+				},
+				onepager: req.body.onepager,
+				whitepaper: req.body.whitepaper
+				};
+
+	return data;
+}
+
 module.exports.projectsCreate = function (req, res) { 
 
+	var data = getData(req);
+	var error = validateProject(data);
+
 	Project
-	    .find({subdomain: req.body.subdomain})
-	    .exec(function(err, project) {
-	         	// Create project creates a new document in the database if the JSON object passes validation in the schema
+		.find({subdomain: data.subdomain})
+		.exec( function(err, project) {
+
+			if(project.length != 0){
+				sendJsonResponse(res, 400, { "message": "Subdomain already exists." });
+				return;
+			} else if(error != undefined) {
+				sendJsonResponse(res, 404, { "message": error });
+				return;	
+			} else {
+
 				Project
-					.create({
-						name: req.body.name,
-						description: req.body.description,
-						website: req.body.website,
-						subdomain: req.body.subdomain,
-						logo: req.body.logo,
-						created: Date.now(),
-						createdBy: req.body.createdBy,
-						social: {
-							facebook: req.body.facebook,
-							twitter: req.body.twitter,
-							youtube: req.body.youtube,
-							telegram: req.body.telegram,
-							bitcointalk: req.body.bitcointalk,
-							medium: req.body.medium
-						},
-						onepager: req.body.onepager,
-						whitepaper: req.body.whitepaper
-					}, function(err, project) {
-						// Callback is used to report an error or return project on successful save
-			    		if (err) {
-			      			sendJsonResponse(res, 400, err);
-			    		} else {
-			      			sendJsonResponse(res, 201, project);
-			    		}
-					}); 
-	    });
+				    .find({subdomain: req.body.subdomain})
+				    .exec(function(err, project) {
+				         	// Create project creates a new document in the database if the JSON object passes validation in the schema
+							Project
+								.create(data, function(err, project) {
+									// Callback is used to report an error or return project on successful save
+						    		if (err) {
+						      			sendJsonResponse(res, 400, err);
+						    		} else {
+						      			sendJsonResponse(res, 201, project);
+						    		}
+								}); 
+				    });
+			}
+		});
+
+
 };
 
 module.exports.projectsListByStartTime = function (req, res) { 

@@ -1,0 +1,46 @@
+#address_balance {
+	margin-top: 50px;
+	margin-left: 50px;
+	display: block;
+	text-align: left;
+	padding-left: 50px;
+    border-left: 6px solid #4159FB;
+    height: 100px;
+}
+
+#balance_message {
+	margin-top: 100px;
+}
+
+#refresh_btn {
+	margin-left: 100px;
+	margin-top: 100px;
+	color: #4159FB;
+	border-color: #4159FB;
+	float: right;
+    right: 0;
+    transform: none;
+}
+
+@media only screen and (max-width: 991px) { #refresh_btn { margin-left: 40%; } }
+@media only screen and (max-width: 650px) { #refresh_btn { margin-left: 35%; } #balance_message { margin-top: 120px }  }
+@media only screen and (max-width: 460px) { #address_balance {	margin-left: 10px; } }
+@media only screen and (max-width: 340px) { #refresh_btn { margin-left: 25%; } }
+
+#address_balance h3 {
+	padding-top: 10px;
+	font-size: 18px;
+	color: #524F4F;
+}
+
+#address_balance p {
+	padding-top: -15px;
+	font-size: 22px;
+	color: #524F4F;
+}
+
+#balance {
+	font-size: 25px;
+	padding-left: 10px;
+	color: #524F4F;
+}

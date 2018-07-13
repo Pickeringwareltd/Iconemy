@@ -8,12 +8,12 @@
 	<link rel="stylesheet" href="stylesheets/vendor.bundle.css?ver=122">
 	
 	<!-- Custom styles for this template -->
-	<link rel="stylesheet" href="stylesheets/style.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/theme.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/custom_styles.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/custom_sale.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/custom_token_form.css?ver=122">
-	<link rel="stylesheet" href="stylesheets/custom_payment.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/style.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_styles.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_sale.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_token_form.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/custom_payment.css?ver=122">
 </head>
 
 <body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
@@ -78,7 +78,7 @@
 						<div class="col-lg-12 text-center res-m-bttm">
 							<div class="header-txt">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25">Make a payment</h1>
-								<p class="animated token_description" data-animate="fadeInUp" data-delay="1.50">To deploy your ERC-20 token to the ethereum network</p>
+								<p class="animated token_description" data-animate="fadeInUp" data-delay="1.50">To deploy your smart contract to the ethereum network</p>
 							</div>
 						</div><!-- .col  -->
 					</div><!-- .row  -->
@@ -117,46 +117,6 @@
 									</table>
 								</div>
 							</div>
-							<div class ="row" id="btc_payment_address" style="display: none;">
-								<div class="col-12">
-									<div class="row">
-										<p id="eth_title">Please send BTC to this address</p>
-									</div>
-									<div class="row" id="copy_address">
-										<div class="col-xl-10 col-lg-9 col-sm-12">
-											<p id="eth_address"><%= payment.btcaddress %></p>
-										</div>
-										<div class="col-xl-2 col-lg-3 col-sm-12">
-											<button id="btc_copy_button" type="submit" class="btn btn-outline">Copy</button>
-										</div>
-									</div>
-									<div class="row" id="web3_message">
-										<div class="col-12">
-											<p>Please visit us with a web3 wallet attached to send BTC straight from this screen.</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class ="row" id="eth_payment_address" style="display: none;">
-								<div class="col-12">
-									<div class="row">
-										<p id="eth_title">Please send ETH to this address</p>
-									</div>
-									<div class="row" id="copy_address">
-										<div class="col-xl-10 col-lg-9 col-sm-12">
-											<p id="eth_address"><%= payment.ethaddress %></p>
-										</div>
-										<div class="col-xl-2 col-lg-3 col-sm-12">
-											<button id="copy_button" type="submit" class="btn btn-outline">Copy</button>
-										</div>
-									</div>
-									<div class="row" id="web3_message">
-										<div class="col-12">
-											<p>Please visit us with a web3 wallet attached to send ETH straight from this screen.</p>
-										</div>
-									</div>
-								</div>
-							</div>
 							<div class ="row" id="payment_channels">
 								<div class="col-lg-4 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
@@ -165,12 +125,21 @@
 								</div>
 								<div class="col-lg-4 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
-										<button type="submit" class="btn btn-outline" id="btc_btn">Bitcoin</button>
+									<% if(payment.items[0].id){ %>
+										<button type="submit" class="btn btn-outline" id="btc_btn" data-amount="<%= payment.btc %>" data-item="<%= payment.items[0].name %>" data-id="<%= payment.items[0].id %>" data-project="<%= project %>">Bitcoin</button>
+									<% } else { %>
+										<button type="submit" class="btn btn-outline" id="btc_btn" data-amount="<%= payment.btc %>" data-item="<%= payment.items[0].name %>" data-project="<%= project %>">Bitcoin</button>
+									<% } %>
 									</div>
 								</div>
 								<div class="col-lg-4 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
-										<button type="submit" class="btn btn-outline" id="eth_btn">Ethereum</button>
+									<% if(payment.items[0].id){ %>
+										<button type="submit" class="btn btn-outline" id="eth_btn" data-amount="<%= payment.eth %>" data-item="<%= payment.items[0].name %>" data-id="<%= payment.items[0].id %>" data-project="<%= project %>">Ethereum</button>
+									<% } else { %>
+										<button type="submit" class="btn btn-outline" id="eth_btn" data-amount="<%= payment.eth %>" data-item="<%= payment.items[0].name %>" data-project="<%= project %>">Ethereum</button>
+									<% } %>
+
 									</div>
 								</div>
 							</div>
@@ -189,9 +158,9 @@
 	<% include partials/preloader %>
 
 	<!-- JavaScript (include all script here) -->
-	<script src="javascripts/jquery.bundle.js?ver=122"></script>
-	<script src="javascripts/script_sale.js?ver=122"></script>
-	<script src="javascripts/make_payment.js?ver=122"></script>
+	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
+	<script src="/javascripts/script_sale.js?ver=122"></script>
+	<script src="/javascripts/make_payment.js?ver=122"></script>
 
 </body>
 </html>

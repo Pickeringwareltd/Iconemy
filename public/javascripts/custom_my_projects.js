@@ -3,7 +3,7 @@ $('.card').on("click",function(){
 	
 	if(subdomain == 'new_project'){
 		// Re-direct to new project form
-		window.location.href = '/project/create'
+		window.location.href = '/projects/create'
 	} else {
 		// Re-direct to that project
 		window.location.href = '/projects/' + subdomain;

@@ -14,15 +14,20 @@ if (process.env.NODE_ENV === 'production') {
 
 var renderSale = function(req, res, responseBody) {
 
-	// Render date so timer can understand
-	var endDate = responseBody.crowdsale.end;
-	responseBody.crowdsale.end = renderDate(endDate);
-
 	if(!responseBody.message){
+
+		// Render date so timer can understand
+		var endDate = responseBody.crowdsale.end;
+		responseBody.crowdsale.end = renderDate(endDate);
+
+		var startDate = responseBody.crowdsale.start;
+		responseBody.crowdsale.start = renderDate(startDate);
+
 		res.render('sale_interaction', { 
 			title: 'Crowdsale',
 			data: responseBody
 		});
+
 	} else {
 		res.render('error', { 
 			title: 'error',
@@ -226,8 +231,9 @@ exports.doCreation = function(req, res){
 	} else {
 
 		request( requestOptions, function(err, response, body) {
+
 		    if (response.statusCode === 201) {
-		        res.redirect('/pay');
+		        res.redirect('/pay?project=' + projectname + '&item=crowdsale&id=' + body.index);
 		    } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
 				res.redirect('/projects/' + projectname + '/crowdsales/create?err=val');
 		    } else {

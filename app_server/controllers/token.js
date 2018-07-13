@@ -36,10 +36,12 @@ var getRequestOptions = function(req, res){
 
 // Renders the token page depending on the API response information
 var renderToken = function(req, res, responseBody) {
+
 	if(!responseBody.message){
 		res.render('token_interaction', { 
 			title: 'Token',
-			token: responseBody.token
+			token: responseBody.token,
+			project: responseBody.project
 		});
 	} else {
 		res.render('error', { 
@@ -128,7 +130,7 @@ exports.doCreation = function(req, res){
 
 		request( requestOptions, function(err, response, body) {
 	        if (response.statusCode === 201) {
-	        	res.redirect('/pay');
+	        	res.redirect('/pay?project=' + projectname + '&item=token');
 	        } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
 				res.redirect('/projects/' + projectname + '/token/create?err=val');
 	      	} else {

@@ -65,20 +65,21 @@ var addCrowdsale = function(req, res, project) {
   	if (!project) {
     	sendJsonResponse(res, 404, { "message": "Project ID not found" });
 	} else {
+		var length = project.crowdsales.length;
+		var crowdsale = getCrowdsale(req);
+		crowdsale.index = length;
+
 		// Push the new crowdsale object into the projects crowdsale array
-    	project.crowdsales.push(getCrowdsale(req));
+    	project.crowdsales.push(crowdsale);
 
     	// Save the new parent document(project)
     	project.save(function(err, project) {
       
-      		var thisCrowdsale;
-      		
       		if (err) {
         		sendJsonResponse(res, 400, err);
      	 	} else {
      	 		// only return the recently added crowdsale (which is the last one in the array)
-				thisCrowdsale = project.crowdsales[project.crowdsales.length - 1];
-				sendJsonResponse(res, 201, thisCrowdsale);
+				sendJsonResponse(res, 201, crowdsale);
     		} 
 
     	});
@@ -130,7 +131,7 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		      		if(project.crowdsales && project.crowdsales.length > 0){
 		      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
 
-		      			if(!crowdsale){
+		      			if(!crowdsale || crowdsale.length == 0){
 		   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
 		   					return;
 		      			} else {
@@ -167,8 +168,13 @@ module.exports.crowdsalesUpdateOne = function (req, res) {
 	sendJsonResponse(res, 404, {"message" : "You cannot update a crowdsale, the smart contract has now been released and will not be able to change."});
 };
 
+var createWallet = function(){
+	var address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+	return address;
+}
+
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
-module.exports.paymentUpdateOne = function (req, res) { 
+module.exports.paymentConfirmOne = function (req, res) { 
 	var projectid = req.params.projectid;
 	var crowdsaleid = req.params.crowdsaleid;
 
@@ -195,29 +201,144 @@ module.exports.paymentUpdateOne = function (req, res) {
 					var thisSale = project.crowdsales[crowdsaleid];
 
 					if(thisSale){
+						
+						// Create a payment object if one doesnt already exist
+						if(!thisSale.payment){
+							thisSale.payment = {
+								currency: '',
+								paid: '',
+								amount: 0,
+								sentTo: '',
+								created: '',
+								createdBy: ''
+							};
+						}
+
 						var payment = thisSale.payment;
 
-						payment.currency = req.body.currency;
-						payment.amount = req.body.amount;
-						payment.paid = req.body.paid;
-						payment.sentTo = req.body.sentto;
-						payment.sentFrom = req.body.sentfrom;
-						payment.created = createdDate;
-						payment.createdBy = req.body.createdBy;
+						if(payment.paid == null){
 
-						// If they have paid, we must know what addresses to search for
-						if(payment.paid && (!payment.sentTo || !payment.sentFrom)){
-							sendJsonResponse(res, 404, {"message": "Must provide sent to and from addresses."});
+							var wallet_address = createWallet();
+
+							if(payment.created == null){
+								createdDate = Date.now();
+							} else {
+								createdDate = thisSale.created;
+							}
+
+							payment.currency = req.body.currency;
+							payment.amount = req.body.amount;
+							payment.sentTo = wallet_address;
+							payment.created = createdDate;
+							payment.createdBy = req.body.createdBy;
+
+							// If they have paid, we must know what addresses to search for
+							if(payment.paid && (!payment.sentTo)){
+								sendJsonResponse(res, 404, {"message": "Must provide sent to address."});
+								return;
+							}
+
+							project.save(function(err, project) {
+							    if (err) {
+							        sendJsonResponse(res, 404, err);
+							    } else {
+							        sendJsonResponse(res, 200, payment);
+								} 
+							});
+
+						} else {
+							sendJsonResponse(res, 404, {"message": "Already paid for!"});
+						}
+
+					} else {
+						sendJsonResponse(res, 404, {"message": "Sale not found"});
+					}
+				}
+			});
+	}
+};
+
+var getBalance = function(address){
+	var balance = 0;
+
+	// Also need to get address of sender
+
+	return balance;
+}
+
+// As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
+module.exports.paymentFinaliseOne = function (req, res) { 
+	var projectid = req.params.projectid;
+	var crowdsaleid = req.params.crowdsaleid;
+
+	if(!projectid){
+		sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});
+		return;
+	} else if (!crowdsaleid){
+		sendJsonResponse(res, 404, {"message": "Not found, Crowdsale ID required"});
+		return;
+	} else {
+		// Find the project and pass the object to the addToken function (below)
+		Project
+			.find({subdomain: projectid})
+			.select('crowdsales')
+			.exec(function(err, _project) {
+				var project = _project[0];
+			
+				if(err){
+					sendJsonResponse(res, 404, err);
+					return;
+				} else if (!project){
+					sendJsonResponse(res, 404, {"message": "Project not found"});
+				} else {
+					var thisSale = project.crowdsales[crowdsaleid];
+
+					if(thisSale){
+						
+						// Create a payment object if one doesnt already exist
+						if(!thisSale.payment){
+							sendJsonResponse(res, 404, {"message": "Must create a payment first!"});
 							return;
 						}
 
-						project.save(function(err, project) {
-						    if (err) {
-						        sendJsonResponse(res, 404, err);
-						    } else {
-						        sendJsonResponse(res, 200, payment);
-							} 
-						});
+						var payment = thisSale.payment;
+						if(payment.currency == 'eth'){
+							var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+						} else {
+							var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
+						}
+
+						if(payment.paid == null){
+
+							var wallet_address = payment.sentto;
+							var balance = getBalance(wallet_address);
+
+							if(balance >= payment.amount){
+								console.log('Paid successfully');
+							}
+
+							if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
+								sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
+								return;
+							} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
+								sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
+								return;
+							}
+
+							payment.paid = Date.now();
+							payment.sentFrom = sentfrom_address;
+
+							project.save(function(err, project) {
+							    if (err) {
+							        sendJsonResponse(res, 404, err);
+							    } else {
+							        sendJsonResponse(res, 200, payment);
+								} 
+							});
+
+						} else {
+							sendJsonResponse(res, 404, {"message": "Already paid for!"});
+						}
 
 					} else {
 						sendJsonResponse(res, 404, {"message": "Sale not found"});

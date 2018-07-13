@@ -169,20 +169,14 @@ var validateProject = function(postdata){
   return error;
 };
 
-// Create project controller for dealing with POST requests containing actual new project data.
-exports.doCreation = function(req, res){
-	var requestOptions, path, projectname, postdata;
+var getData = function(req) {
 
-  	projectname = req.params.projectname;
-
-  	path = "/api/projects/create";
-
-  	var subdomain = req.body.subdomain;
+	var subdomain = req.body.subdomain;
   	var index = subdomain.search(' ');
 
   	subdomain = subdomain.substring(0, index);
-  	
-  	postdata = {
+
+	postdata = {
 		name: req.body.sale_name,
 		description: req.body.description,
 		website: req.body.website,
@@ -199,6 +193,18 @@ exports.doCreation = function(req, res){
 		whitepaper: req.body.whitepaper
 	};
 
+	return postdata;
+}
+
+// Create project controller for dealing with POST requests containing actual new project data.
+exports.doCreation = function(req, res){
+	var requestOptions, path, postdata;
+
+  	path = "/api/projects/create";
+  	
+  	var postdata = getData(req);
+  	var subdomain = postdata.subdomain;
+
 	requestOptions = {
   		url : apiOptions.server + path,
   		method : "POST",
@@ -210,7 +216,7 @@ exports.doCreation = function(req, res){
 	// Check the fields are present
 	if (error == 'All fields marked with * are required!') {
   		res.redirect('/projects/create?err=nodata');
-	} else if(error != '') {
+	} else if(error != undefined) {
 		res.render('create_project', { 
 			title: 'Create project',
 			message: error
@@ -221,7 +227,16 @@ exports.doCreation = function(req, res){
 	        if (response.statusCode === 201) {
 	        	res.redirect('/projects/' + subdomain);
 	        } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
-				res.redirect('/projects/create?err=val');
+	        	if(response.body.errors.website != undefined){
+	        		res.render('create_project', {title: 'Create project', message: 'We already have a project with that website.'});
+	        	} else {
+					res.redirect('/projects/create?err=val');
+				}
+	        } else if (response.statusCode === 400 && body.message) {
+	        	res.render('create_project', { 
+					title: 'Create project',
+					message: body.message
+				});
 	      	} else {
 	        	res.render('error', { 
 					message: body.message,
@@ -231,6 +246,7 @@ exports.doCreation = function(req, res){
 				});
 			} 
 		});
+		
 	}
 
 };

@@ -138,7 +138,8 @@ module.exports.tokenRead = function (req, res) {
 		      					symbol: token.symbol,
 		      					decimals: token.decimals,
 		      					logo: token.logo,
-		      					social: project.social
+		      					social: project.social,
+		      					deployed: token.deployed
 		      				}
 		      			}
 		      			sendJsonResponse(res, 200, response);
@@ -156,10 +157,16 @@ module.exports.tokenUpdate = function (req, res) {
 	sendJsonResponse(res, 404, {"message" : "You cannot update a token, the smart contract has now been released and will not be able to change."});
 };
 
-// As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
-module.exports.paymentUpdate = function (req, res) { 
+var createWallet = function(){
+	var address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+	return address;
+}
+
+// Confirming payments is necessary to store payments for later use, i.e. users may create a token and then pay a week later, confirming the payment optin allows us to create a wallet for deposit
+module.exports.paymentConfirm = function (req, res) { 
 
 	var project = req.params.projectid;
+	var sentto = createWallet();
 
 	if(!project){
 		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
@@ -171,7 +178,7 @@ module.exports.paymentUpdate = function (req, res) {
 			.select('token')
 			.exec(function(err, _project) {
 				var project = _project[0];
-				
+					
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -179,31 +186,124 @@ module.exports.paymentUpdate = function (req, res) {
 					sendJsonResponse(res, 404, {"message": "Project not found"});
 				} else {
 					if(project.token){
-
 						var createdDate;
-						if(!payment.created){
+
+						if(project.token.payment == undefined){
+							project.token.payment = {};
 							createdDate = Date.now();
 						} else {
 							createdDate = project.token.created;
+						}
+
+						if(req.body.currency == 'eth' && !WAValidator.validate(sentto, 'ETH')){
+							sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
+							return;
+						} else if(req.body.currency == 'btc' && !WAValidator.validate(sentto, 'BTC')){
+							sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
+							return;
 						}
 
 						var payment = project.token.payment;
 
 						payment.currency = req.body.currency;
 						payment.amount = req.body.amount;
-						payment.paid = req.body.paid;
-						payment.sentTo = req.body.sentto;
-						payment.sentFrom = req.body.sentfrom;
+						payment.sentTo = sentto;
 						payment.created = createdDate;
-						payment.createdBy = req.body.createdBy;
+						payment.createdBy = 'Jack';
 
 						project.save(function(err, project) {
 						    if (err) {
-						        sendJsonResponse(res, 404, err);
+						    	console.log(err);
+						        sendJsonResponse(res, 404, {"message": err});
 						    } else {
 						        sendJsonResponse(res, 200, payment);
 							} 
 						});
+
+					} else {
+						sendJsonResponse(res, 404, {"message": "Token not found"});
+					}
+				}
+			});
+	}
+
+};
+
+var getBalance = function(address){
+	var balance = 0;
+
+	// Also need to get address of sender
+
+	return balance;
+}
+
+// Finalise payment by checking if wallet is funded and setting contract to paid, this will then trigger the deployment
+module.exports.paymentFinalise = function (req, res) { 
+
+	var project = req.params.projectid;
+	// Check wallet balance, if not equal to amount entered then return error
+	if(!project){
+		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
+		return;
+	} else {
+		// Find the project and pass the object to the addToken function (below)
+		Project
+			.find({subdomain: req.params.projectid})
+			.select('token')
+			.exec(function(err, _project) {
+				var project = _project[0];
+					
+				if(err){
+					sendJsonResponse(res, 404, err);
+					return;
+				} else if (!project){
+					sendJsonResponse(res, 404, {"message": "Project not found"});
+				} else {
+					if(project.token){
+						var createdDate;
+						var payment = project.token.payment;
+
+						if(payment){
+
+							if(!payment.paid){
+
+								var wallet_address = payment.sentto;
+								var balance = getBalance(wallet_address);
+
+								if(balance >= payment.amount){
+									console.log('Paid successfully');
+								}
+
+								if(payment.currency == 'eth'){
+									var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+								} else {
+									var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
+								}
+
+								if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
+									sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
+									return;
+								} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
+									sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
+									return;
+								}
+
+								payment.paid = Date.now();
+								payment.sentFrom = payment_address;
+
+								project.save(function(err, project) {
+								    if (err) {
+								        sendJsonResponse(res, 404, {"message": err});
+								    } else {
+								        sendJsonResponse(res, 200, payment);
+									} 
+								});
+							} else {
+								sendJsonResponse(res, 404, {"message": "Already paid for!"});
+							}
+						} else {
+							sendJsonResponse(res, 404, {"message": "You must create a payment first!"});
+						}
 
 					} else {
 						sendJsonResponse(res, 404, {"message": "Token not found"});

@@ -80,7 +80,11 @@
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= token.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= token.symbol %></p>
 								<ul class="btns animated" data-animate="fadeInUp" data-delay="1.45">
-									<li><a href="/sale" class="btn btn-outline">Buy now</a></li>
+									<% if(!token.deployed) { %>
+										<li><a href="/pay?project=<%=project.id %>&item=token" class="btn btn-outline">Deploy</a></li>
+									<% } else { %>
+										<li><a href="/sale" class="btn btn-outline">Buy now</a></li>
+									<% } %>
 								</ul>
 								<div class="gaps size-3x"></div>
 							</div>
@@ -128,6 +132,30 @@
 	<div class="section section-bg-light section-pad no-pt into-section" id="intro">
 		<div class="container">
 			<div class="gaps size-3x"></div>
+
+		<% if(!token.deployed) { %>
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<div class="card" id="deploy">
+					  <div class="container">
+					  	<div class="balance">
+					  		<p class="title">Deploy contract</p>
+					    </div> 
+					    <div class="status">
+					    	<p class="title">Can deploy</p>
+					    	<div class="status_dot"></div>
+					    </div>
+					    <ul class="withdraw_btn">
+							<li><p id="deploy_explanation"><b>Please note:</b> Noone will be able to see your token until it is deployed to the main ethereum network!</p></li>
+							<li><a id="deploy_btn" class="btn btn-outline" href="/pay?project=<%=project.id %>&item=token">Deploy contract</a></li>
+						</ul>
+					  </div>
+					</div>
+				</div><!-- .col  -->
+			</div><!-- .row  -->
+
+		<% } else { %>
+
 			<div class="row align-items-center">
 				<div class="col-lg-4 col-sm-12">
 					<div class="card animated" data-animate="fadeInUp" data-delay=".2">
@@ -249,6 +277,7 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
+		<% } %>
 			<div class="gaps size-6x"></div>
 			<div class="gaps size-6x"></div>
 

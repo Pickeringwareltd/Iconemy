@@ -25,22 +25,10 @@ var paymentSchema = new mongoose.Schema({
 	},
 	sentTo: {
 		type: String,
-		validate: {
-	    	validator: function(v) {
-	        	return /^0x{1}[a-fA-F0-9]{40}$/.test(v);
-	      	},
-	      	message: '{VALUE} is not a ETH valid address'
-	    },
 		required: false
 	},
 	sentFrom: {
 		type: String,
-		validate: {
-	    	validator: function(v) {
-	        	return /^0x{1}[a-fA-F0-9]{40}$/.test(v);
-	      	},
-	      	message: '{VALUE} is not a valid ETH address'
-	    },
 		required: false
 	}
 });
@@ -72,6 +60,13 @@ var tokenSchema = new mongoose.Schema({
 	createdBy: {
 		type: String,
 		required: [true, 'We need to know who created the token']
+	},
+	deployed: {
+		type: Boolean,
+		"default": false
+	},
+	contract_address: {
+		type: String
 	},
 	payment: paymentSchema
 });
@@ -128,6 +123,17 @@ var crowdsaleSchema = new mongoose.Schema({
 	createdBy: {
 		type: String,
 		required: [true, 'We need to know who created the crowdsale']
+	},
+	deployed: {
+		type: Boolean,
+		"default": false
+	},
+	contract_address: {
+		type: String
+	},
+	index: {
+		type: Number,
+		required: [true, 'Index required']
 	},
 	payment: paymentSchema
 });

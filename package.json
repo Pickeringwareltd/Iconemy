@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "webpack",
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "babel-register": "^6.26.0",
     "cookie-parser": "~1.4.3",
+    "copy-webpack-plugin": "^4.5.2",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
     "ejs": "~2.5.7",
@@ -17,7 +20,15 @@
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "~1.9.0",
     "request": "^2.87.0",
+    "truffle": "^4.1.13",
+    "truffle-contract": "^3.0.6",
+    "truffle-hdwallet-provider": "0.0.5",
     "wallet-address-validator": "^0.1.7",
+    "web3": "^1.0.0-beta.34",
+    "webpack": "^4.16.0",
     "wildcard-subdomains": "^1.1.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.0.8"
   }
 }
