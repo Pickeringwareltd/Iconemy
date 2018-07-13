@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
+var paymentJS = require('./payments');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -157,16 +158,10 @@ module.exports.tokenUpdate = function (req, res) {
 	sendJsonResponse(res, 404, {"message" : "You cannot update a token, the smart contract has now been released and will not be able to change."});
 };
 
-var createWallet = function(){
-	var address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
-	return address;
-}
-
 // Confirming payments is necessary to store payments for later use, i.e. users may create a token and then pay a week later, confirming the payment optin allows us to create a wallet for deposit
 module.exports.paymentConfirm = function (req, res) { 
 
 	var project = req.params.projectid;
-	var sentto = createWallet();
 
 	if(!project){
 		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
@@ -195,6 +190,16 @@ module.exports.paymentConfirm = function (req, res) {
 							createdDate = project.token.created;
 						}
 
+						var payment = project.token.payment;
+
+						var sentto;
+						if(!payment.sentTo){
+							// Create new wallet for taking payments
+							sentto = paymentJS.createWallet(req.body.currency);
+						} else {
+							sentto = payment.sentTo;
+						}
+
 						if(req.body.currency == 'eth' && !WAValidator.validate(sentto, 'ETH')){
 							sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
 							return;
@@ -203,7 +208,6 @@ module.exports.paymentConfirm = function (req, res) {
 							return;
 						}
 
-						var payment = project.token.payment;
 
 						payment.currency = req.body.currency;
 						payment.amount = req.body.amount;
@@ -228,14 +232,6 @@ module.exports.paymentConfirm = function (req, res) {
 	}
 
 };
-
-var getBalance = function(address){
-	var balance = 0;
-
-	// Also need to get address of sender
-
-	return balance;
-}
 
 // Finalise payment by checking if wallet is funded and setting contract to paid, this will then trigger the deployment
 module.exports.paymentFinalise = function (req, res) { 
@@ -267,37 +263,37 @@ module.exports.paymentFinalise = function (req, res) {
 
 							if(!payment.paid){
 
-								var wallet_address = payment.sentto;
-								var balance = getBalance(wallet_address);
+								var wallet_address = payment.sentTo;
+								var balance = paymentJS.getBalance(wallet_address);
 
 								if(balance >= payment.amount){
-									console.log('Paid successfully');
-								}
+									if(payment.currency == 'eth'){
+										var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+									} else {
+										var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
+									}
 
-								if(payment.currency == 'eth'){
-									var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
+									if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
+										sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
+										return;
+									} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
+										sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
+										return;
+									}
+
+									payment.paid = Date.now();
+									payment.sentFrom = sentfrom_address;
+
+									project.save(function(err, project) {
+									    if (err) {
+									        sendJsonResponse(res, 404, {"message": err});
+									    } else {
+									        sendJsonResponse(res, 200, payment);
+										} 
+									});
 								} else {
-									var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
+									sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
 								}
-
-								if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
-									sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
-									return;
-								} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
-									sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
-									return;
-								}
-
-								payment.paid = Date.now();
-								payment.sentFrom = payment_address;
-
-								project.save(function(err, project) {
-								    if (err) {
-								        sendJsonResponse(res, 404, {"message": err});
-								    } else {
-								        sendJsonResponse(res, 200, payment);
-									} 
-								});
 							} else {
 								sendJsonResponse(res, 404, {"message": "Already paid for!"});
 							}

@@ -134,8 +134,6 @@ exports.create = function(req, res) {
 	var error;
 	var item = req.query.item;
 	var project = req.query.project;
-	// Create wallet here
-	var receiver_address = '0xc697F04Dcb807A0be4E1ffe78Fb5325bE112502d';
 	var path;
 	var sale_id;
 
@@ -169,8 +167,7 @@ exports.create = function(req, res) {
 		json : {
 			currency: currency,
 			amount: amount,
-			createdBy: 'Jack',
-			sentto: receiver_address
+			createdBy: 'Jack'
 		}
 	}; 
 
@@ -182,10 +179,10 @@ exports.create = function(req, res) {
 				payment: {
 					amount: amount,
 					currency: currency.toUpperCase(),
-					address: receiver_address,
 					item: item,
 					id: sale_id,
-					project: project
+					project: project,
+					address: body.sentTo
 				},
 				message: error
 			});

@@ -35,37 +35,68 @@ $("#card_btn").click(function() {
 	return false;
 });
 
-$('#refresh_btn').click(function() {
-	var project, item, id, url;
-
-	item = $(this).attr('data-item');
-	project = $(this).attr('data-project');
-
-	if(item.search('Crowdsale') > 0){
-		id = $(this).attr('data-id');
-		url = "/pay/finalise";
-	} else {
-		id = '';
-		url = "/pay/finalise";
-	}
+var checkEthBalance = function(address) {
+	var apiKey = '6KM91A9J1KW79X6F4QM7JMJAPFFG7V5YCP';
+	var etherscan_url = 'https://api.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
 
 	// If the wallet is fully funded, call the finalise payment function on server 
 	$.ajax({
-	   url: url,
-	   type: 'PUT',
-	   data: {
-	   	item: item,
-	   	project: project,
-	   	id: id
-	   },
+	   url: etherscan_url,
+	   type: 'GET',
+	   data: {},
 	   success: function(response) {
-	   	console.log(response.message);
-	   		if(response.message == 'Worked'){
-	   			window.location.href="/projects/" + project;
-	   		} else {
-	   			$('.error').html(response.message);
-    			$(".error-message").delay(1000).slideDown(1000).delay(3000).slideUp(500);
-	   		}
+			var wei = parseInt(response.result);
+			var eth = parseFloat(wei / 1000000000000000000);
+
+			finalisePayment(eth);
 	   }
 	});
+};
+
+var finalisePayment = function(balance){
+	var project, item, id, url;
+	var price = parseFloat($('#price').html().slice(0, -4));
+
+	if(balance >= price || balance == 0){
+		console.log('payment success!');
+
+		item = $('#refresh_btn').attr('data-item');
+		project = $('#refresh_btn').attr('data-project');
+
+		if(item.search('Crowdsale') > 0){
+			id = $('#refresh_btn').attr('data-id');
+			url = "/pay/finalise";
+		} else {
+			id = '';
+			url = "/pay/finalise";
+		}
+
+		// If the wallet is fully funded, call the finalise payment function on server 
+
+		// THIS IS NO LONGER WORKING -- BAD REQUEST?
+		$.ajax({
+		   url: url,
+		   type: 'PUT',
+		   data: {
+		   	item: item,
+		   	project: project,
+		   	id: id
+		   },
+		   success: function(response) {
+		   		if(response.message == 'Worked'){
+		   			window.location.href="/projects/" + project;
+		   		} else {
+		   			$('.error').html(response.message);
+	    			$(".error-message").delay(1000).slideDown(1000).delay(3000).slideUp(500);
+		   		}
+		   }
+		});
+	} else {
+		$('#balance').html(balance);
+	}
+}
+
+$('#refresh_btn').click(function() {
+	var address = $('#eth_address').html();
+	var balance = checkEthBalance(address);
 });

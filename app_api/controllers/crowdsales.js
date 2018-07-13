@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
+var paymentJS = require('./payments');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -168,11 +169,6 @@ module.exports.crowdsalesUpdateOne = function (req, res) {
 	sendJsonResponse(res, 404, {"message" : "You cannot update a crowdsale, the smart contract has now been released and will not be able to change."});
 };
 
-var createWallet = function(){
-	var address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
-	return address;
-}
-
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.paymentConfirmOne = function (req, res) { 
 	var projectid = req.params.projectid;
@@ -218,7 +214,13 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 						if(payment.paid == null){
 
-							var wallet_address = createWallet();
+							var wallet_address;
+							if(!payment.sentTo){
+								// Create new wallet for taking payments
+								wallet_address = paymentJS.createWallet(req.body.currency);
+							} else {
+								wallet_address = payment.sentTo;
+							}
 
 							if(payment.created == null){
 								createdDate = Date.now();
@@ -257,14 +259,6 @@ module.exports.paymentConfirmOne = function (req, res) {
 			});
 	}
 };
-
-var getBalance = function(address){
-	var balance = 0;
-
-	// Also need to get address of sender
-
-	return balance;
-}
 
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.paymentFinaliseOne = function (req, res) { 
@@ -310,31 +304,31 @@ module.exports.paymentFinaliseOne = function (req, res) {
 
 						if(payment.paid == null){
 
-							var wallet_address = payment.sentto;
-							var balance = getBalance(wallet_address);
+							var wallet_address = payment.sentTo;
+							var balance = paymentJS.getBalance(wallet_address);
 
 							if(balance >= payment.amount){
-								console.log('Paid successfully');
+								if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
+									sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
+									return;
+								} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
+									sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
+									return;
+								}
+
+								payment.paid = Date.now();
+								payment.sentFrom = sentfrom_address;
+
+								project.save(function(err, project) {
+								    if (err) {
+								        sendJsonResponse(res, 404, err);
+								    } else {
+								        sendJsonResponse(res, 200, payment);
+									} 
+								});
+							} else {
+								sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
 							}
-
-							if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
-								sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
-								return;
-							} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
-								sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
-								return;
-							}
-
-							payment.paid = Date.now();
-							payment.sentFrom = sentfrom_address;
-
-							project.save(function(err, project) {
-							    if (err) {
-							        sendJsonResponse(res, 404, err);
-							    } else {
-							        sendJsonResponse(res, 200, payment);
-								} 
-							});
 
 						} else {
 							sendJsonResponse(res, 404, {"message": "Already paid for!"});
