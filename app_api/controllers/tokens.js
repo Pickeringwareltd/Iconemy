@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
-var paymentJS = require('./payments');
+var paymentJS = require('./payment_util');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -191,27 +191,32 @@ module.exports.paymentConfirm = function (req, res) {
 						}
 
 						var payment = project.token.payment;
-
-						var sentto;
-						if(!payment.sentTo){
+							
+						// Create wallet which either creates a new wallet and encrypts private key
+						// Or loads existing keys from the DB if already used.
+						var wallet;
+						if(payment.currency != req.body.currency || !payment.sentTo){
 							// Create new wallet for taking payments
-							sentto = paymentJS.createWallet(req.body.currency);
+							wallet = paymentJS.createWallet(req.body.currency);
 						} else {
-							sentto = payment.sentTo;
+							wallet = {
+								address: payment.sentTo,
+								privateKey: payment.seed
+							};
 						}
 
-						if(req.body.currency == 'eth' && !WAValidator.validate(sentto, 'ETH')){
+						if(req.body.currency == 'eth' && !WAValidator.validate(wallet.address, 'ETH')){
 							sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
 							return;
-						} else if(req.body.currency == 'btc' && !WAValidator.validate(sentto, 'BTC')){
+						} else if(req.body.currency == 'btc' && !WAValidator.validate(wallet.address, 'BTC')){
 							sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
 							return;
 						}
 
-
 						payment.currency = req.body.currency;
 						payment.amount = req.body.amount;
-						payment.sentTo = sentto;
+						payment.sentTo = wallet.address;
+						payment.seed = wallet.privateKey;
 						payment.created = createdDate;
 						payment.createdBy = 'Jack';
 
@@ -231,6 +236,29 @@ module.exports.paymentConfirm = function (req, res) {
 			});
 	}
 
+};
+
+// Function is used as callback to deal with the deposit wallet balance
+// If the wallet balance is above the requested deposit amount, store item as 'paid'
+// Else, return error.
+var dealWithBalance = function(project, balance, res) {
+	var payment = project.token.payment;
+
+	if(balance >= payment.amount){
+
+		payment.paid = Date.now();
+
+		project.save(function(err, project) {
+			if (err) {
+				sendJsonResponse(res, 404, {"message": err});
+			} else {
+				sendJsonResponse(res, 200, payment);
+			} 
+		});
+									
+	} else {
+		sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
+	}
 };
 
 // Finalise payment by checking if wallet is funded and setting contract to paid, this will then trigger the deployment
@@ -264,36 +292,11 @@ module.exports.paymentFinalise = function (req, res) {
 							if(!payment.paid){
 
 								var wallet_address = payment.sentTo;
-								var balance = paymentJS.getBalance(wallet_address);
 
-								if(balance >= payment.amount){
-									if(payment.currency == 'eth'){
-										var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
-									} else {
-										var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
-									}
+								// Call getBalance function with callback ensuring the balance is dealt with only when it is returned.
+								// Use 'null' for crowdsale ID so that the payment function knows not to include it in callback.
+								var balance = paymentJS.getBalance(wallet_address, project, null, res, dealWithBalance);
 
-									if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
-										sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
-										return;
-									} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
-										sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
-										return;
-									}
-
-									payment.paid = Date.now();
-									payment.sentFrom = sentfrom_address;
-
-									project.save(function(err, project) {
-									    if (err) {
-									        sendJsonResponse(res, 404, {"message": err});
-									    } else {
-									        sendJsonResponse(res, 200, payment);
-										} 
-									});
-								} else {
-									sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
-								}
 							} else {
 								sendJsonResponse(res, 404, {"message": "Already paid for!"});
 							}

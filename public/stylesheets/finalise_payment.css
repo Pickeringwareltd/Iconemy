@@ -44,3 +44,12 @@
 	padding-left: 10px;
 	color: #524F4F;
 }
+
+#refresh_loader {
+	width: 75px;
+	height: 75px;
+	float: right;
+    right: 0px;
+    transform: none;
+	margin-top: 100px;
+}

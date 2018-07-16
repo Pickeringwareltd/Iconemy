@@ -117,7 +117,6 @@ exports.finalise = function(req, res) {
 		if (response.statusCode === 200) {
 			res.status(200).send({ message: "Worked" });
 	    } else {
-	    	console.log(body.message);
 			res.status(400).send({ message: body.message });
 		} 
 
@@ -126,9 +125,6 @@ exports.finalise = function(req, res) {
 }
 
 exports.create = function(req, res) {
-	// We'd have to create the new wallet here.
-	// Where should we store private key?
-
 	var amount = req.query.amount;
 	var currency = req.query.currency;
 	var error;

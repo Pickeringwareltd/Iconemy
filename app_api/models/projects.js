@@ -27,7 +27,7 @@ var paymentSchema = new mongoose.Schema({
 		type: String,
 		required: false
 	},
-	sentFrom: {
+	seed: {
 		type: String,
 		required: false
 	}

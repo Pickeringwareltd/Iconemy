@@ -1,74 +1,73 @@
+var mongoose = require('mongoose');
+var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
-var bitcoin = require('bitcoinjs-lib');
-var ethereum = require('ethereumjs-wallet');
-var request = require('request');
+var paymentJS = require('./payment_util');
 
-// Generates a new Bitcoin wallet used for collecting payments
-var generateBTCWallet =  function() {
-  const network = bitcoin.networks.bitcoin;
-  const pair = bitcoin.ECPair.makeRandom({ network });
-
-  return {
-    privateKey: pair.toWIF(),
-    address: pair.getAddress()
-  }
-}
-
-// Generates a new Ethereum wallet used for collecting payments
-var generateETHWallet = function() {
-  const pair = ethereum.generate();
-
-  return {
-    privateKey: pair.getPrivateKeyString(),
-    address: pair.getAddressString()
-  }
-}
-
-// Get the balance of an eth address using the etherscan api
-var getEthBalances = async function(address) {
-	var apiKey = '6KM91A9J1KW79X6F4QM7JMJAPFFG7V5YCP';
-	var url = 'https://api.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
-
-	requestOptions = {
-		url : url,
-		method : "GET",
-		json : {}
-	}; 
-
-	request( requestOptions, function(err, response, body) {
-		var wei = parseInt(body.result);
-		var eth = parseFloat(wei / 1000000000000000000);
-
-		return eth;
-	});
-}
-
-module.exports.createWallet = function(currency){
-	var address;
-
-	if(currency == 'eth'){
-		address = generateETHWallet();
-
-		// Print out public/private key pairs
-		console.log(address);
-		address = address.address;
-	} else {
-		address = generateBTCWallet();
-
-		// Print out public/private key pairs
-		console.log(address);
-		address = address.address;
-	}
-
-	return address;
+// Send a JSON response with the status and content passed in via params
+var sendJsonResponse = function(res, status, content) {
+  res.status(status);
+  res.json(content);
 };
 
-module.exports.getBalance = function(address){
-	var balance = 0; 
+/* This function should firstly take in: projectid, item, crowdsaleid (optional) and discount code (optional)
+ * It then loads the appropriate item (if crowdsale, loads the commission selected) 
+ * It then looks up the discount code supplied against the list of discount codes in the DB
+ * It then applies the discount to the item for the code and/or commission selected and stores in the DB
+ * It then returns an object containing the price of the item in USD/ETH/BTC and the discount that has been applied
+ */
+module.exports.createPayment = function (req, res) { 
+	// If the request parameters contains a project ID, then execute a query finding the object containing that id
+	if (req.params && req.params.projectid && req.params.crowdsaleid) {
+		// Call the Project model function to find the ID passed as a request parameter in the URL
+		// I.e. api/projects/123
+		// Execute the query and return a JSON response including the project found or an error
+		Project
+	    	.find({subdomain: req.params.projectid})
+	    	.select('name social token crowdsales')
+	    	.exec(function(err, _project) {
+	    		var project = _project[0];
+	    		// If no project is found, return custom error message
+	      		if (!project) {
+	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
+	          		return;
+	          		// If an error was returned, return that message
+	          	} else if (err) {
+	          		sendJsonResponse(res, 404, err);
+	          		return;
+	      		} else {
 
-	if(address.substring(0,2) == '0x'){
-		balance = getEthBalances(address);
-	} 
+		      		if(project.crowdsales && project.crowdsales.length > 0){
+		      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
 
-	return balance;
+		      			if(!crowdsale || crowdsale.length == 0){
+		   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
+		   					return;
+		      			} else {
+		      				// If successful, build a JSON response with appropriate information
+		      				var response = {
+		      					project: {
+		      						name: project.name,
+		      						id: req.params.projectid,
+		      					},
+		      					token: {
+		      						name: project.token.name,
+		      						symbol: project.token.symbol,
+		      						logo: project.token.logo
+		      					},
+		      					social: project.social,
+		      					crowdsale: crowdsale
+		      				};
+		      				sendJsonResponse(res, 200, response);
+		      			}
+
+		      		} else {
+		   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+		      		}
+	      		}
+	    	});
+	   } else {
+	   		// Else if no projectID was specified in the request, return custom error message
+	   		sendJsonResponse(res, 404, { "message": "Not found, projectID and crowdsaleID required" });
+	   }
 };
+

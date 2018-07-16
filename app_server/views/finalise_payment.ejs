@@ -116,7 +116,8 @@
 								<div class="col-lg-6 col-sm-12">
 									<div class ="row" id="refresh">
 										<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
-											<button type="submit" class="btn btn-outline" id="refresh_btn" data-item="<%= payment.item %>" data-id="<%= payment.id %>" data-project="<%= payment.project %>">Refresh</button>
+											<button type="submit" class="btn btn-outline" id="refresh_btn" data-item="<%= payment.item %>" data-id="<%= payment.id %>" data-project="<%= payment.project %>" data-currency="<%= payment.currency %>">Refresh</button>
+											<img id="refresh_loader" src="/images/ripple_loader.gif" style="display: none;">
 										</div>
 									</div>
 								</div>
@@ -140,7 +141,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/script_sale.js?ver=122"></script>
-	<script src="/javascripts/make_payment.js?ver=122"></script>
+	<script src="/javascripts/finalise_payment.js?ver=122"></script>
 
 	<!-- Pre-loader -->
 	<% include partials/error_message %>

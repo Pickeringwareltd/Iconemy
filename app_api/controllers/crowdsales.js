@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
-var paymentJS = require('./payments');
+var paymentJS = require('./payment_util');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -214,12 +214,16 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 						if(payment.paid == null){
 
-							var wallet_address;
-							if(!payment.sentTo){
+							var wallet;
+
+							if(payment.currency != req.body.currency || !payment.sentTo){
 								// Create new wallet for taking payments
-								wallet_address = paymentJS.createWallet(req.body.currency);
+								wallet = paymentJS.createWallet(req.body.currency);
 							} else {
-								wallet_address = payment.sentTo;
+								wallet = {
+									address: payment.sentTo, 
+									privateKey: payment.seed
+								};
 							}
 
 							if(payment.created == null){
@@ -230,7 +234,8 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 							payment.currency = req.body.currency;
 							payment.amount = req.body.amount;
-							payment.sentTo = wallet_address;
+							payment.sentTo = wallet.address;
+							payment.seed = wallet.privateKey;
 							payment.created = createdDate;
 							payment.createdBy = req.body.createdBy;
 
@@ -257,6 +262,31 @@ module.exports.paymentConfirmOne = function (req, res) {
 					}
 				}
 			});
+	}
+};
+
+// Function is used as callback to deal with the deposit wallet balance
+// If the wallet balance is above the requested deposit amount, store item as 'paid'
+// Else, return error.
+var dealWithBalance = function(project, balance, saleid, res) {
+	var payment = project.crowdsales[saleid].payment;
+
+	// If balance is above or equal to amount needed
+	if(balance >= payment.amount){
+
+		// Set the payment date and store in DB as PAID
+		payment.paid = Date.now();
+
+		project.save(function(err, project) {
+			if (err) {
+				sendJsonResponse(res, 404, err);
+			} else {
+				sendJsonResponse(res, 200, payment);
+			} 
+		});
+	// Else, send an error message back saying amount not met.
+	} else {
+		sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
 	}
 };
 
@@ -296,39 +326,12 @@ module.exports.paymentFinaliseOne = function (req, res) {
 						}
 
 						var payment = thisSale.payment;
-						if(payment.currency == 'eth'){
-							var sentfrom_address = '0x1043b9496f9437EFcEdeD91F9C55eACbC1D1bF8f';
-						} else {
-							var sentfrom_address = '1GVY5eZvtc5bA6EFEGnpqJeHUC5YaV5dsb';
-						}
 
 						if(payment.paid == null){
 
+							// Else if the payment has not yet been paid, get the balance and deal with it using the dealWithBalance function.
 							var wallet_address = payment.sentTo;
-							var balance = paymentJS.getBalance(wallet_address);
-
-							if(balance >= payment.amount){
-								if(payment.currency == 'eth' && !WAValidator.validate(sentfrom_address, 'ETH')){
-									sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
-									return;
-								} else if(payment.currency == 'btc' && !WAValidator.validate(sentfrom_address, 'BTC')){
-									sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
-									return;
-								}
-
-								payment.paid = Date.now();
-								payment.sentFrom = sentfrom_address;
-
-								project.save(function(err, project) {
-								    if (err) {
-								        sendJsonResponse(res, 404, err);
-								    } else {
-								        sendJsonResponse(res, 200, payment);
-									} 
-								});
-							} else {
-								sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
-							}
+							var balance = paymentJS.getBalance(wallet_address, project, crowdsaleid, res, dealWithBalance);
 
 						} else {
 							sendJsonResponse(res, 404, {"message": "Already paid for!"});

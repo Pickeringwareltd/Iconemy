@@ -115,7 +115,7 @@
 							<h6 class="small-text">Sale starts in:</h6>
 							<div class="token-countdown d-flex align-content-stretch" data-date="<%= data.crowdsale.start %>"></div>
 							<ul class="btns">
-								<li><a href="/pay?project=<%= data.project.id %>&item=crowdsale" id="buy_btn" class="btn btn-alt btn-lg">Deploy</a></li>
+								<li><a href="/pay?project=<%= data.project.id %>&item=crowdsale&id=<%= data.crowdsale.index %>" id="buy_btn" class="btn btn-alt btn-lg">Deploy</a></li>
 							</ul>
 						<% } %>
 							
