@@ -18,7 +18,8 @@ router.post('/projects/:projectid/token', ctrlTokens.tokenCreate);
 router.get('/projects/:projectid/token', ctrlTokens.tokenRead);
 router.put('/projects/:projectid/token', ctrlTokens.tokenUpdate);
 router.delete('/projects/:projectid/token', ctrlTokens.tokenDelete);
-router.put('/projects/:projectid/token/payment', ctrlTokens.paymentConfirm);
+router.post('/projects/:projectid/token/payment', ctrlTokens.getPrice);
+router.put('/projects/:projectid/token/payment/confirm', ctrlTokens.paymentConfirm);
 router.put('/projects/:projectid/token/payment/finalise', ctrlTokens.paymentFinalise);
 
 // crowdsales
@@ -26,7 +27,8 @@ router.post('/projects/:projectid/crowdsales', ctrlCrowdsales.crowdsalesCreate);
 router.get('/projects/:projectid/crowdsales/:crowdsaleid', ctrlCrowdsales.crowdsalesReadOne);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid', ctrlCrowdsales.crowdsalesUpdateOne);
 router.delete('/projects/:projectid/crowdsales/:crowdsaleid', ctrlCrowdsales.crowdsalesDeleteOne);
-router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment', ctrlCrowdsales.paymentConfirmOne);
+router.post('/projects/:projectid/crowdsales/:crowdsaleid/payment', ctrlCrowdsales.getPrice);
+router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/confirm', ctrlCrowdsales.paymentConfirmOne);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/finalise', ctrlCrowdsales.paymentFinaliseOne);
 
 module.exports = router;

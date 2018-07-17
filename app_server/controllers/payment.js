@@ -15,53 +15,65 @@ if (process.env.NODE_ENV === 'production') {
 // Display the pay screen
 // Get ETH and BTC price here
 // Calculate actual price here
-// Take in voucher code here?
-exports.index = function(req, res){
+exports.create = function(req, res){
 
-	var price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
+	var path;
 
 	var amount;
 	var error;
 	var id = req.query.id;
 	var item = req.query.item;
 	var project = req.query.project;
+	
+	if(!item || !project){
+		error = 'Please specify an item and a project.'
+	}
+
+	if(item == 'crowdsale'){
+		sale_id = req.body.id;
+		if(!sale_id){
+			error = 'Please specify an ID for the crowdsale.'
+		}
+		
+		path = '/api/projects/' + project + '/crowdsales/' + id + '/payment';
+	}
 
 	if(item == 'token'){
-		amount = 499.99;
-		item = {
-			name: 'ERC-20 token',
-			quantity: '1',
-			price: 499.99
-		};
-	} else if(item == 'crowdsale'){
-		amount = 1499.99;
-		item = {
-			id: id,
-			name: 'ERC-20 Compliant Crowdsale',
-			quantity: '1',
-			price: 1499.99
-		};
-	} else {
-		error = 'No item selected';
-	}
-
-	if(!project){
-		error = 'No project selected';
-	}
+		// Token URL
+		path = '/api/projects/' + project + '/token/payment';
+	} 
 
 	requestOptions = {
-		url : price_url,
-		method : "GET",
-		json : {}
+		url : apiOptions.server + path,
+		method : "POST",
+		json : {
+			projectid: project,
+			item: item,
+			crowdsaleid: id
+		}
 	}; 
 
 	request( requestOptions, function(err, response, body) {
 
-		var eth = parseFloat(body.ETH);
-		var btc = parseFloat(body.BTC);
+		var eth = body.eth;
+		var btc = body.btc;
+		var amount = body.dollars;
+		var item = body.item;
 
-		eth = eth * amount;
-		btc = btc * amount;
+		if(item == 'token'){
+			item = {
+				name: 'ERC-20 Compliant Token',
+				quantity: '1',
+				price: amount
+			}
+		} else {
+			item = {
+				name: 'ERC-20 Compliant Crowdsale',
+				quantity: '1',
+				price: amount,
+				id: id
+			}
+		}
 
 		res.render('make_payment', { 
 			title: 'Pay',
@@ -76,6 +88,76 @@ exports.index = function(req, res){
 		
 	});
 
+};
+
+exports.confirm = function(req, res) {
+	var amount = req.query.amount;
+	var currency = req.query.currency;
+	var error;
+	var item = req.query.item;
+	var project = req.query.project;
+	var path;
+	var sale_id;
+
+	if(!item || !amount || !project){
+		error = 'Please specify an item, amount and a project.'
+	}
+
+	if(item.search('Crowdsale') > 0){
+		sale_id = req.query.id;
+
+		if(!sale_id){
+			error = 'Please specify an ID for the crowdsale.'
+		}
+	} else {
+		sale_id = '';
+	}
+
+	if(!project){
+		error = 'No project selected';
+	}
+
+	if(item.search('Crowdsale') > 0){
+		path = '/api/projects/' + project + '/crowdsales/' + req.query.id + '/payment/confirm';		
+	} else {
+		path = '/api/projects/' + project + '/token/payment/confirm';
+	}
+
+	requestOptions = {
+		url : apiOptions.server + path,
+		method : "PUT",
+		json : {
+			currency: currency,
+			amount: amount,
+			createdBy: 'Jack'
+		}
+	}; 
+
+	request( requestOptions, function(err, response, body) {
+
+		if (response.statusCode === 200) {
+		    res.render('finalise_payment', { 
+				title: 'Pay',
+				payment: {
+					amount: amount,
+					currency: currency.toUpperCase(),
+					item: item,
+					id: sale_id,
+					project: project,
+					address: body.sentTo
+				},
+				message: error
+			});
+	    } else {
+	        res.render('error', { 
+				message: body.message,
+				error: {
+					status: 404
+				}
+			});
+		} 
+
+	});
 };
 
 exports.finalise = function(req, res) {
@@ -122,74 +204,4 @@ exports.finalise = function(req, res) {
 
 	});
 
-}
-
-exports.create = function(req, res) {
-	var amount = req.query.amount;
-	var currency = req.query.currency;
-	var error;
-	var item = req.query.item;
-	var project = req.query.project;
-	var path;
-	var sale_id;
-
-	if(!item || !amount || !project){
-		error = 'Please specify an item, amount and a project.'
-	}
-
-	if(item.search('Crowdsale') > 0){
-		sale_id = req.query.id;
-
-		if(!sale_id){
-			error = 'Please specify an ID for the crowdsale.'
-		}
-	} else {
-		sale_id = '';
-	}
-
-	if(!project){
-		error = 'No project selected';
-	}
-
-	if(item.search('token') > 0){
-		path = '/api/projects/' + project + '/token/payment';
-	} else {
-		path = '/api/projects/' + project + '/crowdsales/' + req.query.id + '/payment';
-	}
-
-	requestOptions = {
-		url : apiOptions.server + path,
-		method : "PUT",
-		json : {
-			currency: currency,
-			amount: amount,
-			createdBy: 'Jack'
-		}
-	}; 
-
-	request( requestOptions, function(err, response, body) {
-
-		if (response.statusCode === 200) {
-		    res.render('finalise_payment', { 
-				title: 'Pay',
-				payment: {
-					amount: amount,
-					currency: currency.toUpperCase(),
-					item: item,
-					id: sale_id,
-					project: project,
-					address: body.sentTo
-				},
-				message: error
-			});
-	    } else {
-	        res.render('error', { 
-				message: body.message,
-				error: {
-					status: 404
-				}
-			});
-		} 
-
-	});
 };

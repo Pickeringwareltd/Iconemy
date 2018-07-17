@@ -68,6 +68,9 @@ var tokenSchema = new mongoose.Schema({
 	contract_address: {
 		type: String
 	},
+	discount_code: {
+		type: String,
+	},
 	payment: paymentSchema
 });
 
@@ -134,6 +137,9 @@ var crowdsaleSchema = new mongoose.Schema({
 	index: {
 		type: Number,
 		required: [true, 'Index required']
+	},
+	discount_code: {
+		type: String,
 	},
 	payment: paymentSchema
 });

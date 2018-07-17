@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
+var request = require('request');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -156,6 +157,86 @@ module.exports.tokenRead = function (req, res) {
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete tokens as the smart contract will remain on the network
 module.exports.tokenUpdate = function (req, res) { 
 	sendJsonResponse(res, 404, {"message" : "You cannot update a token, the smart contract has now been released and will not be able to change."});
+};
+
+/* This function should firstly take in: projectid, item, crowdsaleid (optional) and discount code (optional)
+ * It then loads the appropriate item (if crowdsale, loads the commission selected) 
+ * It then looks up the discount code supplied against the list of discount codes in the DB
+ * It then applies the discount to the item for the code and/or commission selected and stores in the DB
+ * It then returns an object containing the price of the item in USD/ETH/BTC and the discount that has been applied
+ */
+module.exports.getPrice = function (req, res) { 
+	// If the request parameters contains a project ID, then execute a query finding the object containing that id
+	if (req.body && req.body.projectid && req.body.item) {
+
+		if(req.body.item == 'token'){
+
+			var item_price;
+			var total_price;
+			var discount;
+			var project = req.body.projectid;
+
+			// Call the pricing URL to get accurate information on USD -> BTC/ETH prices
+			var price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
+
+			requestOptions = {
+				url : price_url,
+				method : "GET",
+				json : {}
+			}; 
+
+			request( requestOptions, function(err, response, body) {
+
+				if(err){
+	  				sendJsonResponse(res, 404, err);
+	  				return;
+				}
+
+				// Set the crypto prices ready for conversion
+				var eth = parseFloat(body.ETH);
+				var btc = parseFloat(body.BTC);
+
+				// Find the project and pass the object to the addCrowdsale function (below)
+				Project
+					.find({subdomain: project})
+					.select('token')
+					.exec(function(err, _project) {
+						var project = _project[0];
+
+						if(err){
+							sendJsonResponse(res, 404, err);
+							return;
+						}
+
+						item_price = 499.99;
+						// discount = project.token.discount_code;
+
+						// Convert USD item price to ETH and BTC
+						eth = eth * item_price;
+						btc = btc * item_price;
+
+						var pricing = {
+								dollars: item_price,
+								eth: eth,
+								btc: btc,
+								item: req.body.item
+							};
+
+	  					sendJsonResponse(res, 200, pricing);
+	  					
+					});
+	
+			});
+
+		} else {
+			// Else if no crowdsaleID was specified in the request, return custom error message
+	  		sendJsonResponse(res, 404, { "message": "Not found, token required" });
+		}
+
+	} else {
+		// Else if no projectID was specified in the request, return custom error message
+	  	sendJsonResponse(res, 404, { "message": "Not found, project ID and/or item name is required" });
+	}
 };
 
 // Confirming payments is necessary to store payments for later use, i.e. users may create a token and then pay a week later, confirming the payment optin allows us to create a wallet for deposit
