@@ -203,6 +203,7 @@ var formatData = function(req){
     	admin: req.body.admin_wallet,
 		beneficiary: req.body.beneficiary_wallet,
     	createdBy: 'Jack',
+    	discount: req.body.discount
 	};
 
 	return postdata;

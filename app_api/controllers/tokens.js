@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
@@ -24,6 +25,10 @@ module.exports.tokenCreate = function (req, res) {
 			.exec(function(err, _project) {
 				var project = _project[0];
 
+				if(!project){
+					sendJsonResponse(res, 404, {"message": "Project not found"});
+					return;
+				}
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -90,6 +95,7 @@ var validateToken = function(token){
 
 // Creates crowdsale object from form data ready to be added to a project
 var getToken = function(req) {
+
 	var token = {
 		name: req.body.name,
 		symbol: req.body.symbol,
@@ -97,7 +103,8 @@ var getToken = function(req) {
 		owner: req.body.owner,
 		logo: req.body.logo,
 		created: Date.now(),
-		createdBy: req.body.createdBy
+		createdBy: req.body.createdBy,
+		discount_code: req.body.discount
 	}
 
 	return token;
@@ -209,21 +216,52 @@ module.exports.getPrice = function (req, res) {
 						}
 
 						item_price = 499.99;
-						// discount = project.token.discount_code;
+						// Declare again so that nested Discount function can use it
+						var price = item_price;
+						discount = project.token.discount_code;
 
-						// Convert USD item price to ETH and BTC
-						eth = eth * item_price;
-						btc = btc * item_price;
+						// Find the discount code and apply to price if necessary
+						Discount
+							.find({name: discount})
+							.exec(function(err, _discount) {
 
-						var pricing = {
-								dollars: item_price,
-								eth: eth,
-								btc: btc,
-								item: req.body.item
-							};
+								var discount = _discount[0];
 
-	  					sendJsonResponse(res, 200, pricing);
-	  					
+								if(err){
+									sendJsonResponse(res, 404, err);
+									return;
+								}
+
+								if(discount){
+									if(discount.type == 'percent'){
+										// Work out the new item price given the discount.
+										var discount_amount = discount.amount;									
+										var take_off = 100 - discount_amount;
+										take_off = take_off / 100;										
+										price = price * take_off;
+										price = price.toFixed(2);
+									} else {
+										var discount_amount = discount.amount;
+										price = price - discount_amount;
+									}
+								}
+
+								// Convert USD item price to ETH and BTC
+								eth = eth * price;
+								btc = btc * price;
+
+								pricing = {
+										dollars: price,
+										eth: eth,
+										btc: btc,
+										item: req.body.item,
+										discount: discount
+									};
+			  					
+			  					sendJsonResponse(res, 200, pricing);
+
+							});
+
 					});
 	
 			});
@@ -276,14 +314,24 @@ module.exports.paymentConfirm = function (req, res) {
 						// Create wallet which either creates a new wallet and encrypts private key
 						// Or loads existing keys from the DB if already used.
 						var wallet;
-						if(payment.currency != req.body.currency || !payment.sentTo){
+						if(req.body.currency == 'eth' && !payment.ethWallet){
 							// Create new wallet for taking payments
-							wallet = paymentJS.createWallet(req.body.currency);
+							wallet = paymentJS.createWallet('eth');
+						} else if(req.body.currency == 'btc' && !payment.btcWallet){
+							// Create new wallet for taking payments
+							wallet = paymentJS.createWallet('btc');
 						} else {
-							wallet = {
-								address: payment.sentTo,
-								privateKey: payment.seed
-							};
+							if(req.body.currency == 'eth'){
+								wallet = {
+									address: payment.ethWallet.address,
+									seed: payment.ethWallet.seed
+								};
+							} else {
+								wallet = {
+									address: payment.btcWallet.address,
+									seed: payment.btcWallet.seed
+								};
+							}
 						}
 
 						if(req.body.currency == 'eth' && !WAValidator.validate(wallet.address, 'ETH')){
@@ -296,10 +344,13 @@ module.exports.paymentConfirm = function (req, res) {
 
 						payment.currency = req.body.currency;
 						payment.amount = req.body.amount;
-						payment.sentTo = wallet.address;
-						payment.seed = wallet.privateKey;
 						payment.created = createdDate;
 						payment.createdBy = 'Jack';
+						if(req.body.currency == 'eth'){
+							payment.ethWallet = wallet;
+						} else {
+							payment.btcWallet = wallet;
+						}
 
 						project.save(function(err, project) {
 						    if (err) {
@@ -328,6 +379,7 @@ var dealWithBalance = function(project, balance, res) {
 	if(balance >= payment.amount){
 
 		payment.paid = Date.now();
+		project.token.deployed = "Deploying";
 
 		project.save(function(err, project) {
 			if (err) {
@@ -371,8 +423,13 @@ module.exports.paymentFinalise = function (req, res) {
 						if(payment){
 
 							if(!payment.paid){
+								var wallet_address;
 
-								var wallet_address = payment.sentTo;
+								if(payment.currency == 'eth'){
+									wallet_address = payment.ethWallet.address;
+								} else {
+									wallet_address = payment.btcWallet.address;
+								}
 
 								// Call getBalance function with callback ensuring the balance is dealt with only when it is returned.
 								// Use 'null' for crowdsale ID so that the payment function knows not to include it in callback.

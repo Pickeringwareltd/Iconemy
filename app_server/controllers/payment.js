@@ -59,6 +59,7 @@ exports.create = function(req, res){
 		var btc = body.btc;
 		var amount = body.dollars;
 		var item = body.item;
+		var discount = body.discount;
 
 		if(item == 'token'){
 			item = {
@@ -75,16 +76,23 @@ exports.create = function(req, res){
 			}
 		}
 
-		res.render('make_payment', { 
-			title: 'Pay',
-			project: project,
-			payment: {
-				dollars: amount,
-				eth: eth,
-				btc: btc,
-				items: [item]
-			}
-		});
+		if(amount != 0){
+
+			res.render('make_payment', { 
+				title: 'Pay',
+				project: project,
+				payment: {
+					dollars: amount,
+					eth: eth,
+					btc: btc,
+					items: [item],
+					discount: discount
+				}
+			});
+		} else {
+			// This is where we would deploy the contracts
+			res.redirect('/projects/' + project);			
+		}
 		
 	});
 
@@ -135,8 +143,16 @@ exports.confirm = function(req, res) {
 
 	request( requestOptions, function(err, response, body) {
 
+		var address;
+
+		if(currency == 'eth'){
+			address = body.ethWallet.address;
+		} else {
+			address = body.btcWallet.address;
+		}
+
 		if (response.statusCode === 200) {
-		    res.render('finalise_payment', { 
+			res.render('finalise_payment', { 
 				title: 'Pay',
 				payment: {
 					amount: amount,
@@ -144,7 +160,7 @@ exports.confirm = function(req, res) {
 					item: item,
 					id: sale_id,
 					project: project,
-					address: body.sentTo
+					address: address
 				},
 				message: error
 			});

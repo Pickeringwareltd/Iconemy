@@ -95,7 +95,7 @@
 						<div class="gaps"></div>
 						<div class="token-box shadow">
 
-						<% if(data.crowdsale.deployed) { %>
+						<% if(data.crowdsale.deployed == 'Done') { %>
 							<h6 class="small-text">Sale ends in:</h6>
 							<div class="token-countdown d-flex align-content-stretch" data-date="<%= data.crowdsale.end %>"></div>
 							<ul class="token-details">
@@ -111,13 +111,17 @@
 							<ul class="btns">
 								<li><a href="#buy_now" id="buy_btn" class="btn btn-alt btn-lg">BUY NOW</a></li>
 							</ul>
-						<% } else { %>
+						<% } else if(data.crowdsale.deployed == 'None') { %>
 							<h6 class="small-text">Sale starts in:</h6>
 							<div class="token-countdown d-flex align-content-stretch" data-date="<%= data.crowdsale.start %>"></div>
 							<ul class="btns">
 								<li><a href="/pay?project=<%= data.project.id %>&item=crowdsale&id=<%= data.crowdsale.index %>" id="buy_btn" class="btn btn-alt btn-lg">Deploy</a></li>
 							</ul>
+						<% } else { %>
+							<h6 class="small-text">Sale is being deployed!</h6>
+							<p>Please be patient whilst your smart contracts are deployed to the network. We will email you when they are ready.</p>
 						<% } %>
+
 							
 							<% if (data.social) { %>
 								<ul class="social">
@@ -148,7 +152,7 @@
 	<div class="section section-bg-light section-pad no-pt into-section" id="intro">
 		<div class="container">
 
-		<% if(!data.crowdsale.deployed) { %>
+		<% if(data.crowdsale.deployed == 'None') { %>
 			<div class="row align-items-center">
 				<div class="col-lg-12">
 					<div class="card" id="deploy">
@@ -168,7 +172,7 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
-		<% } else { %>
+		<% } else if(data.crowdsale.deployed == 'Done') { %>
 			<div class="row align-items-center">
 				<div class="col-lg-6 col-sm-12">
 					<div class="card animated" data-animate="fadeInUp" data-delay=".2">

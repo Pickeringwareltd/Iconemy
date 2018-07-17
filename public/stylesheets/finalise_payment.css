@@ -53,3 +53,10 @@
     transform: none;
 	margin-top: 100px;
 }
+
+#disclaimer {
+	padding-top: 20px;
+	font-size: 12px;
+	width: 100%;
+	text-align: center;
+}

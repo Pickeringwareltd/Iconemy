@@ -114,6 +114,18 @@
 									    	<td>$<%= item.price %></td>
 									  	</tr>
 									  <% }); %>
+									  <% if(payment.discount) { %>
+									  	<tr id="table_body">
+									    	<td><%= payment.discount.name %></td>
+									    	<td><%= payment.discount.type %></td>
+
+									 		<% if(payment.discount.type == 'percent') { %>
+									    		<td><%= payment.discount.amount %> %</td>
+									    	<% } else { %>
+									    		<td>$<%= payment.discount.amount %></td>
+									    	<% } %>
+									  	</tr>
+									  <% } %>
 									</table>
 								</div>
 							</div>
@@ -139,7 +151,6 @@
 									<% } else { %>
 										<button type="submit" class="btn btn-outline" id="eth_btn" data-amount="<%= payment.eth %>" data-item="<%= payment.items[0].name %>" data-project="<%= project %>">Ethereum</button>
 									<% } %>
-
 									</div>
 								</div>
 							</div>

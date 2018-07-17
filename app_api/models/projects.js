@@ -2,6 +2,17 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
+var walletSchema = new mongoose.Schema({
+	address: {
+		type: String,
+		required: true
+	},
+	seed: {
+		type: String,
+		required: true
+	}
+});
+
 var paymentSchema = new mongoose.Schema({
 	currency: {
 		type: String,
@@ -23,14 +34,8 @@ var paymentSchema = new mongoose.Schema({
 		type: Date,
 		required: false
 	},
-	sentTo: {
-		type: String,
-		required: false
-	},
-	seed: {
-		type: String,
-		required: false
-	}
+	ethWallet: walletSchema,
+	btcWallet: walletSchema
 });
 
 var tokenSchema = new mongoose.Schema({
@@ -62,8 +67,8 @@ var tokenSchema = new mongoose.Schema({
 		required: [true, 'We need to know who created the token']
 	},
 	deployed: {
-		type: Boolean,
-		"default": false
+		type: String,
+		"default": "None"
 	},
 	contract_address: {
 		type: String
@@ -128,8 +133,8 @@ var crowdsaleSchema = new mongoose.Schema({
 		required: [true, 'We need to know who created the crowdsale']
 	},
 	deployed: {
-		type: Boolean,
-		"default": false
+		type: String,
+		"default": "None"
 	},
 	contract_address: {
 		type: String

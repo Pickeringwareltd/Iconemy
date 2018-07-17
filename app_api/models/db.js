@@ -61,5 +61,6 @@ process.on('SIGTERM', function() {
 	});
 });
 
-// Require and include the projects schema
+// Require and include the projects and discounts schema
 require('./projects');
+require('./discounts');

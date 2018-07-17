@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
@@ -103,6 +104,11 @@ var getCrowdsale = function(req) {
 		beneficiary: req.body.beneficiary,
 		created: Date.now(),
 		createdBy: req.body.createdBy,
+		discount_code: req.body.discount
+	}
+
+	if(parseInt(req.body.commission) == 5){
+		crowdsale.deployed = 'Deploying';
 	}
 
 	return crowdsale;
@@ -178,8 +184,6 @@ module.exports.crowdsalesUpdateOne = function (req, res) {
  */
 module.exports.getPrice = function (req, res) { 
 
-	console.log('req = ' + req);
-
 	// If the request parameters contains a project ID, then execute a query finding the object containing that id
 	if (req.body && req.body.projectid && req.body.item) {
 
@@ -188,6 +192,7 @@ module.exports.getPrice = function (req, res) {
 			var item_price;
 			var total_price;
 			var discount;
+			var pricing;
 
 			// Call the pricing URL to get accurate information on USD -> BTC/ETH prices
 			var price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
@@ -222,26 +227,59 @@ module.exports.getPrice = function (req, res) {
 						}
 
 						commission = project.crowdsales[req.body.crowdsaleid].commission;
+
+						// We re-initialise it so that it can be found in Discount function below.
+						var price = item_price;
 						// Item price is $1999.99 for 1%, $1499.99 for 2%, $999.99 for 3% and $499.99 for 4% and FREE for 5%
-						item_price = ((5 - commission) * 500);
+						price = ((5 - commission) * 500);
 
-						if(item_price != 0){
-							item_price = item_price - 0.01;
+						if(price != 0){
+							price = price - 0.01;
 						}
-						// discount = project.crowdsales[req.body.crowdsaleid].discount_code;
-					
-						// Convert USD item price to ETH and BTC
-						eth = eth * item_price;
-						btc = btc * item_price;
 
-						var pricing = {
-								dollars: item_price,
-								eth: eth,
-								btc: btc,
-								item: req.body.item
-							};
-	  					
-	  					sendJsonResponse(res, 200, pricing);
+						discount = project.crowdsales[req.body.crowdsaleid].discount_code;
+
+						// Find the discount code and apply to price if necessary
+						Discount
+							.find({name: discount})
+							.exec(function(err, _discount) {
+								console.log(price);
+
+								var discount = _discount[0];
+
+								if(err){
+									sendJsonResponse(res, 404, err);
+									return;
+								}
+
+								if(discount){
+									if(discount.type == 'percent'){
+										// Work out the new item price given the discount.
+										var discount_amount = discount.amount;									
+										var take_off = 100 - discount_amount;
+										take_off = take_off / 100;										
+										price = price * take_off;
+										price = price.toFixed(2);
+									} else {
+										var discount_amount = discount.amount;
+										price = price - discount_amount;
+									}
+								}
+
+								// Convert USD item price to ETH and BTC
+								eth = eth * price;
+								btc = btc * price;
+
+								pricing = {
+										dollars: price,
+										eth: eth,
+										btc: btc,
+										item: req.body.item
+									};
+			  					
+			  					sendJsonResponse(res, 200, pricing);
+
+							});
 
 					});
 
@@ -303,17 +341,28 @@ module.exports.paymentConfirmOne = function (req, res) {
 						var payment = thisSale.payment;
 
 						if(payment.paid == null){
-
+						
+							// Create wallet which either creates a new wallet and encrypts private key
+							// Or loads existing keys from the DB if already used.
 							var wallet;
-
-							if(payment.currency != req.body.currency || !payment.sentTo){
+							if(req.body.currency == 'eth' && !payment.ethWallet){
 								// Create new wallet for taking payments
-								wallet = paymentJS.createWallet(req.body.currency);
+								wallet = paymentJS.createWallet('eth');
+							} else if(req.body.currency == 'btc' && !payment.btcWallet){
+								// Create new wallet for taking payments
+								wallet = paymentJS.createWallet('btc');
 							} else {
-								wallet = {
-									address: payment.sentTo, 
-									privateKey: payment.seed
-								};
+								if(req.body.currency == 'eth'){
+									wallet = {
+										address: payment.ethWallet.address,
+										seed: payment.ethWallet.seed
+									};
+								} else {
+									wallet = {
+										address: payment.btcWallet.address,
+										seed: payment.btcWallet.seed
+									};
+								}
 							}
 
 							if(payment.created == null){
@@ -324,10 +373,13 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 							payment.currency = req.body.currency;
 							payment.amount = req.body.amount;
-							payment.sentTo = wallet.address;
-							payment.seed = wallet.privateKey;
 							payment.created = createdDate;
 							payment.createdBy = req.body.createdBy;
+							if(req.body.currency == 'eth'){
+								payment.ethWallet = wallet;
+							} else {
+								payment.btcWallet = wallet;
+							}
 
 							// If they have paid, we must know what addresses to search for
 							if(payment.paid && (!payment.sentTo)){
@@ -366,6 +418,7 @@ var dealWithBalance = function(project, balance, saleid, res) {
 
 		// Set the payment date and store in DB as PAID
 		payment.paid = Date.now();
+		project.crowdsales[saleid].deployed = "Done";
 
 		project.save(function(err, project) {
 			if (err) {
@@ -418,9 +471,15 @@ module.exports.paymentFinaliseOne = function (req, res) {
 						var payment = thisSale.payment;
 
 						if(payment.paid == null){
+							var wallet_address;
 
 							// Else if the payment has not yet been paid, get the balance and deal with it using the dealWithBalance function.
-							var wallet_address = payment.sentTo;
+							if(payment.currency == 'eth'){
+								wallet_address = payment.ethWallet.address;
+							} else {
+								wallet_address = payment.btcWallet.address;
+							}
+
 							var balance = paymentJS.getBalance(wallet_address, project, crowdsaleid, res, dealWithBalance);
 
 						} else {

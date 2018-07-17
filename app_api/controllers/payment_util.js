@@ -11,7 +11,7 @@ var generateBTCWallet =  function() {
   const pair = bitcoin.ECPair.makeRandom({ network });
 
   return {
-    privateKey: pair.toWIF(),
+    seed: pair.toWIF(),
     address: pair.getAddress()
   }
 }
@@ -44,7 +44,7 @@ var generateETHWallet = function() {
   const pair = ethereum.generate();
 
   return {
-    privateKey: pair.getPrivateKeyString(),
+    seed: pair.getPrivateKeyString(),
     address: pair.getAddressString()
   }
 }
@@ -90,14 +90,14 @@ module.exports.createWallet = function(currency){
 		wallet = generateBTCWallet();
 	}
 
-	const priv_key = wallet.privateKey;
+	const priv_key = wallet.seed;
 
 	// Encrypt the wallet seed with RSA public key declared at top of file. 
 	// These can be decrypted off the system at a later date when dealing with payments
 	address = wallet.address;
 	seed = key.encrypt(priv_key, 'base64');
 
-	wallet.privateKey = seed;
+	wallet.seed = seed;
 
 	// Return wallet information to be stored in the DB
 	return wallet;
