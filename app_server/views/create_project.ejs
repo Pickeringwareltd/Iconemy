@@ -22,6 +22,11 @@
 	<link rel="stylesheet" href="/stylesheets/custom_sale_form.css?ver=122">
 	<link rel="stylesheet" href="/stylesheets/create_project.css?ver=122">
 
+	<!-- For uploadcare CDN -->
+	<script>
+	  UPLOADCARE_PUBLIC_KEY = '02b13a5445396427d34c';
+	</script>
+
 </head>
 
 <body class="theme-muscari io-mascari" data-spy="scroll" data-target="#mainnav" data-offset="80">
@@ -98,18 +103,17 @@
 
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-6 col-sm-12">
-										<label class="input-title" id="logo_label">Project logo</label>
+										<label class="input-title" id="logo_label">Project logo *</label>
 
 										<div id="upload_section">
-											<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
-
-											<div>
-												<input type="file" id="fileselect" name="fileselect[]" />
-												<div id="filedrag"><img id="upload_icon" src="/images/upload_favicon.png"><br />Drag and drop <br /> logo here.</div>
-											</div>
+											<input type="hidden" role="uploadcare-uploader" name="logo" 
+											data-public-key="02b13a5445396427d34c"
+											data-images-only="true"
+											data-preview-step="true" 
+											data-crop="300:200" />
 										</div>
 
-										<div id="uploaded_logo"></div>
+										<img id="uploaded_logo" />
 									</div>
 									<div class="form-group col-lg-6 col-sm-12">
 											<label id="description_label">Description *</label>
@@ -178,7 +182,7 @@
 												</div>
 												<div class="social_column_input">
 													<div class="input-field animated input-focused">
-														<input name="medium" type="text" id="medium_input" class="input-line required" placeholder="www.medium.com/myproject">
+														<input name="medium" type="text" id="medium_input" class="input-line required" placeholder="www.medium.com/@myproject">
 													</div>
 												</div>
 											</div>
@@ -189,7 +193,7 @@
 												</div>
 												<div class="social_column_input">
 													<div class="input-field animated input-focused">
-														<input name="telegram" type="text" id="telegram_input" class="input-line required" placeholder="www.t.me/myproject">
+														<input name="telegram" type="text" id="telegram_input" class="input-line required" placeholder="https://t.me/myproject">
 													</div>
 												</div>
 											</div>
@@ -283,6 +287,9 @@
 	<!-- Jquery -->
 	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
 
+	<!-- For image processing via uploadcare -->
+	<script src="https://ucarecdn.com/libs/widget/3.5.1/uploadcare.min.js" charset="utf-8"></script>
+
 	<!-- For read only suffix on subdomain -->
 	<script src="/javascripts/readOnlySuffix.js"></script>
 
@@ -301,9 +308,6 @@
 
 	<!-- For the slider -->
 	<script src="/javascripts/bootstrap-slider.js"></script>
-
-	<!-- For logo upload -->
-	<script src="/javascripts/filedrag.js"></script>
 
 	<!-- Error message -->
 	<% include partials/error_message %>

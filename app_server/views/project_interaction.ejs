@@ -86,8 +86,8 @@
 									<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= projectInfo.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
 								<% } if (projectInfo.social.youtube) { %>
 									<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="<%= projectInfo.social.youtube %>"><em class="fa fa-youtube-play"></em></a></li>
-								<% } if (projectInfo.social.github) { %>
-									<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= projectInfo.social.github %>"><em class="fa fa-github"></em></a></li>
+								<% } if (projectInfo.social.telegram) { %>
+									<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= projectInfo.social.telegram %>"><em class="fa fa-telegram"></em></a></li>
 								<% } if (projectInfo.social.bitcointalk) { %>
 									<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="<%= projectInfo.social.bitcointalk %>"><em class="fa fa-bitcoin"></em></a></li>
 								<% } if (projectInfo.social.medium) { %>
@@ -120,9 +120,9 @@
 
 					<div class="row tokens">
 						<% if (projectInfo.token) { %>
-							<div class="col-lg-2 col-4 token_link" data-subdomain="<%= projectInfo.subdomain %>">
+							<div class="col-lg-2 col-4 token_link" data-subdomain="<%= projectInfo.subdomain %>" data-usingsubdomain="<%= projectInfo.usingSubdomain %>">
 								<h3 id="tokens_title">Token</h3>
-								<img src="../<%= projectInfo.token.logo %>" alt="donut" id="token_logo">
+								<img src="<%= projectInfo.token.logo %>" alt="donut" id="token_logo">
 							</div>
 							<div class="col-lg-10 col-8">
 								<p id="token_symbol"><%= projectInfo.token.symbol %></p>
@@ -143,7 +143,7 @@
 
 				<div class="col-lg-4 col-sm-12">
 					<div class="row">
-						<img src="../<%= projectInfo.logo %>" alt="logo" id="project_logo">
+						<img src="<%= projectInfo.logo %>" alt="logo" id="project_logo">
 					</div>
 					<div class="links_section">
 						<div class="row subdomain_section">
@@ -184,9 +184,9 @@
 						<% projectInfo.crowdsales.forEach(function(sale, i) { %>
 					        <div class="col-auto">
 					        	<%if (sale.status == 'On-going') { %>
-									<div class="card custom_card crowdsale current_sale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>">
+									<div class="card custom_card crowdsale current_sale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>" data-usingsubdomain="<%= projectInfo.usingSubdomain %>">
 								<% } else { %>
-							 		<div class="card custom_card crowdsale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>">
+							 		<div class="card custom_card crowdsale" data-index="<%= i %>"  data-subdomain="<%= projectInfo.subdomain %>" data-usingsubdomain="<%= projectInfo.usingSubdomain %>">
 							 	<% } %>
 							 		<div class="container">
 							 			<div class="toprow">
@@ -204,6 +204,7 @@
 							</div>
 					    <% }); %>
 					<% } %>
+					<% if(!projectInfo.usingSubdomain){ %>
 						<div class="col-auto">
 						 	<div class="card custom_card" id="new_crowdsale" data-subdomain="<%= projectInfo.subdomain %>">
 						 		<div class="container">
@@ -212,6 +213,7 @@
 							  	</div>
 						 	</div>
 						</div>
+					<% } %>
 					</div>
 				</div>
 			</div>

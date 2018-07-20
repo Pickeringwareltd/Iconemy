@@ -111,7 +111,7 @@ exports.doCreation = function(req, res){
     	symbol: req.body.token_symbol,
     	decimals: parseInt(req.body.token_decimals),
     	owner: req.body.owner_address,
-    	logo: 'images/donut_logo.png',
+    	logo: req.body.logo,
     	createdBy: 'Jack',
     	discount: req.body.discount
 	};

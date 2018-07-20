@@ -74,7 +74,10 @@ var tokenSchema = new mongoose.Schema({
 		type: String
 	},
 	discount_code: {
-		type: String,
+		type: String
+	},
+	jsFileURL: {
+		type: String
 	},
 	payment: paymentSchema
 });
@@ -145,6 +148,9 @@ var crowdsaleSchema = new mongoose.Schema({
 	},
 	discount_code: {
 		type: String,
+	},
+	jsFileURL: {
+		type: String
 	},
 	payment: paymentSchema
 });

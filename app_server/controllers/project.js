@@ -9,11 +9,12 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://iconemy-start.herokuapp.com";
 }
 
-var renderProject = function(req, res, responseBody){
+var renderProject = function(req, res, responseBody, subdomain){
 
 	if(responseBody[0]){
 		// Need to render crowdsale dates properly
 		data = responseBody[0];
+		data.usingSubdomain = subdomain;
 
 		var i;
 		for (i = 0; i < data.crowdsales.length; i++) { 
@@ -53,9 +54,11 @@ exports.index = function(req, res){
 
 	// Make sure we are using the correct subdomain
 	var projectName =  req.params.projectname;
+	var subdomain = false;
 
 	if(projectName == undefined){
 		projectName = req.subdomains;
+		subdomain = true;
 	}
 
   	// Split the path from the url so that we can call the correct server in development/production
@@ -68,7 +71,7 @@ exports.index = function(req, res){
 	};
 
    	request( requestOptions, function(err, response, body) {
-      	renderProject(req, res, body);
+      	renderProject(req, res, body, subdomain);
    	});
 };
 
@@ -125,42 +128,42 @@ var validateProject = function(postdata){
 
   // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
   if(postdata.facebook != ''){
-  	if(!postdata.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)){
+  	if(postdata.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     	error = 'Must enter a valid Facebook URL';
   		return error;
    	}
   }
 
   if(postdata.twitter != '') {
-  	if(!postdata.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/)){
+  	if(postdata.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     	error = 'Must enter a valid Twitter URL';
   		return error;
     }
   }
 
   if(postdata.youtube != ''){
-  	if(!postdata.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)){
+  	if(postdata.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     	error = 'Must enter a valid Youtube URL';
   		return error;
     }
   }
 
   if(postdata.medium != ''){
-  	if(!postdata.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/[a-zA-Z0-9(\.\?)?]/)){
+  	if(postdata.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) == null){
     	error = 'Must enter a valid Medium URL';
   		return error;	
     }
   }
 
   if(postdata.bitcointalk != ''){
-  	if(!postdata.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/)){
+  	if(postdata.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) == null){
     	error = 'Must enter a valid Bitcointalk URL';
     	return error;
     }
   }
 
   if(postdata.telegram != ''){
-  	if(!postdata.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?/)){
+  	if(postdata.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) == null){
     	error = 'Must enter a valid Telegram URL';
     	return error;
     }
@@ -181,7 +184,7 @@ var getData = function(req) {
 		description: req.body.description,
 		website: req.body.website,
 		subdomain: subdomain,
-		logo: 'images/donut_logo_large.png',
+		logo: req.body.logo,
 		createdBy: 'Jack',
 		facebook: req.body.facebook,
 		twitter: req.body.twitter,

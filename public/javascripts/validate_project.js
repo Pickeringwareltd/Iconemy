@@ -46,44 +46,44 @@ $('#token-form').submit(function (e) {
    * Subdomain length from 1 to 63.
    * See https://stackoverflow.com/questions/7930751/regexp-for-subdomain for more details.
   */
-  if(!subdomain.match(/^[a-z0-9]{0,63}$/)){
+  if(subdomain.match(/^[a-z0-9]{0,63}$/) == null){
     $('.error').html('Your subdomain can only include lowercase characters and numbers');
     triggerErrorMessage();
     return false;
   }
 
   // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
-  if(facebook != '' && !facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(facebook != '' && facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     $('.error').html('Must enter a valid Facebook URL');
     triggerErrorMessage();
     return false;
   }
 
-  if(twitter != '' && !twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(twitter != '' && !twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     $('.error').html('Must enter a valid Twitter URL');
     triggerErrorMessage();
     return false;
   }
 
-  if(youtube != '' && !youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(youtube != '' && !youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) == null){
     $('.error').html('Must enter a valid Youtube URL');
     triggerErrorMessage();
     return false;
   }
 
-  if(medium != '' && !medium.match(/^(https?:\/\/)?(www\.)?medium.com\/[a-zA-Z0-9(\.\?)?]/)){
+  if(medium != '' && !medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) == null){
     $('.error').html('Must enter a valid Medium URL');
     triggerErrorMessage();
     return false;
   }
 
-  if(bitcoin != '' && !bitcoin.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/)){
+  if(bitcoin != '' && !bitcoin.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) == null){
     $('.error').html('Must enter a valid Bitcointalk URL');
     triggerErrorMessage();
     return false;
   }
 
-  if(telegram != '' && !telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-z0-9\_]{5,32})\/?/)){
+  if(telegram != '' && telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) == null){
     $('.error').html('Must enter a valid Telegram URL');
     triggerErrorMessage();
     return false;

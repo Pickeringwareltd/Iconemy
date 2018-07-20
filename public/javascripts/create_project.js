@@ -7,6 +7,26 @@ function $id(id) {
 	return document.getElementById(id);
 }
 
+// Getting an instance of the widget.
+const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+// Selecting an image to be replaced with the uploaded one.
+const preview = document.getElementById('uploaded_logo');
+// "onUploadComplete" lets you get file info once it has been uploaded.
+// "cdnUrl" holds a URL of the uploaded file: to replace a preview with.
+// Display preview of image in the image box after uploading
+widget.onUploadComplete(fileInfo => {
+	$('#upload_section').css('display', 'none');
+	$('#uploaded_logo').css('display', 'block');
+ 	preview.src = fileInfo.cdnUrl;
+});
+
+// Restrict image size to less than 1MB
+widget.validators.push(function(fileInfo) {
+  if (fileInfo.size !== null && fileInfo.size > 1024 * 1024) {
+    throw new Error("fileMaximumSize");
+  }
+});
+
 $('#description').on("click",function(){
 	if($('#description').val() == 'Enter a basic description about your project here'){
 		$('#description').val('');

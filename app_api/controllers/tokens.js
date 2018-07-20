@@ -11,7 +11,7 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 module.exports.tokenCreate = function (req, res) { 
-	// To add a crowdsale, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
+	// To add a token, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
 	var projectID = req.params.projectid;
 
 	if(!projectID){
@@ -148,7 +148,8 @@ module.exports.tokenRead = function (req, res) {
 		      					decimals: token.decimals,
 		      					logo: token.logo,
 		      					social: project.social,
-		      					deployed: token.deployed
+		      					deployed: token.deployed,
+		      					jsFileURL: token.jsFileURL
 		      				}
 		      			}
 		      			sendJsonResponse(res, 200, response);

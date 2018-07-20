@@ -78,7 +78,7 @@
 					<div class="row align-items-center mobile-center">
 						<div class="col-lg-12 text-center res-m-bttm">
 							<div class="header-txt">
-								<img src="/<%= data.token.logo %>" class="center_logo">
+								<img src="<%= data.token.logo %>" class="center_logo">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= data.crowdsale.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= data.token.symbol %></p>
 							</div>
@@ -131,8 +131,8 @@
 										<li class="animated" data-animate="fadeInUp" data-delay=".2"><a href="<%= data.social.twitter %>"><em class="fa fa-twitter"></em></a></li>
 									<% } if (data.social.youtube) { %>
 										<li class="animated" data-animate="fadeInUp" data-delay=".3"><a href="<%= data.social.youtube %>"><em class="fa fa-youtube-play"></em></a></li>
-									<% } if (data.social.github) { %>
-										<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= data.social.github %>"><em class="fa fa-github"></em></a></li>
+									<% } if (data.social.telegram) { %>
+										<li class="animated" data-animate="fadeInUp" data-delay=".4"><a href="<%= data.social.telegram %>"><em class="fa fa-telegram"></em></a></li>
 									<% } if (data.social.bitcointalk) { %>
 										<li class="animated" data-animate="fadeInUp" data-delay=".5"><a href="<%= data.social.bitcointalk %>"><em class="fa fa-bitcoin"></em></a></li>
 									<% } if (data.social.medium) { %>
@@ -281,6 +281,7 @@
 	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/script_sale.js?ver=122"></script>
 	<script src="/javascripts/custom_sale_script.js?ver=122"></script>
-
+	<!-- Request the specific ABI files for this token -->
+	<script src="<%= data.crowdsale.jsFileURL %>"></script>
 </body>
 </html>

@@ -1,0 +1,188 @@
+.header-angle-bg { transform: skewY(0deg); padding-bottom: 0px; }
+
+#footers { margin-top: 0px !important; }
+
+.token_description {
+	padding-top: -10px;
+}
+
+#token_name {
+	padding: 25px 0px 5px 5px;
+	font-size: 40px;
+	color: #524F4F;
+	font-weight: bold;
+}
+
+#uploaded_logo, #fileselect {
+	display: none;
+}
+
+#logo_label {
+	color: #8284a5;
+}
+
+#upload_section, #uploaded_logo
+{
+	font-weight: bold;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	margin: 1em 0;
+	padding-top: 10%;
+	color: #524F4F;
+	border: 2px dashed #524F4F;
+	border-radius: 50%;
+	cursor: default;
+}
+
+#uploaded_logo {
+	display: none;
+	padding-top: 0;
+}
+
+.uploadcare--widget button {
+	margin-top: 50%;
+}
+
+/* Making a round cropping frame. */
+.uploadcare--jcrop-holder>div>div {
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 990px) { #social_right { padding-left: 0px; } #social_left { padding-right: 0px; }  }
+
+img
+{
+	max-width: 100%;
+}
+
+#messages
+{
+	padding: 0 10px;
+	margin: 1em 0;
+	border: 1px solid #999;
+}
+
+#token_symbol {
+	padding: 25px 0px 5px 5px;
+	font-size: 20px;
+	color: #524F4F;
+}
+
+.symbol_text {
+	padding-top: 25px;
+}
+
+.form-row {
+	padding-top: 25px;
+}
+
+#token_decimals {
+	padding: 25px 0px 5px 5px;
+	font-size: 40px;
+	color: #524F4F;
+	font-weight: bold;
+}
+
+#token-form {
+	padding: 5% 10% 0px 10%;
+	position: relative;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 20px;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-size: 20px;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    font-size: 20px;
+}
+
+#token_symbol::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 15px;
+}
+
+#token_symbol:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-size: 15px;
+}
+
+#token_symbol::-ms-input-placeholder { /* Microsoft Edge */
+    font-size: 15px;
+}
+
+.min_amount {
+	font-weight: bold;
+	color: #524F4F;
+	font-size: 20px;
+}
+
+.min_symbol {
+	font-weight: lighter;
+	color: black;
+	font-size: 15px;
+}
+
+#min_message {
+	float: right;
+	padding-right: 10%;
+	padding-top: 20px;
+}
+
+.token-box button {
+	position: relative;
+	float: left;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#owner_message {
+	float: right;
+	text-align: right;
+	padding-top: 50px;
+}
+
+@media only screen and (max-width: 990px) { #owner_message { padding-top: 10px; text-align: left; float: left;} }
+
+#owner_address {
+	padding-top: 30px;
+	color: #524F4F;
+}
+
+#owner_address::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 20px;
+}
+
+
+#owner_address::placeholder { /* Internet Explorer 10-11 */
+    font-size: 20px;
+}
+
+#owner_address::placeholder { /* Microsoft Edge */
+    font-size: 20px;
+}
+
+#submit_btn {
+	color: #4159FB;
+	border-color: #4159FB;
+}
+
+.submit {
+	padding-top: 10%;
+}
+
+#footers {
+	position: relative;
+	margin-top: 10%;
+}
+
+@media only screen and (max-width: 990px) { #min_message { float: left; padding-right: 0px; padding-top: 0px; } }
+@media only screen and (max-width: 770px) { #footers { margin-top: 0px; } #token_name { font-size: 30px; } }
+@media only screen and (max-width: 400px) { #footers { margin-top: 0px; } #token_name { font-size: 25px; } }
+
+.form-message .input-field.input-focused .input-title { top: -10px; transform: scale(0.8); }
+.form-message .input-field.input-focused .txtarea + label + .input-title { top: -10px; transform: scale(0.8); }
+
+
