@@ -1,10 +1,10 @@
 $('.buynow_section').on("click",function(){
 	var subdomain = $(this).attr('data-subdomain');
 
-	console.log('https://' + subdomain + '.iconemy.io/buynow');
+	console.log('https://www..iconemy.io/projects/' + subdomain + '/buynow');
 	
 	// Re-direct to new project form
-	window.location.href = 'https://' + subdomain + '.iconemy.io/buynow';
+	window.location.href = 'https://www..iconemy.io/projects/' + subdomain + '/buynow';
 });
 
 $('#new_token').on("click",function(){
