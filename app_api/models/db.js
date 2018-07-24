@@ -5,9 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var gracefulShutdown;
-// var dbURI = 'mongodb://localhost/iconemy';
-
-var	dbURI = process.env.MONGOLAB_URI;
+var dbURI = 'mongodb://localhost/iconemy';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
