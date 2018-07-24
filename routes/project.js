@@ -15,4 +15,11 @@ module.exports = function (app) {
 	// Projects points to actual project pages
 	app.get('/projects/:projectname', project.index); 
 
+	// Update project details
+	app.get('/projects/:projectname/update', project.update);
+
+	app.post('/projects/:projectname/update', project.doUpdate);
+
+	app.get('/projects/:projectname/buynow', project.buynow);
+
 };

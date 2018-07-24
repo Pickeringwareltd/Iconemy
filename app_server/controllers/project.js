@@ -16,15 +16,24 @@ var renderProject = function(req, res, responseBody, subdomain){
 		data = responseBody[0];
 		data.usingSubdomain = subdomain;
 
+		var active = -1;
+
 		var i;
 		for (i = 0; i < data.crowdsales.length; i++) { 
+
+			// Check if any of the crowdsales are currently active
+			if(Date.now() > Date.parse(data.crowdsales[i].start) && Date.now() < Date.parse(data.crowdsales[i].end)){
+				active = i;
+			}
+
 			data.crowdsales[i].start = renderDate(data.crowdsales[i].start);
 			data.crowdsales[i].end = renderDate(data.crowdsales[i].end);
 		}
 
 		res.render('project_interaction', { 
 			title: responseBody.name,
-			projectInfo: data
+			projectInfo: data,
+			active: active
 		});
 	} else {
 		res.render('error', { 
@@ -87,6 +96,7 @@ var renderCreateProject = function(req, res){
 		}
 	}
 
+	// Render create project form with placeholders
 	res.render('create_project', { 
 		title: 'Create project',
 		message: message
@@ -95,6 +105,103 @@ var renderCreateProject = function(req, res){
 
 exports.create = function(req, res){
 	renderCreateProject(req, res);
+};
+
+// Renders the create token form
+var renderUpdateProject = function(req, res, _data){
+	var message;
+
+	if(req.query.err){
+		if(req.query.err == 'nodata'){
+			message = 'All fields marked with * are required!';
+		} else {
+			message = 'Oops! Somethings gone wrong';
+		}
+	}
+
+	var data = _data[0];
+
+	res.render('update_project', { 
+		title: 'Update project',
+		project: data,
+		message: message
+	});
+}
+
+exports.update = function(req, res){
+	var requestOptions, path;
+
+	// Make sure we are using the correct subdomain
+	var projectName =  req.params.projectname;
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/projects/' + projectName;
+  
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {}
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	renderUpdateProject(req, res, body);
+   	});
+};
+
+// Create project controller for dealing with POST requests containing actual new project data.
+exports.doUpdate = function(req, res){
+	var requestOptions, path, postdata;
+
+	var postdata = getData(req);
+  	var subdomain = postdata.subdomain;
+
+  	path = "/api/projects/" + subdomain;
+
+	requestOptions = {
+  		url : apiOptions.server + path,
+  		method : "PUT",
+  		json : postdata
+	}; 
+
+	var error = validateProject(postdata);
+
+	// Check the fields are present
+	if (error == 'All fields marked with * are required!') {
+  		res.redirect('/projects/' + subdomain + 'update?err=nodata');
+	} else if(error != undefined) {
+		res.render('update_project', { 
+			title: 'Update project',
+			project: postdata,
+			message: error
+		});
+	} else {
+
+		request( requestOptions, function(err, response, body) {
+	        if (response.statusCode === 200) {
+	        	res.redirect('/projects/' + subdomain);
+	        } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+	        	if(response.body.errors.website != undefined){
+	        		res.render('update_project', {title: 'Update project', message: 'We already have a project with that website.'});
+	        	} else {
+					res.redirect('/projects/' + subdomain + 'update?err=val');
+				}
+	        } else if (response.statusCode === 400 && body.message) {
+	        	res.render('update_project', { 
+					title: 'Update project',
+					message: body.message
+				});
+	      	} else {
+	        	res.render('error', { 
+					message: body.message,
+					error: {
+						status: 404
+					}
+				});
+			} 
+		});
+		
+	}
+
 };
 
 var validateProject = function(postdata){
@@ -172,6 +279,16 @@ var validateProject = function(postdata){
   return error;
 };
 
+var addHttps = function (url) {
+	var first = url.substring(0, 8);
+
+	if(first != 'https://' && first != ''){
+		url = 'https://' + url;
+	}
+
+	return url;
+};
+
 var getData = function(req) {
 
 	var subdomain = req.body.subdomain;
@@ -186,12 +303,12 @@ var getData = function(req) {
 		subdomain: subdomain,
 		logo: req.body.logo,
 		createdBy: 'Jack',
-		facebook: req.body.facebook,
-		twitter: req.body.twitter,
-		youtube: req.body.youtube,
-		telegram: req.body.telegram,
-		bitcointalk: req.body.bitcoin,
-		medium: req.body.medium,
+		facebook: addHttps(req.body.facebook),
+		twitter: addHttps(req.body.twitter),
+		youtube: addHttps(req.body.youtube),
+		telegram: addHttps(req.body.telegram),
+		bitcointalk: addHttps(req.body.bitcoin),
+		medium: addHttps(req.body.medium),
 		onepager: req.body.onepager,
 		whitepaper: req.body.whitepaper
 	};
@@ -288,5 +405,72 @@ exports.myprojects = function(req, res){
 
    	request( requestOptions, function(err, response, body) {
       	renderMyProjects(req, res, body);
+   	});
+};
+
+var renderBuyNow = function(req, res, body){
+	if(body[0]){
+		// Need to render crowdsale dates properly
+		data = body[0];
+
+		var active = -1;
+
+		var i;
+		for (i = 0; i < data.crowdsales.length; i++) { 
+
+			// Check if any of the crowdsales are currently active
+			if(Date.now() > Date.parse(data.crowdsales[i].start) && Date.now() < Date.parse(data.crowdsales[i].end)){
+				active = i;
+			}
+
+			data.crowdsales[i].start = renderDate(data.crowdsales[i].start);
+			data.crowdsales[i].end = renderDate(data.crowdsales[i].end);
+		}
+
+		if(active > -1){
+			res.redirect('/projects/' + data.subdomain + '/crowdsales/' + active);
+		} else {
+			res.render('project_interaction', { 
+				title: body.name,
+				projectInfo: data,
+				active: active,
+				message: 'You cannot currently buy this coin now.'
+			});
+		}
+
+	} else {
+		res.render('error', { 
+			title: 'error',
+			message: 'We couldnt find what you were looking for!',
+			error: {
+				status: 404
+			}
+		});
+	}
+}
+
+exports.buynow = function(req, res){
+	var requestOptions, path;
+
+	// Make sure we are using the correct subdomain
+	var projectName =  req.params.projectname;
+	var subdomain = false;
+
+	if(projectName == undefined){
+		projectName = req.subdomains;
+		subdomain = true;
+	}
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/projects/' + projectName;
+  
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {}
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	renderBuyNow(req, res, body);
    	});
 };

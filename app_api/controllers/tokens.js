@@ -380,7 +380,7 @@ var dealWithBalance = function(project, balance, res) {
 	if(balance >= payment.amount){
 
 		payment.paid = Date.now();
-		project.token.deployed = "Deploying";
+		project.token.deployed = "Done";
 
 		project.save(function(err, project) {
 			if (err) {

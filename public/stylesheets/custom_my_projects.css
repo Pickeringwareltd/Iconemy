@@ -14,6 +14,10 @@
     border-color: #fff;
 }
 
+.project { 
+	margin-top: 25px;
+}
+
 /* New project card */
 
 #new_project {

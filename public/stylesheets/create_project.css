@@ -95,6 +95,12 @@
 	margin-top: 40%;
 }
 
+#edit_logo {
+	position: relative;
+	top: 5px;
+	left: 45%;
+}
+
 @media only screen and (max-width: 990px) { #social_right { padding-left: 0px; } #social_left { padding-right: 0px; }  }
 
 img

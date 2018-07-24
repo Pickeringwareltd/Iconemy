@@ -62,6 +62,8 @@
 
 	<!-- Start Section -->
 	<div class="section">
+		<a href="/projects/<%= projectInfo.subdomain %>/update" id="edit_project">Edit project</a>
+		
 		<div class="container">
 			<div class="gaps size-6x"></div>
 
@@ -76,7 +78,7 @@
 					</div>
 					
 					<div class="row social_row">
-					<% if (projectInfo.social) { %>
+					<% if (projectInfo.social != {}) { %>
 						<p id="social_title" class="social_section">Social</p>
 						<div class="social_section">
 							<ul class="social">
@@ -100,7 +102,7 @@
 					
 					<div class="row website">
 						<p id="page_website_title">Website</p>
-						<p id="page_website"><%= projectInfo.website %></p>
+						<a href="https://<%= projectInfo.website %>" id="page_website"><%= projectInfo.website %></a>
 					</div>
 
 					<div class="row documents">
@@ -151,12 +153,13 @@
 							<br/ >
 							<p class="subdomain"><b><%= projectInfo.subdomain %></b></p>
 						</div>
-
-						<div class="row buynow_section">
+						<% if(active > -1){ %>
+						<div class="row buynow_section" data-subdomain="<%= projectInfo.subdomain %>">
 							<p class="title" id="buynow">Buy now</p>
 							<br/ >
 							<p class="buynow"><b><%= projectInfo.subdomain %>.iconemy.io/buynow</b></p>
 						</div>
+						<% } %>
 						<% if(!projectInfo.subdomain){ %>
 							<div class="row admin_section">
 								<p class="title" id="admin">Admin</p>

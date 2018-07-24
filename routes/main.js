@@ -13,4 +13,11 @@ module.exports = function (app) {
 	  		res.render('index');
 		}
 	}); 
+
+	app.get('/buynow', function(req, res) {
+		// If there is a subdomain attached, point to appropriate project
+		if (req.subdomain) {
+	  		project.buynow(req, res);
+		}
+	}); 
 };

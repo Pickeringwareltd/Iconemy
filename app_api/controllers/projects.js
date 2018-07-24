@@ -196,15 +196,27 @@ module.exports.projectsReadOne = function (req, res) {
 
 };
 
+
+
 // You should only be able to update the common project details NOT INCLUDING subdomain as users will no longer be able to 
 // find the project.
 module.exports.projectssUpdateOne = function (req, res) { 
 	var projectid = req.params.projectid;
 
+	var data = getData(req);
+	var error = validateProject(data);
+
+	if(error != undefined) {
+		sendJsonResponse(res, 404, { "message": error });
+		return;	
+	}
+
 	if(projectid) {
 		Project
 			.find({subdomain: req.params.projectid})
-			.exec( function(err, project) {
+			.exec( function(err, _project) {
+				var project = _project[0];
+
 				if (!project) {
 				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
 				    return;
@@ -218,25 +230,23 @@ module.exports.projectssUpdateOne = function (req, res) {
 				}
 				
 				// Upload information from correct values.
-				project.name = req.body.name,
-				project.description = req.body.description,
-				project.website = req.body.website,
-				project.subdomain = req.body.subdomain,
-				project.logo = req.body.logo,
-				project.created = Date.now(),
-				project.createdBy = project.createdBy,
-				project.social.facebook = req.body.facebook,
-				project.social.twitter = req.body.twitter,
-				project.social.youtube = req.body.youtube,
-				project.social.github = req.body.github,
-				project.social.bitcointalk = req.body.bitcointalk,
-				project.social.medium = req.body.medium,
-				project.onepager = req.body.onepager,
-				project.whitepaper = req.body.whitepaper
+				project.name = data.name,
+				project.description = data.description,
+				project.website = data.website,
+				project.logo = data.logo,
+				project.social.facebook = data.social.facebook,
+				project.social.twitter = data.social.twitter,
+				project.social.youtube = data.social.youtube,
+				project.social.github = data.social.github,
+				project.social.bitcointalk = data.social.bitcointalk,
+				project.social.medium = data.social.medium,
+				project.onepager = data.onepager,
+				project.whitepaper = data.whitepaper
 
 				// Try to save the project, return any validation errors if necessary
 				project.save( function(err, project) {
 					if (err) {
+						console.log(err);
 					    sendJsonResponse(res, 404, err);
 					} else {
 					    sendJsonResponse(res, 200, project);
