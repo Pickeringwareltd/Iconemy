@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 
 var apiOptions = {
-  server : "http://localhost:3000"
+  server : "http://localhost:5000"
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -76,7 +76,9 @@ exports.index = function(req, res){
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
-  		json : {}
+  		json : {
+  			user: req.user
+  		}
 	};
 
    	request( requestOptions, function(err, response, body) {
@@ -104,6 +106,11 @@ var renderCreateProject = function(req, res){
 }
 
 exports.create = function(req, res){
+	// If not logged in
+	if(req.user == undefined){
+		res.redirect('/login');
+		return;
+	}
 	renderCreateProject(req, res);
 };
 
@@ -130,6 +137,12 @@ var renderUpdateProject = function(req, res, _data){
 
 exports.update = function(req, res){
 	var requestOptions, path;
+
+	// If not logged in
+	if(req.user == undefined){
+		res.redirect('/login');
+		return;
+	}
 
 	// Make sure we are using the correct subdomain
 	var projectName =  req.params.projectname;
@@ -394,13 +407,21 @@ var renderMyProjects = function(req, res, responseBody){
 exports.myprojects = function(req, res){
   	var requestOptions, path;
 
+  	// If not logged in
+	if(req.user == undefined){
+		res.redirect('/login');
+		return;
+	}
+
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects';
-  
+
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
-  		json : {}
+  		json : {
+  			user: req.user
+  		}
 	};
 
    	request( requestOptions, function(err, response, body) {

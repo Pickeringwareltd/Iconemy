@@ -141,12 +141,16 @@ module.exports.projectsCreate = function (req, res) {
 
 
 };
-
+ 
 module.exports.projectsListByStartTime = function (req, res) { 
+
+	// Get the user obejct from the request in order to find their projects
+	var user = req.body.user;
+	var userID = user.user_id;
 
 	// Get all projects and sort by the date created in descending order (newest first)
 	Project
-		.find()
+		.find({createdBy: userID})
 		.sort('-created')
 		.exec(function(err, projects) {
 			// If no project is found, return custom error message

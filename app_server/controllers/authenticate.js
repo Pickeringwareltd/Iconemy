@@ -1,7 +1,8 @@
 var express = require('express');
 
 exports.login = function(req, res){
-	res.render('login', { title: 'Login' });
+	console.log(req.user);
+	res.render('login', { title: 'Log In' });
 };
 
 exports.signup = function(req, res){
