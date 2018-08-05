@@ -14,6 +14,7 @@ var needsLogIn = jwt({
     	if(req.session.passport == undefined){	
     		return null;
 	    } else {
+            console.log('logged in');
 	    	// get the token from the users session, decode it and validate it
 	    	var id_token = req.session.passport.user.tokens.id_token;
 	    	return id_token;

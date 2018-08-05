@@ -55,6 +55,8 @@ var checkOwner = function(req, res, body, next){
 	var project = body[0];
 	var owner = project.createdBy;
 
+	console.log('project = ' + project);
+
 	if(owner === req.session.passport.user.userid){
 		next();
 	} else {
