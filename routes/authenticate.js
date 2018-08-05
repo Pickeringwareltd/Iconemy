@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === 'production') {
 const env = {
   AUTH0_CLIENT_ID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
   AUTH0_DOMAIN: 'damp-surf-6213.auth0.com',
-  AUTH0_CALLBACK_URL: callback_url
-  AUTH0_AUDIENCE: 
+  AUTH0_CALLBACK_URL: callback_url,
+  AUTH0_AUDIENCE: audience
 };
 
 var project = require('../app_server/controllers/project');
@@ -32,7 +32,7 @@ module.exports = function (app) {
 	    clientID: env.AUTH0_CLIENT_ID,
 	    domain: env.AUTH0_DOMAIN,
 	    redirectUri: env.AUTH0_CALLBACK_URL,
-	    audience: audience,
+	    audience: env.AUTH0_AUDIENCE,
 	    responseType: 'code',
 	    scope: 'openid profile'
 	  }),
