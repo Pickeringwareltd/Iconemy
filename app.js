@@ -43,8 +43,7 @@ session_store.on('connected', function() {
    
 // Catch errors
 session_store.on('error', function(error) {
-  assert.ifError(error);
-  assert.ok(false);
+  console.log('Session store ERROR: ' + error);
 });
 
 // declare the use of sessions in the app in order to run authentication with OAuth
