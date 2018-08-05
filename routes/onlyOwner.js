@@ -11,9 +11,7 @@ var apiOptions = {
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  	apiOptions = {
-  		server : "http://www.iconemy.io/"
-	};
+  	apiOptions.server = "http://www.iconemy.io/";
 }
 
 
@@ -26,6 +24,8 @@ exports.require = function(req, res, next){
 	// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
 	if(req.session.loggedIn){
 		var requestOptions = getRequestOptions(req, res);
+
+		console.log('options = ' + requestOptions);
 
 	   	request( requestOptions, function(err, response, body) {
 	      	checkOwner(req, res, body, next);
@@ -55,13 +55,9 @@ var checkOwner = function(req, res, body, next){
 	var project = body[0];
 	var owner = project.createdBy;
 
-	console.log('body = ' + body);
-
 	if(owner === req.session.passport.user.userid){
-		console.log('next called');
 		next();
 	} else {
-		console.log('other is called');
-		res.redirect('/projects/' + project.subdomain);
+		res.redirect('/projects');
 	}
 };
