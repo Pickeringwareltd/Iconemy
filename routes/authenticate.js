@@ -3,10 +3,23 @@ const passport = require('passport');
 const request = require('request');
 const router = express.Router();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
+var callback_url = 'http://localhost:3000/authenticate';
+var audience = 'http://localhost:3000/api';
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+  callback_url = 'https://iconemy-start.herokuapp.com/authenticate';
+  audience = 'https://iconemy-start.herokuapp.com/api';
+}
+
 const env = {
   AUTH0_CLIENT_ID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
   AUTH0_DOMAIN: 'damp-surf-6213.auth0.com',
-  AUTH0_CALLBACK_URL: 'http://localhost:3000/authenticate'
+  AUTH0_CALLBACK_URL: callback_url
+  AUTH0_AUDIENCE: 
 };
 
 var project = require('../app_server/controllers/project');
@@ -19,7 +32,7 @@ module.exports = function (app) {
 	    clientID: env.AUTH0_CLIENT_ID,
 	    domain: env.AUTH0_DOMAIN,
 	    redirectUri: env.AUTH0_CALLBACK_URL,
-	    audience: 'http://localhost:3000/api',
+	    audience: audience,
 	    responseType: 'code',
 	    scope: 'openid profile'
 	  }),

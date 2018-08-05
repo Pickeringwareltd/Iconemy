@@ -1,13 +1,24 @@
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
+var callback_url = 'http://localhost:3000/authenticate';
+
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+  callback_url = 'https://iconemy-start.herokuapp.com/authenticate';
+}
+
 // Configure Passport to use Auth0
 const strategy = new Auth0Strategy(
   {
     domain: 'damp-surf-6213.auth0.com',
     clientID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
     clientSecret: process.env.AUTH0_CLIENT_SECRET ,
-    callbackURL: 'http://localhost:3000/authenticate'
+    callbackURL: callback_url
   },
   (accessToken, refreshToken, extraParams, profile, done) => {
     // Add the tokens to the user object in request

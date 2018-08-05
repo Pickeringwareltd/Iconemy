@@ -1,6 +1,17 @@
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
+var jwt_audience = 'http://localhost:3000/api';
+
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+  jwt_audience = 'https://iconemy-start.herokuapp.com/api';
+}
+
 var needsLogIn = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
@@ -8,7 +19,7 @@ var needsLogIn = jwt({
         jwksRequestsPerMinute: 5,
         jwksUri: "https://damp-surf-6213.auth0.com/.well-known/jwks.json"
     }),
-    audience: 'http://localhost:3000/api',
+    audience: jwt_audience,
     issuer: "https://damp-surf-6213.auth0.com/",
     algorithms: ['RS256']
 });
