@@ -1,0 +1,47 @@
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+
+// Configure Passport to use Auth0
+const strategy = new Auth0Strategy(
+  {
+    domain: 'damp-surf-6213.auth0.com',
+    clientID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
+    clientSecret: process.env.AUTH0_CLIENT_SECRET ,
+    callbackURL: 'http://localhost:3000/authenticate'
+  },
+  (accessToken, refreshToken, extraParams, profile, done) => {
+    // Add the tokens to the user object in request
+    var accessToken = accessToken;
+    var idToken = extraParams.id_token;
+
+    var user = profile;
+
+    user.tokens = {
+      access_token: accessToken,
+      id_token: idToken
+    };
+
+    return done(null, user);
+  }
+);
+
+passport.use(strategy);
+
+// These functions are used to store and collect user data from a session. 
+// For example, you could store just the userID in the session by returning done(null, user.id)
+// This would store the user ID in the session.
+passport.serializeUser(function(user, done) {
+
+  // We only need to store the user ID and the tokens for authentication
+  var session_store = {
+    userid: user.id,
+    tokens: user.tokens
+  };
+
+  done(null, session_store);
+});
+
+// You could then retrieve the user id from the session, collect the user objects and add that to the request. 
+passport.deserializeUser(function(session_store, done) {
+  done(null, session_store);
+});

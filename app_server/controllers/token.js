@@ -2,7 +2,6 @@ var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
 
-
 var apiOptions = {
   server : "http://localhost:3000"
 };
@@ -24,11 +23,18 @@ var getRequestOptions = function(req, res){
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName + '/token';
-  
+
+  	if(!req.session.loggedIn){
+  		access_token = '';
+  	} else {
+  		access_token = req.session.passport.user.tokens.access_token;
+  	}
+
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
-  		json : {}
+  		json : {},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	};
 
 	return requestOptions;
@@ -112,14 +118,17 @@ exports.doCreation = function(req, res){
     	decimals: parseInt(req.body.token_decimals),
     	owner: req.body.owner_address,
     	logo: req.body.logo,
-    	createdBy: 'Jack',
+    	createdBy: req.session.passport.user.userid,
     	discount: req.body.discount
 	};
+
+	var access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
   		method : "POST",
-  		json : postdata
+  		json : postdata,
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	// Check the fields are present
@@ -130,7 +139,7 @@ exports.doCreation = function(req, res){
 	} else {
 
 		request( requestOptions, function(err, response, body) {
-	        if (response.statusCode === 201) {
+	        if (response.statusCode === 201 || response.statusCode === 302) {
 	        	res.redirect('/pay?project=' + projectname + '&item=token');
 	        } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
 				res.redirect('/projects/' + projectname + '/token/create?err=val');

@@ -64,3 +64,4 @@ process.on('SIGTERM', function() {
 // Require and include the projects and discounts schema
 require('./projects');
 require('./discounts');
+require('./users');

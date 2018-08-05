@@ -22,34 +22,8 @@
 	<!-- Header --> 
 	<header class="site-header is-sticky">
 
-		<!-- Navbar -->
-		<div class="navbar navbar-expand-lg is-transparent" id="mainnav">
-			<nav class="container">
-			
-				<a class="navbar-brand animated" data-animate="fadeInDown" data-delay=".65" href="./">
-					<img class="logo logo-dark" alt="logo" src="/images/logo_dark_custom.png">
-					<img class="logo logo-light" alt="logo" src="/images/logo_light_custom.png">
-				</a>
-				
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
-					<span class="navbar-toggler-icon">
-						<span class="ti ti-align-justify"></span>
-					</span>
-				</button>
-
-				<div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
-					<ul class="navbar-nav animated remove-animation" data-animate="fadeInDown" data-delay=".9">
-						<li class="nav-item"><a class="nav-link menu-link" href="/">Home</a></li>
-						<li class="nav-item"><a class="nav-link menu-link" href="/projects">Projects</a></li>
-						<li class="nav-item"><a class="nav-link menu-link" href="https://docs.iconemy.io" target="_blank">Docs</a></li>
-					</ul>
-					<ul class="navbar-nav navbar-btns animated remove-animation" data-animate="fadeInDown" data-delay="1.15">
-						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/">Log out</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		<!-- End Navbar -->
+		<!-- Navbars -->
+		<% include partials/portal_navbar_dark %>
 
 		<!-- Banner/Slider -->
 		<div id="header" class="banner banner-tokensale d-flex align-items-center">

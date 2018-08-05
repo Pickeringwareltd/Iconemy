@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 
 var apiOptions = {
-  server : "http://localhost:5000"
+  server : "http://localhost:3000"
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -10,11 +10,18 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var renderProject = function(req, res, responseBody, subdomain){
+	var isOwner = false;
 
 	if(responseBody[0]){
 		// Need to render crowdsale dates properly
 		data = responseBody[0];
 		data.usingSubdomain = subdomain;
+
+		if(req.session.passport != undefined){
+			if(req.session.passport.user.userid == data.createdBy){
+				isOwner = true;
+			}
+		} 	
 
 		var active = -1;
 
@@ -33,7 +40,8 @@ var renderProject = function(req, res, responseBody, subdomain){
 		res.render('project_interaction', { 
 			title: responseBody.name,
 			projectInfo: data,
-			active: active
+			active: active,
+			isOwner: isOwner
 		});
 	} else {
 		res.render('error', { 
@@ -90,6 +98,8 @@ exports.index = function(req, res){
 var renderCreateProject = function(req, res){
 	var message;
 
+	console.log('server = ' + JSON.stringify(req.session));
+
 	if(req.query.err){
 		if(req.query.err == 'nodata'){
 			message = 'All fields marked with * are required!';
@@ -107,10 +117,6 @@ var renderCreateProject = function(req, res){
 
 exports.create = function(req, res){
 	// If not logged in
-	if(req.user == undefined){
-		res.redirect('/login');
-		return;
-	}
 	renderCreateProject(req, res);
 };
 
@@ -149,11 +155,13 @@ exports.update = function(req, res){
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName;
+  	var access_token = req.session.passport.user.tokens.access_token;
   
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
-  		json : {}
+  		json : {},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	};
 
    	request( requestOptions, function(err, response, body) {
@@ -169,11 +177,13 @@ exports.doUpdate = function(req, res){
   	var subdomain = postdata.subdomain;
 
   	path = "/api/projects/" + subdomain;
+  	var access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
   		method : "PUT",
-  		json : postdata
+  		json : postdata,
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	var error = validateProject(postdata);
@@ -315,7 +325,7 @@ var getData = function(req) {
 		website: req.body.website,
 		subdomain: subdomain,
 		logo: req.body.logo,
-		createdBy: 'Jack',
+		createdBy: req.session.passport.user.userid,
 		facebook: addHttps(req.body.facebook),
 		twitter: addHttps(req.body.twitter),
 		youtube: addHttps(req.body.youtube),
@@ -337,11 +347,13 @@ exports.doCreation = function(req, res){
   	
   	var postdata = getData(req);
   	var subdomain = postdata.subdomain;
+  	var access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
   		method : "POST",
-  		json : postdata
+  		json : postdata,
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	var error = validateProject(postdata);
@@ -407,18 +419,15 @@ var renderMyProjects = function(req, res, responseBody){
 exports.myprojects = function(req, res){
   	var requestOptions, path;
 
-  	// If not logged in
-	if(req.user == undefined){
-		res.redirect('/login');
-		return;
-	}
-
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects';
+
+  	var access_token = req.session.passport.user.tokens.access_token;
 
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' },
   		json : {
   			user: req.user
   		}

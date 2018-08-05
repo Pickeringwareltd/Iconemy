@@ -43,6 +43,8 @@ exports.create = function(req, res){
 		path = '/api/projects/' + project + '/token/payment';
 	} 
 
+	var access_token = req.session.passport.user.tokens.access_token;
+
 	requestOptions = {
 		url : apiOptions.server + path,
 		method : "POST",
@@ -50,7 +52,8 @@ exports.create = function(req, res){
 			projectid: project,
 			item: item,
 			crowdsaleid: id
-		}
+		},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	request( requestOptions, function(err, response, body) {
@@ -131,6 +134,8 @@ exports.confirm = function(req, res) {
 		path = '/api/projects/' + project + '/token/payment/confirm';
 	}
 
+	var access_token = req.session.passport.user.tokens.access_token;
+
 	requestOptions = {
 		url : apiOptions.server + path,
 		method : "PUT",
@@ -138,8 +143,9 @@ exports.confirm = function(req, res) {
 			currency: currency,
 			amount: amount,
 			createdBy: 'Jack'
-		}
-	}; 
+		},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+	};
 
 	request( requestOptions, function(err, response, body) {
 
@@ -203,11 +209,14 @@ exports.finalise = function(req, res) {
 		path = '/api/projects/' + project + '/crowdsales/' + sale_id + '/payment/finalise';
 	}
 
+	var access_token = req.session.passport.user.tokens.access_token;
+
 	// Send any empty request, the api will then check the wallet and do the rest.
 	requestOptions = {
 		url : apiOptions.server + path,
 		method : "PUT",
-		json : {}
+		json : {},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	request( requestOptions, function(err, response, body) {

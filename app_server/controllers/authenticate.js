@@ -1,7 +1,6 @@
 var express = require('express');
 
 exports.login = function(req, res){
-	console.log(req.user);
 	res.render('login', { title: 'Log In' });
 };
 

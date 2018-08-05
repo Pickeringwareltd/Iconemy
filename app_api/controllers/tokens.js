@@ -14,6 +14,8 @@ module.exports.tokenCreate = function (req, res) {
 	// To add a token, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
 	var projectID = req.params.projectid;
 
+	console.log('called');
+
 	if(!projectID){
 		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
 		return;
@@ -174,6 +176,7 @@ module.exports.tokenUpdate = function (req, res) {
  * It then returns an object containing the price of the item in USD/ETH/BTC and the discount that has been applied
  */
 module.exports.getPrice = function (req, res) { 
+
 	// If the request parameters contains a project ID, then execute a query finding the object containing that id
 	if (req.body && req.body.projectid && req.body.item) {
 

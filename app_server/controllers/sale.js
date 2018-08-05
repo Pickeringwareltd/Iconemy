@@ -120,10 +120,13 @@ exports.create = function(req, res){
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName + '/token';
 
+  	var access_token = req.session.passport.user.tokens.access_token;
+
   	requestOptions = {
   		url: apiOptions.server + path,
   		method : "GET",
-  		json : {}
+  		json : {},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	};
 
 	request( requestOptions, function(err, response, data) {
@@ -202,7 +205,7 @@ var formatData = function(req){
     	commission: parseInt(req.body.commission),
     	admin: req.body.admin_wallet,
 		beneficiary: req.body.beneficiary_wallet,
-    	createdBy: 'Jack',
+    	createdBy: req.session.passport.user.userid,
     	discount: req.body.discount
 	};
 
@@ -218,10 +221,13 @@ exports.doCreation = function(req, res){
 
   	var postdata = formatData(req);
 
+  	var access_token = req.session.passport.user.tokens.access_token;
+
   	requestOptions = {
   		url : apiOptions.server + path,
   		method : "POST",
-  		json : postdata
+  		json : postdata,
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	}; 
 
 	// Check the fields are present

@@ -6,46 +6,62 @@ const logger = require('morgan');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
+
+// Require passport configuration
+require('./config/passport');
+
 var routesApi = require('./app_api/routes/index');
 
 var app = express();
 
-// Configure Passport to use Auth0
-const strategy = new Auth0Strategy(
-  {
-    domain: 'damp-surf-6213.auth0.com',
-    clientID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
-    clientSecret: process.env.AUTH0_CLIENT_SECRET ,
-    callbackURL: 'http://localhost:5000/usercallback'
-  },
-  (accessToken, refreshToken, extraParams, profile, done) => {
-    return done(null, profile);
-  }
-);
+// ******************************************* SESSION STORE ***********************************
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 
-passport.use(strategy);
+var dbURI = 'mongodb://localhost/iconemy';
 
-// This can be used to keep a smaller payload
-passport.serializeUser(function(user, done) {
-  done(null, user);
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+  dbURI = process.env.MONGOLAB_URI;
+}
+
+var session_store = new MongoDBStore({
+  uri: dbURI,
+  collection: 'mySessions'
 });
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+  
+session_store.on('connected', function() {
+  console.log('Session store connectd to: ' + dbURI);
+  session_store.client; // The underlying MongoClient object from the MongoDB driver
+});
+   
+// Catch errors
+session_store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
 });
 
 // declare the use of sessions in the app in order to run authentication with OAuth
 app.use(session({ 
-  resave: false,
+  resave: true,
   saveUninitialized: true,
-  secret: 'the super important secret for iconemy' 
+  secret: 'the super important secret for iconemy',
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000, //one week
+    httpOnly: true
+  },
+  store: session_store
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+// ******************************************* END SESSION STORE ***********************************
 
 // Specify where the views are found
 app.set('views', path.join(__dirname, '/app_server/views'));
@@ -73,9 +89,30 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(function(req, res, next) {
+  res.locals.loggedIn = false;
+
+  if(req.session.loggedIn){ 
+      res.locals.loggedIn = true;
+  } else {
+    // If user has not logged in yet, set the 'return to' session path to previous url
+    if(req.path != '/authenticate' && req.path != '/login'){
+        req.session.returnTo = req.path;
+    }
+  }
+  next();
+});
+
 // require that the app sends requests to the routes folder (index.js)
 require('./routes')(app);
 app.use('/api', routesApi);
+
+// Catch unauthorised errors and redirect users to log in page
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.redirect('/login');
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -82,6 +82,9 @@ var validateProject = function(data){
 }
 
 var getData = function(req){
+
+	console.log(req.session);
+
 	var data = {
 				name: req.body.name,
 				description: req.body.description,
@@ -106,6 +109,8 @@ var getData = function(req){
 }
 
 module.exports.projectsCreate = function (req, res) { 
+
+	console.log(req.session);
 
 	var data = getData(req);
 	var error = validateProject(data);
@@ -143,10 +148,9 @@ module.exports.projectsCreate = function (req, res) {
 };
  
 module.exports.projectsListByStartTime = function (req, res) { 
-
 	// Get the user obejct from the request in order to find their projects
 	var user = req.body.user;
-	var userID = user.user_id;
+	var userID = user.sub;
 
 	// Get all projects and sort by the date created in descending order (newest first)
 	Project
