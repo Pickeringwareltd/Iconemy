@@ -25,7 +25,7 @@ exports.require = function(req, res, next){
 	if(req.session.loggedIn){
 		var requestOptions = getRequestOptions(req, res);
 
-		console.log('options = ' + requestOptions);
+		console.log('options = ' + JSON.stringify(requestOptions));
 
 	   	request( requestOptions, function(err, response, body) {
 	      	checkOwner(req, res, body, next);
