@@ -11,7 +11,7 @@ var apiOptions = {
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  	apiOptions.server = "http://www.iconemy.io/";
+  	apiOptions.server = "http://www.iconemy.io";
 }
 
 
@@ -24,8 +24,6 @@ exports.require = function(req, res, next){
 	// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
 	if(req.session.loggedIn){
 		var requestOptions = getRequestOptions(req, res);
-
-		console.log('options = ' + JSON.stringify(requestOptions));
 
 	   	request( requestOptions, function(err, response, body) {
 	      	checkOwner(req, res, body, next);
