@@ -1,9 +1,21 @@
 var express = require('express');
 var request = require('request');
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
+
 var apiOptions = {
   server : "http://localhost:3000"
 };
+
+// If we are running on production, use the production server
+if (process.env.NODE_ENV === 'production') {
+  	apiOptions = {
+  		server : "http://www.iconemy.io/"
+	};
+}
+
 
 exports.require = function(req, res, next){
 
