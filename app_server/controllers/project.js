@@ -6,7 +6,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "https://iconemy-start.herokuapp.com";
+  apiOptions.server = "https://www.iconemy.io";
 }
 
 var renderProject = function(req, res, responseBody, subdomain){

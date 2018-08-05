@@ -9,7 +9,7 @@ var jwt_audience = 'http://localhost:3000/api';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  jwt_audience = 'https://iconemy-start.herokuapp.com/api';
+  jwt_audience = 'https://www.iconemy.io/api';
 }
 
 var needsLogIn = jwt({

@@ -14,8 +14,6 @@ module.exports.tokenCreate = function (req, res) {
 	// To add a token, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
 	var projectID = req.params.projectid;
 
-	console.log('called');
-
 	if(!projectID){
 		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
 		return;

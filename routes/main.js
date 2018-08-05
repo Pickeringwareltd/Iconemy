@@ -9,9 +9,9 @@ module.exports = function (app) {
 		// If there is a subdomain attached, point to appropriate project
 		if (req.subdomain) {
 	  		project.index(req, res);
-		} else {
-	  		res.render('index');
 		}
+
+	  	res.render('index');
 	}); 
 
 	app.get('/buynow', function(req, res) {

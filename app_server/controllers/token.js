@@ -7,7 +7,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "https://iconemy-start.herokuapp.com";
+  apiOptions.server = "https://www.iconemy.io";
 }
 
 // Collates the API request for getting token information

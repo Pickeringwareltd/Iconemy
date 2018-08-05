@@ -9,7 +9,7 @@ var callback_url = 'http://localhost:3000/authenticate';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  callback_url = 'https://iconemy-start.herokuapp.com/authenticate';
+  callback_url = 'http://www.iconemy.io/authenticate';
 }
 
 // Configure Passport to use Auth0

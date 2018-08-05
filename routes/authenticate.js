@@ -11,8 +11,8 @@ var callback_url = 'http://localhost:3000/authenticate';
 var audience = 'http://localhost:3000/api';
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  callback_url = 'https://iconemy-start.herokuapp.com/authenticate';
-  audience = 'https://iconemy-start.herokuapp.com/api';
+  callback_url = 'http://www.iconemy.io/authenticate';
+  audience = 'http://www.iconemy.io/api';
 }
 
 const env = {
