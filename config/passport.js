@@ -21,6 +21,7 @@ const strategy = new Auth0Strategy(
     callbackURL: callback_url
   },
   (accessToken, refreshToken, extraParams, profile, done) => {
+    console.log('callback recieved');
     // Add the tokens to the user object in request
     var accessToken = accessToken;
     var idToken = extraParams.id_token;
@@ -43,6 +44,8 @@ passport.use(strategy);
 // For example, you could store just the userID in the session by returning done(null, user.id)
 // This would store the user ID in the session.
 passport.serializeUser(function(user, done) {
+  console.log('serialise called');
+
 
   // We only need to store the user ID and the tokens for authentication
   var session_store = {
