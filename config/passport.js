@@ -24,13 +24,14 @@ const strategy = new Auth0Strategy(
     // Add the tokens to the user object in request
     var accessToken = accessToken;
     var idToken = extraParams.id_token;
-
     var user = profile;
 
     user.tokens = {
       access_token: accessToken,
       id_token: idToken
     };
+
+    console.log('USER = ' + JSON.stringify(user));
 
     return done(null, user);
   }

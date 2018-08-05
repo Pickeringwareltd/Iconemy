@@ -37,6 +37,8 @@ module.exports = function (app) {
 	    scope: 'openid profile'
 	  }),
 	  function(req, res) {
+		console.log('login callback called');
+
 	    res.redirect('/');
 	  }
 	);
@@ -58,12 +60,18 @@ module.exports = function (app) {
 	app.get('/authenticate', passport.authenticate('auth0', { failureRedirect: '/' }), 
 		function(req, res) {
 
+			console.log('authenticate called');
+
 		 	if(req.query.code){
+				console.log('authenticate has code');
+
 		 		req.session.loggedIn = true;
 
 		 		if(req.session.returnTo == '/'){
 		 			req.session.returnTo = '/projects';
 		 		}
+
+				console.log('authenticate session return to = ' + req.session.returnTo);
 
 	   			res.redirect(req.session.returnTo || '/projects');
     			delete req.session.returnTo;
