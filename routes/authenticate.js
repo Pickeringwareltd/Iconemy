@@ -28,6 +28,20 @@ var project = require('../app_server/controllers/project');
 // Forward request onto the main controller
 module.exports = function (app) { 
 
+		// Perform the login
+	app.get('/signup',  passport.authenticate('auth0', {
+	    clientID: env.AUTH0_CLIENT_ID,
+	    domain: env.AUTH0_DOMAIN,
+	    redirectUri: env.AUTH0_CALLBACK_URL,
+	    audience: env.AUTH0_AUDIENCE,
+	    responseType: 'code',
+	    scope: 'openid profile'
+	  }),
+	  function(req, res) {
+	    res.redirect('/');
+	  }
+	);
+
 	// Perform the login
 	app.get('/login',  passport.authenticate('auth0', {
 	    clientID: env.AUTH0_CLIENT_ID,
@@ -38,8 +52,6 @@ module.exports = function (app) {
 	    scope: 'openid profile'
 	  }),
 	  function(req, res) {
-		console.log('login callback called');
-
 	    res.redirect('/');
 	  }
 	);

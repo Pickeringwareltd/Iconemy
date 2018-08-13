@@ -83,8 +83,6 @@ var validateProject = function(data){
 
 var getData = function(req){
 
-	console.log(req.session);
-
 	var data = {
 				name: req.body.name,
 				description: req.body.description,
@@ -109,8 +107,6 @@ var getData = function(req){
 }
 
 module.exports.projectsCreate = function (req, res) { 
-
-	console.log(req.session);
 
 	var data = getData(req);
 	var error = validateProject(data);

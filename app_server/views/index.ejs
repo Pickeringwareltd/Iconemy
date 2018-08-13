@@ -92,7 +92,7 @@
 										<span class="token-status-point token-status-point-3" style="left:80%;">Bonus</span>
 									</div>
 									<div>
-										<a href="/login" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
+										<a href="/projects" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
 									</div>
 								</div>
 							</div>
@@ -144,7 +144,7 @@
 						<p class="lead animated" data-animate="fadeInUp" data-delay=".3">Iconemy allows you to create and sell your own cryptocurrency in an official ERC-20 compliant crowdsale.</p>
 						<p class="animated" data-animate="fadeInUp" data-delay=".4">The cryptocurrency market has exploded in recent years with a countless amount of crowdsales being released for new and exciting innovations!</p>
 						<p class="animated" data-animate="fadeInUp" data-delay=".5">Here at Iconemy, you will have the chance to create and sell your very own cryptocurrency on the Ethereum Blockchain and sell it via our auotmated crowdsale platform.</p>
-						<a href="/login" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
+						<a href="/projects" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
@@ -189,7 +189,7 @@
 						We will create, audit and publish your smart contracts and webpages, so that all you have to do is find investors and hype your great idea!
 						<br>
 						<br>
-						<a href="/login" target="_blank" class="btn btn-outline">Create sale NOW</a>
+						<a href="/projects" target="_blank" class="btn btn-outline">Create sale NOW</a>
 					</div>
 				</div>
 			</div>
@@ -525,23 +525,23 @@
 						<li class="animated" data-animate="fadeInUp" data-delay=".3"><em class="fa fa-envelope"></em><span>jp@iconemy.io</span></li>
 						<li class="animated" data-animate="fadeInUp" data-delay=".4"><em class="fa fa-paper-plane"></em><span>Join us on Telegram</span></li>
 						<li class="animated" data-animate="fadeInUp" data-delay=".5">
-							<a href="/login" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
+							<a href="/projects" target="_blank" class="btn btn-alt btn-lg">Create sale NOW</a>
 						</li>
 					</ul>
 				</div><!-- .col  -->
 				<div class="col-lg-5">
-					<form id="contact-form" class="form-message text-left" action="form/contact.php" method="post">
+					<form id="contact-form" class="form-message text-left" action="/api/contact" method="post">
 						<div class="form-results"></div>
 						<div class="input-field animated" data-animate="fadeInUp" data-delay=".5">
-							<input name="contact-name" type="text" class="input-line required">
+							<input name="name" type="text" class="input-line required">
 							<label class="input-title">Your Name</label>
 						</div>
 						<div class="input-field animated" data-animate="fadeInUp" data-delay=".6">
-							<input name="contact-email" type="email" class="input-line required email">
+							<input name="email" type="email" class="input-line required email">
 							<label class="input-title">Your Email</label>
 						</div>
 						<div class="input-field animated" data-animate="fadeInUp" data-delay=".7">
-							<textarea name="contact-message" class="txtarea input-line required"></textarea>
+							<textarea name="message" class="txtarea input-line required"></textarea>
 							<label class="input-title">Your Message</label>
 						</div>
 						<input type="text" class="d-none" name="form-anti-honeypot" value="">
@@ -604,7 +604,7 @@
 				<div class="col-sm-6 col-xl-4 res-l-bttm">
 					<div class="footer-subscription">
 						<h6 class="animated" data-animate="fadeInUp" data-delay=".6">Subscribe to our newsletter</h6>
-						<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form animated" data-animate="fadeInUp" data-delay=".7">
+						<form id="subscribe-form" action="/api/subscribe" method="post" class="subscription-form animated" data-animate="fadeInUp" data-delay=".7">
 							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email" >
 							<input type="text" class="d-none" name="form-anti-honeypot" value="">
 							<button type="submit" class="btn btn-plane">Subscribe</button>

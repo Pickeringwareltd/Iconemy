@@ -3,10 +3,15 @@ var router = express.Router();
 var ctrlProjects = require('../controllers/projects');
 var ctrlTokens = require('../controllers/tokens');
 var ctrlCrowdsales = require('../controllers/crowdsales');
+var ctrlContact = require('../controllers/contact');
 const needsLogIn = require('./auth');
 const onlyOwner = require('./onlyOwner');
 
 // All routes in this file will be prepended with /api as this is what calls this file from app.js
+// This is used for adding users contact forms and subscriptions to the DB
+router.post('/contact', ctrlContact.contact);
+router.post('/subscribe', ctrlContact.subscribe);
+
 // projects
 router.get('/projects', needsLogIn, ctrlProjects.projectsListByStartTime);
 router.post('/projects/create', needsLogIn, ctrlProjects.projectsCreate);

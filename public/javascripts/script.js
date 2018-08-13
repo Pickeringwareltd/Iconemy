@@ -335,7 +335,12 @@
 					success: function(data) {
 						var type = (data.result==='error') ? 'alert-danger' : 'alert-success';
 						qf_results.removeClass( 'alert-danger alert-success' ).addClass( 'alert ' + type ).html(data.message).slideDown(400);
-						if (data.result !== 'error') { $(form).clearForm().find('.input-field').removeClass('input-focused'); }
+						if (data.result !== 'error') { $(form).clearForm(); }
+					},
+					error: function(data) {
+						var type = (data.responseJSON.result==='error') ? 'alert-danger' : 'alert-success';
+						qf_results.removeClass( 'alert-danger alert-success' ).addClass( 'alert ' + type ).html(data.responseJSON.message).slideDown(400);
+						if (data.responseJSON.result !== 'error') { $(form).clearForm(); }
 					}
 				});
 				}
@@ -355,6 +360,11 @@
 						var type = (data.result==='error') ? 'alert-danger' : 'alert-success';
 						sf_results.removeClass( 'alert-danger alert-success' ).addClass( 'alert ' + type ).html(data.message).slideDown(400);
 						if (data.result !== 'error') { $(form).clearForm(); }
+					},
+					error: function(data) {
+						var type = (data.responseJSON.result==='error') ? 'alert-danger' : 'alert-success';
+						sf_results.removeClass( 'alert-danger alert-success' ).addClass( 'alert ' + type ).html(data.responseJSON.message).slideDown(400);
+						if (data.responseJSON.result !== 'error') { $(form).clearForm(); }
 					}
 				});
 				}
