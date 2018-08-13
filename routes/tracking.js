@@ -10,7 +10,7 @@ var view = function(req, res, next){
 
 	var mobile = true; 
 
-	if(req.headers['user-agent'].includes('Mozilla')){
+	if(req.headers['user-agent'].includes('Mobile')){
 		mobile = false;
 	}
 
