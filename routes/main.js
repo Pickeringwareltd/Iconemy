@@ -1,12 +1,12 @@
 var express = require('express');
 var ctrl = require('../app_server/controllers/main');
 var project = require('../app_server/controllers/project');
-var tracking = require('./tracking');
+var tracking = require('../tracking/tracking');
 
 // Forward request onto the main controller
 module.exports = function (app) {
 	// Render home page if no subdomain added OR render project if one is added.
-	app.get('/', tracking, function(req, res) {
+	app.get('/', tracking.view, function(req, res) {
 
 		// If there is a subdomain attached, point to appropriate project
 		if (req.subdomain) {
@@ -16,7 +16,7 @@ module.exports = function (app) {
 	  	res.render('index');
 	}); 
 
-	app.get('/buynow', function(req, res) {
+	app.get('/buynow', tracking.view, function(req, res) {
 		// If there is a subdomain attached, point to appropriate project
 		if (req.subdomain) {
 	  		project.buynow(req, res);

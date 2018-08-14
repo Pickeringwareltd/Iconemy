@@ -4,6 +4,7 @@ var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
+var tracking = require('../../tracking/tracking');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -63,6 +64,7 @@ var addToken = function(req, res, project) {
       		if (err) {
         		sendJsonResponse(res, 400, err);
      	 	} else {
+     	 		tracking.newtoken(project.token);
      	 		// Return newly created token
 				sendJsonResponse(res, 201, project.token);
     		} 
@@ -347,7 +349,7 @@ module.exports.paymentConfirm = function (req, res) {
 						payment.currency = req.body.currency;
 						payment.amount = req.body.amount;
 						payment.created = createdDate;
-						payment.createdBy = 'Jack';
+						payment.createdBy = req.body.createdBy;
 						if(req.body.currency == 'eth'){
 							payment.ethWallet = wallet;
 						} else {
@@ -359,6 +361,7 @@ module.exports.paymentConfirm = function (req, res) {
 						    	console.log(err);
 						        sendJsonResponse(res, 404, {"message": err});
 						    } else {
+						    	tracking.paymentconfirmed(payment, 'token');
 						        sendJsonResponse(res, 200, payment);
 							} 
 						});
@@ -387,6 +390,7 @@ var dealWithBalance = function(project, balance, res) {
 			if (err) {
 				sendJsonResponse(res, 404, {"message": err});
 			} else {
+				tracking.paymentfinalised(payment, 'token');
 				sendJsonResponse(res, 200, payment);
 			} 
 		});

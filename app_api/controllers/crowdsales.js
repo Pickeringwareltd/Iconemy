@@ -4,6 +4,7 @@ var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
+var tracking = require('../../tracking/tracking');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -81,6 +82,7 @@ var addCrowdsale = function(req, res, project) {
       		if (err) {
         		sendJsonResponse(res, 400, err);
      	 	} else {
+     	 		tracking.newcrowdsale(crowdsale);
      	 		// only return the recently added crowdsale (which is the last one in the array)
 				sendJsonResponse(res, 201, crowdsale);
     		} 
@@ -391,6 +393,7 @@ module.exports.paymentConfirmOne = function (req, res) {
 							    if (err) {
 							        sendJsonResponse(res, 404, err);
 							    } else {
+						    		tracking.paymentconfirmed(payment, 'crowdsale');
 							        sendJsonResponse(res, 200, payment);
 								} 
 							});
@@ -424,6 +427,7 @@ var dealWithBalance = function(project, balance, saleid, res) {
 			if (err) {
 				sendJsonResponse(res, 404, err);
 			} else {
+				tracking.paymentfinalised(payment, 'crowdsale');
 				sendJsonResponse(res, 200, payment);
 			} 
 		});

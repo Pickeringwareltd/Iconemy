@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var tracking = require('../../tracking/tracking');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -18,7 +19,7 @@ var renderProject = function(req, res, responseBody, subdomain){
 		data.usingSubdomain = subdomain;
 
 		if(req.session.passport != undefined){
-			if(req.session.passport.user.userid == data.createdBy){
+			if(req.session.passport.user.user.id == data.createdBy){
 				isOwner = true;
 			}
 		} 	
@@ -36,6 +37,8 @@ var renderProject = function(req, res, responseBody, subdomain){
 			data.crowdsales[i].start = renderDate(data.crowdsales[i].start);
 			data.crowdsales[i].end = renderDate(data.crowdsales[i].end);
 		}
+
+		tracking.projectview(req, res, data);
 
 		res.render('project_interaction', { 
 			title: responseBody.name,
@@ -97,8 +100,6 @@ exports.index = function(req, res){
 // Renders the create token form
 var renderCreateProject = function(req, res){
 	var message;
-
-	console.log('server = ' + JSON.stringify(req.session));
 
 	if(req.query.err){
 		if(req.query.err == 'nodata'){
@@ -325,7 +326,7 @@ var getData = function(req) {
 		website: req.body.website,
 		subdomain: subdomain,
 		logo: req.body.logo,
-		createdBy: req.session.passport.user.userid,
+		createdBy: req.session.passport.user.user.id,
 		facebook: addHttps(req.body.facebook),
 		twitter: addHttps(req.body.twitter),
 		youtube: addHttps(req.body.youtube),

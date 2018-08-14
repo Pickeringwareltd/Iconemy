@@ -24,14 +24,14 @@ const strategy = new Auth0Strategy(
     // Add the tokens to the user object in request
     var accessToken = accessToken;
     var idToken = extraParams.id_token;
-    var user = profile;
+    var user = {};
 
+    user.profile = profile;
+    
     user.tokens = {
       access_token: accessToken,
       id_token: idToken
     };
-
-    console.log('USER = ' + JSON.stringify(user));
 
     return done(null, user);
   }
@@ -46,7 +46,7 @@ passport.serializeUser(function(user, done) {
 
   // We only need to store the user ID and the tokens for authentication
   var session_store = {
-    userid: user.id,
+    user: user.profile,
     tokens: user.tokens
   };
 

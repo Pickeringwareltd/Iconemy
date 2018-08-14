@@ -9,8 +9,7 @@ var userSchema = new mongoose.Schema({
      required: true
    }, 
    nickname: {
-     type: String,
-     required: true
+     type: String
    },
    firstname: {
    	 type: String
@@ -18,11 +17,18 @@ var userSchema = new mongoose.Schema({
    surname: {
    	 type: String
    },
+   userid: {
+    type: String,
+    unique: true,
+    required: true
+   },
    role: {
    	type: String,
    	"default": "user"
    }
 });
+
+mongoose.model('User', userSchema);
 
 var subscriptionSchema = new mongoose.Schema({
   email: {

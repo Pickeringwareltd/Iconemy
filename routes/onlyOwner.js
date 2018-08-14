@@ -53,7 +53,7 @@ var checkOwner = function(req, res, body, next){
 	var project = body[0];
 	var owner = project.createdBy;
 
-	if(owner === req.session.passport.user.userid){
+	if(owner === req.session.passport.user.user.id){
 		next();
 	} else {
 		res.redirect('/projects');

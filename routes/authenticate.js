@@ -76,6 +76,22 @@ module.exports = function (app) {
 		 	if(req.query.code){
 		 		req.session.loggedIn = true;
 
+			  	path = '/user'
+
+			  	var access_token = req.session.passport.user.tokens.access_token;
+
+			  	requestOptions = {
+			  		url: audience + path,
+			  		method : "POST",
+  					headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' },
+			  		json : {
+			  			userid: req.session.passport.user.user.id,
+			  			email: req.session.passport.user.user.displayName
+			  		}
+				};
+
+			   	request( requestOptions, function(err, response, body) {});
+
 		 		if(req.session.returnTo == '/'){
 		 			req.session.returnTo = '/projects';
 		 		}

@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
+var tracking = require('../../tracking/tracking');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -44,6 +45,8 @@ var getRequestOptions = function(req, res){
 var renderToken = function(req, res, responseBody) {
 
 	if(!responseBody.message){
+		tracking.tokenview(req, res, responseBody.project.id);
+
 		res.render('token_interaction', { 
 			title: 'Token',
 			token: responseBody.token,
@@ -118,7 +121,7 @@ exports.doCreation = function(req, res){
     	decimals: parseInt(req.body.token_decimals),
     	owner: req.body.owner_address,
     	logo: req.body.logo,
-    	createdBy: req.session.passport.user.userid,
+    	createdBy: req.session.passport.user.user.id,
     	discount: req.body.discount
 	};
 

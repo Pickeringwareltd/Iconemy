@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
+var tracking = require('../../tracking/tracking');
 var moment = require('moment');
 moment().format();
 
@@ -16,12 +17,16 @@ var renderSale = function(req, res, responseBody) {
 
 	if(!responseBody.message){
 
+		console.log(JSON.stringify(responseBody));
+
 		// Render date so timer can understand
 		var endDate = responseBody.crowdsale.end;
 		responseBody.crowdsale.end = renderDate(endDate);
 
 		var startDate = responseBody.crowdsale.start;
 		responseBody.crowdsale.start = renderDate(startDate);
+
+		tracking.crowdsaleview(req, res, responseBody.project.id, responseBody.crowdsale.index);
 
 		res.render('sale_interaction', { 
 			title: 'Crowdsale',
@@ -205,7 +210,7 @@ var formatData = function(req){
     	commission: parseInt(req.body.commission),
     	admin: req.body.admin_wallet,
 		beneficiary: req.body.beneficiary_wallet,
-    	createdBy: req.session.passport.user.userid,
+    	createdBy: req.session.passport.user.user.id,
     	discount: req.body.discount
 	};
 

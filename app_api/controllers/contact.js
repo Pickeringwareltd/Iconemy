@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var validator = require('validator');
 var Subscription = mongoose.model('Subscription');
 var Contact = mongoose.model('Contact');
+var tracking = require('../../tracking/tracking');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -47,6 +48,7 @@ module.exports.subscribe = function (req, res) {
 							      			sendJsonResponse(res, 400, { "result": "error", "message": err });
 							      			return;
 							    		} else {
+							    			tracking.subscribe(req);
 							      			sendJsonResponse(res, 201, { "result": "success", "message": "Thank you for subscribing! We will be in touch shortly." });
 							    		}
 									}); 
@@ -99,6 +101,7 @@ module.exports.contact = function (req, res) {
 							      			sendJsonResponse(res, 400, { "result": "error", "message": err });
 							      			return;
 							    		} else {
+							    			tracking.contact(req);
 							      			sendJsonResponse(res, 201, { "result": "success", "message": "Thank you for reaching out! We will be in touch shortly." });
 							    		}
 									}); 

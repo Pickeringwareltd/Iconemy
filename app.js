@@ -8,6 +8,7 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const tracking = require('./tracking/tracking');
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');

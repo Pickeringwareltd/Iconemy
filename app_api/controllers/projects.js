@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var tracking = require('../../tracking/tracking');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -129,10 +130,12 @@ module.exports.projectsCreate = function (req, res) {
 				         	// Create project creates a new document in the database if the JSON object passes validation in the schema
 							Project
 								.create(data, function(err, project) {
+									console.log(err);
 									// Callback is used to report an error or return project on successful save
 						    		if (err) {
 						      			sendJsonResponse(res, 400, err);
 						    		} else {
+						    			tracking.newproject(project);
 						      			sendJsonResponse(res, 201, project);
 						    		}
 								}); 
@@ -156,7 +159,6 @@ module.exports.projectsListByStartTime = function (req, res) {
 			// If no project is found, return custom error message
 	      	if (!projects) {
 	          	sendJsonResponse(res, 404, { "message": "projects not found" });
-	          	// MUST RETURN ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 	          	return;
 	          	// If an error was returned, return that message
 	        } else if (err) {
