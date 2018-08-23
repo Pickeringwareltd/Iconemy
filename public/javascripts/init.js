@@ -13,7 +13,7 @@ ct_$('html').ultimateGDPR({
         gear_icon_color: '#ffffff', //color in hex
     },
     popup_options: {
-        always_show: true, // true, false, when true popup is displayed always even when consent is given
+        always_show: false, // true, false, when true popup is displayed always even when consent is given
         gear_display: true, // true, false when true displays icon with cookie settings
         popup_text: 'Cookies To make this site work properly, we sometimes place small data files called cookies on your device. Most big websites do this too.', // text for popup
         accept_button_text: 'Accept', // string, text for accept button
@@ -76,7 +76,7 @@ ct_$('html').ultimateGDPR({
     configure_mode: {
         on: true,
         parametr: '?configure123456',
-        dependencies: ['https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 'stylesheets/ct-ultimate-gdpr.min.css', 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'],
+        dependencies: ['https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', '/stylesheets/ct-ultimate-gdpr.min.css', 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'],
         debug: false, // bool: true false, debug mode on/off (showing all 3rd party cookies urls, blockes urls names of all local cookies and names of blocked local cookies )
     }
 });
