@@ -19,6 +19,6 @@ module.exports = function (app) {
 	// Get the creation form
 	app.get('/projects/:projectname/token/create', needsLogIn, onlyOwner.require, tracking.view, token.create); 
 	// Create the token
-	app.post('/projects/:projectname/token/create', needsLogIn, onlyOwner.require, tracking.view, token.doCreation); 
+	app.post('/projects/:projectname/token/create', needsLogIn, onlyOwner.require, token.doCreation); 
 
 }

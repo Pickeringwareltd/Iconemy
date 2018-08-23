@@ -72,9 +72,9 @@
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= token.symbol %></p>
 								<ul class="btns animated" data-animate="fadeInUp" data-delay="1.45">
 									<% if(token.deployed == 'None') { %>
-										<li><a href="/pay?project=<%=project.id %>&item=token" class="btn btn-outline">Deploy</a></li>
+										<li><a href="/pay?project=<%= project.id %>&item=token" class="btn btn-outline">Deploy</a></li>
 									<% } else if(token.deployed == 'Done') { %>
-										<li><a href="/sale" class="btn btn-outline">Buy now</a></li>
+										<li><a href="/projects/<%= project.id %>/buynow" class="btn btn-outline">Buy now</a></li>
 									<% } %>
 								</ul>
 								<div class="gaps size-3x"></div>

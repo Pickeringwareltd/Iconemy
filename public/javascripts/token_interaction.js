@@ -1,18 +1,3 @@
-$('#transfer_btn').on("click",function(){
-	$('#transfer_btn').css('display', 'none');
-	$('#loading_gif').css('display', 'block');
-
-	  $( "#loading_gif" ).animate({
-	    display: "block"
-	  }, {
-	    duration: 4000,
-	    complete: function() {
-	        $( this ).css('display','none');
-	        $( "#complete_img" ).css('display', 'block');
-	    }
-	  });
-});
-
 $('#release_btn').on("click",function(){
 	$('#release_btn').css('display', 'none');
 	$('#release_loading_gif').css('display', 'block');

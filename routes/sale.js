@@ -9,8 +9,10 @@ module.exports = function (app) {
 	// Return the creae crowdsale form
 	app.get('/projects/:projectname/crowdsales/create', needsLogIn, onlyOwner.require, tracking.view, sale.create);
 
+	app.get('/projects/:projectname/crowdsales/:crowdsaleid/toggleprogress', needsLogIn, onlyOwner.require, sale.toggleProgress);
+
 	// Use the submitted data from the form to do something
-	app.post('/projects/:projectname/crowdsales/create', needsLogIn, onlyOwner.require, tracking.view, sale.doCreation);
+	app.post('/projects/:projectname/crowdsales/create', needsLogIn, onlyOwner.require, sale.doCreation);
 
 	app.get('/projects/:projectname/crowdsales/:crowdsaleid', tracking.view, sale.index);  
 

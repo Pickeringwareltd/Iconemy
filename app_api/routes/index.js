@@ -5,6 +5,8 @@ var ctrlTokens = require('../controllers/tokens');
 var ctrlCrowdsales = require('../controllers/crowdsales');
 var ctrlContact = require('../controllers/contact');
 var ctrlUser = require('../controllers/user');
+var ctrlAdmin = require('../controllers/admin');
+var ctrlContracts = require('../controllers/contracts');
 const needsLogIn = require('./auth');
 const onlyOwner = require('./onlyOwner');
 const tracking = require('../../tracking/tracking');
@@ -34,10 +36,20 @@ router.put('/projects/:projectid/token/payment/finalise', needsLogIn, onlyOwner.
 // crowdsales
 router.post('/projects/:projectid/crowdsales', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesCreate);
 router.get('/projects/:projectid/crowdsales/:crowdsaleid', tracking.apicall, ctrlCrowdsales.crowdsalesReadOne);
+router.get('/projects/:projectid/crowdsales/:crowdsaleid/toggleprogress', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.toggleProgress);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesUpdateOne);
 router.delete('/projects/:projectid/crowdsales/:crowdsaleid', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesDeleteOne);
 router.post('/projects/:projectid/crowdsales/:crowdsaleid/payment', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.getPrice);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/confirm', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.paymentConfirmOne);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/finalise', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.paymentFinaliseOne);
+
+// Admin
+router.get('/admin/projects', ctrlAdmin.projectsListByCreationTime);
+
+// Smart contracts
+router.post('/contracts/crowdsale/basic', ctrlContracts.basicSale);
+router.post('/contracts/token/transfers', ctrlContracts.tokenTransfers);
+router.post('/contracts/token/holders', ctrlContracts.tokenHolders);
+
 
 module.exports = router;

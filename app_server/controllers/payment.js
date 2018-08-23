@@ -142,7 +142,7 @@ exports.confirm = function(req, res) {
 		json : {
 			currency: currency,
 			amount: amount,
-			createdBy: 'Jack'
+			createdBy: req.session.passport.user.user.id
 		},
   		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 	};

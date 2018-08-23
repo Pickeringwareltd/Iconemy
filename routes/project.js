@@ -10,7 +10,7 @@ module.exports = function (app) {
 	app.get('/projects/create', needsLogIn, tracking.view, project.create); 
 	
 	// Handle data sent by new project form
-	app.post('/projects/create', needsLogIn, tracking.view, project.doCreation); 
+	app.post('/projects/create', needsLogIn, project.doCreation); 
 
 	// My projects points to users owned projects
 	app.get('/projects', needsLogIn, tracking.view, project.myprojects); 
@@ -21,7 +21,7 @@ module.exports = function (app) {
 	// Update project details
 	app.get('/projects/:projectname/update', needsLogIn, onlyOwner.require, tracking.view, project.update);
 
-	app.post('/projects/:projectname/update', needsLogIn, onlyOwner.require, tracking.view, project.doUpdate);
+	app.post('/projects/:projectname/update', needsLogIn, onlyOwner.require, project.doUpdate);
 
 	app.get('/projects/:projectname/buynow', tracking.view, project.buynow);
 

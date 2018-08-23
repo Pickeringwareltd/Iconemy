@@ -13,11 +13,33 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+exports.toggleProgress = function(req, res){
+	var requestOptions, path;
+
+	// Make sure we are using the correct subdomain
+	var projectName =  req.params.projectname;
+	var saleId = req.params.crowdsaleid;
+
+  	var access_token = req.session.passport.user.tokens.access_token;
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/projects/' + projectName + '/crowdsales/' + saleId + '/toggleprogress';
+
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {},
+  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	res.redirect('/projects/' + projectName + '/crowdsales/' + saleId);
+   	});
+};
+
 var renderSale = function(req, res, responseBody) {
 
 	if(!responseBody.message){
-
-		console.log(JSON.stringify(responseBody));
 
 		// Render date so timer can understand
 		var endDate = responseBody.crowdsale.end;
@@ -211,7 +233,8 @@ var formatData = function(req){
     	admin: req.body.admin_wallet,
 		beneficiary: req.body.beneficiary_wallet,
     	createdBy: req.session.passport.user.user.id,
-    	discount: req.body.discount
+    	discount: req.body.discount,
+    	deployed: 'None'
 	};
 
 	return postdata;

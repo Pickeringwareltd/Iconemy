@@ -9,5 +9,5 @@ module.exports = function (app) {
 
 	// Should really be post
 	app.get('/pay/finalise', needsLogIn, tracking.view, payment.confirm); 
-	app.put('/pay/finalise', needsLogIn, tracking.view, payment.finalise); 
+	app.put('/pay/finalise', needsLogIn, payment.finalise); 
 };

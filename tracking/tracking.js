@@ -208,7 +208,11 @@ module.exports.paymentconfirmed = function(payment, type){
 	// Record an event
 	client.recordEvent('payments-confirmed', {
 	  product: type,
-	  payment: pay
+	  currency: pay.currency,
+	  amount: pay.amount,
+	  address: pay.address,
+	  created: pay.created,
+	  createdBy: pay.createdBy
 	});
 };
 
@@ -227,7 +231,11 @@ module.exports.paymentfinalised = function(payment, type){
 	// Record an event
 	client.recordEvent('payments-finalised', {
 	  product: type,
-	  payment: pay
+	  currency: pay.currency,
+	  amount: pay.amount,
+	  address: pay.address,
+	  paid: pay.paid,
+	  created: pay.created,
+	  createdBy: pay.createdBy
 	});
 };
-

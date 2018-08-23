@@ -61,18 +61,26 @@
 						<div class="token-box shadow">
 
 						<% if(data.crowdsale.deployed == 'Done') { %>
+							<a href="/projects/<%= data.project.id %>/crowdsales/<%= data.crowdsale.index %>/toggleProgress" id="toggle">toggle progress</a>
 							<h6 class="small-text">Sale ends in:</h6>
 							<div class="token-countdown d-flex align-content-stretch" data-date="<%= data.crowdsale.end %>"></div>
-							<ul class="token-details">
-								<li>0 DON</li>
-								<li id="center_detail">1 ETH = 50 DON, BTC = 250 DON</li>
-								<li>50000 DON</li>
-							</ul>
-							<div class="token-bar">
-								<div class="token-percent" style="width:40%;">16899.49 DON</div>
-								<span class="token-point token-point-1" style="left:25%;">Soft Cap</span>
-								<span class="token-point token-point-2" style="left:95%;">Hard Cap</span>
-							</div>
+
+							<% if(!data.crowdsale.showprogress) { %>
+								<h1 id="tokens-sold">...</h1>
+								<p id="tokens-sold-label">Tokens sold</p>
+							<% } else { %>
+								<ul class="token-details">
+									<li>0 <%= data.token.symbol %></li>
+									<li id="center_detail">1 ETH = 50 <%= data.token.symbol %>, 1 BTC = 250 <%= data.token.symbol %></li>
+									<li>50000 <%= data.token.symbol %></li>
+								</ul>
+								<div class="token-bar">
+									<div class="token-percent" style="width:40%;">16899.49 <%= data.token.symbol %></div>
+									<span class="token-point token-point-1" style="left:25%;">Soft Cap</span>
+									<span class="token-point token-point-2" style="left:95%;">Hard Cap</span>
+								</div>
+							<% } %>
+
 							<ul class="btns">
 								<li><a href="#buy_now" id="buy_btn" class="btn btn-alt btn-lg">BUY NOW</a></li>
 							</ul>
@@ -143,7 +151,7 @@
 					<div class="card animated" data-animate="fadeInUp" data-delay=".2">
 					  <div class="container token-price">
 					  	<p class="title">Token price</p>
-					    <h4 class="eth"><span><b id="token_price">0.0014</b></span> ETH</h4>  
+					    <h4 class="eth"><span><b id="token_price"><%= data.crowdsale.initialPrice %></b></span> ETH</h4>  
 					  </div>
 					</div>
 				</div><!-- .col  -->
@@ -151,7 +159,7 @@
 					<div class="card animated" data-animate="fadeInUp" data-delay=".4">
 					  <div class="container">
 					  	<p class="title">Total supply</p> 
-					    <h4><b>25,123,456</b></h4> 
+					    <h4><b id="supply_num">25,123,456</b></h4> 
 					  </div>
 					</div>
 				</div><!-- .col  -->
@@ -159,11 +167,11 @@
 			<div class="gaps size-3x"></div>
 			<div class="row align-items-center">
 				<div class="col-lg-12">
-					<div class="card_large" id="buy_now">
+					<div class="card_large" id="buy_section">
 					  <div class="container">
 					  	<div class="balance">
 					  		<p class="title">Balance</p>
-					    	<h4 class="token_balance"><b>1,345</b> DON</h4>
+					    	<h4 class="token_balance"><b id="balance_num">1,345</b> <%= data.token.symbol %></h4>
 					    </div> 
 					    <div class="status">
 					    	<p class="title">Can buy</p>
@@ -185,9 +193,9 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
-			<div class="row align-items-center">
+			<div class="row align-items-center admin_only">
 				<div class="col-lg-12">
-					<div class="card" id="withdraw">
+					<div class="card" id="withdraw_section">
 					  <div class="container">
 					  	<div class="balance">
 					  		<p class="title">Withdraw</p>
@@ -205,9 +213,9 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
-			<div class="row align-items-center">
+			<div class="row align-items-center admin_only">
 				<div class="col-lg-12">
-					<div class="card" id="stop">
+					<div class="card" id="stop_section">
 					  <div class="container">
 					  	<div class="balance">
 					  		<p class="title">Stop sale</p>

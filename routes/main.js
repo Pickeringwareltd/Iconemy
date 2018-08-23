@@ -2,6 +2,7 @@ var express = require('express');
 var ctrl = require('../app_server/controllers/main');
 var project = require('../app_server/controllers/project');
 var tracking = require('../tracking/tracking');
+var fs = require('fs');
 
 // Forward request onto the main controller
 module.exports = function (app) {
@@ -21,5 +22,23 @@ module.exports = function (app) {
 		if (req.subdomain) {
 	  		project.buynow(req, res);
 		}
+	}); 
+
+	app.get('/privacy', tracking.view, function(req, res) {
+		  var privacyFile = "./public/privacy_policy.pdf";
+
+		  fs.readFile(privacyFile, function (err,data){
+		    res.contentType("application/pdf");
+		    res.send(data);
+		  });
+	}); 
+
+	app.get('/terms', tracking.view, function(req, res) {
+		  var termsFile = "./public/terms_conditions.pdf";
+
+		  fs.readFile(termsFile, function (err,data){
+		    res.contentType("application/pdf");
+		    res.send(data);
+		  });
 	}); 
 };

@@ -106,7 +106,8 @@ var getCrowdsale = function(req) {
 		beneficiary: req.body.beneficiary,
 		created: Date.now(),
 		createdBy: req.body.createdBy,
-		discount_code: req.body.discount
+		discount_code: req.body.discount,
+		deployed: 'None'
 	}
 
 	if(parseInt(req.body.commission) == 5){
@@ -176,6 +177,44 @@ module.exports.crowdsalesReadOne = function (req, res) {
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.crowdsalesUpdateOne = function (req, res) { 
 	sendJsonResponse(res, 404, {"message" : "You cannot update a crowdsale, the smart contract has now been released and will not be able to change."});
+};
+
+module.exports.toggleProgress = function (req, res) { 
+	var project = req.params.projectid;
+	var sale = req.params.crowdsaleid;
+
+	if(project) {
+		Project
+			.find({subdomain: req.params.projectid})
+			.exec( function(err, _project) {
+				var project = _project[0];
+
+				if (!project) {
+				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
+				    return;
+				} else if (err) {
+				    sendJsonResponse(res, 400, err);
+					return; 
+				}
+				
+				// Upload information from correct values.
+				var progress = project.crowdsales[sale].showprogress;
+				project.crowdsales[sale].showprogress = !progress;
+
+				// Try to save the project, return any validation errors if necessary
+				project.save( function(err, project) {
+					if (err) {
+						console.log(err);
+					    sendJsonResponse(res, 404, err);
+					} else {
+					    sendJsonResponse(res, 200, project);
+					}
+				});
+			});
+	} else {
+    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
+    	return;
+	}
 };
 
 /* This function should firstly take in: projectid, item, crowdsaleid (optional) and discount code (optional)
@@ -421,7 +460,7 @@ var dealWithBalance = function(project, balance, saleid, res) {
 
 		// Set the payment date and store in DB as PAID
 		payment.paid = Date.now();
-		project.crowdsales[saleid].deployed = "Done";
+		project.crowdsales[saleid].deployed = "Deploying";
 
 		project.save(function(err, project) {
 			if (err) {

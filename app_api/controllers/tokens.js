@@ -106,7 +106,8 @@ var getToken = function(req) {
 		logo: req.body.logo,
 		created: Date.now(),
 		createdBy: req.body.createdBy,
-		discount_code: req.body.discount
+		discount_code: req.body.discount,
+		deployed: 'None'
 	}
 
 	return token;
@@ -384,7 +385,7 @@ var dealWithBalance = function(project, balance, res) {
 	if(balance >= payment.amount){
 
 		payment.paid = Date.now();
-		project.token.deployed = "Done";
+		project.token.deployed = "Deploying";
 
 		project.save(function(err, project) {
 			if (err) {

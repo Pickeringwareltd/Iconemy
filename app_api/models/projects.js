@@ -152,6 +152,10 @@ var crowdsaleSchema = new mongoose.Schema({
 	jsFileURL: {
 		type: String
 	},
+	showprogress: {
+		type: Boolean,
+		"default": true
+	},
 	payment: paymentSchema
 });
 

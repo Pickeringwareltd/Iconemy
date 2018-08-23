@@ -9,6 +9,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const tracking = require('./tracking/tracking');
+const ether_socket = require('./app_api/websocket/ws');
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
@@ -16,7 +17,8 @@ require('./app_api/models/db');
 // Require passport configuration
 require('./config/passport');
 
-var routesApi = require('./app_api/routes/index');
+var api_routes = require('./app_api/routes/index');
+var admin_routes = require('./app_admin/routes/index');
 
 var app = express();
 
@@ -31,6 +33,10 @@ var dbURI = 'mongodb://localhost/iconemy';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGOLAB_URI;
 }
+
+// Start the websocket vonnected to the INFURA MAINNET which will constantly pick up transactions relating to Iconemys contracts
+// It then parses and stores each transaction in the DB
+// ether_socket.start();
 
 var session_store = new MongoDBStore({
   uri: dbURI,
@@ -62,9 +68,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 // ******************************************* END SESSION STORE ***********************************
-
 // Specify where the views are found
-app.set('views', path.join(__dirname, '/app_server/views'));
+app.set('views', [path.join(__dirname, '/app_server/views'), path.join(__dirname, '/app_admin/views')]);
 // view engine setup
 app.set('view engine', 'ejs');
 
@@ -105,7 +110,8 @@ app.use(function(req, res, next) {
 
 // require that the app sends requests to the routes folder (index.js)
 require('./routes')(app);
-app.use('/api', routesApi);
+app.use('/api', api_routes);
+app.use('/admin', admin_routes);
 
 // Catch unauthorised errors and redirect users to log in page
 app.use(function (err, req, res, next) {
