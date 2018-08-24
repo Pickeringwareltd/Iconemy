@@ -82,6 +82,22 @@ var tokenSchema = new mongoose.Schema({
 	payment: paymentSchema
 });
 
+var emailSchema = new mongoose.Schema({
+	email: {
+		type: String,
+		required: [true, 'Email is required']
+	},
+	hash: {
+		type: String,
+		required: [true, 'TX hash is required']
+	},
+	time: {
+		type: Date,
+		required: [true, 'Date required']
+	}
+
+});
+
 var crowdsaleSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -156,6 +172,7 @@ var crowdsaleSchema = new mongoose.Schema({
 		type: Boolean,
 		"default": true
 	},
+	emails: [emailSchema],
 	payment: paymentSchema
 });
 

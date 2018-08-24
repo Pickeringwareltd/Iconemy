@@ -42,6 +42,7 @@ router.delete('/projects/:projectid/crowdsales/:crowdsaleid', needsLogIn, onlyOw
 router.post('/projects/:projectid/crowdsales/:crowdsaleid/payment', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.getPrice);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/confirm', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.paymentConfirmOne);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/finalise', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.paymentFinaliseOne);
+router.post('/projects/:projectid/crowdsales/:crowdsaleid/purchase', tracking.apicall, ctrlCrowdsales.recordPurchaseEmail);
 
 // Admin
 router.get('/admin/projects', ctrlAdmin.projectsListByCreationTime);

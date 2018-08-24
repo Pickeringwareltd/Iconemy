@@ -119,7 +119,7 @@ label {
 	color: white;
 }
 
-#transfer_btn, #buynow_btn, #stop_btn, #release_btn, #sale_btn, #mint_btn, #deploy_btn{
+#transfer_btn, #buynow_btn, #stop_btn, #release_btn, #sale_btn, #mint_btn, #deploy_btn, #question_popup_btn{
 	color: #fff;
 }
 

@@ -26,3 +26,4 @@ $('#eth').on("keyup",function(){
 
 	$('#tokens').val(token_total);
 });
+

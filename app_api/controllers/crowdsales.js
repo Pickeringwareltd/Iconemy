@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
+var validator = require('validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
 var tracking = require('../../tracking/tracking');
@@ -10,6 +11,84 @@ var tracking = require('../../tracking/tracking');
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
+};
+
+/* This function is used by the web3 crowdsale function to record successful transactions made through the site
+ * All that we will store is the email against the transaction hash, we can then work everything else out via the logs
+ * I.e. we can match the tx hash to the logs, get the users eth address and use that eth address to work out other purchases on the same account
+ * We can loop through the successful 'TokenPurchase' events, checking the txHash against the list of emails, if one is there add the email to that TX, if not, no email was supplied.
+*/
+module.exports.recordPurchaseEmail = function(req, res){
+
+	var json = JSON.parse(req.body.json);
+
+	var purchaseObj = {
+		email: json.email,
+		hash: json.hash.tx,
+		time: Date.now()
+	}
+
+	if(!validator.isEmail(purchaseObj.email)){
+		sendJsonResponse(res, 400, {"message": "Email must be valid"});
+		return;						
+	}
+
+	var projectid = req.params.projectid;
+	var crowdsaleid = req.params.crowdsaleid;
+
+	// If transaction was deemed successful
+	if(json.hash.receipt.status == '0x1'){
+
+		// Find the project and pass the object to the addEmails function (below)
+		Project
+			.find({subdomain: projectid})
+			.select('crowdsales')
+			.exec(function(err, _project) {
+				var project = _project[0];
+
+				if(err){
+					sendJsonResponse(res, 400, err);
+					return;
+				} else {
+
+					if(project.crowdsales && project.crowdsales.length > 0){
+						var thisSale = project.crowdsales[crowdsaleid];
+						if(!thisSale){
+							sendJsonResponse(res, 400, {"message": "Crowdsale does not exist"});
+							return;
+						}
+					} else {
+						sendJsonResponse(res, 400, {"message": "This project has no crowdsales"});
+						return;
+					}
+
+					addEmail(req, res, project, crowdsaleid, purchaseObj);
+				}
+			});
+	}
+}
+
+var addEmail = function(req, res, project, sale, purchaseObj) {
+  	if (!project || !sale) {
+    	sendJsonResponse(res, 400, { "message": "You must supply both project and crowdsale ID" });
+    	return;
+	} else {
+		// Push the new purchase object into the crowdsales emails array
+    	project.crowdsales[sale].emails.push(purchaseObj);
+
+    	// Save the new parent document(project)
+    	project.save(function(err, project) {
+      
+      		if (err) {
+        		sendJsonResponse(res, 400, err);
+        		console.log(err);
+     	 	} else {
+     	 		// tracking.newemail(purchaseObj);
+     	 		// only return the recently added crowdsale (which is the last one in the array)
+				sendJsonResponse(res, 201, purchaseObj);
+    		} 
+    	});
+	} 
 };
 
 module.exports.crowdsalesCreate = function (req, res) { 

@@ -75,7 +75,32 @@
 	color: #fff;
 }
 
-@media only screen and (max-width: 768px) { .sale-box { margin-top: 5px; } #center_detail { display: none; } }
+.modal h3{
+	color: #4159FB;
+}
+
+.modal p {
+	color: grey;
+	text-align: center;
+}
+
+.modal #small_message {
+	font-size: 12px;
+}
+
+.modal input {
+	color: #524F4F !important;
+}
+
+.modal #loader_gif, #complete_img_blue {
+	height: 100px;
+	width: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (max-width: 768px) { .sale-box { margin-top: 5px; } #center_detail { display: none; }}
 
 @media only screen and (max-width: 574px) { #buy_btn { margin-top: 15px; } }
 

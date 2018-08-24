@@ -191,7 +191,7 @@
 					    <ul class="transfer_btn">
 					    	<img src="/images/loading_gif.gif" alt="loading" id="loading_gif">
 					    	<img src="/images/tick_img.png" alt="loading" id="complete_img">
-							<li><a id="buynow_btn" class="btn btn-outline">Buy now</a></li>
+							<li><a class="btn btn-outline" data-toggle="modal" id="question_popup_btn">Buy now</a></li>
 						</ul>
 					  </div>
 					</div>
@@ -247,6 +247,57 @@
 		</div><!-- .conatiner  -->
 	</div>
 	<!-- End Section -->
+
+	<!-- Ask if we can take email pop-up -->
+	<div class="modal fade" id="question_popup" tabindex="-1" role="dialog" aria-labelledby="question_popup_title" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h3 class="modal-title" id="question_popup_title">Can we e-mail you?</h3>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p><b>We need your email to keep you updated with the project!</b></p>
+	       	<p id="small_message">Your email will be accessible by Iconemy and the MetaFusion team. For more information visit the privacy policy <a href="/privacy">here</a></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" id="email_reject_button">No thanks</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#email_popup">Of course!</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="email_popup" tabindex="-1" role="dialog" aria-labelledby="email_popup_title" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <p><b>Enter your email here. </b></p>
+	        <p class="text-danger" style="display: none;" id="popup_error_message"></p>
+	        <form id="email-form" class="form-message text-left">
+				<div class="form-row justify-content-center">
+					<div class="form-group col-lg-12 col-sm-12">
+						<div class="input-field animated">
+							<input name="email" type="text" id="email_input" class="input-line required" placeholder="myname@email.co.uk">
+						</div>
+					</div>
+				</div>
+			</form>
+			<img id="loader_gif" src="/images/ripple_loader.gif" style="display: none;">
+			<img id="complete_img_blue" src="/images/complete_image_blue.png" style="display: none;">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" id="email_submit_button">Submit</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" id="email_continue_button" style="display: none;">Continue</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<!-- Footer -->
 	<% include partials/footer %>
