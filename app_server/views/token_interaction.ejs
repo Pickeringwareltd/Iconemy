@@ -76,6 +76,7 @@
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= token.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= token.symbol %></p>
 								<p class="lead animated" id="contract_address" data-animate="fadeInUp" data-delay="1.35">0x1091921960633dea4C72a95d0cbd04b8a67DD9dA <em class="far fa-copy" id="address_copy" data-address="0x1091921960633dea4C72a95d0cbd04b8a67DD9dA"></em></p>
+								<input readonly id="hidden_address_input" style="display: none;" data-address="0x1091921960633dea4C72a95d0cbd04b8a67DD9dA"></input>
 								<ul class="btns animated" data-animate="fadeInUp" data-delay="1.45">
 									<% if(token.deployed == 'None') { %>
 										<li><a href="/pay?project=<%= project.id %>&item=token" class="btn btn-outline">Deploy</a></li>

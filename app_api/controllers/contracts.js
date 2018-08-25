@@ -30,6 +30,8 @@ module.exports.basicSale = function (req, res) {
 	);
 };
 
+// This does NOT account for accounts which have sent all of their tokens to other accounts
+// I.e. I could recieve 1 token and send that 1 token to someone else - therefore having a balance of 0.
 module.exports.tokenHolders = function (req, res) { 
 	var data = JSON.parse(req.body.json);
 
