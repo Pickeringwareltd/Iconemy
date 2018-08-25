@@ -50,6 +50,8 @@
 								<img src="<%= data.token.logo %>" class="center_logo">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= data.crowdsale.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= data.token.symbol %></p>
+								<p class="lead animated" id="contract_address" data-animate="fadeInUp" data-delay="1.35">0x1091921960633dea4C72a95d0cbd04b8a67DD9dA <em class="far fa-copy" id="address_copy" data-address="0x1091921960633dea4C72a95d0cbd04b8a67DD9dA"></em></p>
+
 							</div>
 						</div><!-- .col  -->
 					</div><!-- .row  -->
@@ -86,7 +88,7 @@
 							<% } %>
 
 							<ul class="btns">
-								<li><a href="#buy_now" id="buy_btn" class="btn btn-alt btn-lg">BUY NOW</a></li>
+								<li><a href="#buy_section" id="buy_btn" class="btn btn-alt btn-lg">BUY NOW</a></li>
 							</ul>
 						<% } else if(data.crowdsale.deployed == 'None') { %>
 							<h6 class="small-text">Sale starts in:</h6>
@@ -151,7 +153,7 @@
 			</div><!-- .row  -->
 		<% } else if(data.crowdsale.deployed == 'Done') { %>
 			<div class="row align-items-center">
-				<div class="col-lg-6 col-sm-12">
+				<div class="col-lg-4 col-sm-12">
 					<div class="card animated" data-animate="fadeInUp" data-delay=".2">
 					  <div class="container token-price">
 					  	<p class="title">Token price</p>
@@ -159,11 +161,19 @@
 					  </div>
 					</div>
 				</div><!-- .col  -->
-				<div class="col-lg-6 col-sm-12">
+				<div class="col-lg-4 col-sm-12">
 					<div class="card animated" data-animate="fadeInUp" data-delay=".4">
 					  <div class="container">
 					  	<p class="title">Total supply</p> 
 					    <h4><b id="supply_num">25,123,456</b></h4> 
+					  </div>
+					</div>
+				</div><!-- .col  -->
+				<div class="col-lg-4 col-sm-12" id="token_link" data-link="/projects/<%= data.project.id %>/token">
+					<div class="card animated" data-animate="fadeInUp" data-delay=".4">
+					  <div class="container">
+					  	<p class="title">Token for sale</p> 
+					    <h4><b><%= data.token.symbol %></b></h4> 
 					  </div>
 					</div>
 				</div><!-- .col  -->
@@ -197,7 +207,7 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
-			<div class="row align-items-center admin_only">
+			<div class="row align-items-center admin_only" style="display: none;">
 				<div class="col-lg-12">
 					<div class="card" id="withdraw_section">
 					  <div class="container">
@@ -217,7 +227,7 @@
 					</div>
 				</div><!-- .col  -->
 			</div><!-- .row  -->
-			<div class="row align-items-center admin_only">
+			<div class="row align-items-center admin_only" style="display: none;">
 				<div class="col-lg-12">
 					<div class="card" id="stop_section">
 					  <div class="container">
@@ -309,6 +319,8 @@
 	<script src="/javascripts/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/script_sale.js?ver=122"></script>
 	<script src="/javascripts/custom_sale_script.js?ver=122"></script>
+	<script src="/javascripts/copy_contract_address.js?ver=122"></script>
+
 	<!-- Request the specific ABI files for this token -->
 	<script src="<%= data.crowdsale.jsFileURL %>"></script>
 </body>
