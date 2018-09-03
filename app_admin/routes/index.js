@@ -8,4 +8,7 @@ router.get('/', ctrlMain.index);
 router.get('/projects', ctrlMain.projects);
 router.get('/projects/:projectname', ctrlMain.projectReadOne);
 
+
+router.post('/projects/:projectname/token/contract', ctrlMain.doTokenContractCreation);
+
 module.exports = router;

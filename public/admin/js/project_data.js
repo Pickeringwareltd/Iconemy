@@ -1,0 +1,112 @@
+$(function() {
+    var open = window.location.hash;
+
+    if(open == '#token'){
+      showToken();
+    } else {
+      showProject();
+    }
+})
+
+$('#project').on('click', function(){
+  showProject();
+});
+
+$('#token').on('click', function(){
+  showToken();
+});
+
+$('.sale').on('click', function(){
+	var id = $(this).attr('data-index');
+
+  showSale(id);
+});
+
+$('#abi_copy').on('click', function(){
+	var abi = $(this).attr('data-abi');
+
+	copyTextToClipboard(abi);
+
+	alert('Copied ABI to clipboard');
+});
+
+$('#bytecode_copy').on('click', function(){
+	var bytecode = $(this).attr('data-bytecode');
+
+	copyTextToClipboard(bytecode);
+
+	alert('Copied bytecode to clipboard');
+});
+
+$('#seed_copy').on('click', function(){
+	var seed = $(this).attr('data-seed');
+
+	copyTextToClipboard(seed);
+
+	alert('Copied seed to clipboard');
+});
+
+function showSale(_id){
+  $('.projects').hide();
+  $('.tokens').hide();
+  $('.crowdsales').hide();
+
+  var id = _id;
+  var this_sale = '#sale_' + id;
+
+  $(this_sale).show();
+}
+
+function showProject(){
+  $('.tokens').hide();
+  $('.crowdsales').hide();
+  $('.projects').show();
+}
+
+function showToken(){
+  $('.projects').hide();
+  $('.crowdsales').hide();
+  $('.tokens').show();
+}
+
+function copyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+
+  // Place in top-left corner of screen regardless of scroll position.
+  textArea.style.position = 'fixed';
+  textArea.style.top = 0;
+  textArea.style.left = 0;
+
+  // Ensure it has a small width and height. Setting to 1px / 1em
+  // doesn't work as this gives a negative w/h on some browsers.
+  textArea.style.width = '2em';
+  textArea.style.height = '2em';
+
+  // We don't need padding, reducing the size if it does flash render.
+  textArea.style.padding = 0;
+
+  // Clean up any borders.
+  textArea.style.border = 'none';
+  textArea.style.outline = 'none';
+  textArea.style.boxShadow = 'none';
+
+  // Avoid flash of white box if rendered for any reason.
+  textArea.style.background = 'transparent';
+
+
+  textArea.value = text;
+
+  document.body.appendChild(textArea);
+
+  textArea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Copying text command was ' + msg);
+  } catch (err) {
+    console.log('Oops, unable to copy');
+  }
+
+  document.body.removeChild(textArea);
+}

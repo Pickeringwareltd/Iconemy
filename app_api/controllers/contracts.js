@@ -84,4 +84,3 @@ module.exports.tokenTransfers = function (req, res) {
 	    }
 	);
 };
-

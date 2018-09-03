@@ -1,10 +1,151 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var tracking = require('../../tracking/tracking');
+var WAValidator = require('wallet-address-validator');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
+};
+
+module.exports.getTokenContract = function(req, res) {
+	var subdomain = req.params.projectid;
+
+	// Get all projects and sort by the date created in descending order (newest first)
+	Project
+		.find({subdomain: subdomain})
+		.select('token')
+		.exec(function(err, _object) {
+			// If no project is found, return custom error message
+	      	if (!_object) {
+	          	sendJsonResponse(res, 404, { "message": "token not found" });
+	          	return;
+	          	// If an error was returned, return that message
+	        } else if (err) {
+	         	sendJsonResponse(res, 404, err);
+	          	return;
+	      	} else {
+	      		var object = _object[0];
+	      		var token = object.token;
+	      		var contract = token.contract;
+	      		// If project was found and no error returned then return the project
+	      		sendJsonResponse(res, 200, contract);
+	      	}
+		});
+};
+
+var getTokenData = function(req){
+	var data = {
+		address: req.body.address,
+	    abi: req.body.abi,
+	    bytecode: req.body.bytecode,
+	    network: req.body.network,
+    	jsFileURL: req.body.jsFileURL,
+    	compiler: req.body.compiler
+	}
+
+	return data;
+}
+
+var validateContract = function(data){
+  var error;
+
+  // If any required fields are missing, return appropriate error message 
+  if (!data.address || !data.abi || !data.bytecode || !data.network || !data.jsFileURL || !data.compiler) {
+  	error = 'All fields marked with * are required!';
+  	return error;
+  }
+
+  if(!WAValidator.validate(data.address, 'ETH')){
+  	error = 'ETH address is invalid!';
+  	return error;
+  }
+
+  return error;
+}
+
+module.exports.setTokenContract = function(req, res) {
+	var projectid = req.params.projectid;
+
+	var data = getTokenData(req);
+
+	var error = validateContract(data);
+
+	if(error != undefined) {
+		sendJsonResponse(res, 404, { "message": error });
+		return;	
+	}
+
+	if(projectid) {
+		console.log(projectid);
+		Project
+			.find({subdomain: req.params.projectid})
+			.exec( function(err, _project) {
+				var project = _project[0];
+
+				if (!project) {
+				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
+				    return;
+				} else if (err) {
+				    sendJsonResponse(res, 400, err);
+					return; 
+				}
+				
+				// Upload information from correct values.
+				project.token.contract = {
+					abi: data.abi,
+					address: data.address,
+					network: data.network,
+					bytecode: data.bytecode,
+					jsFileURL: data.jsFileURL,
+					compiler: data.compiler
+				};
+
+				project.token.jsFileURL = data.jsFileURL;
+				project.token.deployed = 'Done';
+
+				// Try to save the project, return any validation errors if necessary
+				project.save( function(err, project) {
+					if (err) {
+						console.log(err);
+					    sendJsonResponse(res, 404, err);
+					} else {
+					    sendJsonResponse(res, 200, project.token);
+					}
+				});
+			});
+	} else {
+    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
+    	return;
+	}
+};
+
+module.exports.getCrowdsaleContract = function(req, res) {
+	var subdomain = req.params.projectid;
+	var crowdsaleid = req.params.crowdsaleid;
+
+	// Get all projects and sort by the date created in descending order (newest first)
+	Project
+		.find({subdomain: subdomain})
+		.select('crowdsales')
+		.exec(function(err, _object) {
+			// If no project is found, return custom error message
+	      	if (!_object) {
+	          	sendJsonResponse(res, 404, { "message": "token not found" });
+	          	return;
+	          	// If an error was returned, return that message
+	        } else if (err) {
+	         	sendJsonResponse(res, 404, err);
+	          	return;
+	      	} else {
+	      		var object = _object[0];
+	      		var crowdsales = object.crowdsales;
+	      		var crowdsale = crowdsales[crowdsaleid];
+	      		var contract = crowdsale.contract;
+	      		// If project was found and no error returned then return the project
+	      		sendJsonResponse(res, 200, contract);
+	      	}
+		});
 };
 
 var validateProject = function(data){

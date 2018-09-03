@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>Amount</th>
+        <td><%= project.token.payment.amount %></td>
+    </tr>
+    <tr>
+        <th>Currency</th>
+        <td><%= project.token.payment.currency %></td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td><%= project.token.payment.created %></td>
+    </tr>
+    <tr>
+        <th>Paid</th>
+        <td><%= project.token.payment.paid %></td>
+    </tr>
+    <tr>
+        <th>Wallet address</th>
+        <td><%= project.token.payment.ethWallet.address %></td>
+    </tr>
+    <tr>
+        <th>Wallet seed</th>
+        <td id="seed_copy" data-seed="<%= project.token.payment.ethWallet.seed %>" class="copy_btn">Copy here</td>
+    </tr>
+</table>

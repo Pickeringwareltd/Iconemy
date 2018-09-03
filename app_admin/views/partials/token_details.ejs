@@ -1,0 +1,34 @@
+<table id="token_details">
+    <tr>
+        <th>Name</th>
+        <td><%= project.token.name %></td>
+    </tr>
+    <tr>
+        <th>Symbol</th>
+        <td><%= project.token.symbol %></td>
+    </tr>
+    <tr>
+        <th>Decimals</th>
+        <td><%= project.token.decimals %></td>
+    </tr>
+    <tr>
+        <th>Owner</th>
+        <td><%= project.token.owner %></td>
+    </tr>
+    <tr>
+        <th>Iconemy page</th>
+        <td><a href="/projects/<%=project.subdomain%>">Go there</a></td>
+    </tr>
+    <tr>
+        <th>Created on</th>
+        <td><%= project.token.created %></td>
+    </tr>                                                   
+    <tr>
+        <th>Logo:</th>
+        <td><img src="<%= project.token.logo %>"/></td>
+    </tr>
+    <tr>
+        <th>Deployed</th>
+        <td><%= project.token.deployed %></td>
+    </tr>
+</table>

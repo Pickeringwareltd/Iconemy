@@ -1,0 +1,26 @@
+<table id="contract_details">
+    <tr>
+        <th>ABI</th>
+        <td data-abi="<%= project.token.contract.abi %>" id="abi_copy" class="copy_btn">Copy here</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td><%= project.token.contract.address %></td>
+    </tr>
+    <tr>
+        <th>Network</th>
+        <td><%= project.token.contract.network %></td>
+    </tr>
+    <tr>
+        <th>Compiler</th>
+        <td><%= project.token.contract.compiler %></td>
+    </tr>
+    <tr>
+        <th>Javascript File</th>
+        <td><%= project.token.contract.jsFileURL %></td>
+    </tr>
+    <tr>
+        <th>Bytecode</th>
+        <td data-bytecode="<%= project.token.contract.bytecode %>" id="bytecode_copy" class="copy_btn">Copy here</td>
+    </tr>
+</table>

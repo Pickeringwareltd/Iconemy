@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const tracking = require('./tracking/tracking');
 const ether_socket = require('./app_api/websocket/ws');
+const https = require('./config/https');
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
@@ -21,6 +22,8 @@ var api_routes = require('./app_api/routes/index');
 var admin_routes = require('./app_admin/routes/index');
 
 var app = express();
+
+app.use(https.requireHTTPS);
 
 // ******************************************* SESSION STORE ***********************************
 if (process.env.NODE_ENV !== 'production') {

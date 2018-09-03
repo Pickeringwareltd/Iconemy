@@ -38,6 +38,49 @@ var paymentSchema = new mongoose.Schema({
 	btcWallet: walletSchema
 });
 
+var deploymentSchema = new mongoose.Schema({
+	time: {
+		type: Date,
+		required: [true, 'Deployment time is required ']
+	},
+	block: {
+		type: Number,
+		required: [true, 'Block number is required when deploying contract']
+	},
+	tx: {
+		type: String,
+		required: [true, 'TX hash is required when deploying contract']
+	}
+});
+
+var contractSchema = new mongoose.Schema({
+	abi: {
+		type: String,
+		required: [true, 'ABI is required when deploying contract']
+	},
+	address: {
+		type: String,
+		required: [true, 'Address is required when deploying contract']
+	},
+	network: {
+		type: Number,
+		required: [true, 'Network is required when deploying contract']
+	},
+	compiler: {
+		type: String,
+		required: [true, 'Compiler is required when deploying contract']
+	},
+	bytecode: {
+		type: String,
+		required: [true, 'Bytecode is required when deploying contract']
+	},
+	jsFileURL: {
+		type: String,
+		required: [true, 'Javascript file url is required when deploying contract']
+	},
+	deployment: deploymentSchema
+});
+
 var tokenSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -79,7 +122,8 @@ var tokenSchema = new mongoose.Schema({
 	jsFileURL: {
 		type: String
 	},
-	payment: paymentSchema
+	payment: paymentSchema,
+	contract: contractSchema
 });
 
 var emailSchema = new mongoose.Schema({
@@ -173,7 +217,8 @@ var crowdsaleSchema = new mongoose.Schema({
 		"default": true
 	},
 	emails: [emailSchema],
-	payment: paymentSchema
+	payment: paymentSchema,
+	contract: contractSchema
 });
 
 // Simply holds links to all of the social sites the project is part of

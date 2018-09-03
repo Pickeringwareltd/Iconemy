@@ -41,7 +41,7 @@
     <link href="/admin/css/admin_all_projects.css" rel="stylesheet" media="all">
     <link href="/admin/css/project_info.css" rel="stylesheet" media="all">
 
-        <!-- For uploadcare CDN -->
+    <!-- For uploadcare CDN -->
     <script>
       UPLOADCARE_PUBLIC_KEY = '02b13a5445396427d34c';
     </script>
@@ -73,7 +73,7 @@
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
                         <li class="active">
-                            <a href="#">
+                            <a href="admin/projects">
                                 <i class="fas fa-chart-bar"></i>Projects</a>
                         </li>
                         <li>
@@ -102,7 +102,7 @@
                             </a>
                         </li>
                         <li class="active">
-                            <a href="#">
+                            <a href="/admin/projects">
                                 <i class="fas fa-chart-bar"></i>Projects
                             </a>
                         </li>
@@ -137,81 +137,10 @@
                                 <h2 class="title-1 m-b-25"><%= project.name %></h2>
                             </div>
                         </div>
+                        
+                        <!-- Main statistic board - showing various stats about the project -->
+                        <% include partials/main_statistic_board %>
 
-                        <div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c1">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-account-o"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2 id="unique_visitors">...</h2>
-                                                <span>Unique visitors</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="unique_visitors_chart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c2">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-shopping-cart"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2 id="orders">...</h2>
-                                                <span>tokens issued</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="orders_per_month"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c3">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-calendar-note"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2 id="projects">...</h2>
-                                                <span>tokens sold</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="projects_by_month"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-money"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2 id="earnings">...</h2>
-                                                <span>total earnings</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="earnings_by_month"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row m-t-25">
                             <div class="col-lg-12">
                                 <div class="au-card chart-percent-card">
@@ -223,90 +152,91 @@
                                                     <nav class="navbar-sidebar">
                                                         <ul class="navbar__list list-unstyled side-menu">
                                                             <li>
-                                                                <a class="js-arrow" href="#">
-                                                                    <i class="fa fa-th-large"></i>Project</a>
+                                                                <p class="js-arrow" id="project">
+                                                                    <i class="fa fa-th-large"></i>Project</p>
                                                             </li>
                                                             <li>
-                                                                <a href="#token">
-                                                                    <i class="fa fa-dot-circle-o"></i>Token</a>
+                                                                <p id="token">
+                                                                    <i class="fa fa-dot-circle-o"></i>Token</p>
                                                             </li>
-                                                            <li>
-                                                                <a href="#sale-name-1">
-                                                                    <i class="fa fa-dollar"></i>Sale name 1</a>
-                                                            </li>
+
+                                                            <!-- Iterate through all crowdsales in the project and create a sub-menu -->
+                                                            <% project.crowdsales.forEach(function(sale, i) { %>
+                                                                <li>
+                                                                    <p class="sale" data-index="<%= sale.index %>">
+                                                                        <i class="fa fa-dollar"></i><%= sale.name %></p>
+                                                                </li>
+                                                            <% }); %>
+
                                                         </ul>
                                                     </nav>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-8">
                                                 <div class="projects">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
 
-                                                </div>
-                                                <div class="tokens">
-                                                    <div  class="status" style="background-color: <%= project.token_status.color %>"><%= project.token_status.message %></div>
-                                                    
-                                                    <a href="/projects/<%=project.subdomain%>">Go there</a>
-
-                                                    <form>
-                                                        <div class="form-group col-lg-12">
-                                                            <label class="input-title" id="logo_label">Upload JS files</label>
-
-                                                            <div id="upload_section">
-                                                                <input type="hidden" role="uploadcare-uploader" name="jsfile" 
-                                                                data-public-key="02b13a5445396427d34c" />
-                                                            </div>
-
-                                                            <img id="uploaded_logo" />
-                                                        </div>
-
-                                                        <div class="form-row submit">
-                                                            <div class="form-group col-12">
-                                                                <input type="text" class="d-none" name="form-anti-honeypot" value="">
-                                                                <div class="input-field animated">
-                                                                    <button type="submit" class="btn btn-outline" id="submit_btn">Upload now</button>
-                                                                </div>
+                                                                <h2>Project details</h2>
+                                                                
+                                                                <!-- Project table -->
+                                                                <% include partials/project_details %>
                                                             </div>
                                                         </div>
-                                                    </form> 
-
-                                                </div>
-                                                <div class="sale-name-1" style="display: none;">
-                                                    <div  class="status" style="background-color: <%= project.sale_status.color %>"><%= project.sale_status.message %></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                            
-<!--                                         <div class="info">
-                                            <h4><%= project.name %></h4>
-                                            <p><%= project.description %></p>
-                                        </div>
-
-                                        <a href="/projects/<%=project.subdomain%>">Go there</a>
-
-                                        <form>
-                                            <div class="form-group col-lg-12">
-                                                <label class="input-title" id="logo_label">Upload JS files</label>
-
-                                                <div id="upload_section">
-                                                    <input type="hidden" role="uploadcare-uploader" name="jsfile" 
-                                                    data-public-key="02b13a5445396427d34c" />
-                                                </div>
-
-                                                <img id="uploaded_logo" />
-                                            </div>
-
-                                            <div class="form-row submit">
-                                                <div class="form-group col-12">
-                                                    <input type="text" class="d-none" name="form-anti-honeypot" value="">
-                                                    <div class="input-field animated">
-                                                        <button type="submit" class="btn btn-outline" id="submit_btn">Upload now</button>
                                                     </div>
                                                 </div>
+                                                <div class="tokens" style="display: none;">
+
+                                                    <div  class="status" style="background-color: <%= project.token_status.color %>;"><%= project.token_status.message %></div>
+
+                                                    <h2>Token details</h2>
+
+                                                    <!-- Token table -->
+                                                    <% include partials/token_details %>
+
+                                                    <!-- If the token has been deployed - show the status of the smart contracts -->
+
+                                                    <% if(project.token.deployed == 'Done'){ %>
+
+                                                        <h3>Contract</h3>
+
+                                                        <!-- Token contract table -->
+                                                        <% include partials/token_contract_details %>
+
+                                                    <!-- Else, if the token has been paid for and needs deploying - show the form for setting the smart contracts as deployed -->
+
+                                                    <% } else if (project.token.deployed == 'Deploying') { %>
+                                                        
+                                                        <h3>Deployment form</h3>
+
+                                                        <!-- Token contract deployment form -->
+                                                        <% include partials/token_contract_form %>
+
+                                                    <% } %>
+
+                                                    <!-- If the statuses are either deployed or deploying then the user must have successfully paid for the project, so show the payment details -->
+
+                                                    <% if(project.token.deployed == 'Done' || project.token.deployed == 'Deploying'){ %>
+
+                                                        <h3>Payment</h3>
+                                                        
+                                                        <!-- Token payment details -->
+                                                        <% include partials/token_payment_details %>
+
+                                                    <% } %>
+                                                </div>
+                                                <% project.crowdsales.forEach(function(sale, i) { %>
+                                                    <div class="crowdsales" id="sale_<%= sale.index %>" style="display: none;">
+                                                        
+                                                        <div  class="status" style="background-color: <%= project.sale_status.color %>"><%= project.sale_status.message %></div>
+
+                                                        <h3><%= sale.name %></h3>
+
+                                                    </div>
+                                                <% }); %>
                                             </div>
-                                        </form> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -323,7 +253,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Jquery JS-->
@@ -342,14 +271,15 @@
     <script src="/admin/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/admin/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="/admin/vendor/select2/select2.min.js"></script>
+
     <!-- For image processing via uploadcare -->
     <script src="https://ucarecdn.com/libs/widget/3.5.1/uploadcare.min.js" charset="utf-8"></script>
-
 
     <!-- Main JS-->
     <script src="/admin/js/main.js"></script>
     <script src="/admin/js/analytics.js"></script>
-    <script src="/admin/js/all_projects.js"></script>
+    <script src="/admin/js/project_data.js"></script>
+
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var moment = require('moment');
+var WAValidator = require('wallet-address-validator');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -223,3 +224,78 @@ var renderProject = function(req, res, body) {
 
     res.render('admin_project', data);
 }
+
+// var renderContract = function(req, res){
+//     var requestOptions, path;
+
+//     // Split the path from the url so that we can call the correct server in development/production
+//     path = '/api/admin/projects/' + req.params.projectname + '/crowdsale/0/contract';
+  
+//     requestOptions = {
+//       url: apiOptions.server + path,
+//       method : "GET",
+//       json : {}
+//     };
+
+//     request( requestOptions, function(err, response, body) { 
+//         console.log(body);
+//     });
+// }
+
+var formatData = function(req){
+
+  var postdata = {
+    address: req.body.contract_address,
+    abi: req.body.abi,
+    bytecode: req.body.bytecode,
+    network: req.body.network,
+    jsFileURL: req.body.jsfile,
+    compiler: req.body.compiler
+  }
+
+  return postdata;
+};
+
+exports.doTokenContractCreation = function(req, res){
+
+    var requestOptions, path, projectname, postdata;
+      
+    projectname = req.params.projectname;
+    
+    path = "/api/admin/projects/" + projectname + '/token/contract';
+
+    var postdata = formatData(req);
+
+    var access_token = req.session.passport.user.tokens.access_token;
+
+    requestOptions = {
+      url : apiOptions.server + path,
+      method : "POST",
+      json : postdata,
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+    }; 
+
+    // Check the fields are present
+    if (!postdata.address || !postdata.abi || !postdata.bytecode || !postdata.network || !postdata.jsFileURL || !postdata.compiler) {
+        res.redirect('/admin/projects/' + projectname + '#token?err=nodata');
+    } else if(!WAValidator.validate(postdata.address, 'ETH')){
+        res.redirect('/admin/projects/' + projectname + '#token?err=invalidaddress');
+    } else {
+
+        request( requestOptions, function(err, response, body) {
+
+            if (response.statusCode === 200) {
+                res.redirect('/admin/projects/' + projectname + '#token');
+            } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+                res.redirect('/admin/projects/' + projectname + '#token?err=val');
+            } else {
+                res.render('error', { 
+                  message: body.message,
+                  error: {
+                    status: 404
+                  }
+                });
+            }
+        });
+    }
+};

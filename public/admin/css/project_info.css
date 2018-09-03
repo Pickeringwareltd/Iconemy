@@ -3,4 +3,108 @@
 	display: flex;
 	align-items: center;
   	justify-content: center;
+  	position: absolute;
+  	right: 5%;
+}
+
+.side-menu p{
+	display: block;
+    color: rgb(85, 85, 85);
+    font-size: 16px;
+    padding: 15px 0px;
+}
+
+.side-menu li p i {
+    margin-right: 19px;
+}
+
+h3 {
+	margin-top: 35px;
+	padding-bottom: 20px;
+}
+
+.copy_btn {
+	border: 2px solid grey;
+	padding: 5px;
+	color: black;
+	text-align: center;
+}
+
+table {
+	width: 100%;
+	margin-top: 20px;
+}
+
+table th {
+	font-weight: bold;
+}
+
+table td {
+	text-align: left;
+	padding-left: 40px;
+}
+
+table img {
+	max-width: 33%;
+}
+
+#contract_address, #compiler {
+    padding: 5px 0px 5px 5px;
+    font-size: 15px;
+    color: #524F4F;
+    font-weight: bold;
+}
+
+.form-message {
+	border: 1px dashed black;
+	border-radius: 25px;
+	padding: 25px;
+}
+
+.form-message textarea {
+	border: 1px solid grey;
+	padding: 10px;
+	width: 100%;
+}
+
+.form-message.text-left .input-field .input-line {
+    text-align: left;
+}
+
+.form-message .input-field .input-line {
+    border-bottom-color: #46bdf4;
+}
+
+.form-message .input-field .input-line {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    border-bottom: 1px solid #46bdf4;
+    outline: none;
+}
+
+#upload_section {
+  display: flex;
+  justify-content: center;
+}
+
+.submit_btn {
+	display: flex;
+  	justify-content: center;
+}
+
+#submit_btn {
+	margin-top: 50px;
+	border: 2px solid black;
+	border-radius: 25px;
+	padding: 10px;
+}
+
+#submit_btn:hover {
+	background-color: #167BF8;
+	color: white;
 }

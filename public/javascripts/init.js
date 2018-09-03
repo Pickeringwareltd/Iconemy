@@ -1,3 +1,5 @@
+// https://gdpr-js.readthedocs.io/en/latest/Page/cookies.html#cookies-management
+
 ct_$('html').ultimateGDPR({
     popup_style: {
         position: 'bottom-panel', // bottom-left, bottom-right, bottom-panel, top-left, top-right, top-panel

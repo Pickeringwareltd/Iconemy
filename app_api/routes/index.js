@@ -46,6 +46,9 @@ router.post('/projects/:projectid/crowdsales/:crowdsaleid/purchase', tracking.ap
 
 // Admin
 router.get('/admin/projects', ctrlAdmin.projectsListByCreationTime);
+router.get('/admin/projects/:projectid/token/contract', ctrlAdmin.getTokenContract);
+router.get('/admin/projects/:projectid/crowdsale/:crowdsaleid/contract', ctrlAdmin.getCrowdsaleContract);
+router.post('/admin/projects/:projectid/token/contract', ctrlAdmin.setTokenContract);
 
 // Smart contracts
 router.post('/contracts/crowdsale/basic', ctrlContracts.basicSale);
