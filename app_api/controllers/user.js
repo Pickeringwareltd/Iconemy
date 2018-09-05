@@ -9,6 +9,33 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
+// This is used to check if the user is an admin or a user (and has access to the admin section)
+module.exports.checkRole = function (req, res) { 
+	var id = req.params.userid;
+
+	User
+		.find({userid: id})
+		.exec( function(err, user) {
+
+			if(user.length != 0){
+
+				var user = user[0];
+
+				if(user.role == 'admin'){
+					sendJsonResponse(res, 200, { "result": 'admin' });
+					return;						
+				} else {
+					sendJsonResponse(res, 200, { "result": 'user' });
+					return;		
+				}
+
+			} else if(err != undefined) {
+				sendJsonResponse(res, 404, { "result": "error", "message": err });
+				return;	
+			}
+		});
+};
+
 var getUserData = function(req){
 	var data = {
 				userid: req.body.userid,

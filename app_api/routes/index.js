@@ -9,6 +9,7 @@ var ctrlAdmin = require('../controllers/admin');
 var ctrlContracts = require('../controllers/contracts');
 const needsLogIn = require('./auth');
 const onlyOwner = require('./onlyOwner');
+const onlyAdmin = require('./onlyAdmin');
 const tracking = require('../../tracking/tracking');
 
 // All routes in this file will be prepended with /api as this is what calls this file from app.js
@@ -16,6 +17,7 @@ const tracking = require('../../tracking/tracking');
 router.post('/contact', tracking.apicall, ctrlContact.contact);
 router.post('/subscribe', tracking.apicall, ctrlContact.subscribe);
 router.post('/user', needsLogIn, tracking.apicall, ctrlUser.checkLogIn);
+router.get('/user/:userid', needsLogIn, tracking.apicall, ctrlUser.checkRole);
 
 // projects
 router.get('/projects', needsLogIn, tracking.apicall, ctrlProjects.projectsListByStartTime);
@@ -45,14 +47,14 @@ router.put('/projects/:projectid/crowdsales/:crowdsaleid/payment/finalise', need
 router.post('/projects/:projectid/crowdsales/:crowdsaleid/purchase', tracking.apicall, ctrlCrowdsales.recordPurchaseEmail);
 
 // Admin
-router.get('/admin/projects', ctrlAdmin.projectsListByCreationTime);
-router.get('/admin/subscriptions', ctrlAdmin.getSubscriptions);
-router.get('/admin/messages', ctrlAdmin.getMessages);
-router.post('/admin/messages/:messageid/responded', ctrlAdmin.respondToMessage);
-router.get('/admin/projects/:projectid/token/contract', ctrlAdmin.getTokenContract);
-router.get('/admin/projects/:projectid/crowdsale/:crowdsaleid/contract', ctrlAdmin.getCrowdsaleContract);
-router.post('/admin/projects/:projectid/token/contract', ctrlAdmin.setTokenContract);
-router.post('/admin/projects/:projectid/crowdsale/:crowdsaleid/contract', ctrlAdmin.setCrowdsaleContract);
+router.get('/admin/projects', needsLogIn, onlyAdmin.require, ctrlAdmin.projectsListByCreationTime);
+router.get('/admin/subscriptions', needsLogIn, onlyAdmin.require, ctrlAdmin.getSubscriptions);
+router.get('/admin/messages', needsLogIn, onlyAdmin.require, ctrlAdmin.getMessages);
+router.post('/admin/messages/:messageid/responded', needsLogIn, onlyAdmin.require, ctrlAdmin.respondToMessage);
+router.get('/admin/projects/:projectid/token/contract', needsLogIn, onlyAdmin.require, ctrlAdmin.getTokenContract);
+router.get('/admin/projects/:projectid/crowdsale/:crowdsaleid/contract', needsLogIn, onlyAdmin.require, ctrlAdmin.getCrowdsaleContract);
+router.post('/admin/projects/:projectid/token/contract', needsLogIn, onlyAdmin.require, ctrlAdmin.setTokenContract);
+router.post('/admin/projects/:projectid/crowdsale/:crowdsaleid/contract', needsLogIn, onlyAdmin.require, ctrlAdmin.setCrowdsaleContract);
 
 // Smart contracts
 router.post('/contracts/crowdsale/basic', ctrlContracts.basicSale);

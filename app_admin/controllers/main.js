@@ -20,11 +20,14 @@ exports.messageResponded = function(req, res) {
     // Split the path from the url so that we can call the correct server in development/production
     path = '/api/admin/messages/' + req.params.messageid + '/responded';
   
+    var access_token = req.session.passport.user.tokens.access_token;
+  
     requestOptions = {
       url: apiOptions.server + path,
       method : "POST",
-      json : {}
-     };
+      json : {},
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+  };
 
     request( requestOptions, function(err, response, body) { 
         res.redirect('/admin');
@@ -36,12 +39,14 @@ exports.index = function(req, res){
 
     // Split the path from the url so that we can call the correct server in development/production
     path = '/api/admin/messages';
+    var access_token = req.session.passport.user.tokens.access_token;
   
     requestOptions = {
       url: apiOptions.server + path,
       method : "GET",
-      json : {}
-     };
+      json : {},
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+  };
 
     request( requestOptions, function(err, response, body) { 
         renderPortal(req, res, body);
@@ -54,12 +59,14 @@ var renderPortal = function(req, res, message_data){
 
   // Split the path from the url so that we can call the correct server in development/production
   path = '/api/admin/subscriptions';
-
+  var access_token = req.session.passport.user.tokens.access_token;
+  
   requestOptions = {
-    url: apiOptions.server + path,
-    method : "GET",
-    json : {}
-   };
+      url: apiOptions.server + path,
+      method : "GET",
+      json : {},
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+  };
 
   request( requestOptions, function(err, response, subscribe_data) { 
 
@@ -73,6 +80,8 @@ var renderPortal = function(req, res, message_data){
         if(message_data[i].responded == false){
           no_reply++;
         }
+
+        console.log(message_data[i].time);
 
         message_data[i].time = timeAgo.format(new Date(message_data[i].time), 'twitter');
       }
@@ -89,6 +98,8 @@ var renderPortal = function(req, res, message_data){
         if(inputDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
             todays_subscribers++;
         }
+
+        console.log(subscribe_data[j].time);
 
         // Format the date to 'time ago...'
         subscribe_data[j].time = timeAgo.format(new Date(subscribe_data[j].time), 'twitter');
@@ -117,12 +128,14 @@ exports.projects = function(req, res){
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/admin/projects';
+    var access_token = req.session.passport.user.tokens.access_token;
   
-  	requestOptions = {
-  		url: apiOptions.server + path,
-  		method : "GET",
-  		json : {}
-	   };
+    requestOptions = {
+      url: apiOptions.server + path,
+      method : "GET",
+      json : {},
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+    };
 
    	request( requestOptions, function(err, response, body) { 
       	renderProjects(req, res, body);
@@ -310,33 +323,28 @@ exports.projectReadOne = function(req, res){
 
 var renderProject = function(req, res, body) { 
     var this_project = body[0];
+    var message;
+
+    if(req.query.err){
+      if(req.query.err == 'nodata'){
+        message = 'All fields are required!';
+      } else if(req.query.err == 'invalidaddress'){
+        message = 'Invalid contract address!';
+      } else {
+        message = 'Oops! Somethings gone wrong';
+      }
+    }
 
     this_project.token_status = getTokenStatus(this_project);
     this_project.sale_status = getSaleStatus(this_project);
 
     var data = {
-      project: this_project
+      project: this_project,
+      message: message
     };
 
     res.render('admin_project', data);
 }
-
-// var renderContract = function(req, res){
-//     var requestOptions, path;
-
-//     // Split the path from the url so that we can call the correct server in development/production
-//     path = '/api/admin/projects/' + req.params.projectname + '/crowdsale/0/contract';
-  
-//     requestOptions = {
-//       url: apiOptions.server + path,
-//       method : "GET",
-//       json : {}
-//     };
-
-//     request( requestOptions, function(err, response, body) { 
-//         console.log(body);
-//     });
-// }
 
 var formatTokenData = function(req){
 
@@ -361,7 +369,6 @@ exports.doTokenContractCreation = function(req, res){
     path = "/api/admin/projects/" + projectname + '/token/contract';
 
     var postdata = formatTokenData(req);
-
     var access_token = req.session.passport.user.tokens.access_token;
 
     requestOptions = {
@@ -373,9 +380,9 @@ exports.doTokenContractCreation = function(req, res){
 
     // Check the fields are present
     if (!postdata.address || !postdata.abi || !postdata.bytecode || !postdata.network || !postdata.jsFileURL || !postdata.compiler) {
-        res.redirect('/admin/projects/' + projectname + '#token?err=nodata');
+        res.redirect('/admin/projects/' + projectname + '?err=nodata');
     } else if(!WAValidator.validate(postdata.address, 'ETH')){
-        res.redirect('/admin/projects/' + projectname + '#token?err=invalidaddress');
+        res.redirect('/admin/projects/' + projectname + '?err=invalidaddress');
     } else {
 
         request( requestOptions, function(err, response, body) {
@@ -383,7 +390,7 @@ exports.doTokenContractCreation = function(req, res){
             if (response.statusCode === 200) {
                 res.redirect('/admin/projects/' + projectname + '#token');
             } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
-                res.redirect('/admin/projects/' + projectname + '#token?err=val');
+                res.redirect('/admin/projects/' + projectname + '?err=val');
             } else {
                 res.render('error', { 
                   message: body.message,
@@ -420,7 +427,6 @@ exports.doSaleContractCreation = function(req, res){
     path = "/api/admin/projects/" + projectname + '/crowdsale/' + saleid + '/contract';
 
     var postdata = formatSaleData(req);
-
     var access_token = req.session.passport.user.tokens.access_token;
 
     requestOptions = {
@@ -432,9 +438,9 @@ exports.doSaleContractCreation = function(req, res){
 
     // Check the fields are present
     if (!postdata.address || !postdata.abi || !postdata.bytecode || !postdata.network || !postdata.jsFileURL || !postdata.compiler) {
-        res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=nodata');
+        res.redirect('/admin/projects/' + projectname + '?err=nodata');
     } else if(!WAValidator.validate(postdata.address, 'ETH')){
-        res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=invalidaddress');
+        res.redirect('/admin/projects/' + projectname + '?err=invalidaddress');
     } else {
 
         request( requestOptions, function(err, response, body) {
@@ -442,7 +448,7 @@ exports.doSaleContractCreation = function(req, res){
             if (response.statusCode === 200) {
                 res.redirect('/admin/projects/' + projectname + '#sale-' + saleid);
             } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
-                res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=val');
+                res.redirect('/admin/projects/' + projectname + '?err=val');
             } else {
                 res.render('error', { 
                   message: body.message,
