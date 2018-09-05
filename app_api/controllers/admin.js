@@ -1,11 +1,87 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
+var Message = mongoose.model('Contact');
+var Subscription = mongoose.model('Subscription');
 var tracking = require('../../tracking/tracking');
 var WAValidator = require('wallet-address-validator');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
+};
+
+
+module.exports.getSubscriptions = function(req, res){
+	// Get all messages and sort by the date created in descending order (newest first)
+	Subscription
+		.find()
+		.sort('-time')
+		.exec(function(err, _subscriptions) {
+			// If no project is found, return custom error message
+	      	if (!_subscriptions) {
+	          	sendJsonResponse(res, 404, { "message": "messages not found" });
+	          	return;
+	          	// If an error was returned, return that message
+	        } else if (err) {
+	         	sendJsonResponse(res, 404, err);
+	          	return;
+	      	} else {
+	      		// If project was found and no error returned then return the project
+	      		sendJsonResponse(res, 200, _subscriptions);
+	      	}
+		});
+};
+
+module.exports.respondToMessage = function(req, res){
+	// Get all projects and sort by the date created in descending order (newest first)
+	Message
+		.findById(req.params.messageid)
+		.exec(function(err, _message) {
+			var message = _message;
+
+			// If no project is found, return custom error message
+	      	if (!message) {
+	          	sendJsonResponse(res, 404, { "message": "messages not found" });
+	          	return;
+	          	// If an error was returned, return that message
+	        } else if (err) {
+	         	sendJsonResponse(res, 404, err);
+	          	return;
+	      	}
+
+	      	message.responded = true;
+
+	      	// Try to save the project, return any validation errors if necessary
+			message.save( function(err, project) {
+				if (err) {
+					console.log(err);
+				    sendJsonResponse(res, 404, err);
+				} else {
+				    sendJsonResponse(res, 200, message);
+				}
+			});
+		});
+};
+
+module.exports.getMessages = function(req, res){
+	// Get all messages and sort by the date created in descending order (newest first)
+	Message
+		.find()
+		.sort('-time')
+		.exec(function(err, _messages) {
+			// If no project is found, return custom error message
+	      	if (!_messages) {
+	          	sendJsonResponse(res, 404, { "message": "messages not found" });
+	          	return;
+	          	// If an error was returned, return that message
+	        } else if (err) {
+	         	sendJsonResponse(res, 404, err);
+	          	return;
+	      	} else {
+	      		// If project was found and no error returned then return the project
+	      		sendJsonResponse(res, 200, _messages);
+	      	}
+		});
 };
 
 module.exports.getTokenContract = function(req, res) {
@@ -34,7 +110,7 @@ module.exports.getTokenContract = function(req, res) {
 		});
 };
 
-var getTokenData = function(req){
+var getContractData = function(req){
 	var data = {
 		address: req.body.address,
 	    abi: req.body.abi,
@@ -67,7 +143,7 @@ var validateContract = function(data){
 module.exports.setTokenContract = function(req, res) {
 	var projectid = req.params.projectid;
 
-	var data = getTokenData(req);
+	var data = getContractData(req);
 
 	var error = validateContract(data);
 
@@ -146,6 +222,61 @@ module.exports.getCrowdsaleContract = function(req, res) {
 	      		sendJsonResponse(res, 200, contract);
 	      	}
 		});
+};
+
+module.exports.setCrowdsaleContract = function(req, res) {
+	var projectid = req.params.projectid;
+	var crowdsaleid = req.params.crowdsaleid;
+
+	var data = getContractData(req);
+	var error = validateContract(data);
+
+	if(error != undefined) {
+		sendJsonResponse(res, 404, { "message": error });
+		return;	
+	}
+
+	if(projectid) {
+		Project
+			.find({subdomain: req.params.projectid})
+			.exec( function(err, _project) {
+				var project = _project[0];
+
+				if (!project) {
+				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
+				    return;
+				} else if (err) {
+				    sendJsonResponse(res, 400, err);
+					return; 
+				}
+				
+				// Upload information from correct values.
+				project.crowdsales[crowdsaleid].contract = {
+					abi: data.abi,
+					address: data.address,
+					network: data.network,
+					bytecode: data.bytecode,
+					jsFileURL: data.jsFileURL,
+					compiler: data.compiler
+				};
+
+				project.crowdsales[crowdsaleid].jsFileURL = data.jsFileURL;
+				project.crowdsales[crowdsaleid].deployed = 'Done';
+
+				// Try to save the project, return any validation errors if necessary
+				project.save( function(err, project) {
+					if (err) {
+						console.log(err);
+					    sendJsonResponse(res, 404, err);
+					} else {
+					    sendJsonResponse(res, 200, project.crowdsales[crowdsaleid]);
+					}
+				});
+			});
+	} else {
+    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
+    	return;
+	}
 };
 
 var validateProject = function(data){

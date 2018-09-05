@@ -3385,7 +3385,7 @@ section {
 }
 
 .au-task-list {
-    height: 424px;
+    max-height: 554px;
     position: relative;
     overflow-y: auto;
 }
@@ -3462,7 +3462,7 @@ section {
 }
 
 .au-message-list {
-    height: 424px;
+    max-height: 554px;
     position: relative;
     overflow-y: auto;
 }
@@ -3549,12 +3549,13 @@ section {
 }
 
 .au-message__item-time span {
+    max-width: 20%;
     font-size: 14px;
     color: #808080;
 }
 
 .au-message__item-text .text {
-    margin-left: 60px;
+    max-width: 90%;
     padding: 7px 0;
     padding-left: 23px;
 }

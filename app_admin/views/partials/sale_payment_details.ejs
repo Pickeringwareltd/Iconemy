@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>Amount</th>
+        <td><%= sale.payment.amount %></td>
+    </tr>
+    <tr>
+        <th>Currency</th>
+        <td><%= sale.payment.currency %></td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td><%= sale.payment.created %></td>
+    </tr>
+    <tr>
+        <th>Paid</th>
+        <td><%= sale.payment.paid %></td>
+    </tr>
+    <tr>
+        <th>Wallet address</th>
+        <td><%= sale.payment.ethWallet.address %></td>
+    </tr>
+    <tr>
+        <th>Wallet seed</th>
+        <td id="seed_copy" data-seed="<%= sale.payment.ethWallet.seed %>" class="copy_btn">Copy here</td>
+    </tr>
+</table>

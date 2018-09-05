@@ -1,0 +1,72 @@
+<form id="sale_contract_form" class="form-message text-left" method="post" action="/admin/projects/<%= project.subdomain %>/crowdsales/<%= sale.index %>/contract">
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12 col-sm-12">
+            <div class="input-field animated">
+                <label class="input-title">Contract address</label>
+
+                <input name="contract_address" type="text" id="contract_address" class="input-line required" placeholder="0x1091921960633dea4C72a95d0cbd04b8a67DD9dA">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12 col-sm-12">
+            <div class="input-field animated">
+                <label class="input-title">Compiler</label>
+
+                <input name="compiler" type="text" id="compiler" class="input-line required" placeholder="0.4.21+commit.dfe3193c.Emscripten.clang">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12 col-sm-12">
+                <label id="abi_label">ABI</label>
+                
+                <textarea name="abi" rows="6" cols="50" id="abi"></textarea>
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12 col-sm-12">
+                <label id="bytecode_label">Bytecode</label>
+                
+                <textarea name="bytecode" rows="6" cols="50" id="bytecode"></textarea>
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12 col-sm-12">
+            <label id="network_label">Network</label>
+                
+            <select class="custom-select" id="network" name="network" form="sale_contract_form" required>
+                <option selected>Select network</option>
+                <option value="1">Main net</option>
+                <option value="4">Rinkeby testnet</option>
+                <option value="3">Kovan testnet</option>
+            </select>  
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center">
+        <div class="form-group col-lg-12">
+            <label class="input-title" id="logo_label">Upload JavaScript file</label>
+
+            <div id="upload_section">
+                <input type="hidden" role="uploadcare-uploader" name="jsfile" 
+                data-public-key="02b13a5445396427d34c" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row submit">
+        <div class="form-group col-12">
+            <input type="text" class="d-none" name="form-anti-honeypot" value="">
+            <div class="input-field animated submit_btn">
+                <button type="submit" class="btn btn-outline" id="submit_btn">Mark as deployed</button>
+            </div>
+        </div>
+    </div>
+
+</form> 

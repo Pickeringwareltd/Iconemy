@@ -1,0 +1,54 @@
+<table id="sale_details">
+    <tr>
+        <th>Name</th>
+        <td><%= project.crowdsales[i].name %></td>
+    </tr>
+    <tr>
+        <th>Pricing mechanism</th>
+        <td><%= project.crowdsales[i].pricingMechanism %></td>
+    </tr>
+    <tr>
+        <th>Initial token price</th>
+        <td><%= project.crowdsales[i].initialPrice %></td>
+    </tr>
+    <tr>
+        <th>Starts</th>
+        <td><%= project.crowdsales[i].start %></td>
+    </tr>
+    <tr>
+        <th>Ends</th>
+        <td><%= project.crowdsales[i].end %></td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td><%= project.crowdsales[i].status %></td>
+    </tr>
+    <tr>
+        <th>Admin</th>
+        <td><%= project.crowdsales[i].admin %></td>
+    </tr>
+    <tr>
+        <th>Beneficiary</th>
+        <td><%= project.crowdsales[i].beneficiary %></td>
+    </tr>
+    <tr>
+        <th>Iconemy page</th>
+        <td><a href="/projects/<%=project.subdomain%>">Go there</a></td>
+    </tr>
+    <tr>
+        <th>Created on</th>
+        <td><%= project.crowdsales[i].created %></td>
+    </tr> 
+    <tr>
+        <th>Commission</th>
+        <td><%= project.crowdsales[i].commission %></td>
+    </tr> 
+    <tr>
+        <th>Discount code used</th>
+        <td><%= project.crowdsales[i].discount_code %></td>
+    </tr>                                                 
+    <tr>
+        <th>Deployed</th>
+        <td><%= project.crowdsales[i].deployed %></td>
+    </tr>
+</table>

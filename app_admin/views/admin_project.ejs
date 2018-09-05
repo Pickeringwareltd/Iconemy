@@ -10,8 +10,8 @@
     <meta property="og:title" content="Iconemy - Create your own crowdsale"/>
     <meta property="og:description" content="Create a cryptocurrency in less than 10 minutes."/>
     <meta property="og:type" content="website"/>
-    <meta property="og:url" content="http://iconemy.io"/>
-    <meta property="og:image" content="http://iconemy.io/images/promo_img.png"/>
+    <meta property="og:url" content="https://iconemy.io"/>
+    <meta property="og:image" content="https://iconemy.io/images/promo_img.png"/>
 
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="/images/logo_favicon.png">
@@ -231,7 +231,41 @@
                                                         
                                                         <div  class="status" style="background-color: <%= project.sale_status.color %>"><%= project.sale_status.message %></div>
 
-                                                        <h3><%= sale.name %></h3>
+                                                        <h3><%= sale.name %> details</h3>
+
+                                                        <!-- Sale table -->
+                                                        <% include partials/sale_details %>
+
+                                                        <!-- If the sale has been deployed - show the status of the smart contracts -->
+
+                                                        <% if(sale.deployed == 'Done'){ %>
+
+                                                            <h3>Contract</h3>
+
+                                                            <!-- Sale contract table -->
+                                                            <% include partials/sale_contract_details %>
+
+                                                        <!-- Else, if the sale has been paid for and needs deploying - show the form for setting the smart contracts as deployed -->
+
+                                                        <% } else if (sale.deployed == 'Deploying') { %>
+                                                            
+                                                            <h3>Deployment form</h3>
+
+                                                            <!-- Sale contract deployment form -->
+                                                            <% include partials/sale_contract_form %>
+
+                                                        <% } %>
+
+                                                        <!-- If the statuses are either deployed or deploying then the user must have successfully paid for the project, so show the payment details -->
+
+                                                        <% if(sale.deployed == 'Done' || sale.deployed == 'Deploying'){ %>
+
+                                                            <h3>Payment</h3>
+                                                        
+                                                            <!-- Token payment details -->
+                                                            <% include partials/sale_payment_details %>
+
+                                                        <% } %>
 
                                                     </div>
                                                 <% }); %>

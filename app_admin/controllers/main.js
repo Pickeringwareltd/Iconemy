@@ -2,6 +2,9 @@ var express = require('express');
 var request = require('request');
 var moment = require('moment');
 var WAValidator = require('wallet-address-validator');
+// https://github.com/catamphetamine/javascript-time-ago#readme
+var time_ago = require('javascript-time-ago');
+var en_locale = require('javascript-time-ago/locale/en');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -11,8 +14,101 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+exports.messageResponded = function(req, res) {
+  var requestOptions, path;
+
+    // Split the path from the url so that we can call the correct server in development/production
+    path = '/api/admin/messages/' + req.params.messageid + '/responded';
+  
+    requestOptions = {
+      url: apiOptions.server + path,
+      method : "POST",
+      json : {}
+     };
+
+    request( requestOptions, function(err, response, body) { 
+        res.redirect('/admin');
+    });
+};
+
 exports.index = function(req, res){
-	res.render('admin_portal');
+  var requestOptions, path;
+
+    // Split the path from the url so that we can call the correct server in development/production
+    path = '/api/admin/messages';
+  
+    requestOptions = {
+      url: apiOptions.server + path,
+      method : "GET",
+      json : {}
+     };
+
+    request( requestOptions, function(err, response, body) { 
+        renderPortal(req, res, body);
+    }); 
+};
+
+var renderPortal = function(req, res, message_data){
+
+  var requestOptions, path;
+
+  // Split the path from the url so that we can call the correct server in development/production
+  path = '/api/admin/subscriptions';
+
+  requestOptions = {
+    url: apiOptions.server + path,
+    method : "GET",
+    json : {}
+   };
+
+  request( requestOptions, function(err, response, subscribe_data) { 
+
+      // Set the locale (english time) for time_ago
+      time_ago.locale(en_locale);
+      const timeAgo = new time_ago('en-US');
+
+      var no_reply = 0;
+
+      for(var i = 0 ; i < message_data.length ; i++){
+        if(message_data[i].responded == false){
+          no_reply++;
+        }
+
+        message_data[i].time = timeAgo.format(new Date(message_data[i].time), 'twitter');
+      }
+
+      var todays_subscribers = 0;
+      var todaysDate = new Date();
+
+      // Loop through the subscribers and check if they subscribed today, then convert their time to 'time ago'
+      for(var j = 0 ; j < subscribe_data.length ; j++){
+        // Create date from input value
+        var inputDate = new Date(subscribe_data[j].time);
+
+        // call setHours to take the time out of the comparison
+        if(inputDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+            todays_subscribers++;
+        }
+
+        // Format the date to 'time ago...'
+        subscribe_data[j].time = timeAgo.format(new Date(subscribe_data[j].time), 'twitter');
+
+        // If theres no time ago, it means its been less than a minute since the time
+        if(subscribe_data[j].time === ''){
+          subscribe_data[j].time = 'Just now';
+        }
+      }
+
+      var data = {
+        unread: no_reply,
+        messages: message_data,
+        subscriptions: subscribe_data,
+        subscribed_today: todays_subscribers
+      }
+
+      res.render('admin_portal', data);
+
+  }); 
 };
 
 exports.projects = function(req, res){
@@ -242,7 +338,7 @@ var renderProject = function(req, res, body) {
 //     });
 // }
 
-var formatData = function(req){
+var formatTokenData = function(req){
 
   var postdata = {
     address: req.body.contract_address,
@@ -264,7 +360,7 @@ exports.doTokenContractCreation = function(req, res){
     
     path = "/api/admin/projects/" + projectname + '/token/contract';
 
-    var postdata = formatData(req);
+    var postdata = formatTokenData(req);
 
     var access_token = req.session.passport.user.tokens.access_token;
 
@@ -288,6 +384,65 @@ exports.doTokenContractCreation = function(req, res){
                 res.redirect('/admin/projects/' + projectname + '#token');
             } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
                 res.redirect('/admin/projects/' + projectname + '#token?err=val');
+            } else {
+                res.render('error', { 
+                  message: body.message,
+                  error: {
+                    status: 404
+                  }
+                });
+            }
+        });
+    }
+};
+
+var formatSaleData = function(req){
+
+  var postdata = {
+    address: req.body.contract_address,
+    abi: req.body.abi,
+    bytecode: req.body.bytecode,
+    network: req.body.network[0],
+    jsFileURL: req.body.jsfile,
+    compiler: req.body.compiler
+  }
+
+  return postdata;
+};
+
+exports.doSaleContractCreation = function(req, res){
+
+    var requestOptions, path, projectname, postdata;
+      
+    projectname = req.params.projectname;
+    saleid = req.params.saleid;
+    
+    path = "/api/admin/projects/" + projectname + '/crowdsale/' + saleid + '/contract';
+
+    var postdata = formatSaleData(req);
+
+    var access_token = req.session.passport.user.tokens.access_token;
+
+    requestOptions = {
+      url : apiOptions.server + path,
+      method : "POST",
+      json : postdata,
+      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+    }; 
+
+    // Check the fields are present
+    if (!postdata.address || !postdata.abi || !postdata.bytecode || !postdata.network || !postdata.jsFileURL || !postdata.compiler) {
+        res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=nodata');
+    } else if(!WAValidator.validate(postdata.address, 'ETH')){
+        res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=invalidaddress');
+    } else {
+
+        request( requestOptions, function(err, response, body) {
+
+            if (response.statusCode === 200) {
+                res.redirect('/admin/projects/' + projectname + '#sale-' + saleid);
+            } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+                res.redirect('/admin/projects/' + projectname + '#sale-' + saleid + '?err=val');
             } else {
                 res.render('error', { 
                   message: body.message,

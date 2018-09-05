@@ -1,0 +1,26 @@
+<table id="contract_details">
+    <tr>
+        <th>ABI</th>
+        <td data-abi="<%= sale.contract.abi %>" id="abi_copy" class="copy_btn">Copy here</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td><%= sale.contract.address %></td>
+    </tr>
+    <tr>
+        <th>Network</th>
+        <td><%= sale.contract.network %></td>
+    </tr>
+    <tr>
+        <th>Compiler</th>
+        <td><%= sale.contract.compiler %></td>
+    </tr>
+    <tr>
+        <th>Javascript File</th>
+        <td><%= sale.contract.jsFileURL %></td>
+    </tr>
+    <tr>
+        <th>Bytecode</th>
+        <td data-bytecode="<%= sale.contract.bytecode %>" id="bytecode_copy" class="copy_btn">Copy here</td>
+    </tr>
+</table>
