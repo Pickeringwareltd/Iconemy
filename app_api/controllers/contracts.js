@@ -12,7 +12,6 @@ provider.on('end', e => {
 var setNewProvider = function(){
 	console.log('WS closed');
 
-	
 	console.log('Attempting ws reconnect...');
 	provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
 
