@@ -1,10 +1,25 @@
 const Web3 = require('web3');
-const web3 = new Web3('wss://rinkeby.infura.io/_ws');
+const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
+var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
+var web3 = new Web3(provider);
+
+provider.on('error', e => console.log('WS Error', e));
+provider.on('end', e => {
+	console.log('WS closed');
+	console.log('Attempting ws reconnect...');
+	provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
+
+	provider.on('connect', function() {
+		console.log('WS reconnected');
+	});
+
+	web3.setProvider(provider);
+});	
+
 const contract = require('truffle-contract');
 const cron = require('node-cron');
 
 // Import our contract artifacts and turn them into usable abstractions.
-// const kyc_artifact = require('../../build/contracts/KYCCrowdsale.json');
 const sale_artifact = require('../../build/contracts/Crowdsale.json');
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
@@ -23,6 +38,7 @@ var pendingTX;
 var cronjob;
 
 module.exports.start = function() {
+
 	// Get the past log events from the contract
 	instance.getPastEvents(
 	    "TokenPurchase",

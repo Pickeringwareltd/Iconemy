@@ -1,5 +1,26 @@
 const Web3 = require('web3');
-const web3 = new Web3('wss://rinkeby.infura.io/_ws');
+const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
+var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
+var web3 = new Web3(provider);
+
+provider.on('error', e => console.log('WS Error', e));
+provider.on('end', e => {
+	console.log('end');
+	setNewProvider();
+});	
+
+var setNewProvider = function(){
+	console.log('WS closed');
+	console.log('Attempting ws reconnect...');
+	provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
+
+	provider.on('connect', function() {
+		console.log('WS reconnected');
+	});
+
+	web3.setProvider(provider);
+}
+
 const Set = require("collections/set");
 
 var sendJsonResponse = function(res, status, content) {
@@ -24,6 +45,7 @@ module.exports.basicSale = function (req, res) {
 	            transaction_summary = events.length;
 	            sendJsonResponse(res, 200, {'transactions': transaction_summary});
 	        } else {
+	        	setNewProvider();
 	        	sendJsonResponse(res, 400, {'error' : errors});
 	        }
 	    }
@@ -55,6 +77,7 @@ module.exports.tokenHolders = function (req, res) {
 
 	            sendJsonResponse(res, 200, {'holders': token_holders.length});
 	        } else {
+	        	console.log(errors);
 	        	sendJsonResponse(res, 400, {'error' : errors});
 	        }
 	    }
@@ -79,6 +102,7 @@ module.exports.tokenTransfers = function (req, res) {
 	            transaction_summary = events.length;
 	            sendJsonResponse(res, 200, {'transactions': transaction_summary});
 	        } else {
+	        	console.log(errors);
 	        	sendJsonResponse(res, 400, {'error' : errors});
 	        }
 	    }
