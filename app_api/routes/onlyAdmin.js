@@ -11,48 +11,54 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 var checkAdmin = function(req, res, id, next){
+	try{
+		User
+			.find({userid: id})
+			.exec( function(err, data) {
 
-	User
-		.find({userid: id})
-		.exec( function(err, data) {
+				var user = data[0];
 
-			var user = data[0];
-
-			if(user.length == 0){
-				sendJsonResponse(res, 400, { "message": "User doesnt exist" });
-				return;
-			} else if(err != undefined) {
-				sendJsonResponse(res, 400, { "message": err });
-				return;	
-			} else {
-
-				if(user.role === 'admin'){
-					next();
-				} else {
-					sendJsonResponse(res, 400, {'message': 'Not an admin'});
+				if(user.length == 0){
+					sendJsonResponse(res, 400, { "message": "User doesnt exist" });
 					return;
-				}
+				} else if(err != undefined) {
+					sendJsonResponse(res, 400, { "message": err });
+					return;	
+				} else {
 
-			}
-		});
+					if(user.role === 'admin'){
+						next();
+					} else {
+						sendJsonResponse(res, 400, {'message': 'Not an admin'});
+						return;
+					}
+
+				}
+			});
+	} catch(e) {
+		console.log('Error on API routes onlyAdmin.js/checkAdmin: ' + e);
+	}
 };
 
 exports.require = function(req, res, next){
+	try{
+		// The user being logged is checked by the needsLogIn middleware
+		// The user MUST be logged in and MUST be the owner of the resource
+		// Need to get the user object from the request (if none, redirect to log in)
+		// Need to search the token in the request and get the 'createdBy' variable
+		// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
 
-	// The user being logged is checked by the needsLogIn middleware
-	// The user MUST be logged in and MUST be the owner of the resource
-	// Need to get the user object from the request (if none, redirect to log in)
-	// Need to search the token in the request and get the 'createdBy' variable
-	// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
+		// We extract the userID from the access token such that we can make sure the logged in user is the owner of the resource
+		var access_token = req.headers.authorization.substr(7, req.headers.authorization.length);
+		var token = jwt.decode(access_token);
+		var userid = token.sub;
 
-	// We extract the userID from the access token such that we can make sure the logged in user is the owner of the resource
-	var access_token = req.headers.authorization.substr(7, req.headers.authorization.length);
-	var token = jwt.decode(access_token);
-	var userid = token.sub;
-
-	if(userid != undefined){
-	    checkAdmin(req, res, userid, next);
-	} else {
-		sendJsonResponse(401, {'message' : 'Not logged in'});
+		if(userid != undefined){
+		    checkAdmin(req, res, userid, next);
+		} else {
+			sendJsonResponse(401, {'message' : 'Not logged in'});
+		}
+	} catch(e) {
+		console.log('Error on API routes onlyAdmin.js/require: ' + e);
 	}
 };

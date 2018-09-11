@@ -17,20 +17,24 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 var sendEmail = function(email){
-	// using SendGrid's v3 Node.js Library
-	// https://github.com/sendgrid/sendgrid-nodejs
-	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	try{
+		// using SendGrid's v3 Node.js Library
+		// https://github.com/sendgrid/sendgrid-nodejs
+		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-	const msg = {
-	  to: email,
-	  from: 'jp@iconemy.io',
-	  subject: 'Hello world',
-	  text: 'Hello plain world!',
-	  html: '<p>Hello HTML world!</p>',
-	  templateId: 'd-0fa622099d954e6fb33d49011048a04e'
-	};
+		const msg = {
+		  to: email,
+		  from: 'jp@iconemy.io',
+		  subject: 'Hello world',
+		  text: 'Hello plain world!',
+		  html: '<p>Hello HTML world!</p>',
+		  templateId: 'd-0fa622099d954e6fb33d49011048a04e'
+		};
 
-	sgMail.send(msg);
+		sgMail.send(msg);
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
+	}
 };
 
 /* This function is used by the web3 crowdsale function to record successful transactions made through the site
@@ -39,239 +43,261 @@ var sendEmail = function(email){
  * We can loop through the successful 'TokenPurchase' events, checking the txHash against the list of emails, if one is there add the email to that TX, if not, no email was supplied.
 */
 module.exports.recordPurchaseEmail = function(req, res){
+	try{
+		var json = JSON.parse(req.body.json);
 
-	var json = JSON.parse(req.body.json);
+		var purchaseObj = {
+			email: json.email,
+			hash: json.hash.tx,
+			time: Date.now()
+		}
 
-	var purchaseObj = {
-		email: json.email,
-		hash: json.hash.tx,
-		time: Date.now()
-	}
+		if(!validator.isEmail(purchaseObj.email)){
+			sendJsonResponse(res, 400, {"message": "Email must be valid"});
+			return;						
+		}
 
-	if(!validator.isEmail(purchaseObj.email)){
-		sendJsonResponse(res, 400, {"message": "Email must be valid"});
-		return;						
-	}
+		var projectid = req.params.projectid;
+		var crowdsaleid = req.params.crowdsaleid;
 
-	var projectid = req.params.projectid;
-	var crowdsaleid = req.params.crowdsaleid;
+		// If transaction was deemed successful
+		if(json.hash.receipt.status == '0x1'){
 
-	// If transaction was deemed successful
-	if(json.hash.receipt.status == '0x1'){
+			// Find the project and pass the object to the addEmails function (below)
+			Project
+				.find({subdomain: projectid})
+				.select('crowdsales')
+				.exec(function(err, _project) {
+					var project = _project[0];
 
-		// Find the project and pass the object to the addEmails function (below)
-		Project
-			.find({subdomain: projectid})
-			.select('crowdsales')
-			.exec(function(err, _project) {
-				var project = _project[0];
+					if(err){
+						sendJsonResponse(res, 400, err);
+						return;
+					} else {
 
-				if(err){
-					sendJsonResponse(res, 400, err);
-					return;
-				} else {
-
-					if(project.crowdsales && project.crowdsales.length > 0){
-						var thisSale = project.crowdsales[crowdsaleid];
-						if(!thisSale){
-							sendJsonResponse(res, 400, {"message": "Crowdsale does not exist"});
+						if(project.crowdsales && project.crowdsales.length > 0){
+							var thisSale = project.crowdsales[crowdsaleid];
+							if(!thisSale){
+								sendJsonResponse(res, 400, {"message": "Crowdsale does not exist"});
+								return;
+							}
+						} else {
+							sendJsonResponse(res, 400, {"message": "This project has no crowdsales"});
 							return;
 						}
-					} else {
-						sendJsonResponse(res, 400, {"message": "This project has no crowdsales"});
-						return;
-					}
 
-					addEmail(req, res, project, crowdsaleid, purchaseObj);
-				}
-			});
+						addEmail(req, res, project, crowdsaleid, purchaseObj);
+					}
+				});
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
 	}
 }
 
 var addEmail = function(req, res, project, sale, purchaseObj) {
-  	if (!project || !sale) {
-    	sendJsonResponse(res, 400, { "message": "You must supply both project and crowdsale ID" });
-    	return;
-	} else {
-		// Push the new purchase object into the crowdsales emails array
-    	project.crowdsales[sale].emails.push(purchaseObj);
+	try{
+	  	if (!project || !sale) {
+	    	sendJsonResponse(res, 400, { "message": "You must supply both project and crowdsale ID" });
+	    	return;
+		} else {
+			// Push the new purchase object into the crowdsales emails array
+	    	project.crowdsales[sale].emails.push(purchaseObj);
 
-    	// Save the new parent document(project)
-    	project.save(function(err, project) {
-      
-      		if (err) {
-        		sendJsonResponse(res, 400, err);
-        		console.log(err);
-     	 	} else {
-     	 		sendEmail(purchaseObj.email);
-     	 		// tracking.newemail(purchaseObj);
-     	 		// only return the recently added crowdsale (which is the last one in the array)
-				sendJsonResponse(res, 201, purchaseObj);
-    		} 
-    	});
-	} 
+	    	// Save the new parent document(project)
+	    	project.save(function(err, project) {
+	      
+	      		if (err) {
+	        		sendJsonResponse(res, 400, err);
+	        		console.log(err);
+	     	 	} else {
+	     	 		sendEmail(purchaseObj.email);
+	     	 		// tracking.newemail(purchaseObj);
+	     	 		// only return the recently added crowdsale (which is the last one in the array)
+					sendJsonResponse(res, 201, purchaseObj);
+	    		} 
+	    	});
+		} 
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
+	}
 };
 
 module.exports.crowdsalesCreate = function (req, res) { 
+	try{
+		// To add a crowdsale, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
+		var project = req.params.projectid;
 
-	// To add a crowdsale, you must first find the parent document (project), add the subdocument (crowdsale) to it and restore.
-	var project = req.params.projectid;
+		if(!project){
+			sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
+			return;
+		} else {
+			// Find the project and pass the object to the addCrowdsale function (below)
+			Project
+				.find({subdomain: project})
+				.select('token crowdsales')
+				.exec(function(err, _project) {
+					var project = _project[0];
 
-	if(!project){
-		sendJsonResponse(res, 404, {"message": "Not found, ProjectID required"});
-		return;
-	} else {
-		// Find the project and pass the object to the addCrowdsale function (below)
-		Project
-			.find({subdomain: project})
-			.select('token crowdsales')
-			.exec(function(err, _project) {
-				var project = _project[0];
-
-				if(err){
-					sendJsonResponse(res, 404, err);
-					return;
-				} else {
-					var token = project.token;
-
-					if(project.crowdsales && project.crowdsales.length > 0){
-						var lastSale = project.crowdsales[project.crowdsales.length - 1];
-
-						if(lastSale.end > new Date(req.body.start)){
-							sendJsonResponse(res, 404, {"message": "Your sale must start after the previous sale has finished."});
-							return;						
-						}
-					}
-
-					if(!WAValidator.validate(req.body.admin, 'ETH') || !WAValidator.validate(req.body.beneficiary, 'ETH')){
-						sendJsonResponse(res, 404, {"message": "You must provide a valid ETH address."});
-						return;	
-					}
-
-					if(new Date(req.body.end) < new Date(req.body.start)){
-						sendJsonResponse(res, 404, {"message": "Your sale must end after it has started."});
-						return;	
-					}
-
-					// Check for a project token, otherwise there is nothing to sell
-					if(!token){
-						sendJsonResponse(res, 404, {"message": "You cannot create a crowdsale without a token"});
+					if(err){
+						sendJsonResponse(res, 404, err);
 						return;
 					} else {
-						addCrowdsale(req, res, project);
+						var token = project.token;
+
+						if(project.crowdsales && project.crowdsales.length > 0){
+							var lastSale = project.crowdsales[project.crowdsales.length - 1];
+
+							if(lastSale.end > new Date(req.body.start)){
+								sendJsonResponse(res, 404, {"message": "Your sale must start after the previous sale has finished."});
+								return;						
+							}
+						}
+
+						if(!WAValidator.validate(req.body.admin, 'ETH') || !WAValidator.validate(req.body.beneficiary, 'ETH')){
+							sendJsonResponse(res, 404, {"message": "You must provide a valid ETH address."});
+							return;	
+						}
+
+						if(new Date(req.body.end) < new Date(req.body.start)){
+							sendJsonResponse(res, 404, {"message": "Your sale must end after it has started."});
+							return;	
+						}
+
+						// Check for a project token, otherwise there is nothing to sell
+						if(!token){
+							sendJsonResponse(res, 404, {"message": "You cannot create a crowdsale without a token"});
+							return;
+						} else {
+							addCrowdsale(req, res, project);
+						}
 					}
-				}
-			});
+				});
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/crowdsalesCreate: ' + e);
 	}
 };
 
 var addCrowdsale = function(req, res, project) {
-  	if (!project) {
-    	sendJsonResponse(res, 404, { "message": "Project ID not found" });
-	} else {
-		var length = project.crowdsales.length;
-		var crowdsale = getCrowdsale(req);
-		crowdsale.index = length;
+	try{
+	  	if (!project) {
+	    	sendJsonResponse(res, 404, { "message": "Project ID not found" });
+		} else {
+			var length = project.crowdsales.length;
+			var crowdsale = getCrowdsale(req);
+			crowdsale.index = length;
 
-		// Push the new crowdsale object into the projects crowdsale array
-    	project.crowdsales.push(crowdsale);
+			// Push the new crowdsale object into the projects crowdsale array
+	    	project.crowdsales.push(crowdsale);
 
-    	// Save the new parent document(project)
-    	project.save(function(err, project) {
-      
-      		if (err) {
-        		sendJsonResponse(res, 400, err);
-     	 	} else {
-     	 		tracking.newcrowdsale(crowdsale);
-     	 		// only return the recently added crowdsale (which is the last one in the array)
-				sendJsonResponse(res, 201, crowdsale);
-    		} 
+	    	// Save the new parent document(project)
+	    	project.save(function(err, project) {
+	      
+	      		if (err) {
+	        		sendJsonResponse(res, 400, err);
+	     	 	} else {
+	     	 		tracking.newcrowdsale(crowdsale);
+	     	 		// only return the recently added crowdsale (which is the last one in the array)
+					sendJsonResponse(res, 201, crowdsale);
+	    		} 
 
-    	});
-	} 
+	    	});
+		} 
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/addCrowdsale: ' + e);
+	}
 };
 
 // Creates crowdsale object from form data ready to be added to a project
 var getCrowdsale = function(req) {
-	var crowdsale = {
-		name: req.body.name,
-		status: 'Not started',
-		start: req.body.start,
-		end: req.body.end,
-		pricingMechanism: req.body.pricingmechanism,
-		initialPrice: parseFloat(req.body.initialprice),
-		public: req.body.public,
-		commission: parseInt(req.body.commission),
-		admin: req.body.admin,
-		beneficiary: req.body.beneficiary,
-		created: Date.now(),
-		createdBy: req.body.createdBy,
-		discount_code: req.body.discount,
-		deployed: 'None'
-	}
+	try{
+		var crowdsale = {
+			name: req.body.name,
+			status: 'Not started',
+			start: req.body.start,
+			end: req.body.end,
+			pricingMechanism: req.body.pricingmechanism,
+			initialPrice: parseFloat(req.body.initialprice),
+			public: req.body.public,
+			commission: parseInt(req.body.commission),
+			admin: req.body.admin,
+			beneficiary: req.body.beneficiary,
+			created: Date.now(),
+			createdBy: req.body.createdBy,
+			discount_code: req.body.discount,
+			deployed: 'None'
+		}
 
-	if(parseInt(req.body.commission) == 5){
-		crowdsale.deployed = 'Deploying';
-	}
+		if(parseInt(req.body.commission) == 5){
+			crowdsale.deployed = 'Deploying';
+		}
 
-	return crowdsale;
+		return crowdsale;
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/getCrowdsale: ' + e);
+	}
 };
 
 // Find one crowdsale under a specific project
 module.exports.crowdsalesReadOne = function (req, res) { 
-	// If the request parameters contains a project ID, then execute a query finding the object containing that id
-	if (req.params && req.params.projectid && req.params.crowdsaleid) {
-		// Call the Project model function to find the ID passed as a request parameter in the URL
-		// I.e. api/projects/123
-		// Execute the query and return a JSON response including the project found or an error
-		Project
-	    	.find({subdomain: req.params.projectid})
-	    	.select('name social token crowdsales')
-	    	.exec(function(err, _project) {
-	    		var project = _project[0];
-	    		// If no project is found, return custom error message
-	      		if (!project) {
-	          		sendJsonResponse(res, 404, { "message": "projectID not found" });
-	          		return;
-	          		// If an error was returned, return that message
-	          	} else if (err) {
-	          		sendJsonResponse(res, 404, err);
-	          		return;
-	      		} else {
-
-		      		if(project.crowdsales && project.crowdsales.length > 0){
-		      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
-
-		      			if(!crowdsale || crowdsale.length == 0){
-		   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
-		   					return;
-		      			} else {
-		      				// If successful, build a JSON response with appropriate information
-		      				var response = {
-		      					project: {
-		      						name: project.name,
-		      						id: req.params.projectid,
-		      					},
-		      					token: {
-		      						name: project.token.name,
-		      						symbol: project.token.symbol,
-		      						logo: project.token.logo
-		      					},
-		      					social: project.social,
-		      					crowdsale: crowdsale
-		      				};
-		      				sendJsonResponse(res, 200, response);
-		      			}
-
+	try{
+		// If the request parameters contains a project ID, then execute a query finding the object containing that id
+		if (req.params && req.params.projectid && req.params.crowdsaleid) {
+			// Call the Project model function to find the ID passed as a request parameter in the URL
+			// I.e. api/projects/123
+			// Execute the query and return a JSON response including the project found or an error
+			Project
+		    	.find({subdomain: req.params.projectid})
+		    	.select('name social token crowdsales')
+		    	.exec(function(err, _project) {
+		    		var project = _project[0];
+		    		// If no project is found, return custom error message
+		      		if (!project) {
+		          		sendJsonResponse(res, 404, { "message": "projectID not found" });
+		          		return;
+		          		// If an error was returned, return that message
+		          	} else if (err) {
+		          		sendJsonResponse(res, 404, err);
+		          		return;
 		      		} else {
-		   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+
+			      		if(project.crowdsales && project.crowdsales.length > 0){
+			      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
+
+			      			if(!crowdsale || crowdsale.length == 0){
+			   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
+			   					return;
+			      			} else {
+			      				// If successful, build a JSON response with appropriate information
+			      				var response = {
+			      					project: {
+			      						name: project.name,
+			      						id: req.params.projectid,
+			      					},
+			      					token: {
+			      						name: project.token.name,
+			      						symbol: project.token.symbol,
+			      						logo: project.token.logo
+			      					},
+			      					social: project.social,
+			      					crowdsale: crowdsale
+			      				};
+			      				sendJsonResponse(res, 200, response);
+			      			}
+
+			      		} else {
+			   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+			      		}
 		      		}
-	      		}
-	    	});
-	   } else {
-	   		// Else if no projectID was specified in the request, return custom error message
-	   		sendJsonResponse(res, 404, { "message": "Not found, projectID and crowdsaleID required" });
-	   }
+		    	});
+		   } else {
+		   		// Else if no projectID was specified in the request, return custom error message
+		   		sendJsonResponse(res, 404, { "message": "Not found, projectID and crowdsaleID required" });
+		   }
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/crowdsalesReadOne: ' + e);
+	}
 };
 
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
@@ -280,40 +306,44 @@ module.exports.crowdsalesUpdateOne = function (req, res) {
 };
 
 module.exports.toggleProgress = function (req, res) { 
-	var project = req.params.projectid;
-	var sale = req.params.crowdsaleid;
+	try{
+		var project = req.params.projectid;
+		var sale = req.params.crowdsaleid;
 
-	if(project) {
-		Project
-			.find({subdomain: req.params.projectid})
-			.exec( function(err, _project) {
-				var project = _project[0];
+		if(project) {
+			Project
+				.find({subdomain: req.params.projectid})
+				.exec( function(err, _project) {
+					var project = _project[0];
 
-				if (!project) {
-				    sendJsonResponse(res, 404, { "message": "Project ID not found" });
-				    return;
-				} else if (err) {
-				    sendJsonResponse(res, 400, err);
-					return; 
-				}
-				
-				// Upload information from correct values.
-				var progress = project.crowdsales[sale].showprogress;
-				project.crowdsales[sale].showprogress = !progress;
-
-				// Try to save the project, return any validation errors if necessary
-				project.save( function(err, project) {
-					if (err) {
-						console.log(err);
-					    sendJsonResponse(res, 404, err);
-					} else {
-					    sendJsonResponse(res, 200, project);
+					if (!project) {
+					    sendJsonResponse(res, 404, { "message": "Project ID not found" });
+					    return;
+					} else if (err) {
+					    sendJsonResponse(res, 400, err);
+						return; 
 					}
+					
+					// Upload information from correct values.
+					var progress = project.crowdsales[sale].showprogress;
+					project.crowdsales[sale].showprogress = !progress;
+
+					// Try to save the project, return any validation errors if necessary
+					project.save( function(err, project) {
+						if (err) {
+							console.log(err);
+						    sendJsonResponse(res, 404, err);
+						} else {
+						    sendJsonResponse(res, 200, project);
+						}
+					});
 				});
-			});
-	} else {
-    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
-    	return;
+		} else {
+	    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
+	    	return;
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/toggleProgress: ' + e);
 	}
 };
 
@@ -324,224 +354,231 @@ module.exports.toggleProgress = function (req, res) {
  * It then returns an object containing the price of the item in USD/ETH/BTC and the discount that has been applied
  */
 module.exports.getPrice = function (req, res) { 
+	try{
+		// If the request parameters contains a project ID, then execute a query finding the object containing that id
+		if (req.body && req.body.projectid && req.body.item) {
 
-	// If the request parameters contains a project ID, then execute a query finding the object containing that id
-	if (req.body && req.body.projectid && req.body.item) {
+			if(req.body.item == 'crowdsale' && req.body.crowdsaleid){
 
-		if(req.body.item == 'crowdsale' && req.body.crowdsaleid){
+				var item_price, total_price, discount, pricing, requestOptions, price_url;
 
-			var item_price, total_price, discount, pricing, requestOptions, price_url;
+				// Call the pricing URL to get accurate information on USD -> BTC/ETH prices
+				price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
 
-			// Call the pricing URL to get accurate information on USD -> BTC/ETH prices
-			price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
+				requestOptions = {
+					url : price_url,
+					method : "GET",
+					json : {}
+				}; 
 
-			requestOptions = {
-				url : price_url,
-				method : "GET",
-				json : {}
-			}; 
+				request( requestOptions, function(err, response, body) {
 
-			request( requestOptions, function(err, response, body) {
+					if(err){
+		  				sendJsonResponse(res, 404, err);
+		  				return;
+					}
 
-				if(err){
-	  				sendJsonResponse(res, 404, err);
-	  				return;
-				}
+					// Set the crypto prices ready for conversion
+					var eth = parseFloat(body.ETH);
+					var btc = parseFloat(body.BTC);
 
-				// Set the crypto prices ready for conversion
-				var eth = parseFloat(body.ETH);
-				var btc = parseFloat(body.BTC);
+					// Find the project and pass the object to the addCrowdsale function (below)
+					Project
+						.find({subdomain: req.body.projectid})
+						.select('crowdsales')
+						.exec(function(err, _project) {
+							var project = _project[0];
 
-				// Find the project and pass the object to the addCrowdsale function (below)
-				Project
-					.find({subdomain: req.body.projectid})
-					.select('crowdsales')
-					.exec(function(err, _project) {
-						var project = _project[0];
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							}
 
-						if(err){
-							sendJsonResponse(res, 404, err);
-							return;
-						}
+							var commission = project.crowdsales[req.body.crowdsaleid].commission;
 
-						var commission = project.crowdsales[req.body.crowdsaleid].commission;
+							// We re-initialise it so that it can be found in Discount function below.
+							var price = item_price;
+							// Item price is $1999.99 for 1%, $1499.99 for 2%, $999.99 for 3% and $499.99 for 4% and FREE for 5%
+							price = ((5 - commission) * 500);
 
-						// We re-initialise it so that it can be found in Discount function below.
-						var price = item_price;
-						// Item price is $1999.99 for 1%, $1499.99 for 2%, $999.99 for 3% and $499.99 for 4% and FREE for 5%
-						price = ((5 - commission) * 500);
+							if(price != 0){
+								price = price - 0.01;
+							}
 
-						if(price != 0){
-							price = price - 0.01;
-						}
+							var discount = project.crowdsales[req.body.crowdsaleid].discount_code;
 
-						var discount = project.crowdsales[req.body.crowdsaleid].discount_code;
+							// Find the discount code and apply to price if necessary
+							Discount
+								.find({name: discount})
+								.exec(function(err, _discount) {
+									var discount = _discount[0];
 
-						// Find the discount code and apply to price if necessary
-						Discount
-							.find({name: discount})
-							.exec(function(err, _discount) {
-								var discount = _discount[0];
-
-								if(err){
-									sendJsonResponse(res, 404, err);
-									return;
-								}
-
-								if(discount){
-									if(discount.type == 'percent'){
-										// Work out the new item price given the discount.
-										var discount_amount = discount.amount;									
-										var take_off = 100 - discount_amount;
-										take_off = take_off / 100;										
-										price = price * take_off;
-										price = price.toFixed(2);
-									} else {
-										var discount_amount = discount.amount;
-										price = price - discount_amount;
+									if(err){
+										sendJsonResponse(res, 404, err);
+										return;
 									}
-								}
 
-								// Convert USD item price to ETH and BTC
-								eth = eth * price;
-								btc = btc * price;
+									if(discount){
+										if(discount.type == 'percent'){
+											// Work out the new item price given the discount.
+											var discount_amount = discount.amount;									
+											var take_off = 100 - discount_amount;
+											take_off = take_off / 100;										
+											price = price * take_off;
+											price = price.toFixed(2);
+										} else {
+											var discount_amount = discount.amount;
+											price = price - discount_amount;
+										}
+									}
 
-								pricing = {
-										dollars: price,
-										eth: eth,
-										btc: btc,
-										item: req.body.item
-									};
-			  					
-			  					sendJsonResponse(res, 200, pricing);
+									// Convert USD item price to ETH and BTC
+									eth = eth * price;
+									btc = btc * price;
 
-							});
+									pricing = {
+											dollars: price,
+											eth: eth,
+											btc: btc,
+											item: req.body.item
+										};
+				  					
+				  					sendJsonResponse(res, 200, pricing);
 
-					});
+								});
 
-			});
+						});
+
+				});
+
+			} else {
+				// Else if no crowdsaleID was specified in the request, return custom error message
+		  		sendJsonResponse(res, 404, { "message": "Not found, crowdsale ID required" });
+			}
 
 		} else {
-			// Else if no crowdsaleID was specified in the request, return custom error message
-	  		sendJsonResponse(res, 404, { "message": "Not found, crowdsale ID required" });
+			// Else if no projectID was specified in the request, return custom error message
+		  	sendJsonResponse(res, 404, { "message": "Not found, project ID and/or item name is required" });
 		}
-
-	} else {
-		// Else if no projectID was specified in the request, return custom error message
-	  	sendJsonResponse(res, 404, { "message": "Not found, project ID and/or item name is required" });
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/getPrice: ' + e);
 	}
 };
 
 
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.paymentConfirmOne = function (req, res) { 
-	var projectid = req.params.projectid;
-	var crowdsaleid = req.params.crowdsaleid;
-	var createdDate;
+	try{
+		var projectid = req.params.projectid;
+		var crowdsaleid = req.params.crowdsaleid;
+		var createdDate;
 
-	if(!projectid){
-		sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});
-		return;
-	} else if (!crowdsaleid){
-		sendJsonResponse(res, 404, {"message": "Not found, Crowdsale ID required"});
-		return;
-	} else {
-		// Find the project and pass the object to the addToken function (below)
-		Project
-			.find({subdomain: projectid})
-			.select('crowdsales')
-			.exec(function(err, _project) {
-				var project = _project[0];
-				
-				if(err){
-					sendJsonResponse(res, 404, err);
-					return;
-				} else if (!project){
-					sendJsonResponse(res, 404, {"message": "Project not found"});
-				} else {
-					var thisSale = project.crowdsales[crowdsaleid];
+		if(!projectid){
+			sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});
+			return;
+		} else if (!crowdsaleid){
+			sendJsonResponse(res, 404, {"message": "Not found, Crowdsale ID required"});
+			return;
+		} else {
+			// Find the project and pass the object to the addToken function (below)
+			Project
+				.find({subdomain: projectid})
+				.select('crowdsales')
+				.exec(function(err, _project) {
+					var project = _project[0];
+					
+					if(err){
+						sendJsonResponse(res, 404, err);
+						return;
+					} else if (!project){
+						sendJsonResponse(res, 404, {"message": "Project not found"});
+					} else {
+						var thisSale = project.crowdsales[crowdsaleid];
 
-					if(thisSale){
-						
-						// Create a payment object if one doesnt already exist
-						if(!thisSale.payment){
-							thisSale.payment = {
-								currency: '',
-								paid: '',
-								amount: 0,
-								sentTo: '',
-								created: '',
-								createdBy: ''
-							};
-						}
+						if(thisSale){
+							
+							// Create a payment object if one doesnt already exist
+							if(!thisSale.payment){
+								thisSale.payment = {
+									currency: '',
+									paid: '',
+									amount: 0,
+									sentTo: '',
+									created: '',
+									createdBy: ''
+								};
+							}
 
-						var payment = thisSale.payment;
+							var payment = thisSale.payment;
 
-						if(payment.paid == null){
-						
-							// Create wallet which either creates a new wallet and encrypts private key
-							// Or loads existing keys from the DB if already used.
-							var wallet;
-							if(req.body.currency == 'eth' && !payment.ethWallet){
-								// Create new wallet for taking payments
-								wallet = paymentJS.createWallet('eth');
-							} else if(req.body.currency == 'btc' && !payment.btcWallet){
-								// Create new wallet for taking payments
-								wallet = paymentJS.createWallet('btc');
-							} else {
-								if(req.body.currency == 'eth'){
-									wallet = {
-										address: payment.ethWallet.address,
-										seed: payment.ethWallet.seed
-									};
+							if(payment.paid == null){
+							
+								// Create wallet which either creates a new wallet and encrypts private key
+								// Or loads existing keys from the DB if already used.
+								var wallet;
+								if(req.body.currency == 'eth' && !payment.ethWallet){
+									// Create new wallet for taking payments
+									wallet = paymentJS.createWallet('eth');
+								} else if(req.body.currency == 'btc' && !payment.btcWallet){
+									// Create new wallet for taking payments
+									wallet = paymentJS.createWallet('btc');
 								} else {
-									wallet = {
-										address: payment.btcWallet.address,
-										seed: payment.btcWallet.seed
-									};
+									if(req.body.currency == 'eth'){
+										wallet = {
+											address: payment.ethWallet.address,
+											seed: payment.ethWallet.seed
+										};
+									} else {
+										wallet = {
+											address: payment.btcWallet.address,
+											seed: payment.btcWallet.seed
+										};
+									}
 								}
-							}
 
-							if(payment.created == null){
-								createdDate = Date.now();
+								if(payment.created == null){
+									createdDate = Date.now();
+								} else {
+									createdDate = thisSale.created;
+								}
+
+								payment.currency = req.body.currency;
+								payment.amount = req.body.amount;
+								payment.created = createdDate;
+								payment.createdBy = req.body.createdBy;
+								if(req.body.currency == 'eth'){
+									payment.ethWallet = wallet;
+								} else {
+									payment.btcWallet = wallet;
+								}
+
+								// If they have paid, we must know what addresses to search for
+								if(payment.paid && (!payment.sentTo)){
+									sendJsonResponse(res, 404, {"message": "Must provide sent to address."});
+									return;
+								}
+
+								project.save(function(err, project) {
+								    if (err) {
+								        sendJsonResponse(res, 404, err);
+								    } else {
+							    		tracking.paymentconfirmed(payment, 'crowdsale');
+								        sendJsonResponse(res, 200, payment);
+									} 
+								});
+
 							} else {
-								createdDate = thisSale.created;
+								sendJsonResponse(res, 404, {"message": "Already paid for!"});
 							}
-
-							payment.currency = req.body.currency;
-							payment.amount = req.body.amount;
-							payment.created = createdDate;
-							payment.createdBy = req.body.createdBy;
-							if(req.body.currency == 'eth'){
-								payment.ethWallet = wallet;
-							} else {
-								payment.btcWallet = wallet;
-							}
-
-							// If they have paid, we must know what addresses to search for
-							if(payment.paid && (!payment.sentTo)){
-								sendJsonResponse(res, 404, {"message": "Must provide sent to address."});
-								return;
-							}
-
-							project.save(function(err, project) {
-							    if (err) {
-							        sendJsonResponse(res, 404, err);
-							    } else {
-						    		tracking.paymentconfirmed(payment, 'crowdsale');
-							        sendJsonResponse(res, 200, payment);
-								} 
-							});
 
 						} else {
-							sendJsonResponse(res, 404, {"message": "Already paid for!"});
+							sendJsonResponse(res, 404, {"message": "Sale not found"});
 						}
-
-					} else {
-						sendJsonResponse(res, 404, {"message": "Sale not found"});
 					}
-				}
-			});
+				});
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/paymentConfirmOne: ' + e);
 	}
 };
 
@@ -549,87 +586,95 @@ module.exports.paymentConfirmOne = function (req, res) {
 // If the wallet balance is above the requested deposit amount, store item as 'paid'
 // Else, return error.
 var dealWithBalance = function(project, balance, saleid, res) {
-	var payment = project.crowdsales[saleid].payment;
+	try{
+		var payment = project.crowdsales[saleid].payment;
 
-	// If balance is above or equal to amount needed
-	if(balance >= payment.amount){
+		// If balance is above or equal to amount needed
+		if(balance >= payment.amount){
 
-		// Set the payment date and store in DB as PAID
-		payment.paid = Date.now();
-		project.crowdsales[saleid].deployed = "Deploying";
+			// Set the payment date and store in DB as PAID
+			payment.paid = Date.now();
+			project.crowdsales[saleid].deployed = "Deploying";
 
-		project.save(function(err, project) {
-			if (err) {
-				sendJsonResponse(res, 404, err);
-			} else {
-				tracking.paymentfinalised(payment, 'crowdsale');
-				sendJsonResponse(res, 200, payment);
-			} 
-		});
-	// Else, send an error message back saying amount not met.
-	} else {
-		sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
+			project.save(function(err, project) {
+				if (err) {
+					sendJsonResponse(res, 404, err);
+				} else {
+					tracking.paymentfinalised(payment, 'crowdsale');
+					sendJsonResponse(res, 200, payment);
+				} 
+			});
+		// Else, send an error message back saying amount not met.
+		} else {
+			sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/dealWithBalance: ' + e);
 	}
 };
 
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.paymentFinaliseOne = function (req, res) { 
-	var projectid = req.params.projectid;
-	var crowdsaleid = req.params.crowdsaleid;
+	try{
+		var projectid = req.params.projectid;
+		var crowdsaleid = req.params.crowdsaleid;
 
-	if(!projectid){
-		sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});
-		return;
-	} else if (!crowdsaleid){
-		sendJsonResponse(res, 404, {"message": "Not found, Crowdsale ID required"});
-		return;
-	} else {
-		// Find the project and pass the object to the addToken function (below)
-		Project
-			.find({subdomain: projectid})
-			.select('crowdsales')
-			.exec(function(err, _project) {
-				var project = _project[0];
-			
-				if(err){
-					sendJsonResponse(res, 404, err);
-					return;
-				} else if (!project){
-					sendJsonResponse(res, 404, {"message": "Project not found"});
-				} else {
-					var thisSale = project.crowdsales[crowdsaleid];
+		if(!projectid){
+			sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});
+			return;
+		} else if (!crowdsaleid){
+			sendJsonResponse(res, 404, {"message": "Not found, Crowdsale ID required"});
+			return;
+		} else {
+			// Find the project and pass the object to the addToken function (below)
+			Project
+				.find({subdomain: projectid})
+				.select('crowdsales')
+				.exec(function(err, _project) {
+					var project = _project[0];
+				
+					if(err){
+						sendJsonResponse(res, 404, err);
+						return;
+					} else if (!project){
+						sendJsonResponse(res, 404, {"message": "Project not found"});
+					} else {
+						var thisSale = project.crowdsales[crowdsaleid];
 
-					if(thisSale){
-						
-						// Create a payment object if one doesnt already exist
-						if(!thisSale.payment){
-							sendJsonResponse(res, 404, {"message": "Must create a payment first!"});
-							return;
-						}
-
-						var payment = thisSale.payment;
-
-						if(payment.paid == null){
-							var wallet_address;
-
-							// Else if the payment has not yet been paid, get the balance and deal with it using the dealWithBalance function.
-							if(payment.currency == 'eth'){
-								wallet_address = payment.ethWallet.address;
-							} else {
-								wallet_address = payment.btcWallet.address;
+						if(thisSale){
+							
+							// Create a payment object if one doesnt already exist
+							if(!thisSale.payment){
+								sendJsonResponse(res, 404, {"message": "Must create a payment first!"});
+								return;
 							}
 
-							var balance = paymentJS.getBalance(wallet_address, project, crowdsaleid, res, dealWithBalance);
+							var payment = thisSale.payment;
+
+							if(payment.paid == null){
+								var wallet_address;
+
+								// Else if the payment has not yet been paid, get the balance and deal with it using the dealWithBalance function.
+								if(payment.currency == 'eth'){
+									wallet_address = payment.ethWallet.address;
+								} else {
+									wallet_address = payment.btcWallet.address;
+								}
+
+								var balance = paymentJS.getBalance(wallet_address, project, crowdsaleid, res, dealWithBalance);
+
+							} else {
+								sendJsonResponse(res, 404, {"message": "Already paid for!"});
+							}
 
 						} else {
-							sendJsonResponse(res, 404, {"message": "Already paid for!"});
+							sendJsonResponse(res, 404, {"message": "Sale not found"});
 						}
-
-					} else {
-						sendJsonResponse(res, 404, {"message": "Sale not found"});
 					}
-				}
-			});
+				});
+		}
+	} catch(e) {
+		console.log('Error on API controllers crowdsales.js/paymentFinaliseOne: ' + e);
 	}
 };
 
