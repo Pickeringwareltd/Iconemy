@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require( 'mongoose' );
 var jwt = require('jsonwebtoken');
 require('dotenv').load();

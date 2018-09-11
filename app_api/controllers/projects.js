@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var tracking = require('../../tracking/tracking');

@@ -1,3 +1,5 @@
+'use strict';
+
 const WAValidator = require('wallet-address-validator');
 const bitcoin = require('bitcoinjs-lib');
 const ethereum = require('ethereumjs-wallet');
@@ -20,6 +22,7 @@ var generateBTCWallet =  function() {
 var getBTCBalances = function(address, project, crowdsaleid, res, callback) {
 	// Get balance of BTC wallet with atleast 6 confirmations
 	var url = 'https://chain.so/api/v2/get_address_balance/BTC/' + address + '/6';
+	var requestOptions;
 
 	requestOptions = {
 		url : url,
@@ -54,6 +57,8 @@ var getEthBalances = function(address, project, crowdsaleid, res, callback) {
 	var apiKey = '6KM91A9J1KW79X6F4QM7JMJAPFFG7V5YCP';
 	var url = 'https://api.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
 	var testurl = 'http://api-rinkeby.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
+	var requestOptions;
+
 
 	requestOptions = {
 		url : testurl,

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var Discount = mongoose.model('Discount');
@@ -328,13 +330,10 @@ module.exports.getPrice = function (req, res) {
 
 		if(req.body.item == 'crowdsale' && req.body.crowdsaleid){
 
-			var item_price;
-			var total_price;
-			var discount;
-			var pricing;
+			var item_price, total_price, discount, pricing, requestOptions, price_url;
 
 			// Call the pricing URL to get accurate information on USD -> BTC/ETH prices
-			var price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
+			price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
 
 			requestOptions = {
 				url : price_url,
@@ -365,7 +364,7 @@ module.exports.getPrice = function (req, res) {
 							return;
 						}
 
-						commission = project.crowdsales[req.body.crowdsaleid].commission;
+						var commission = project.crowdsales[req.body.crowdsaleid].commission;
 
 						// We re-initialise it so that it can be found in Discount function below.
 						var price = item_price;
@@ -376,14 +375,12 @@ module.exports.getPrice = function (req, res) {
 							price = price - 0.01;
 						}
 
-						discount = project.crowdsales[req.body.crowdsaleid].discount_code;
+						var discount = project.crowdsales[req.body.crowdsaleid].discount_code;
 
 						// Find the discount code and apply to price if necessary
 						Discount
 							.find({name: discount})
 							.exec(function(err, _discount) {
-								console.log(price);
-
 								var discount = _discount[0];
 
 								if(err){
@@ -440,6 +437,7 @@ module.exports.getPrice = function (req, res) {
 module.exports.paymentConfirmOne = function (req, res) { 
 	var projectid = req.params.projectid;
 	var crowdsaleid = req.params.crowdsaleid;
+	var createdDate;
 
 	if(!projectid){
 		sendJsonResponse(res, 404, {"message": "Not found, Project ID required"});

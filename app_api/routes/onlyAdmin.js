@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');

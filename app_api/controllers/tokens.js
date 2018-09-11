@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var Discount = mongoose.model('Discount');
@@ -183,9 +185,7 @@ module.exports.getPrice = function (req, res) {
 
 		if(req.body.item == 'token'){
 
-			var item_price;
-			var total_price;
-			var discount;
+			var item_price, total_price, discount, requestOptions;
 			var project = req.body.projectid;
 
 			// Call the pricing URL to get accurate information on USD -> BTC/ETH prices

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var Message = mongoose.model('Contact');
@@ -153,7 +155,6 @@ module.exports.setTokenContract = function(req, res) {
 	}
 
 	if(projectid) {
-		console.log(projectid);
 		Project
 			.find({subdomain: req.params.projectid})
 			.exec( function(err, _project) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var validator = require('validator');
 var Subscription = mongoose.model('Subscription');

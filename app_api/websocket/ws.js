@@ -1,3 +1,5 @@
+'use strict';
+
 const Web3 = require('web3');
 const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
 var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);

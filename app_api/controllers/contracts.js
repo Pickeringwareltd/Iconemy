@@ -1,3 +1,5 @@
+'use strict';
+
 const Web3 = require('web3');
 const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
 var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
@@ -37,6 +39,8 @@ module.exports.basicSale = function (req, res) {
 
 	var instance = new web3.eth.Contract(abi, address);
 
+	var transaction_summary;
+
 	// Get the past log events from the contract
 	instance.getPastEvents(
 	    "TokenPurchase",
@@ -62,6 +66,8 @@ module.exports.tokenHolders = function (req, res) {
 	var abi = data.abi;
 
 	var instance = new web3.eth.Contract(abi, address);
+
+	var transaction_summary;
 
 	// Get the past log events from the contract
 	instance.getPastEvents(
@@ -93,6 +99,8 @@ module.exports.tokenTransfers = function (req, res) {
 	var abi = data.abi;
 
 	var instance = new web3.eth.Contract(abi, address);
+
+	var transaction_summary;
 
 	// Get the past log events from the contract
 	instance.getPastEvents(

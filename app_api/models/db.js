@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 
 if (process.env.NODE_ENV !== 'production') {
