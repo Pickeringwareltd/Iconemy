@@ -110,42 +110,44 @@ var getData = function(req){
 }
 
 module.exports.projectsCreate = function (req, res) { 
+	try{
+		var data = getData(req);
+		var error = validateProject(data);
 
-	var data = getData(req);
-	var error = validateProject(data);
+		Project
+			.find({subdomain: data.subdomain})
+			.exec( function(err, project) {
 
-	Project
-		.find({subdomain: data.subdomain})
-		.exec( function(err, project) {
+				if(project.length != 0){
+					sendJsonResponse(res, 400, { "message": "Subdomain already exists." });
+					return;
+				} else if(error != undefined) {
+					sendJsonResponse(res, 404, { "message": error });
+					return;	
+				} else {
 
-			if(project.length != 0){
-				sendJsonResponse(res, 400, { "message": "Subdomain already exists." });
-				return;
-			} else if(error != undefined) {
-				sendJsonResponse(res, 404, { "message": error });
-				return;	
-			} else {
+					Project
+					    .find({subdomain: req.body.subdomain})
+					    .exec(function(err, project) {
+					         	// Create project creates a new document in the database if the JSON object passes validation in the schema
+								Project
+									.create(data, function(err, project) {
+										console.log(err);
+										// Callback is used to report an error or return project on successful save
+							    		if (err) {
+							      			sendJsonResponse(res, 400, err);
+							    		} else {
+							    			tracking.newproject(project);
+							      			sendJsonResponse(res, 201, project);
+							    		}
+									}); 
+					    });
+				}
+			});
 
-				Project
-				    .find({subdomain: req.body.subdomain})
-				    .exec(function(err, project) {
-				         	// Create project creates a new document in the database if the JSON object passes validation in the schema
-							Project
-								.create(data, function(err, project) {
-									console.log(err);
-									// Callback is used to report an error or return project on successful save
-						    		if (err) {
-						      			sendJsonResponse(res, 400, err);
-						    		} else {
-						    			tracking.newproject(project);
-						      			sendJsonResponse(res, 201, project);
-						    		}
-								}); 
-				    });
-			}
-		});
-
-
+	} catch (e) {
+		console.log('Error in API projects.js/projectsCreate: ' + e);
+	}
 };
  
 module.exports.projectsListByStartTime = function (req, res) { 
