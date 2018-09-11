@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 
@@ -17,10 +19,8 @@ if (process.env.NODE_ENV === 'production') {
 // Calculate actual price here
 exports.create = function(req, res){
 
-	var path;
+	var path, amount, error, access_token;
 
-	var amount;
-	var error;
 	var id = req.query.id;
 	var item = req.query.item;
 	var project = req.query.project;
@@ -43,7 +43,7 @@ exports.create = function(req, res){
 		path = '/api/projects/' + project + '/token/payment';
 	} 
 
-	var access_token = req.session.passport.user.tokens.access_token;
+	access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
 		url : apiOptions.server + path,
@@ -102,13 +102,13 @@ exports.create = function(req, res){
 };
 
 exports.confirm = function(req, res) {
+	
+	var requestOptions, path, sale_id, error, access_token;
+
 	var amount = req.query.amount;
 	var currency = req.query.currency;
-	var error;
 	var item = req.query.item;
 	var project = req.query.project;
-	var path;
-	var sale_id;
 
 	if(!item || !amount || !project){
 		error = 'Please specify an item, amount and a project.'
@@ -134,7 +134,7 @@ exports.confirm = function(req, res) {
 		path = '/api/projects/' + project + '/token/payment/confirm';
 	}
 
-	var access_token = req.session.passport.user.tokens.access_token;
+	access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
 		url : apiOptions.server + path,
@@ -186,9 +186,10 @@ exports.finalise = function(req, res) {
 	// Double check the balance of the wallet provided (validation)
 	// Finalise the payment and send to thank you screen
 	// Thank you for purchasing, we are deploying your contract now, we will email you when its ready!
+	var sale_id, error, requestOptions, path, access_token;
+
 	var item = req.body.item;
 	var project = req.body.project;
-	var sale_id;
 
 	if(!item || !project){
 		error = 'Please specify an item, amount and a project.'
@@ -209,7 +210,7 @@ exports.finalise = function(req, res) {
 		path = '/api/projects/' + project + '/crowdsales/' + sale_id + '/payment/finalise';
 	}
 
-	var access_token = req.session.passport.user.tokens.access_token;
+	access_token = req.session.passport.user.tokens.access_token;
 
 	// Send any empty request, the api will then check the wallet and do the rest.
 	requestOptions = {

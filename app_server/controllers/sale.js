@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
@@ -14,13 +16,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 exports.toggleProgress = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, saleId, access_token;
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
-	var saleId = req.params.crowdsaleid;
+	projectName =  req.params.projectname;
+	saleId = req.params.crowdsaleid;
 
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName + '/crowdsales/' + saleId + '/toggleprogress';
@@ -78,11 +80,11 @@ var renderDate =  function(_date) {
 }
 
 exports.index = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, saleId;
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
-	var saleId = req.params.crowdsaleid;
+	projectName =  req.params.projectname;
+	saleId = req.params.crowdsaleid;
 
 	if(projectName == undefined){
 		projectName = req.subdomains;
@@ -135,10 +137,10 @@ var renderCreateSale = function(req, res, responseBody) {
 }
 
 exports.create = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, access_token;
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
+	projectName =  req.params.projectname;
 
 	if(projectName == undefined){
 		projectName = req.subdomains;
@@ -147,7 +149,7 @@ exports.create = function(req, res){
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName + '/token';
 
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
 
   	requestOptions = {
   		url: apiOptions.server + path,
@@ -241,15 +243,15 @@ var formatData = function(req){
 }
 
 exports.doCreation = function(req, res){
-	var requestOptions, path, projectname, postdata;
+	var requestOptions, path, projectname, postdata, access_token;
   	
   	projectname = req.params.projectname;
   	
   	path = "/api/projects/" + projectname + '/crowdsales';
 
-  	var postdata = formatData(req);
+  	postdata = formatData(req);
 
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
 
   	requestOptions = {
   		url : apiOptions.server + path,

@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 var tracking = require('../../tracking/tracking');
@@ -11,6 +13,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var renderProject = function(req, res, responseBody, subdomain){
+	var data;
+
 	var isOwner = false;
 
 	if(responseBody[0]){
@@ -70,11 +74,11 @@ var renderDate =  function(_date) {
 }
 
 exports.index = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, subdomain;
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
-	var subdomain = false;
+	projectName =  req.params.projectname;
+	subdomain = false;
 
 	if(projectName == undefined){
 		projectName = req.subdomains;
@@ -123,7 +127,7 @@ exports.create = function(req, res){
 
 // Renders the create token form
 var renderUpdateProject = function(req, res, _data){
-	var message;
+	var data, message;
 
 	if(req.query.err){
 		if(req.query.err == 'nodata'){
@@ -133,7 +137,7 @@ var renderUpdateProject = function(req, res, _data){
 		}
 	}
 
-	var data = _data[0];
+	data = _data[0];
 
 	res.render('update_project', { 
 		title: 'Update project',
@@ -143,7 +147,7 @@ var renderUpdateProject = function(req, res, _data){
 }
 
 exports.update = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, access_token;
 
 	// If not logged in
 	if(req.user == undefined){
@@ -152,11 +156,11 @@ exports.update = function(req, res){
 	}
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
+	projectName =  req.params.projectname;
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects/' + projectName;
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
   
   	requestOptions = {
   		url: apiOptions.server + path,
@@ -172,13 +176,13 @@ exports.update = function(req, res){
 
 // Create project controller for dealing with POST requests containing actual new project data.
 exports.doUpdate = function(req, res){
-	var requestOptions, path, postdata;
+	var requestOptions, path, postdata, subdomain, access_token;
 
-	var postdata = getData(req);
-  	var subdomain = postdata.subdomain;
+	postdata = getData(req);
+  	subdomain = postdata.subdomain;
 
   	path = "/api/projects/" + subdomain;
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
@@ -342,13 +346,13 @@ var getData = function(req) {
 
 // Create project controller for dealing with POST requests containing actual new project data.
 exports.doCreation = function(req, res){
-	var requestOptions, path, postdata;
+	var requestOptions, path, postdata, subdomain, access_token;
 
   	path = "/api/projects/create";
   	
-  	var postdata = getData(req);
-  	var subdomain = postdata.subdomain;
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	postdata = getData(req);
+  	subdomain = postdata.subdomain;
+  	access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
@@ -418,12 +422,12 @@ var renderMyProjects = function(req, res, responseBody){
 };
 
 exports.myprojects = function(req, res){
-  	var requestOptions, path;
+  	var requestOptions, path, access_token;
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/projects';
 
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
 
   	requestOptions = {
   		url: apiOptions.server + path,
@@ -440,6 +444,8 @@ exports.myprojects = function(req, res){
 };
 
 var renderBuyNow = function(req, res, body){
+	var data;
+
 	if(body[0]){
 		// Need to render crowdsale dates properly
 		data = body[0];
@@ -481,11 +487,11 @@ var renderBuyNow = function(req, res, body){
 }
 
 exports.buynow = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, projectName, subdomain;
 
 	// Make sure we are using the correct subdomain
-	var projectName =  req.params.projectname;
-	var subdomain = false;
+	projectName =  req.params.projectname;
+	subdomain = false;
 
 	if(projectName == undefined){
 		projectName = req.subdomains;

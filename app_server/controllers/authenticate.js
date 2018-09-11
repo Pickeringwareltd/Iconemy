@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 
 exports.login = function(req, res){

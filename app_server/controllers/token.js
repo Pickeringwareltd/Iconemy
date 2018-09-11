@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
@@ -13,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Collates the API request for getting token information
 var getRequestOptions = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, access_token;
 
 	// Make sure we are using the correct subdomain
 	var projectName =  req.params.projectname;
@@ -109,7 +111,7 @@ exports.create = function(req, res){
 
 // Create token controller for dealing with POST requests containing actual new token data.
 exports.doCreation = function(req, res){
-	var requestOptions, path, projectname, postdata;
+	var requestOptions, path, projectname, postdata, access_token;
 
   	projectname = req.params.projectname;
 
@@ -125,7 +127,7 @@ exports.doCreation = function(req, res){
     	discount: req.body.discount
 	};
 
-	var access_token = req.session.passport.user.tokens.access_token;
+	access_token = req.session.passport.user.tokens.access_token;
 
 	requestOptions = {
   		url : apiOptions.server + path,
