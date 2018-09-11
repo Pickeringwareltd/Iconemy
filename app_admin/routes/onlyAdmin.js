@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 
@@ -28,7 +30,7 @@ exports.require = function(req, res, next){
 };
 
 var getRequestOptions = function(req, res){
-	var requestOptions, path;
+	var requestOptions, path, access_token;
 
 	// Make sure we are using the correct subdomain
 	var userid =  req.session.passport.user.user.id;
@@ -36,7 +38,7 @@ var getRequestOptions = function(req, res){
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/user/' + userid;
 
-  	var access_token = req.session.passport.user.tokens.access_token;
+  	access_token = req.session.passport.user.tokens.access_token;
   
   	requestOptions = {
   		url: apiOptions.server + path,

@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 var moment = require('moment');
@@ -15,12 +17,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 exports.messageResponded = function(req, res) {
-  var requestOptions, path;
+  var requestOptions, path, access_token;
 
     // Split the path from the url so that we can call the correct server in development/production
     path = '/api/admin/messages/' + req.params.messageid + '/responded';
   
-    var access_token = req.session.passport.user.tokens.access_token;
+    access_token = req.session.passport.user.tokens.access_token;
   
     requestOptions = {
       url: apiOptions.server + path,
@@ -35,11 +37,11 @@ exports.messageResponded = function(req, res) {
 };
 
 exports.index = function(req, res){
-  var requestOptions, path;
+  var requestOptions, path, access_token;
 
     // Split the path from the url so that we can call the correct server in development/production
     path = '/api/admin/messages';
-    var access_token = req.session.passport.user.tokens.access_token;
+    access_token = req.session.passport.user.tokens.access_token;
   
     requestOptions = {
       url: apiOptions.server + path,
@@ -55,11 +57,11 @@ exports.index = function(req, res){
 
 var renderPortal = function(req, res, message_data){
 
-  var requestOptions, path;
+  var requestOptions, path, access_token;
 
   // Split the path from the url so that we can call the correct server in development/production
   path = '/api/admin/subscriptions';
-  var access_token = req.session.passport.user.tokens.access_token;
+  access_token = req.session.passport.user.tokens.access_token;
   
   requestOptions = {
       url: apiOptions.server + path,
@@ -99,8 +101,6 @@ var renderPortal = function(req, res, message_data){
             todays_subscribers++;
         }
 
-        console.log(subscribe_data[j].time);
-
         // Format the date to 'time ago...'
         subscribe_data[j].time = timeAgo.format(new Date(subscribe_data[j].time), 'twitter');
 
@@ -124,11 +124,11 @@ var renderPortal = function(req, res, message_data){
 
 exports.projects = function(req, res){
 
-	var requestOptions, path;
+	var requestOptions, path, access_token;
 
   	// Split the path from the url so that we can call the correct server in development/production
   	path = '/api/admin/projects';
-    var access_token = req.session.passport.user.tokens.access_token;
+    access_token = req.session.passport.user.tokens.access_token;
   
     requestOptions = {
       url: apiOptions.server + path,
@@ -362,14 +362,14 @@ var formatTokenData = function(req){
 
 exports.doTokenContractCreation = function(req, res){
 
-    var requestOptions, path, projectname, postdata;
+    var requestOptions, path, projectname, postdata, access_token;
       
     projectname = req.params.projectname;
     
     path = "/api/admin/projects/" + projectname + '/token/contract';
 
-    var postdata = formatTokenData(req);
-    var access_token = req.session.passport.user.tokens.access_token;
+    postdata = formatTokenData(req);
+    access_token = req.session.passport.user.tokens.access_token;
 
     requestOptions = {
       url : apiOptions.server + path,
@@ -419,15 +419,15 @@ var formatSaleData = function(req){
 
 exports.doSaleContractCreation = function(req, res){
 
-    var requestOptions, path, projectname, postdata;
+    var requestOptions, path, projectname, postdata, access_token;
       
     projectname = req.params.projectname;
     saleid = req.params.saleid;
     
     path = "/api/admin/projects/" + projectname + '/crowdsale/' + saleid + '/contract';
 
-    var postdata = formatSaleData(req);
-    var access_token = req.session.passport.user.tokens.access_token;
+    postdata = formatSaleData(req);
+    access_token = req.session.passport.user.tokens.access_token;
 
     requestOptions = {
       url : apiOptions.server + path,
