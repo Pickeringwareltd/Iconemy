@@ -14,7 +14,7 @@ var validateProject = function(data){
 	  var error;
 
 	  // If any required fields are missing, return appropriate error message 
-	  if (!data.name || !data.description || data.description == 'Enter a basic description about your project here' || !data.website || !data.subdomain || data.subdomain == '    .iconemy.io') {
+	  if (!data.name || !data.description || data.description === 'Enter a basic description about your project here' || !data.website || !data.subdomain || data.subdomain === '    .iconemy.io') {
 	  	error = 'All fields marked with * are required!';
 	  	return error;
 	  }
@@ -34,49 +34,49 @@ var validateProject = function(data){
 	   * Subdomain length from 1 to 63.
 	   * See https://stackoverflow.com/questions/7930751/regexp-for-subdomain for more details.
 	  */
-	  if(data.subdomain.match(/^[a-z0-9]{0,63}$/) == null){
+	  if(data.subdomain.match(/^[a-z0-9]{0,63}$/) === null){
 	    error = 'Your subdomain can only include lowercase characters and numbers';
 	  	return error;
 	  }
 
 	  // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
 	  if(data.social.facebook != ''){
-	  	if(data.social.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(data.social.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Facebook URL';
 	  		return error;
 	   	}
 	  }
 
 	  if(data.social.twitter != '') {
-	  	if(data.social.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(data.social.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Twitter URL';
 	  		return error;
 	    }
 	  }
 
 	  if(data.social.youtube != ''){
-	  	if(data.social.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(data.social.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Youtube URL';
 	  		return error;
 	    }
 	  }
 
 	  if(data.social.medium != ''){
-	  	if(data.social.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) == null){
+	  	if(data.social.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) === null){
 	    	error = 'Must enter a valid Medium URL';
 	  		return error;	
 	    }
 	  }
 
 	  if(data.social.bitcointalk != ''){
-	  	if(data.social.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(data.social.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Bitcointalk URL';
 	    	return error;
 	    }
 	  }
 
 	  if(data.social.telegram != ''){
-	  	if(data.social.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) == null){
+	  	if(data.social.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) === null){
 	    	error = 'Must enter a valid Telegram URL';
 	    	return error;
 	    }
@@ -198,7 +198,7 @@ module.exports.projectsReadOne = function (req, res) {
 		    	.find({subdomain: req.params.projectid})
 		    	.exec(function(err, project) {
 		    		// If no project is found, return custom error message
-		      		if (!project || project == '') {
+		      		if (!project || project === '') {
 		          		sendJsonResponse(res, 404, { "message": "projectID not found" });
 		          		// MUST RETURN AFTER ERROR MESSAGES IN IF STATEMENTS TO PREVENT FURTHER EXECUTION OF FUNCTION
 		          		return;

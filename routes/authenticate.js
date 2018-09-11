@@ -96,12 +96,12 @@ module.exports = function (app) {
 
 				   	request( requestOptions, function(err, response, body) {});
 
-			 		if(req.session.returnTo == '/'){
+			 		if(req.session.returnTo === '/'){
 			 			req.session.returnTo = '/projects';
 			 		}
 
 		   			res.redirect(req.session.returnTo || '/projects');
-	    			req.session.returnTo == null;
+	    			req.session.returnTo = null;
 				} else {
 					console.log('AUTHENTICATION ERROR: No authorization code supplied');
 				}

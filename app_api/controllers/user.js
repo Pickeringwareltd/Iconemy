@@ -46,7 +46,7 @@ module.exports.checkRole = function (req, res) {
 
 					var user = user[0];
 
-					if(user.role == 'admin'){
+					if(user.role === 'admin'){
 						sendJsonResponse(res, 200, { "result": 'admin' });
 						return;						
 					} else {

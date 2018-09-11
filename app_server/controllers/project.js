@@ -24,7 +24,7 @@ var renderProject = function(req, res, responseBody, subdomain){
 			data.usingSubdomain = subdomain;
 
 			if(req.session.passport != undefined){
-				if(req.session.passport.user.user.id == data.createdBy){
+				if(req.session.passport.user.user.id === data.createdBy){
 					isOwner = true;
 				}
 			} 	
@@ -88,7 +88,7 @@ exports.index = function(req, res){
 		projectName =  req.params.projectname;
 		subdomain = false;
 
-		if(projectName == undefined){
+		if(projectName === undefined){
 			projectName = req.subdomains;
 			subdomain = true;
 		}
@@ -118,7 +118,7 @@ var renderCreateProject = function(req, res){
 		var message;
 
 		if(req.query.err){
-			if(req.query.err == 'nodata'){
+			if(req.query.err === 'nodata'){
 				message = 'All fields marked with * are required!';
 			} else {
 				message = 'Oops! Somethings gone wrong';
@@ -146,7 +146,7 @@ var renderUpdateProject = function(req, res, _data){
 		var data, message;
 
 		if(req.query.err){
-			if(req.query.err == 'nodata'){
+			if(req.query.err === 'nodata'){
 				message = 'All fields marked with * are required!';
 			} else {
 				message = 'Oops! Somethings gone wrong';
@@ -170,7 +170,7 @@ exports.update = function(req, res){
 		var requestOptions, path, projectName, access_token;
 
 		// If not logged in
-		if(req.user == undefined){
+		if(req.user === undefined){
 			res.redirect('/login');
 			return;
 		}
@@ -218,7 +218,7 @@ exports.doUpdate = function(req, res){
 		var error = validateProject(postdata);
 
 		// Check the fields are present
-		if (error == 'All fields marked with * are required!') {
+		if (error === 'All fields marked with * are required!') {
 	  		res.redirect('/projects/' + subdomain + 'update?err=nodata');
 		} else if(error != undefined) {
 			res.render('update_project', { 
@@ -264,7 +264,7 @@ var validateProject = function(postdata){
 	  var error;
 
 	  // If any required fields are missing, return appropriate error message 
-	  if (!postdata.name || !postdata.description || postdata.description == 'Enter a basic description about your project here' || !postdata.website || !postdata.subdomain || postdata.subdomain == '    .iconemy.io') {
+	  if (!postdata.name || !postdata.description || postdata.description === 'Enter a basic description about your project here' || !postdata.website || !postdata.subdomain || postdata.subdomain === '    .iconemy.io') {
 	  	error = 'All fields marked with * are required!';
 	  	return error;
 	  }
@@ -291,42 +291,42 @@ var validateProject = function(postdata){
 
 	  // All useful regexs come from https://github.com/lorey/social-media-profiles-regexs
 	  if(postdata.facebook != ''){
-	  	if(postdata.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(postdata.facebook.match(/^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Facebook URL';
 	  		return error;
 	   	}
 	  }
 
 	  if(postdata.twitter != '') {
-	  	if(postdata.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(postdata.twitter.match(/^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Twitter URL';
 	  		return error;
 	    }
 	  }
 
 	  if(postdata.youtube != ''){
-	  	if(postdata.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(postdata.youtube.match(/^(https?:\/\/)?(www\.)?youtube.com\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Youtube URL';
 	  		return error;
 	    }
 	  }
 
 	  if(postdata.medium != ''){
-	  	if(postdata.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) == null){
+	  	if(postdata.medium.match(/^(https?:\/\/)?(www\.)?medium.com\/@?[a-zA-Z0-9(\.\?)?]+/) === null){
 	    	error = 'Must enter a valid Medium URL';
 	  		return error;	
 	    }
 	  }
 
 	  if(postdata.bitcointalk != ''){
-	  	if(postdata.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) == null){
+	  	if(postdata.bitcointalk.match(/^(https?:\/\/)?(www\.)?bitcointalk.org\/[a-zA-Z0-9(\.\?)?]/) === null){
 	    	error = 'Must enter a valid Bitcointalk URL';
 	    	return error;
 	    }
 	  }
 
 	  if(postdata.telegram != ''){
-	  	if(postdata.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) == null){
+	  	if(postdata.telegram.match(/https?:\/\/(t(elegram)?\.me|telegram\.org)\/([a-zA-Z0-9\_]{5,32})\/?/) === null){
 	    	error = 'Must enter a valid Telegram URL';
 	    	return error;
 	    }
@@ -403,7 +403,7 @@ exports.doCreation = function(req, res){
 		var error = validateProject(postdata);
 
 		// Check the fields are present
-		if (error == 'All fields marked with * are required!') {
+		if (error === 'All fields marked with * are required!') {
 	  		res.redirect('/projects/create?err=nodata');
 		} else if(error != undefined) {
 			res.render('create_project', { 
@@ -548,7 +548,7 @@ exports.buynow = function(req, res){
 		projectName =  req.params.projectname;
 		subdomain = false;
 
-		if(projectName == undefined){
+		if(projectName === undefined){
 			projectName = req.subdomains;
 			subdomain = true;
 		}

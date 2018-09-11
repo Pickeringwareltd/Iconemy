@@ -13,7 +13,7 @@ var needsLogIn = jwt({
     issuer: "https://damp-surf-6213.auth0.com/",
     algorithms: ['RS256'],
     getToken: function fromSession (req) {
-    	if(req.session.passport == undefined){	
+    	if(req.session.passport === undefined){	
     		return null;
 	    } else {
 	    	// get the token from the users session, decode it and validate it

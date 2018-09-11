@@ -90,8 +90,8 @@ var subscribe_logs = function(){
 	        .on("data", function (_transaction) {
 			    	web3.eth.getTransaction(_transaction.transactionHash)
 			            .then(function (transaction) {
-			            	if(transaction.to == null){} else {
-				            	if(transaction.to.toLowerCase() == address){
+			            	if(transaction.to === null){} else {
+				            	if(transaction.to.toLowerCase() === address){
 				             		var gas = transaction.gas;
 
 				             		web3.eth.getTransactionReceipt(transaction.hash)
@@ -99,7 +99,7 @@ var subscribe_logs = function(){
 			            					var gasUsed = transaction.gasUsed;
 
 			            					if(gas > gasUsed){
-			            						if(transaction.status == null){} else {
+			            						if(transaction.status === null){} else {
 				            						console.log('TX SUCCEEDED = ' + transaction.status);
 				            						stopCron();
 				            					}
@@ -122,8 +122,8 @@ var subscribe_logs = function(){
 	        .on("changed", function (_transaction) {
 			        web3.eth.getTransaction(_transaction.transactionHash)
 			            .then(function (transaction) {
-			            	if(transaction.to == null){} else {
-				            	if(transaction.to.toLowerCase() == address){
+			            	if(transaction.to === null){} else {
+				            	if(transaction.to.toLowerCase() === address){
 				             		console.log('REMOVED = ' + JSON.stringify(transaction));
 				             		stopCron();
 				             		// This will fire when the TX has been removed from the blockchain due to failing the compilation 
@@ -149,8 +149,8 @@ var subscribe_pending = function(){
 	        .on("data", function (transactionHash) {
 	            web3.eth.getTransaction(transactionHash)
 	                .then(function (transaction) {
-	                	if(transaction.to == null){} else {
-		                	if(transaction.to.toLowerCase() == address){
+	                	if(transaction.to === null){} else {
+		                	if(transaction.to.toLowerCase() === address){
 		                    	console.log('PENDING = ' + JSON.stringify(transaction));
 
 		                    	pendingTX = transaction.hash;
@@ -173,8 +173,8 @@ var runCron = function(txHash){
 		cronjob = cron.schedule("*/10 * * * * *", function() {
 			web3.eth.getTransactionReceipt(txHash)
 	                .then(function (transaction) {
-	                	if(transaction.status == null){} else {
-		                	if(transaction.status == false){
+	                	if(transaction.status === null){} else {
+		                	if(transaction.status === false){
 		                		console.log('TX FAILED!');
 		                		stopCron();
 		                	}

@@ -21,7 +21,7 @@ var getRequestOptions = function(req, res){
 		// Make sure we are using the correct subdomain
 		var projectName =  req.params.projectname;
 
-		if(projectName == undefined){
+		if(projectName === undefined){
 			projectName = req.subdomains;
 		}
 
@@ -92,9 +92,9 @@ var renderCreateToken = function(req, res, responseBody){
 
 		if(!responseBody.token){
 			if(req.query.err){
-				if(req.query.err == 'nodata'){
+				if(req.query.err === 'nodata'){
 					message = 'All fields marked with * are required!';
-				} else if(req.query.err == 'invalidaddress'){
+				} else if(req.query.err === 'invalidaddress'){
 					message = 'Please provide a valid eth address';
 				}
 			}

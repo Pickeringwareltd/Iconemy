@@ -18,7 +18,7 @@ var checkOwner = function(req, res, userid, next){
 
 				var project = data[0];
 
-				if(project.length == 0){
+				if(project.length === 0){
 					sendJsonResponse(res, 400, { "message": "Project doesnt exist" });
 					return;
 				} else if(err != undefined) {

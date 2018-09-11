@@ -98,7 +98,7 @@ exports.index = function(req, res){
 		projectName =  req.params.projectname;
 		saleId = req.params.crowdsaleid;
 
-		if(projectName == undefined){
+		if(projectName === undefined){
 			projectName = req.subdomains;
 		}
 
@@ -125,9 +125,9 @@ var renderCreateSale = function(req, res, responseBody) {
 
 		if(!responseBody.message){
 			if(req.query.err){
-				if(req.query.err == 'nodata'){
+				if(req.query.err === 'nodata'){
 					message = 'All fields marked with * are required!';
-				} else if(req.query.err == 'invalidaddress'){
+				} else if(req.query.err === 'invalidaddress'){
 					message = 'Please provide a valid eth address';
 				} else {
 					message = 'Oops! Something has gone wrong!';
@@ -162,7 +162,7 @@ exports.create = function(req, res){
 		// Make sure we are using the correct subdomain
 		projectName =  req.params.projectname;
 
-		if(projectName == undefined){
+		if(projectName === undefined){
 			projectName = req.subdomains;
 		}
 
@@ -247,7 +247,7 @@ var formatData = function(req){
 
 	  	var isPublic = true;
 
-	  	if(req.body.sale_type == 'pre-sale'){
+	  	if(req.body.sale_type === 'pre-sale'){
 	  		isPublic = false;
 	  	}
 
@@ -293,7 +293,7 @@ exports.doCreation = function(req, res){
 		}; 
 
 		// Check the fields are present
-		if (!postdata.name || !postdata.start || !postdata.end || !postdata.initialprice || postdata.public == undefined || !postdata.commission) {
+		if (!postdata.name || !postdata.start || !postdata.end || !postdata.initialprice || postdata.public === undefined || !postdata.commission) {
 	  		res.redirect('/projects/' + projectname + '/crowdsales/create?err=nodata');
 		} else if(!WAValidator.validate(postdata.admin, 'ETH') || !WAValidator.validate(postdata.beneficiary, 'ETH')){
 	  		res.redirect('/projects/' + projectname + '/crowdsales/create?err=invalidaddress');

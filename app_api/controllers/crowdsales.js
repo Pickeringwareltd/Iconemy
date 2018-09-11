@@ -61,7 +61,7 @@ module.exports.recordPurchaseEmail = function(req, res){
 		var crowdsaleid = req.params.crowdsaleid;
 
 		// If transaction was deemed successful
-		if(json.hash.receipt.status == '0x1'){
+		if(json.hash.receipt.status === '0x1'){
 
 			// Find the project and pass the object to the addEmails function (below)
 			Project
@@ -229,7 +229,7 @@ var getCrowdsale = function(req) {
 			deployed: 'None'
 		}
 
-		if(parseInt(req.body.commission) == 5){
+		if(parseInt(req.body.commission) === 5){
 			crowdsale.deployed = 'Deploying';
 		}
 
@@ -265,7 +265,7 @@ module.exports.crowdsalesReadOne = function (req, res) {
 			      		if(project.crowdsales && project.crowdsales.length > 0){
 			      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
 
-			      			if(!crowdsale || crowdsale.length == 0){
+			      			if(!crowdsale || crowdsale.length === 0){
 			   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
 			   					return;
 			      			} else {
@@ -358,7 +358,7 @@ module.exports.getPrice = function (req, res) {
 		// If the request parameters contains a project ID, then execute a query finding the object containing that id
 		if (req.body && req.body.projectid && req.body.item) {
 
-			if(req.body.item == 'crowdsale' && req.body.crowdsaleid){
+			if(req.body.item === 'crowdsale' && req.body.crowdsaleid){
 
 				var item_price, total_price, discount, pricing, requestOptions, price_url;
 
@@ -419,7 +419,7 @@ module.exports.getPrice = function (req, res) {
 									}
 
 									if(discount){
-										if(discount.type == 'percent'){
+										if(discount.type === 'percent'){
 											// Work out the new item price given the discount.
 											var discount_amount = discount.amount;									
 											var take_off = 100 - discount_amount;
@@ -511,19 +511,19 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 							var payment = thisSale.payment;
 
-							if(payment.paid == null){
+							if(payment.paid === null){
 							
 								// Create wallet which either creates a new wallet and encrypts private key
 								// Or loads existing keys from the DB if already used.
 								var wallet;
-								if(req.body.currency == 'eth' && !payment.ethWallet){
+								if(req.body.currency === 'eth' && !payment.ethWallet){
 									// Create new wallet for taking payments
 									wallet = paymentJS.createWallet('eth');
-								} else if(req.body.currency == 'btc' && !payment.btcWallet){
+								} else if(req.body.currency === 'btc' && !payment.btcWallet){
 									// Create new wallet for taking payments
 									wallet = paymentJS.createWallet('btc');
 								} else {
-									if(req.body.currency == 'eth'){
+									if(req.body.currency === 'eth'){
 										wallet = {
 											address: payment.ethWallet.address,
 											seed: payment.ethWallet.seed
@@ -536,7 +536,7 @@ module.exports.paymentConfirmOne = function (req, res) {
 									}
 								}
 
-								if(payment.created == null){
+								if(payment.created === null){
 									createdDate = Date.now();
 								} else {
 									createdDate = thisSale.created;
@@ -546,7 +546,7 @@ module.exports.paymentConfirmOne = function (req, res) {
 								payment.amount = req.body.amount;
 								payment.created = createdDate;
 								payment.createdBy = req.body.createdBy;
-								if(req.body.currency == 'eth'){
+								if(req.body.currency === 'eth'){
 									payment.ethWallet = wallet;
 								} else {
 									payment.btcWallet = wallet;
@@ -651,11 +651,11 @@ module.exports.paymentFinaliseOne = function (req, res) {
 
 							var payment = thisSale.payment;
 
-							if(payment.paid == null){
+							if(payment.paid === null){
 								var wallet_address;
 
 								// Else if the payment has not yet been paid, get the balance and deal with it using the dealWithBalance function.
-								if(payment.currency == 'eth'){
+								if(payment.currency === 'eth'){
 									wallet_address = payment.ethWallet.address;
 								} else {
 									wallet_address = payment.btcWallet.address;

@@ -203,7 +203,7 @@ module.exports.getPrice = function (req, res) {
 		// If the request parameters contains a project ID, then execute a query finding the object containing that id
 		if (req.body && req.body.projectid && req.body.item) {
 
-			if(req.body.item == 'token'){
+			if(req.body.item === 'token'){
 
 				var item_price, total_price, discount, requestOptions;
 				var project = req.body.projectid;
@@ -258,7 +258,7 @@ module.exports.getPrice = function (req, res) {
 									}
 
 									if(discount){
-										if(discount.type == 'percent'){
+										if(discount.type === 'percent'){
 											// Work out the new item price given the discount.
 											var discount_amount = discount.amount;									
 											var take_off = 100 - discount_amount;
@@ -330,7 +330,7 @@ module.exports.paymentConfirm = function (req, res) {
 						if(project.token){
 							var createdDate;
 
-							if(project.token.payment == undefined){
+							if(project.token.payment === undefined){
 								project.token.payment = {};
 								createdDate = Date.now();
 							} else {
@@ -342,14 +342,14 @@ module.exports.paymentConfirm = function (req, res) {
 							// Create wallet which either creates a new wallet and encrypts private key
 							// Or loads existing keys from the DB if already used.
 							var wallet;
-							if(req.body.currency == 'eth' && !payment.ethWallet){
+							if(req.body.currency === 'eth' && !payment.ethWallet){
 								// Create new wallet for taking payments
 								wallet = paymentJS.createWallet('eth');
-							} else if(req.body.currency == 'btc' && !payment.btcWallet){
+							} else if(req.body.currency === 'btc' && !payment.btcWallet){
 								// Create new wallet for taking payments
 								wallet = paymentJS.createWallet('btc');
 							} else {
-								if(req.body.currency == 'eth'){
+								if(req.body.currency === 'eth'){
 									wallet = {
 										address: payment.ethWallet.address,
 										seed: payment.ethWallet.seed
@@ -362,10 +362,10 @@ module.exports.paymentConfirm = function (req, res) {
 								}
 							}
 
-							if(req.body.currency == 'eth' && !WAValidator.validate(wallet.address, 'ETH')){
+							if(req.body.currency === 'eth' && !WAValidator.validate(wallet.address, 'ETH')){
 								sendJsonResponse(res, 404, {"message": "Must be a valid ETH address!"});
 								return;
-							} else if(req.body.currency == 'btc' && !WAValidator.validate(wallet.address, 'BTC')){
+							} else if(req.body.currency === 'btc' && !WAValidator.validate(wallet.address, 'BTC')){
 								sendJsonResponse(res, 404, {"message": "Must be a valid BTC address!"});
 								return;
 							}
@@ -374,7 +374,7 @@ module.exports.paymentConfirm = function (req, res) {
 							payment.amount = req.body.amount;
 							payment.created = createdDate;
 							payment.createdBy = req.body.createdBy;
-							if(req.body.currency == 'eth'){
+							if(req.body.currency === 'eth'){
 								payment.ethWallet = wallet;
 							} else {
 								payment.btcWallet = wallet;
@@ -461,7 +461,7 @@ module.exports.paymentFinalise = function (req, res) {
 								if(!payment.paid){
 									var wallet_address;
 
-									if(payment.currency == 'eth'){
+									if(payment.currency === 'eth'){
 										wallet_address = payment.ethWallet.address;
 									} else {
 										wallet_address = payment.btcWallet.address;

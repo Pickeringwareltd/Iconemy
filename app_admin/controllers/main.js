@@ -88,11 +88,9 @@ var renderPortal = function(req, res, message_data){
         var no_reply = 0;
 
         for(var i = 0 ; i < message_data.length ; i++){
-          if(message_data[i].responded == false){
+          if(message_data[i].responded === false){
             no_reply++;
           }
-
-          console.log(message_data[i].time);
 
           message_data[i].time = timeAgo.format(new Date(message_data[i].time), 'twitter');
         }
@@ -106,7 +104,7 @@ var renderPortal = function(req, res, message_data){
           var inputDate = new Date(subscribe_data[j].time);
 
           // call setHours to take the time out of the comparison
-          if(inputDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+          if(inputDate.setHours(0,0,0,0) === todaysDate.setHours(0,0,0,0)) {
               todays_subscribers++;
           }
 
@@ -241,10 +239,10 @@ var getTokenStatus = function(_project){
       if(project.token){
         status.message = 'needs payment';
         status.color = '#F09300';
-        if(project.token.discount_code == 'GIVEMEITFREE' || typeof project.token.payment !== "undefined"){
+        if(project.token.discount_code === 'GIVEMEITFREE' || typeof project.token.payment !== "undefined"){
           status.message = 'needs deploying';
           status.color = '#0007FF';
-          if(project.token.deployed == 'Done'){
+          if(project.token.deployed === 'Done'){
             status.message = 'deployed';
             status.color = '#27CB00';
           } 
@@ -270,11 +268,11 @@ var getSaleStatus = function(_project){
         status.color = '#F09300';
         for(var i = 0; i < project.crowdsales.length; i++){
           if(project.crowdsales[i].payment){
-            if(typeof project.crowdsales[i].payment.paid !== "undefined" || project.crowdsales[i].discount_code == 'GIVEMEITFREE'){
+            if(typeof project.crowdsales[i].payment.paid !== "undefined" || project.crowdsales[i].discount_code === 'GIVEMEITFREE'){
               status.message = 'needs deploying';
               status.color = '#0007FF';
 
-                if(project.crowdsales[i].deployed == 'Done'){
+                if(project.crowdsales[i].deployed === 'Done'){
                   status.message = 'deployed';
                   status.color = '#27CB00';
                 } 
@@ -301,7 +299,7 @@ var getRevenue = function(_project, eth, btc){
 
       if(project.token){
         if(project.token.payment){
-          if(project.token.payment.currency == 'eth'){
+          if(project.token.payment.currency === 'eth'){
             tokenrevenue = project.token.payment.amount * eth;
           } else {
             tokenrevenue = project.token.payment.amount * btc;
@@ -313,7 +311,7 @@ var getRevenue = function(_project, eth, btc){
         for(var i = 0; i < project.crowdsales.length; i++){
           if(project.crowdsales[i].payment){
             if(project.crowdsales[i].payment.paid != null){
-              if(project.crowdsales[i].payment.currency == 'eth'){
+              if(project.crowdsales[i].payment.currency === 'eth'){
                 var amount = project.crowdsales[i].payment.amount * eth;
                 salerevenue = salerevenue + amount;
               } else {
@@ -359,9 +357,9 @@ var renderProject = function(req, res, body) {
       var message;
 
       if(req.query.err){
-        if(req.query.err == 'nodata'){
+        if(req.query.err === 'nodata'){
           message = 'All fields are required!';
-        } else if(req.query.err == 'invalidaddress'){
+        } else if(req.query.err === 'invalidaddress'){
           message = 'Invalid contract address!';
         } else {
           message = 'Oops! Somethings gone wrong';

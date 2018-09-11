@@ -106,7 +106,7 @@ module.exports.createWallet = function(currency){
 		// import the public key declared at the top of the file
 		key.importKey(pub_key, 'pkcs8-public');
 
-		if(currency == 'eth'){
+		if(currency === 'eth'){
 			wallet = generateETHWallet();
 		} else {
 			wallet = generateBTCWallet();
@@ -132,7 +132,7 @@ module.exports.getBalance = function(address, project, crowdsaleid, res, callbac
 	try{
 		var balance = 0; 
 
-		if(address.substring(0,2) == '0x'){
+		if(address.substring(0,2) === '0x'){
 			balance = getEthBalances(address, project, crowdsaleid, res, callback);
 		} else {
 			balance = getBTCBalances(address, project, crowdsaleid, res, callback);

@@ -30,7 +30,7 @@ exports.create = function(req, res){
 			error = 'Please specify an item and a project.'
 		}
 
-		if(item == 'crowdsale'){
+		if(item === 'crowdsale'){
 			sale_id = req.body.id;
 			if(!sale_id){
 				error = 'Please specify an ID for the crowdsale.'
@@ -39,7 +39,7 @@ exports.create = function(req, res){
 			path = '/api/projects/' + project + '/crowdsales/' + id + '/payment';
 		}
 
-		if(item == 'token'){
+		if(item === 'token'){
 			// Token URL
 			path = '/api/projects/' + project + '/token/payment';
 		} 
@@ -65,7 +65,7 @@ exports.create = function(req, res){
 			var item = body.item;
 			var discount = body.discount;
 
-			if(item == 'token'){
+			if(item === 'token'){
 				item = {
 					name: 'ERC-20 Compliant Token',
 					quantity: '1',
@@ -155,7 +155,7 @@ exports.confirm = function(req, res) {
 
 			var address;
 
-			if(currency == 'eth'){
+			if(currency === 'eth'){
 				address = body.ethWallet.address;
 			} else {
 				address = body.btcWallet.address;

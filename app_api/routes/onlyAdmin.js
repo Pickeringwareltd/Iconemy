@@ -18,7 +18,7 @@ var checkAdmin = function(req, res, id, next){
 
 				var user = data[0];
 
-				if(user.length == 0){
+				if(user.length === 0){
 					sendJsonResponse(res, 400, { "message": "User doesnt exist" });
 					return;
 				} else if(err != undefined) {
