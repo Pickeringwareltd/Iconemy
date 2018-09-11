@@ -1,3 +1,5 @@
+'use strict';
+
 var checkBTCBalance = function(address) {
 	// Get balance of BTC wallet with atleast 6 confirmations
 	var chainso_url = 'https://chain.so/api/v2/get_address_balance/BTC/' + address + '/6';

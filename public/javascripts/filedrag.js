@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 filedrag.js - HTML5 File Drag & Drop demonstration
 Featured on SitePoint.com

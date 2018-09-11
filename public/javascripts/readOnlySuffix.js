@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function(){
     $.fn.readOnlySuffix = function(suffix) {
         return this.each(function() {

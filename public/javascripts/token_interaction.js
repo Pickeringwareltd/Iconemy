@@ -1,3 +1,5 @@
+'use strict';
+
 $('#release_btn').on("click",function(){
 	$('#release_btn').css('display', 'none');
 	$('#release_loading_gif').css('display', 'block');

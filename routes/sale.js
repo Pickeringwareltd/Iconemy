@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var sale = require('../app_server/controllers/sale');
 var needsLogIn = require('./auth');

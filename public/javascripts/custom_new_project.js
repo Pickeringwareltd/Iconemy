@@ -1,3 +1,5 @@
+'use strict';
+
 $('.tokens').on("click",function(){
 	// Re-direct to new project form
 	window.location.href = '/token/create'

@@ -1,3 +1,5 @@
+'use strict';
+
 /* Template	:	ICO Crypto v1.2.2 */
 (function($){
 	'use strict';

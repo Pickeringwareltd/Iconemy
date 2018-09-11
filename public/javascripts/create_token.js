@@ -1,3 +1,5 @@
+'use strict';
+
 // Getting an instance of the widget.
 const widget = uploadcare.Widget('[role=uploadcare-uploader]');
 // Selecting an image to be replaced with the uploaded one.

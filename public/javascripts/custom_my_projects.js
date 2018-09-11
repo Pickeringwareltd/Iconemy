@@ -1,3 +1,5 @@
+'use strict';
+
 $('.card').on("click",function(){
 	var subdomain = $(this).attr('id');
 	
@@ -12,7 +14,6 @@ $('.card').on("click",function(){
 
 /* Template	:	ICO Crypto v1.2.2 */
 (function($){
-	'use strict';
 	var $win = $(window), $body_m = $('body'), $navbar = $('.navbar');
 
 	// Touch Class

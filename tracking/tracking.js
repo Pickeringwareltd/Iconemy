@@ -1,3 +1,5 @@
+'use strict';
+
 var KeenTracking = require('keen-tracking');
 
 // Configure a client instance

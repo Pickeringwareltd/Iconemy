@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var request = require('request');
 
@@ -38,7 +40,7 @@ var getRequestOptions = function(req, res){
 	var projectName =  req.params.projectname;
 
   	// Split the path from the url so that we can call the correct server in development/production
-  	path = '/api/projects/' + projectName;
+  	var path = '/api/projects/' + projectName;
 
   	requestOptions = {
   		url: apiOptions.server + path,

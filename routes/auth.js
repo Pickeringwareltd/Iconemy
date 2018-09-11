@@ -1,3 +1,5 @@
+'use strict';
+
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 

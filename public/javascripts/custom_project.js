@@ -1,3 +1,5 @@
+'use strict';
+
 $('.buynow_section').on("click",function(){
 	var subdomain = $(this).attr('data-subdomain');
 	

@@ -1,3 +1,5 @@
+'use strict';
+
 // Refer to routes/main.js
 module.exports = function(app){
 	require('./main')(app);

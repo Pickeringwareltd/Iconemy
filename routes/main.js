@@ -1,8 +1,10 @@
+'use strict';
+
 var express = require('express');
 var ctrl = require('../app_server/controllers/main');
-var project = require('../app_server/controllers/project');
-var tracking = require('../tracking/tracking');
-var fs = require('fs');
+const project = require('../app_server/controllers/project');
+const tracking = require('../tracking/tracking');
+const fs = require('fs');
 
 // Forward request onto the main controller
 module.exports = function (app) {

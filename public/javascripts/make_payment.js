@@ -1,3 +1,5 @@
+'use strict';
+
 $("#eth_btn").click(function() {
 	var project, item, id, currency, amount;
 

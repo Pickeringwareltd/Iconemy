@@ -1,3 +1,5 @@
+'use strict';
+
 var usd_eth;
 var fetched;
 

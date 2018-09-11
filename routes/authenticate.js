@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const passport = require('passport');
 const request = require('request');
@@ -72,15 +74,17 @@ module.exports = function (app) {
 	// We must store the JWTs in a session and pass the session ID into a cookie so that we can keep users logged in
 	app.get('/authenticate', passport.authenticate('auth0', { failureRedirect: '/' }), 
 		function(req, res) {
+			try{
 
 		 	if(req.query.code){
+
 		 		req.session.loggedIn = true;
 
-			  	path = '/user'
+			  	const path = '/user';
 
-			  	var access_token = req.session.passport.user.tokens.access_token;
+			  	const access_token = req.session.passport.user.tokens.access_token;
 
-			  	requestOptions = {
+			  	const requestOptions = {
 			  		url: audience + path,
 			  		method : "POST",
   					headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' },
@@ -97,10 +101,15 @@ module.exports = function (app) {
 		 		}
 
 	   			res.redirect(req.session.returnTo || '/projects');
-    			delete req.session.returnTo;
+    			req.session.returnTo == null;
 			} else {
 				console.log('AUTHENTICATION ERROR: No authorization code supplied');
 			}
+
+			} catch (e) {
+				console.log('ERROR: ' + e);
+			}
+			
 	  	}
 	);
 

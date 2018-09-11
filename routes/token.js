@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var token = require('../app_server/controllers/token');
 var needsLogIn = require('./auth');
