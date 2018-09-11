@@ -27,20 +27,28 @@ module.exports = function (app) {
 	}); 
 
 	app.get('/privacy', tracking.view, function(req, res) {
-		  var privacyFile = "./public/privacy_policy.pdf";
+		try{
+			var privacyFile = "./public/privacy_policy.pdf";
 
-		  fs.readFile(privacyFile, function (err,data){
-		    res.contentType("application/pdf");
-		    res.send(data);
-		  });
+			fs.readFile(privacyFile, function (err,data){
+			  res.contentType("application/pdf");
+			  res.send(data);
+			});
+		} catch(e) {
+			console.log('Error on server-side routes main.js/privacy: ' + e);
+		}
 	}); 
 
 	app.get('/terms', tracking.view, function(req, res) {
-		  var termsFile = "./public/terms_conditions.pdf";
+		try{
+		    var termsFile = "./public/terms_conditions.pdf";
 
-		  fs.readFile(termsFile, function (err,data){
-		    res.contentType("application/pdf");
-		    res.send(data);
-		  });
+		    fs.readFile(termsFile, function (err,data){
+		      res.contentType("application/pdf");
+		      res.send(data);
+		    });
+		} catch(e) {
+			console.log('Error on server-side routes main.js/terms: ' + e);
+		}
 	}); 
 };

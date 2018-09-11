@@ -76,38 +76,38 @@ module.exports = function (app) {
 		function(req, res) {
 			try{
 
-		 	if(req.query.code){
+			 	if(req.query.code){
 
-		 		req.session.loggedIn = true;
+			 		req.session.loggedIn = true;
 
-			  	const path = '/user';
+				  	const path = '/user';
 
-			  	const access_token = req.session.passport.user.tokens.access_token;
+				  	const access_token = req.session.passport.user.tokens.access_token;
 
-			  	const requestOptions = {
-			  		url: audience + path,
-			  		method : "POST",
-  					headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' },
-			  		json : {
-			  			userid: req.session.passport.user.user.id,
-			  			email: req.session.passport.user.user.displayName
-			  		}
-				};
+				  	const requestOptions = {
+				  		url: audience + path,
+				  		method : "POST",
+	  					headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' },
+				  		json : {
+				  			userid: req.session.passport.user.user.id,
+				  			email: req.session.passport.user.user.displayName
+				  		}
+					};
 
-			   	request( requestOptions, function(err, response, body) {});
+				   	request( requestOptions, function(err, response, body) {});
 
-		 		if(req.session.returnTo == '/'){
-		 			req.session.returnTo = '/projects';
-		 		}
+			 		if(req.session.returnTo == '/'){
+			 			req.session.returnTo = '/projects';
+			 		}
 
-	   			res.redirect(req.session.returnTo || '/projects');
-    			req.session.returnTo == null;
-			} else {
-				console.log('AUTHENTICATION ERROR: No authorization code supplied');
-			}
+		   			res.redirect(req.session.returnTo || '/projects');
+	    			req.session.returnTo == null;
+				} else {
+					console.log('AUTHENTICATION ERROR: No authorization code supplied');
+				}
 
-			} catch (e) {
-				console.log('ERROR: ' + e);
+			} catch(e) {
+				console.log('Error on server-side routes authenticate.js/authenticate: ' + e);
 			}
 			
 	  	}

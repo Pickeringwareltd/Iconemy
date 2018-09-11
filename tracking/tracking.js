@@ -10,234 +10,286 @@ var client = new KeenTracking({
 
 // This is fired from the middleware used by both API and server, the function is stored in app.js
 module.exports.view = function(req, res, next){
+	try{
+		var mobile = false; 
 
-	var mobile = false; 
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		// Get the users IP address
+		var ipaddress = req.headers['x-forwarded-for'] || 
+	     req.connection.remoteAddress || 
+	     req.socket.remoteAddress ||
+	     (req.connection.socket ? req.connection.socket.remoteAddress : null);
+
+		// Record an event
+		client.recordEvent('pageviews', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  refer: req.headers.referer,
+		  ip: ipaddress
+		});
+
+		next();
+	} catch(e) {
+		console.log('Error on tracking.js/view: ' + e);
+		next();
 	}
-
-	// Get the users IP address
-	var ipaddress = req.headers['x-forwarded-for'] || 
-     req.connection.remoteAddress || 
-     req.socket.remoteAddress ||
-     (req.connection.socket ? req.connection.socket.remoteAddress : null);
-
-	// Record an event
-	client.recordEvent('pageviews', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  refer: req.headers.referer,
-	  ip: ipaddress
-	});
-
-	next();
 }; 
 
 // This is fired from the middleware used by both API and server, the function is stored in app.js
 module.exports.apicall = function(req, res, next){
+	try{
+		// Record an event
+		client.recordEvent('apicalls', {
+		  path: req.path,
+		  refer: req.headers.referer
+		});
 
-	// Record an event
-	client.recordEvent('apicalls', {
-	  path: req.path,
-	  refer: req.headers.referer
-	});
-
-	next();
+		next();
+	} catch(e) {
+		console.log('Error on tracking.js/apicall: ' + e);
+		next();
+	}
 };
 
 module.exports.projectview = function(req, res, project){
-	var mobile = false; 
+	try{
+		var mobile = false; 
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
+
+		var token = false;
+		var crowdsale = false;
+
+		if(typeof(project.token) != undefined){
+			token = true;
+		}
+
+		if(typeof(project.crowdsale) != undefined){
+			crowdsale = true;
+		}	
+
+		// Record an event
+		client.recordEvent('projectviews', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  project: project.id,
+		  hastoken: token,
+		  hassales: crowdsale,
+		  refer: req.headers.referer
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/projectview: ' + e);
 	}
-
-	var token = false;
-	var crowdsale = false;
-
-	if(typeof(project.token) != undefined){
-		token = true;
-	}
-
-	if(typeof(project.crowdsale) != undefined){
-		crowdsale = true;
-	}	
-
-	// Record an event
-	client.recordEvent('projectviews', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  project: project.id,
-	  hastoken: token,
-	  hassales: crowdsale,
-	  refer: req.headers.referer
-	});
 }
 
 module.exports.tokenview = function(req, res, project){
-	var mobile = false; 
+	try{
+		var mobile = false; 
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
+
+		// Record an event
+		client.recordEvent('tokenviews', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  project: project,
+		  refer: req.headers.referer
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/tokenview: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('tokenviews', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  project: project,
-	  refer: req.headers.referer
-	});
 }
 
 module.exports.crowdsaleview = function(req, res, project, sale){
-	var mobile = false; 
+	try{
+		var mobile = false; 
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
+
+		// Record an event
+		client.recordEvent('crowdsaleviews', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  project: project,
+		  sale: sale,
+		  refer: req.headers.referer
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/crowdsaleview: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('crowdsaleviews', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  project: project,
-	  sale: sale,
-	  refer: req.headers.referer
-	});
 }
 
 // This is fired from the API when a new user is recognised
 module.exports.registration = function(email, id){
-	// Record an event
-	client.recordEvent('registrations', {
-	  email: email,
-	  userid: id
-	});
+	try{
+		// Record an event
+		client.recordEvent('registrations', {
+		  email: email,
+		  userid: id
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/registration: ' + e);
+	}
 };
 
 // This is fired from the API when a new user is recognised
 module.exports.login = function(req, email, id){
-	// Record an event
-	client.recordEvent('logins', {
-	  email: email,
-	  userid: id
-	});
+	try{
+		// Record an event
+		client.recordEvent('logins', {
+		  email: email,
+		  userid: id
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/login: ' + e);
+	}
 };
 
 // Records the subscription event, this is called via the api controller upon successful subscription
 module.exports.subscribe = function(req){
+	try{
+		var mobile = false; 
 
-	var mobile = false; 
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		// Record an event
+		client.recordEvent('subscriptions', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  email: req.body.youremail,
+		  refer: req.headers.referer
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/subscribe: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('subscriptions', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  email: req.body.youremail,
-	  refer: req.headers.referer
-	});
 };
 
 // Records the message event, this is caled via the api controller upon contact
 module.exports.contact = function(req){
+	try{
+		var mobile = false; 
 
-	var mobile = false; 
+		if(req.headers['user-agent'].includes('Mobile')){
+			mobile = true;
+		}
 
-	if(req.headers['user-agent'].includes('Mobile')){
-		mobile = true;
+		// Record an event
+		client.recordEvent('contact-messages', {
+		  path: req.path,
+		  user: req.headers['user-agent'],
+		  mobile: mobile,
+		  email: req.body.email,
+		  name: req.body.name,
+		  message: req.body.message,
+		  refer: req.headers.referer
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/contact: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('contact-messages', {
-	  path: req.path,
-	  user: req.headers['user-agent'],
-	  mobile: mobile,
-	  email: req.body.email,
-	  name: req.body.name,
-	  message: req.body.message,
-	  refer: req.headers.referer
-	});
 };
 
 
 
 // This is fired from the API when a new user is recognised
 module.exports.newproject = function(project){
-	// Record an event
-	client.recordEvent('projects-created', {
-	  project: project
-	});
+	try{
+		// Record an event
+		client.recordEvent('projects-created', {
+		  project: project
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/newproject: ' + e);
+	}
 };
 
 // This is fired from the API when a new user is recognised
 module.exports.newtoken = function(token){
-	// Record an event
-	client.recordEvent('tokens-created', {
-	  token: token
-	});
+	try{
+		// Record an event
+		client.recordEvent('tokens-created', {
+		  token: token
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/newtoken: ' + e);
+	}
 };
 
 // This is fired from the API when a new user is recognised
 module.exports.newcrowdsale = function(crowdsale){
-	// Record an event
-	client.recordEvent('crowdsales-created', {
-	  crowdsale: crowdsale
-	});
+	try{
+		// Record an event
+		client.recordEvent('crowdsales-created', {
+		  crowdsale: crowdsale
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/newcrowdsale: ' + e);
+	}
 };
 
 // This is fired from the API when a new user is recognised
 module.exports.paymentconfirmed = function(payment, type){
+	try{
+		var pay = {
+			currency: payment.currency,
+			amount: payment.amount,
+			address: payment.ethWallet.address,
+			created: payment.created,
+			createdBy: payment.createdBy
+		}
 
-	var pay = {
-		currency: payment.currency,
-		amount: payment.amount,
-		address: payment.ethWallet.address,
-		created: payment.created,
-		createdBy: payment.createdBy
+		// Record an event
+		client.recordEvent('payments-confirmed', {
+		  product: type,
+		  currency: pay.currency,
+		  amount: pay.amount,
+		  address: pay.address,
+		  created: pay.created,
+		  createdBy: pay.createdBy
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/paymentconfirmed: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('payments-confirmed', {
-	  product: type,
-	  currency: pay.currency,
-	  amount: pay.amount,
-	  address: pay.address,
-	  created: pay.created,
-	  createdBy: pay.createdBy
-	});
 };
 
 // This is fired from the API when a new user is recognised
 module.exports.paymentfinalised = function(payment, type){
+	try{
+		var pay = {
+			currency: payment.currency,
+			amount: payment.amount,
+			address: payment.ethWallet.address,
+			paid: payment.paid,
+			created: payment.created,
+			createdBy: payment.createdBy
+		}
 
-	var pay = {
-		currency: payment.currency,
-		amount: payment.amount,
-		address: payment.ethWallet.address,
-		paid: payment.paid,
-		created: payment.created,
-		createdBy: payment.createdBy
+		// Record an event
+		client.recordEvent('payments-finalised', {
+		  product: type,
+		  currency: pay.currency,
+		  amount: pay.amount,
+		  address: pay.address,
+		  paid: pay.paid,
+		  created: pay.created,
+		  createdBy: pay.createdBy
+		});
+	} catch(e) {
+		console.log('Error on tracking.js/paymentfinalised: ' + e);
 	}
-
-	// Record an event
-	client.recordEvent('payments-finalised', {
-	  product: type,
-	  currency: pay.currency,
-	  amount: pay.amount,
-	  address: pay.address,
-	  paid: pay.paid,
-	  created: pay.created,
-	  createdBy: pay.createdBy
-	});
 };
