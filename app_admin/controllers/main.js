@@ -163,7 +163,7 @@ var renderProjects = function(req, res, body){
     // Call the pricing URL to get accurate information on USD -> BTC/ETH prices
     var price_url = 'https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC,ETH';
 
-    requestOptions = {
+    var requestOptions = {
       url : price_url,
       method : "GET",
       json : {}
@@ -464,7 +464,7 @@ var formatSaleData = function(req){
 exports.doSaleContractCreation = function(req, res){
   try{
 
-      var requestOptions, path, projectname, postdata, access_token;
+      var requestOptions, path, projectname, saleid, postdata, access_token;
         
       projectname = req.params.projectname;
       saleid = req.params.saleid;

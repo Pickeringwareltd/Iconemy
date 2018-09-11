@@ -518,11 +518,12 @@ var renderBuyNow = function(req, res, body){
 			if(active > -1){
 				res.redirect('/projects/' + data.subdomain + '/crowdsales/' + active);
 			} else {
-				res.render('project_interaction', { 
-					title: body.name,
-					projectInfo: data,
-					active: active,
-					message: 'You cannot currently buy this coin now.'
+				res.render('error', { 
+					title: 'error',
+					message: 'You cant buy this token at the moment!',
+					error: {
+						status: 404
+					}
 				});
 			}
 

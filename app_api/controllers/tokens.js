@@ -158,6 +158,13 @@ module.exports.tokenRead = function (req, res) {
 			      			sendJsonResponse(res, 404, { "message": "Token does not exist" });
 			          		return;
 			      		} else {
+
+			      			var token_address = null;
+
+			      			if(token.contract != null){
+			      				token_address = token.contract.address;
+			      			}
+
 			      			var response = {
 			      				project: {
 			      					name: project.name,
@@ -170,7 +177,8 @@ module.exports.tokenRead = function (req, res) {
 			      					logo: token.logo,
 			      					social: project.social,
 			      					deployed: token.deployed,
-			      					jsFileURL: token.jsFileURL
+			      					jsFileURL: token.jsFileURL,
+			      					address: token_address
 			      				}
 			      			}
 			      			sendJsonResponse(res, 200, response);
@@ -275,7 +283,7 @@ module.exports.getPrice = function (req, res) {
 									eth = eth * price;
 									btc = btc * price;
 
-									pricing = {
+									var pricing = {
 											dollars: price,
 											eth: eth,
 											btc: btc,

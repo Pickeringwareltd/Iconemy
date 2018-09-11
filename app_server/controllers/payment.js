@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 exports.create = function(req, res){
 	try{
 
-		var path, amount, error, access_token;
+		var path, amount, sale_id, error, requestOptions, access_token;
 
 		var id = req.query.id;
 		var item = req.query.item;

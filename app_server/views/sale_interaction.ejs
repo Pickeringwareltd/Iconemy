@@ -74,8 +74,9 @@
 								<img src="<%= data.token.logo %>" class="center_logo">
 								<h1 class="animated token_name" data-animate="fadeInUp" data-delay="1.25"><%= data.crowdsale.name %></h1>
 								<p class="lead animated token_symbol" data-animate="fadeInUp" data-delay="1.35"><%= data.token.symbol %></p>
-								<p class="lead animated" id="contract_address" data-animate="fadeInUp" data-delay="1.35">0x1091921960633dea4C72a95d0cbd04b8a67DD9dA <em class="far fa-copy" id="address_copy" data-address="0x1091921960633dea4C72a95d0cbd04b8a67DD9dA"></em></p>
-
+								<% if(data.crowdsale.address != null){ %>
+									<p class="lead animated" id="contract_address" data-animate="fadeInUp" data-delay="1.35"><%= data.crowdsale.address %> <em class="far fa-copy" id="address_copy" data-address="<%= data.crowdsale.address %>"></em></p>
+								<% } %>
 							</div>
 						</div><!-- .col  -->
 					</div><!-- .row  -->

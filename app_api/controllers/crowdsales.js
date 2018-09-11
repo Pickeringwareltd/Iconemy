@@ -269,6 +269,31 @@ module.exports.crowdsalesReadOne = function (req, res) {
 			   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
 			   					return;
 			      			} else {
+			      				var sale_address = null;
+
+				      			if(crowdsale.contract != null){
+				      				sale_address = crowdsale.contract.address;
+				      				crowdsale.address = sale_address;
+				      			}
+
+				      			var this_sale = {
+				      				 pricingMechanism: crowdsale.pricingMechanism,
+								     deployed: crowdsale.deployed,
+								     showprogress: crowdsale.showprogress,
+								     _id: crowdsale._id,
+								     name: crowdsale.name,
+								     status: crowdsale.status,
+								     start: crowdsale.start,
+								     end: crowdsale.end,
+								     initialPrice: crowdsale.initialPrice,
+								     public: crowdsale.public,
+								     commission: crowdsale.commission,
+								     admin: crowdsale.admin,
+								     beneficiary: crowdsale.beneficiary,
+								     created: crowdsale.created,
+								     address: sale_address
+				      			}
+				      			
 			      				// If successful, build a JSON response with appropriate information
 			      				var response = {
 			      					project: {
@@ -281,8 +306,9 @@ module.exports.crowdsalesReadOne = function (req, res) {
 			      						logo: project.token.logo
 			      					},
 			      					social: project.social,
-			      					crowdsale: crowdsale
+			      					crowdsale: this_sale
 			      				};
+
 			      				sendJsonResponse(res, 200, response);
 			      			}
 

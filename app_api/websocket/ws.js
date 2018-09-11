@@ -5,7 +5,7 @@ const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
 var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
 var web3 = new Web3(provider);
 
-provider.on('error', e => console.log('WS Error', e));
+provider.on('error', e => console.log('Error on API websocket ws.js: ', e));
 provider.on('end', e => {
 	console.log('WS closed');
 	console.log('Attempting ws reconnect...');
