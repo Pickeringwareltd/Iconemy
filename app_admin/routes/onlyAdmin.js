@@ -18,44 +18,56 @@ if (process.env.NODE_ENV === 'production') {
 
 
 exports.require = function(req, res, next){
-	if(req.session.loggedIn){
-		var requestOptions = getRequestOptions(req, res);
+	try{
+		if(req.session.loggedIn){
+			var requestOptions = getRequestOptions(req, res);
 
-	   	request( requestOptions, function(err, response, body) {
-	      	checkAdmin(req, res, body, next);
-	   	});
-	} else {
-		res.redirect('/');
+		   	request( requestOptions, function(err, response, body) {
+		      	checkAdmin(req, res, body, next);
+		   	});
+		} else {
+			res.redirect('/');
+		}
+	} catch(e) {
+		console.log('Error on admin routes onlyAdmin.js/require: ' + e);
 	}
 };
 
 var getRequestOptions = function(req, res){
-	var requestOptions, path, access_token;
+	try{
+		var requestOptions, path, access_token;
 
-	// Make sure we are using the correct subdomain
-	var userid =  req.session.passport.user.user.id;
+		// Make sure we are using the correct subdomain
+		var userid =  req.session.passport.user.user.id;
 
-  	// Split the path from the url so that we can call the correct server in development/production
-  	path = '/api/user/' + userid;
+	  	// Split the path from the url so that we can call the correct server in development/production
+	  	path = '/api/user/' + userid;
 
-  	access_token = req.session.passport.user.tokens.access_token;
-  
-  	requestOptions = {
-  		url: apiOptions.server + path,
-  		method : "GET",
-  		json : {},
-  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
-	};
+	  	access_token = req.session.passport.user.tokens.access_token;
+	  
+	  	requestOptions = {
+	  		url: apiOptions.server + path,
+	  		method : "GET",
+	  		json : {},
+	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+		};
 
-	return requestOptions;
+		return requestOptions;
+	} catch(e) {
+		console.log('Error on admin routes onlyAdmin.js/getRequestOptions: ' + e);
+	}
 };
 
 var checkAdmin = function(req, res, body, next){
-	var data = body;
+	try{
+		var data = body;
 
-	if(data.result === 'admin'){
-		next();
-	} else {
-		res.redirect('/');
+		if(data.result === 'admin'){
+			next();
+		} else {
+			res.redirect('/');
+		}
+	} catch(e) {
+		console.log('Error on admin routes onlyAdmin.js/checkAdmin: ' + e);
 	}
 };
