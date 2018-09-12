@@ -291,7 +291,8 @@ module.exports.crowdsalesReadOne = function (req, res) {
 								     admin: crowdsale.admin,
 								     beneficiary: crowdsale.beneficiary,
 								     created: crowdsale.created,
-								     address: sale_address
+								     address: sale_address,
+								     jsFileURL: crowdsale.jsFileURL
 				      			}
 				      			
 			      				// If successful, build a JSON response with appropriate information

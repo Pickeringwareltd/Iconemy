@@ -95,12 +95,12 @@
 								</div>
 							</div>
 							<div class ="row" id="payment_channels">
-								<div class="col-lg-4 col-sm-12">
+<!-- 								<div class="col-lg-4 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
 										<button type="submit" class="btn btn-outline" id="card_btn">Debit card</button>
 									</div>
-								</div>
-								<div class="col-lg-4 col-sm-12">
+								</div> -->
+								<div class="col-lg-6 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
 									<% if(payment.items[0].id){ %>
 										<button type="submit" class="btn btn-outline" id="btc_btn" data-amount="<%= payment.btc %>" data-item="<%= payment.items[0].name %>" data-id="<%= payment.items[0].id %>" data-project="<%= project %>">Bitcoin</button>
@@ -109,7 +109,7 @@
 									<% } %>
 									</div>
 								</div>
-								<div class="col-lg-4 col-sm-12">
+								<div class="col-lg-6 col-sm-12">
 									<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
 									<% if(payment.items[0].id){ %>
 										<button type="submit" class="btn btn-outline" id="eth_btn" data-amount="<%= payment.eth %>" data-item="<%= payment.items[0].name %>" data-id="<%= payment.items[0].id %>" data-project="<%= project %>">Ethereum</button>

@@ -43,7 +43,7 @@ exports.toggleProgress = function(req, res){
 	}
 };
 
-var renderSale = function(req, res, responseBody) {
+var renderSale = function(req, res, responseBody, saleID) {
 	try{
 
 		if(!responseBody.message){
@@ -54,6 +54,8 @@ var renderSale = function(req, res, responseBody) {
 
 			var startDate = responseBody.crowdsale.start;
 			responseBody.crowdsale.start = renderDate(startDate);
+
+			responseBody.crowdsale.index = saleID;
 
 			tracking.crowdsaleview(req, res, responseBody.project.id, responseBody.crowdsale.index);
 
@@ -112,7 +114,7 @@ exports.index = function(req, res){
 		};
 
 	   	request( requestOptions, function(err, response, body) {
-	      	renderSale(req, res, body);
+	      	renderSale(req, res, body, saleId);
 	   	});
 	} catch(e) {
 		console.log('Error on server-side controllers sale.js/index: ' + e);
