@@ -8,7 +8,7 @@ var validator = require('validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
 var tracking = require('../../tracking/tracking');
-const sgMail = require('@sendgrid/mail');
+const sendEmails = require('../emails/emails');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -17,24 +17,24 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 var sendEmail = function(email){
-	try{
-		// using SendGrid's v3 Node.js Library
-		// https://github.com/sendgrid/sendgrid-nodejs
-		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	// try{
+	// 	// using SendGrid's v3 Node.js Library
+	// 	// https://github.com/sendgrid/sendgrid-nodejs
+	// 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-		const msg = {
-		  to: email,
-		  from: 'jp@iconemy.io',
-		  subject: 'Hello world',
-		  text: 'Hello plain world!',
-		  html: '<p>Hello HTML world!</p>',
-		  templateId: 'd-0fa622099d954e6fb33d49011048a04e'
-		};
+	// 	const msg = {
+	// 	  to: email,
+	// 	  from: 'jp@iconemy.io',
+	// 	  subject: 'Hello world',
+	// 	  text: 'Hello plain world!',
+	// 	  html: '<p>Hello HTML world!</p>',
+	// 	  templateId: 'd-0fa622099d954e6fb33d49011048a04e'
+	// 	};
 
-		sgMail.send(msg);
-	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
-	}
+	// 	sgMail.send(msg);
+	// } catch(e) {
+	// 	console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
+	// }
 };
 
 /* This function is used by the web3 crowdsale function to record successful transactions made through the site
@@ -111,7 +111,7 @@ var addEmail = function(req, res, project, sale, purchaseObj) {
 	        		sendJsonResponse(res, 400, err);
 	        		console.log(err);
 	     	 	} else {
-	     	 		sendEmail(purchaseObj.email);
+					sendEmails.sendEmail(purchaseObj.email);
 	     	 		// tracking.newemail(purchaseObj);
 	     	 		// only return the recently added crowdsale (which is the last one in the array)
 					sendJsonResponse(res, 201, purchaseObj);
