@@ -10,7 +10,7 @@ var onlyAdmin = require('./onlyAdmin');
 // This is used for adding users contact forms and subscriptions to the DB
 router.get('/', needsLogIn, onlyAdmin.require, ctrlMain.index);
 router.get('/projects', needsLogIn, onlyAdmin.require,  ctrlMain.projects);
-router.get('/projects/:projectname', needsLogIn, onlyAdmin.require,  ctrlMain.projectReadOne);
+router.get('/projects/:projectname', needsLogIn, onlyAdmin.require, ctrlMain.projectReadOne);
 
 router.post('/messages/:messageid', needsLogIn, onlyAdmin.require,  ctrlMain.messageResponded);
 router.post('/projects/:projectname/token/contract', needsLogIn, onlyAdmin.require,  ctrlMain.doTokenContractCreation);

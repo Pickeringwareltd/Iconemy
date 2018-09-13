@@ -64,6 +64,7 @@ var checkAdmin = function(req, res, body, next){
 		var data = body;
 
 		if(data.result === 'admin'){
+			console.log('IS ADMIN WORKS');
 			next();
 		} else {
 			res.redirect('/');

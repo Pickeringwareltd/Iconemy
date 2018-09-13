@@ -21,6 +21,7 @@ var needsLogIn = jwt({
         } else {
             // get the token from the users session, decode it and validate it
             var id_token = req.session.passport.user.tokens.id_token;
+            console.log('AUTH JS WORKS');
             return id_token;
         }
     }
