@@ -16,9 +16,7 @@ var audience = 'http://localhost:3000/api';
 if (process.env.NODE_ENV === 'production') {
   callback_url = 'https://www.iconemy.io/authenticate';
   audience = 'https://www.iconemy.io/api';
-}
-
-if(process.env.USING_STAGING === 'true'){
+} else if (process.env.NODE_ENV === 'staging'){
 	callback_url = process.env.STAGING_URL + '/authenticate';
   	audience = process.env.STAGING_URL + '/api';
 }

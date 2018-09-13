@@ -9,9 +9,7 @@ var apiOptions = {
 
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
-}
-
-if (process.env.USING_STAGING === 'true'){
+} else if (process.env.NODE_ENV === 'staging'){
   apiOptions.server = process.env.STAGING_URL;
 }
 

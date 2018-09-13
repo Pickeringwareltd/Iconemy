@@ -14,9 +14,7 @@ var jwt_audience = 'http://localhost:3000/api';
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
   jwt_audience = 'https://www.iconemy.io/api';
-}
-
-if (process.env.USING_STAGING === 'true') {
+} else if (process.env.NODE_ENV === 'staging') {
   jwt_audience = process.env.STAGING_URL + '/api'; 
 }
 
