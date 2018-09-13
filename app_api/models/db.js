@@ -14,9 +14,7 @@ var db_account = 'development';
 if (process.env.NODE_ENV === 'production') {
 	dbURI = process.env.MONGOLAB_URI;
 	db_account = 'production';
-}
-
-if (process.env.USING_STAGING === 'true'){
+} else if (process.env.NODE_ENV === 'staging'){
 	dbURI = process.env.MONGOLAB_URI;
 	db_account = 'staging';
 }

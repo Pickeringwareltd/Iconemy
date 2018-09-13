@@ -14,8 +14,9 @@ var apiOptions = {
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
   	apiOptions.server = "http://www.iconemy.io";
+} else if (process.env.NODE_ENV === 'staging'){
+  apiOptions.server = process.env.STAGING_URL;
 }
-
 
 exports.require = function(req, res, next){
 	try{

@@ -14,6 +14,8 @@ var apiOptions = {
 
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
+} else if (process.env.NODE_ENV === 'staging'){
+  apiOptions.server = process.env.STAGING_URL;
 }
 
 exports.messageResponded = function(req, res) {
