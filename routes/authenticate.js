@@ -14,13 +14,18 @@ var audience = 'http://localhost:3000/api';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  callback_url = 'http://www.iconemy.io/authenticate';
-  audience = 'http://www.iconemy.io/api';
+  callback_url = 'https://www.iconemy.io/authenticate';
+  audience = 'https://www.iconemy.io/api';
+}
+
+if(process.env.USING_STAGING === 'true'){
+	callback_url = process.env.STAGING_URL + '/authenticate';
+  	audience = process.env.STAGING_URL + '/api';
 }
 
 const env = {
-  AUTH0_CLIENT_ID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
-  AUTH0_DOMAIN: 'damp-surf-6213.auth0.com',
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+  AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
   AUTH0_CALLBACK_URL: callback_url,
   AUTH0_AUDIENCE: audience
 };

@@ -7,11 +7,17 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
+var jwtURI = 'https://' + process.env.AUTH0_DOMAIN + '/.well-known/jwks.json';
+var jwtISSUER = 'https://' + process.env.AUTH0_DOMAIN + '/';
 var jwt_audience = 'http://localhost:3000/api';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
-  jwt_audience = 'http://www.iconemy.io/api';
+  jwt_audience = 'https://www.iconemy.io/api';
+}
+
+if (process.env.USING_STAGING === 'true') {
+  jwt_audience = process.env.STAGING_URL + '/api'; 
 }
 
 var needsLogIn = jwt({
@@ -19,10 +25,10 @@ var needsLogIn = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: "https://damp-surf-6213.auth0.com/.well-known/jwks.json"
+        jwksUri: jwtURI
     }),
     audience: jwt_audience,
-    issuer: "https://damp-surf-6213.auth0.com/",
+    issuer: jwtISSUER,
     algorithms: ['RS256']
 });
 
