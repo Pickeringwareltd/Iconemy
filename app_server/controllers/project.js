@@ -12,6 +12,10 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+if (process.env.USING_STAGING === 'true'){
+  apiOptions.server = process.env.STAGING_URL;
+}
+
 var renderProject = function(req, res, responseBody, subdomain){
 	try{
 		var data;

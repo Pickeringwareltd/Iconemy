@@ -15,6 +15,10 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+if (process.env.USING_STAGING === 'true'){
+  apiOptions.server = process.env.STAGING_URL;
+}
+
 exports.toggleProgress = function(req, res){
 	try{
 		var requestOptions, path, projectName, saleId, access_token;

@@ -13,6 +13,10 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+if (process.env.USING_STAGING === 'true'){
+  apiOptions.server = process.env.STAGING_URL;
+}
+
 // Collates the API request for getting token information
 var getRequestOptions = function(req, res){
 	try{

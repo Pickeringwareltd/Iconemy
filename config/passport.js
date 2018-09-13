@@ -13,8 +13,11 @@ var callback_url = 'http://localhost:3000/authenticate';
 if (process.env.NODE_ENV === 'production') {
   callback_url = 'https://www.iconemy.io/authenticate';
 } 
+
 if (process.env.USING_STAGING === 'true'){
-  callback_url = 'https://quiet-coast-97144.herokuapp.com/authenticate';
+  var url = process.env.STAGING_URL;
+
+  callback_url = url + '/authenticate';
 }
 
 // Configure Passport to use Auth0

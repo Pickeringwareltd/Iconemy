@@ -8,10 +8,17 @@ if (process.env.NODE_ENV !== 'production') {
 
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/iconemy';
+var db_account = 'development';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
 	dbURI = process.env.MONGOLAB_URI;
+	db_account = 'production';
+}
+
+if (process.env.USING_STAGING === 'true'){
+	dbURI = process.env.MONGOLAB_URI;
+	db_account = 'staging';
 }
 
 mongoose.connect(dbURI);
@@ -19,7 +26,7 @@ mongoose.connect(dbURI);
 // Events that will log to console when fired
 // Connection established
 mongoose.connection.on('connected', function () {
- console.log('Mongoose connected to ' + dbURI);
+ console.log('Mongoose connected to ' + db_account);
 });
 
 // Error in connection

@@ -11,6 +11,10 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 }
 
+if (process.env.USING_STAGING === 'true'){
+  apiOptions.server = process.env.STAGING_URL;
+}
+
 // Create payment here by calling update project with token/crowdsale payment details
 // On successful payment - deploy contracts
 
