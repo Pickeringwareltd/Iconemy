@@ -35,7 +35,7 @@ if (process.env.NODE_ENV !== 'production') {
 var dbURI = 'mongodb://localhost/iconemy';
 
 // If we are running on production, use the production server
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   dbURI = process.env.MONGOLAB_URI;
 }
 
