@@ -12,7 +12,7 @@ var callback_url = 'http://localhost:3000/authenticate';
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
   callback_url = 'https://www.iconemy.io/authenticate';
-} else if (process.env.NODE_ENV === 'staging'){
+} else if (process.env.USING_STAGING === 'true'){
   callback_url = 'https://quiet-coast-97144.herokuapp.com/authenticate';
 }
 
