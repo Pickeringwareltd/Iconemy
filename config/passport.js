@@ -12,17 +12,15 @@ var callback_url = 'http://localhost:3000/authenticate';
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production') {
   callback_url = 'https://www.iconemy.io/authenticate';
-}
-
-if (process.env.USING_STAGING === 'true'){
+} else if (process.env.NODE_ENV === 'staging'){
   callback_url = 'https://quiet-coast-97144.herokuapp.com/authenticate';
 }
 
 // Configure Passport to use Auth0
 const strategy = new Auth0Strategy(
   {
-    domain: 'damp-surf-6213.auth0.com',
-    clientID: 'tPqT4H0hgXromr4kzHiBIcHKWhAQyKay',
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET ,
     callbackURL: callback_url
   },
