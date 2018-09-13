@@ -188,6 +188,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="tokens" style="display: none;">
+                                                <% if(project.token){ %>
 
                                                     <div  class="status" style="background-color: <%= project.token_status.color %>;"><%= project.token_status.message %></div>
 
@@ -226,6 +227,7 @@
                                                         <% include partials/token_payment_details %>
 
                                                     <% } %>
+                                                <% } %>
                                                 </div>
                                                 <% project.crowdsales.forEach(function(sale, i) { %>
                                                     <div class="crowdsales" id="sale_<%= sale.index %>" style="display: none;">
