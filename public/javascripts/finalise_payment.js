@@ -24,7 +24,7 @@ var checkBTCBalance = function(address) {
 var checkEthBalance = function(address) {
 	var apiKey = '6KM91A9J1KW79X6F4QM7JMJAPFFG7V5YCP';
 	var etherscan_url = 'https://api.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
-	var testurl = 'http://api-rinkeby.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
+	var testurl = 'https://api-rinkeby.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
 
 	// If the wallet is fully funded, call the finalise payment function on server 
 	$.ajax({
