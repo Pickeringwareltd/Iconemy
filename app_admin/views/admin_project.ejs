@@ -187,10 +187,50 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="tokens" style="display: none;">
+                                                <% if(project.token){ %>
 
+                                                    <div  class="status" style="background-color: <%= project.token_status.color %>;"><%= project.token_status.message %></div>
 
-                                                <!-- INCLUDE HERE -->
+                                                    <h2>Token details</h2>
 
+                                                    <!-- Token table -->
+                                                    <% include partials/token_details %>
+
+                                                    <!-- If the token has been deployed - show the status of the smart contracts -->
+
+                                                    <% if(project.token.deployed == 'Done'){ %>
+
+                                                        <h3>Contract</h3>
+
+                                                        <!-- Token contract table -->
+                                                        <% include partials/token_contract_details %>
+
+                                                    <!-- Else, if the token has been paid for and needs deploying - show the form for setting the smart contracts as deployed -->
+
+                                                    <% } else if (project.token.deployed == 'Deploying') { %>
+                                                        
+                                                        <h3>Deployment form</h3>
+
+                                                        <!-- Token contract deployment form -->
+                                                        <% include partials/token_contract_form %>
+
+                                                    <% } %>
+
+                                                    <!-- If the statuses are either deployed or deploying then the user must have successfully paid for the project, so show the payment details -->
+
+                                                    <% if(project.token.deployed == 'Done' || project.token.deployed == 'Deploying'){ %>
+
+                                                        <h3>Payment</h3>
+                                                        
+                                                        <!-- Token payment details -->
+                                                        <% include partials/token_payment_details %>
+
+                                                    <% } %>
+                                                <% } %>
+                                                </div>
+
+                                                <!-- INCLUDE -->
 
                                             </div>
                                         </div>
