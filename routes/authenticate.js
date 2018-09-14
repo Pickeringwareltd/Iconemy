@@ -4,7 +4,7 @@ const express = require('express');
 const passport = require('passport');
 const request = require('request');
 const router = express.Router();
-const errors = require('./add-ons/errors');
+const errors = require('../add-ons/errors');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();

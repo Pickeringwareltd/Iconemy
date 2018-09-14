@@ -1,6 +1,6 @@
 'use strict';
 
-const errors = require('../../add-ons/errors');
+const errors = require('../add-ons/errors');
 
 module.exports.requireHTTPS = function(req, res, next) {
 	try{

@@ -2,7 +2,7 @@
 
 var express = require('express');
 var request = require('request');
-const errors = require('./add-ons/errors');
+const errors = require('../../add-ons/errors');
 
 var apiOptions = {
   server : "http://localhost:3000"
