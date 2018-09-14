@@ -376,8 +376,6 @@ var renderProject = function(req, res, body) {
         message: message
       };
 
-      console.log('Admin data = ' + JSON.stringify(data));
-
       res.render('admin_project', data);
   } catch(e) {
     console.log('Error on admin controllers main.js/renderProject: ' + e);

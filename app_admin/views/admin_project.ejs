@@ -230,7 +230,6 @@
                                                 <% } %>
                                                 </div>
 
-                                                <% if(project.crowdsales){ %>
                                                 <% project.crowdsales.forEach(function(sale, i) { %>
                                                     <div class="crowdsales" id="sale_<%= sale.index %>" style="display: none;">
                                                         
@@ -266,15 +265,22 @@
                                                         <% if(sale.deployed == 'Done' || sale.deployed == 'Deploying'){ %>
 
                                                             <h3>Payment</h3>
-                                                        
+
+                                                            <% if(sale.payment){ %>
+                                                            
                                                             <!-- Token payment details -->
                                                             <% include partials/sale_payment_details %>
+
+                                                            <% } else { %>
+
+                                                                <h4>Waiting payment.</h4>
+
+                                                            <% } %>
 
                                                         <% } %>
 
                                                     </div>
                                                 <% }); %>
-                                                <% } %>
                                             </div>
                                         </div>
                                     </div>

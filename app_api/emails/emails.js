@@ -2,12 +2,26 @@
 
 const sgMail = require('@sendgrid/mail');
 
+
+var checkEnv = function(email){
+	if (process.env.NODE_ENV === 'production') {
+		return email;
+	} else if (process.env.NODE_ENV === 'staging'){
+		return email;
+	} else {
+		return 'jp@iconemy.io'; 
+	}
+}
+
 // This is fired from the middleware used by both API and server, the function is stored in app.js
 module.exports.sendEmail = function(email){
 	try{
 		// using SendGrid's v3 Node.js Library
 		// https://github.com/sendgrid/sendgrid-nodejs
 		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+		// This allows us to send jack the emails in development mode
+		email = checkEnv(email);
 
 		const msg = {
 			to: email,
