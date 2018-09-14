@@ -11,7 +11,7 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const tracking = require('./tracking/tracking');
+const tracking = require('./add-ons/tracking');
 const ether_socket = require('./app_api/websocket/ws');
 const https = require('./config/https');
 
