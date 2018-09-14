@@ -2,7 +2,7 @@
 
 var express = require('express');
 var request = require('request');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 const errors = require('../../add-ons/errors');
 
 var apiOptions = {
