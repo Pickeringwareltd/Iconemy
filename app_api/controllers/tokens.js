@@ -6,7 +6,7 @@ var Discount = mongoose.model('Discount');
 var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);

@@ -3,7 +3,7 @@
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 
 var apiOptions = {
   server : "http://localhost:3000"

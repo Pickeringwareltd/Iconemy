@@ -3,7 +3,7 @@
 var express = require('express');
 var payment = require('../app_server/controllers/payment');
 var needsLogIn = require('./auth');
-var tracking = require('../tracking/tracking');
+var tracking = require('../add-ons/tracking');
 
 // Forward request onto the main controller
 module.exports = function (app) { 

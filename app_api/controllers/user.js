@@ -3,34 +3,13 @@
 var mongoose = require('mongoose');
 var validator = require('validator');
 var User = mongoose.model('User');
-var tracking = require('../../tracking/tracking');
-const sgMail = require('@sendgrid/mail');
+var tracking = require('../../add-ons/tracking');
+const sendEmail = require('../../add-ons/emails');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
-};
-
-var sendEmail = function(email){
-	try{
-		// using SendGrid's v3 Node.js Library
-		// https://github.com/sendgrid/sendgrid-nodejs
-		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-		const msg = {
-		  to: email,
-		  from: 'jp@iconemy.io',
-		  subject: 'Hello world',
-		  text: 'Hello plain world!',
-		  html: '<p>Hello HTML world!</p>',
-		  templateId: 'd-a863d706bc2a48d59b76150a51aa7048'
-		};
-
-		sgMail.send(msg);
-	} catch(e) {
-		console.log('Error on API controllers user.js/sendEmail: ' + e);
-	}
 };
 
 // This is used to check if the user is an admin or a user (and has access to the admin section)
@@ -110,7 +89,7 @@ module.exports.checkLogIn = function (req, res) {
 								   } else {
 								   	  // Track user sign up
 								   	  tracking.registration(user.email, user.userid);
-								   	  sendEmail(user.email);
+								   	  sendEmail.sendSignUpEmail(user.email);
 								      sendJsonResponse(res, 201, { "result": "created" });
 								   }
 							}); 

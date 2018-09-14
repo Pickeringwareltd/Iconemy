@@ -4,7 +4,7 @@ var express = require('express');
 var token = require('../app_server/controllers/token');
 var needsLogIn = require('./auth');
 var onlyOwner = require('./onlyOwner');
-var tracking = require('../tracking/tracking');
+var tracking = require('../add-ons/tracking');
 
 // Forward request onto the main controller
 module.exports = function (app) { 

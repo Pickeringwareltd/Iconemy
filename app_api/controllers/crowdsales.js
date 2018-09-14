@@ -1,40 +1,19 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Project = mongoose.model('Project');
-var Discount = mongoose.model('Discount');
-var WAValidator = require('wallet-address-validator');
-var validator = require('validator');
-var paymentJS = require('./payment_util');
-var request = require('request');
-var tracking = require('../../tracking/tracking');
-const sendEmails = require('../emails/emails');
+const mongoose = require('mongoose');
+const Project = mongoose.model('Project');
+const Discount = mongoose.model('Discount');
+const WAValidator = require('wallet-address-validator');
+const validator = require('validator');
+const paymentJS = require('./payment_util');
+const request = require('request');
+const tracking = require('../../add-ons/tracking');
+const sendEmails = require('../../add-ons/emails');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
-};
-
-var sendEmail = function(email){
-	// try{
-	// 	// using SendGrid's v3 Node.js Library
-	// 	// https://github.com/sendgrid/sendgrid-nodejs
-	// 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-	// 	const msg = {
-	// 	  to: email,
-	// 	  from: 'jp@iconemy.io',
-	// 	  subject: 'Hello world',
-	// 	  text: 'Hello plain world!',
-	// 	  html: '<p>Hello HTML world!</p>',
-	// 	  templateId: 'd-0fa622099d954e6fb33d49011048a04e'
-	// 	};
-
-	// 	sgMail.send(msg);
-	// } catch(e) {
-	// 	console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
-	// }
 };
 
 /* This function is used by the web3 crowdsale function to record successful transactions made through the site
@@ -112,7 +91,6 @@ var addEmail = function(req, res, project, sale, purchaseObj) {
 	        		console.log(err);
 	     	 	} else {
 					sendEmails.sendEmail(purchaseObj.email);
-	     	 		// tracking.newemail(purchaseObj);
 	     	 		// only return the recently added crowdsale (which is the last one in the array)
 					sendJsonResponse(res, 201, purchaseObj);
 	    		} 

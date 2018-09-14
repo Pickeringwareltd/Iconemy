@@ -3,7 +3,7 @@
 var express = require('express');
 var ctrl = require('../app_server/controllers/main');
 const project = require('../app_server/controllers/project');
-const tracking = require('../tracking/tracking');
+const tracking = require('../add-ons/tracking');
 const fs = require('fs');
 
 // Forward request onto the main controller

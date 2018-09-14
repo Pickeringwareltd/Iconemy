@@ -23,8 +23,6 @@ module.exports.sendEmail = function(_email){
 		// This allows us to send jack the emails in development mode
 		var email = checkEnv(_email);
 
-		console.log(email);
-
 		const msg = {
 			to: email,
 			from: 'jp@iconemy.io',
@@ -33,6 +31,8 @@ module.exports.sendEmail = function(_email){
 			html: '<p>Hello HTML world!</p>',
 			templateId: 'd-0fa622099d954e6fb33d49011048a04e'
 		};
+
+		console.log(JSON.stringify(msg));
 
 		sgMail.send(msg);
 	} catch(e) {

@@ -12,7 +12,7 @@ var ctrlContracts = require('../controllers/contracts');
 const needsLogIn = require('./auth');
 const onlyOwner = require('./onlyOwner');
 const onlyAdmin = require('./onlyAdmin');
-const tracking = require('../../tracking/tracking');
+const tracking = require('../../add-ons/tracking');
 
 // All routes in this file will be prepended with /api as this is what calls this file from app.js
 // This is used for adding users contact forms and subscriptions to the DB

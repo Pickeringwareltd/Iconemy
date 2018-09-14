@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var validator = require('validator');
 var Subscription = mongoose.model('Subscription');
 var Contact = mongoose.model('Contact');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {

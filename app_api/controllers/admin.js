@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var Message = mongoose.model('Contact');
 var Subscription = mongoose.model('Subscription');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 var WAValidator = require('wallet-address-validator');
 
 var sendJsonResponse = function(res, status, content) {

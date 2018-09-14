@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
-var tracking = require('../../tracking/tracking');
+var tracking = require('../../add-ons/tracking');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
