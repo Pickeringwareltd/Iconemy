@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-const errors = require('../../add-ons/errors');
+const errors = require('./add-ons/errors');
 
 exports.index = function(req, res){
 
