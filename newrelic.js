@@ -6,7 +6,13 @@
  * description of configuration variables and their potential values.
  */
 
-var appName = 'Iconemy - ' + process.env.NODE_ENV;
+var name = process.env.NODE_ENV
+
+if(process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging'){
+  name = 'development';
+}
+
+var appName = 'Iconemy - ' + name;
 
 exports.config = {
   /**
