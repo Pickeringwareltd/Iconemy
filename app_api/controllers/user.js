@@ -35,7 +35,8 @@ module.exports.checkRole = function (req, res) {
 					}
 
 				} else if(err != undefined) {
-					sendJsonResponse(res, 404, { "result": "error", "message": err });
+					errors.print(err, 'Error getting user: ');
+					sendJsonResponse(res, 404, { "result": "error", "message": 'Error getting user' });
 					return;	
 				}
 			});
@@ -76,7 +77,8 @@ module.exports.checkLogIn = function (req, res) {
 						sendJsonResponse(res, 200, { "result": "existing" });
 						return;
 					} else if(err != undefined) {
-						sendJsonResponse(res, 404, { "result": "error", "message": err });
+						errors.print(err, 'Error getting user data');
+						sendJsonResponse(res, 404, { "result": "error", "message": 'Error getting user data' });
 						return;	
 					} else {
 
@@ -85,7 +87,8 @@ module.exports.checkLogIn = function (req, res) {
 							.create(data, function(err, user) {
 								// Callback is used to report an error or return project on successful save
 								   if (err) {
-								      sendJsonResponse(res, 400, { "result": "error", "message": err });
+								   	  errors.print(err, 'Error saving user: ');
+								      sendJsonResponse(res, 400, { "result": "error", "message": 'Error saving user' });
 								      return;
 								   } else {
 								   	  // Track user sign up

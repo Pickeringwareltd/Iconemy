@@ -51,7 +51,8 @@ module.exports.recordPurchaseEmail = function(req, res){
 					var project = _project[0];
 
 					if(err){
-						sendJsonResponse(res, 400, err);
+						errors.print(err, 'Error getting projects to record email: '); 
+						sendJsonResponse(res, 400, 'Error getting projects to record email');
 						return;
 					} else {
 
@@ -88,8 +89,8 @@ var addEmail = function(req, res, project, sale, purchaseObj) {
 	    	project.save(function(err, project) {
 	      
 	      		if (err) {
-	        		sendJsonResponse(res, 400, err);
-	        		console.log(err);
+	      			errors.print(err, 'Error adding email address: ');
+	        		sendJsonResponse(res, 400, 'Error adding email address');
 	     	 	} else {
 					sendEmails.sendEmail(purchaseObj.email);
 	     	 		// only return the recently added crowdsale (which is the last one in the array)
@@ -119,7 +120,8 @@ module.exports.crowdsalesCreate = function (req, res) {
 					var project = _project[0];
 
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error finding project to create sale');
+						sendJsonResponse(res, 404, 'Error finding project to create sale');
 						return;
 					} else {
 						var token = project.token;
@@ -174,7 +176,8 @@ var addCrowdsale = function(req, res, project) {
 	    	project.save(function(err, project) {
 	      
 	      		if (err) {
-	        		sendJsonResponse(res, 400, err);
+	      			errors.print(err, 'Error adding crowdsale: ');
+	        		sendJsonResponse(res, 400, 'Error adding crowdsale');
 	     	 	} else {
 	     	 		tracking.newcrowdsale(crowdsale);
 	     	 		// only return the recently added crowdsale (which is the last one in the array)
@@ -237,7 +240,8 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		          		return;
 		          		// If an error was returned, return that message
 		          	} else if (err) {
-		          		sendJsonResponse(res, 404, err);
+		          		errors.print(err, 'Error getting project to get crowdsale: ');
+		          		sendJsonResponse(res, 404, 'Error getting project to get crowdsale');
 		          		return;
 		      		} else {
 
@@ -326,7 +330,8 @@ module.exports.toggleProgress = function (req, res) {
 					    sendJsonResponse(res, 404, { "message": "Project ID not found" });
 					    return;
 					} else if (err) {
-					    sendJsonResponse(res, 400, err);
+						errors.print(err, 'Error finding project to toggle: ');
+					    sendJsonResponse(res, 400, 'Error finding project to toggle');
 						return; 
 					}
 					
@@ -337,8 +342,8 @@ module.exports.toggleProgress = function (req, res) {
 					// Try to save the project, return any validation errors if necessary
 					project.save( function(err, project) {
 						if (err) {
-							console.log(err);
-						    sendJsonResponse(res, 404, err);
+							errors.print(err, 'Error toggling progress on crowdsale: ');
+						    sendJsonResponse(res, 404, 'Error toggling progress on crowdsale');
 						} else {
 						    sendJsonResponse(res, 200, project);
 						}
@@ -380,7 +385,8 @@ module.exports.getPrice = function (req, res) {
 				request( requestOptions, function(err, response, body) {
 
 					if(err){
-		  				sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error requesting pricing data: ');
+		  				sendJsonResponse(res, 404, 'Error requesting pricing data');
 		  				return;
 					}
 
@@ -396,7 +402,8 @@ module.exports.getPrice = function (req, res) {
 							var project = _project[0];
 
 							if(err){
-								sendJsonResponse(res, 404, err);
+								errors.print(err, 'Error finding project to find pricing data: ');
+								sendJsonResponse(res, 404, 'Error finding project to find pricing data');
 								return;
 							}
 
@@ -420,7 +427,8 @@ module.exports.getPrice = function (req, res) {
 									var discount = _discount[0];
 
 									if(err){
-										sendJsonResponse(res, 404, err);
+										errors.print(err, 'Error finding discount code: ');
+										sendJsonResponse(res, 404, 'Error finding discount code');
 										return;
 									}
 
@@ -494,7 +502,8 @@ module.exports.paymentConfirmOne = function (req, res) {
 					var project = _project[0];
 					
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error finding project to confirm payment: ');
+						sendJsonResponse(res, 404, 'Error finding project to confirm payment');
 						return;
 					} else if (!project){
 						sendJsonResponse(res, 404, {"message": "Project not found"});
@@ -566,7 +575,8 @@ module.exports.paymentConfirmOne = function (req, res) {
 
 								project.save(function(err, project) {
 								    if (err) {
-								        sendJsonResponse(res, 404, err);
+								    	errors.print(err, 'Error storing project with confirm payment: ');
+								        sendJsonResponse(res, 404, 'Error storing project with confirm payment');
 								    } else {
 							    		tracking.paymentconfirmed(payment, 'crowdsale');
 								        sendJsonResponse(res, 200, payment);
@@ -604,7 +614,8 @@ var dealWithBalance = function(project, balance, saleid, res) {
 
 			project.save(function(err, project) {
 				if (err) {
-					sendJsonResponse(res, 404, err);
+					errors.print(err, 'Error getting project to deal with balance: ');
+					sendJsonResponse(res, 404, 'Error getting project to deal with balance');
 				} else {
 					tracking.paymentfinalised(payment, 'crowdsale');
 					sendJsonResponse(res, 200, payment);
@@ -640,7 +651,8 @@ module.exports.paymentFinaliseOne = function (req, res) {
 					var project = _project[0];
 				
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error getting project to finalise payment: ');
+						sendJsonResponse(res, 404, 'Error getting project to finalise payment');
 						return;
 					} else if (!project){
 						sendJsonResponse(res, 404, {"message": "Project not found"});

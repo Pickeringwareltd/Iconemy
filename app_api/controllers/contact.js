@@ -53,7 +53,8 @@ module.exports.subscribe = function (req, res) {
 										.create(data, function(err, subscription) {
 											// Callback is used to report an error or return project on successful save
 								    		if (err) {
-								      			sendJsonResponse(res, 400, { "result": "error", "message": err });
+								    			errors.print(err, 'Error adding subscription: ');
+								      			sendJsonResponse(res, 400, { "result": "error", "message": 'Error adding subscription' });
 								      			return;
 								    		} else {
 								    			tracking.subscribe(req);
@@ -102,7 +103,8 @@ module.exports.contact = function (req, res) {
 						sendJsonResponse(res, 400, { "result": "error", "message": "Apologies, we will reply to your first message as soon as we can." });
 						return;
 					} else if(err != undefined) {
-						sendJsonResponse(res, 404, { "result": "error", "message": err });
+						errors.print(err, 'Error finding contact data: ');
+						sendJsonResponse(res, 404, { "result": "error", "message": 'Error finding contact data' });
 						return;	
 					} else {
 
@@ -114,7 +116,8 @@ module.exports.contact = function (req, res) {
 										.create(data, function(err, messages) {
 											// Callback is used to report an error or return project on successful save
 								    		if (err) {
-								      			sendJsonResponse(res, 400, { "result": "error", "message": err });
+								    			errors.print(err, 'Error storing contact data: ');
+								      			sendJsonResponse(res, 400, { "result": "error", "message": 'Error storing contact data' });
 								      			return;
 								    		} else {
 								    			tracking.contact(req);

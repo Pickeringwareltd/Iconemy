@@ -488,10 +488,6 @@ exports.myprojects = function(req, res){
 	  		}
 		};
 
-		var e = 'THIS IS AN ERROR';
-
-		errors.print(e, 'Test errors working: ');
-
 	   	request( requestOptions, function(err, response, body) {
 	      	renderMyProjects(req, res, body);
 	   	});

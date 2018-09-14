@@ -62,8 +62,8 @@ module.exports.respondToMessage = function(req, res){
 		      	// Try to save the project, return any validation errors if necessary
 				message.save( function(err, project) {
 					if (err) {
-						console.log(err);
-					    sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error marking message as responded: ');
+					    sendJsonResponse(res, 404, 'Error marking message as responded');
 					} else {
 					    sendJsonResponse(res, 200, message);
 					}
@@ -87,7 +87,8 @@ module.exports.getMessages = function(req, res){
 		          	return;
 		          	// If an error was returned, return that message
 		        } else if (err) {
-		         	sendJsonResponse(res, 404, err);
+		        	errors.print(err, 'Error getting messages: ');
+		         	sendJsonResponse(res, 404, 'Error getting messages');
 		          	return;
 		      	} else {
 		      		// If project was found and no error returned then return the project
@@ -114,7 +115,8 @@ module.exports.getTokenContract = function(req, res) {
 		          	return;
 		          	// If an error was returned, return that message
 		        } else if (err) {
-		         	sendJsonResponse(res, 404, err);
+		        	errors.print(err, 'Error getting token contract: ');
+		         	sendJsonResponse(res, 404, 'Error getting token contract');
 		          	return;
 		      	} else {
 		      		var object = _object[0];
@@ -210,8 +212,8 @@ module.exports.setTokenContract = function(req, res) {
 					// Try to save the project, return any validation errors if necessary
 					project.save( function(err, project) {
 						if (err) {
-							console.log(err);
-						    sendJsonResponse(res, 404, err);
+							errors.print(err, 'Error setting token contract: ');
+						    sendJsonResponse(res, 404, 'Error setting token contract');
 						} else {
 						    sendJsonResponse(res, 200, project.token);
 						}
@@ -242,7 +244,8 @@ module.exports.getCrowdsaleContract = function(req, res) {
 		          	return;
 		          	// If an error was returned, return that message
 		        } else if (err) {
-		         	sendJsonResponse(res, 404, err);
+		        	errors.print(err, 'Error getting crowdsale contract: ');
+		         	sendJsonResponse(res, 404, 'Error getting crowdsale contract');
 		          	return;
 		      	} else {
 		      		var object = _object[0];
@@ -281,7 +284,8 @@ module.exports.setCrowdsaleContract = function(req, res) {
 					    sendJsonResponse(res, 404, { "message": "Project ID not found" });
 					    return;
 					} else if (err) {
-					    sendJsonResponse(res, 400, err);
+						errors.print(err, 'Error setting crowdsale contract: ');
+					    sendJsonResponse(res, 400, 'Error setting crowdsale contract');
 						return; 
 					}
 					
@@ -301,8 +305,8 @@ module.exports.setCrowdsaleContract = function(req, res) {
 					// Try to save the project, return any validation errors if necessary
 					project.save( function(err, project) {
 						if (err) {
-							console.log(err);
-						    sendJsonResponse(res, 404, err);
+							errors.print(err, 'Error saving contract data to crowdsale: ');
+						    sendJsonResponse(res, 404, 'Error saving contract data to crowdsale');
 						} else {
 						    sendJsonResponse(res, 200, project.crowdsales[crowdsaleid]);
 						}
@@ -437,7 +441,8 @@ module.exports.projectsListByCreationTime = function (req, res) {
 		          	return;
 		          	// If an error was returned, return that message
 		        } else if (err) {
-		         	sendJsonResponse(res, 404, err);
+		        	errors.print(err, 'Error getting projects by creation time: ');
+		         	sendJsonResponse(res, 404, 'Error getting projects by creation time');
 		          	return;
 		      	} else {
 		      		// If project was found and no error returned then return the project
@@ -473,7 +478,8 @@ module.exports.projectssUpdateOne = function (req, res) {
 					    sendJsonResponse(res, 404, { "message": "Project ID not found" });
 					    return;
 					} else if (err) {
-					    sendJsonResponse(res, 400, err);
+						errors.print(err, 'Error getting project to update: ');
+					    sendJsonResponse(res, 400, 'Error getting project to update');
 						return; 
 					} else if (project.subdomain !== req.body.subdomain && project.token){
 						// Should reject changes to subdomain as this is how users find projects
@@ -498,8 +504,8 @@ module.exports.projectssUpdateOne = function (req, res) {
 					// Try to save the project, return any validation errors if necessary
 					project.save( function(err, project) {
 						if (err) {
-							console.log(err);
-						    sendJsonResponse(res, 404, err);
+							errors.print(err, 'Error storing updated project: ');
+						    sendJsonResponse(res, 404, 'Error storing updated project');
 						} else {
 						    sendJsonResponse(res, 200, project);
 						}
@@ -533,7 +539,8 @@ module.exports.projectsDeleteOne = function (req, res) {
 	      		} else {
 		      		Project.remove( function(err, project) {
 		      			if (err) {
-			            	sendJsonResponse(res, 404, err);
+		      				errors.print(err, 'Error deleting project: ');
+			            	sendJsonResponse(res, 404, 'Error deleting project');
 							return; 	
 						} else {
 			          		sendJsonResponse(res, 204, null);

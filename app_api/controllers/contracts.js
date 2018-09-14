@@ -6,7 +6,7 @@ const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
 var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
 var web3 = new Web3(provider);
 
-provider.on('error', e => console.log('WS Error', e));
+provider.on('error', e => errors.print(e, 'Websocket Error: '));
 provider.on('end', e => {
 	console.log('end');
 	setNewProvider();
@@ -57,7 +57,8 @@ module.exports.basicSale = function (req, res) {
 		            sendJsonResponse(res, 200, {'transactions': transaction_summary});
 		        } else {
 		        	setNewProvider();
-		        	sendJsonResponse(res, 400, {'error' : errors});
+		        	errors.print(errors, 'Error getting basicSale: ');
+		        	sendJsonResponse(res, 400, {'error' : 'Error getting basicSale'});
 		        }
 		    }
 		);
@@ -94,8 +95,8 @@ module.exports.tokenHolders = function (req, res) {
 
 		            sendJsonResponse(res, 200, {'holders': token_holders.length});
 		        } else {
-		        	console.log(errors);
-		        	sendJsonResponse(res, 400, {'error' : errors});
+		        	errors.print(errors, 'Error getting tokenHolders: ');
+		        	sendJsonResponse(res, 400, {'error' : 'Error getting tokenHolders'});
 		        }
 		    }
 		);
@@ -125,8 +126,8 @@ module.exports.tokenTransfers = function (req, res) {
 		            transaction_summary = events.length;
 		            sendJsonResponse(res, 200, {'transactions': transaction_summary});
 		        } else {
-		        	console.log(errors);
-		        	sendJsonResponse(res, 400, {'error' : errors});
+		        	errors.print(errors, 'Error getting tokenTransfers: ');
+		        	sendJsonResponse(res, 400, {'error' : 'Error getting tokenTransfers'});
 		        }
 		    }
 		);

@@ -35,7 +35,8 @@ module.exports.tokenCreate = function (req, res) {
 						return;
 					}
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error getting project to create token: ');
+						sendJsonResponse(res, 404, 'Error getting project to create token');
 						return;
 					} else {
 						if(project.token){
@@ -70,7 +71,8 @@ var addToken = function(req, res, project) {
 	    	project.save(function(err, project) {
 	      		
 	      		if (err) {
-	        		sendJsonResponse(res, 400, err);
+	      			errors.print(err, 'Error creating token: ');
+	        		sendJsonResponse(res, 400, 'Error creating token');
 	     	 	} else {
 	     	 		tracking.newtoken(project.token);
 	     	 		// Return newly created token
@@ -150,7 +152,8 @@ module.exports.tokenRead = function (req, res) {
 		          		return;
 		          		// If an error was returned, return that message
 		          	} else if (err) {
-		          		sendJsonResponse(res, 404, err);
+		          		errors.print(err, 'Error getting project to get token: ');
+		          		sendJsonResponse(res, 404, 'Error getting project to get token');
 		          		return;
 		      		} else {
 		      			var token = project.token;
@@ -229,7 +232,8 @@ module.exports.getPrice = function (req, res) {
 				request( requestOptions, function(err, response, body) {
 
 					if(err){
-		  				sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error getting pricing information: ');
+		  				sendJsonResponse(res, 404, 'Error getting pricing information');
 		  				return;
 					}
 
@@ -245,7 +249,8 @@ module.exports.getPrice = function (req, res) {
 							var project = _project[0];
 
 							if(err){
-								sendJsonResponse(res, 404, err);
+								errors.print(err, 'Error getting project to get token: ');
+								sendJsonResponse(res, 404, 'Error getting project to get token');
 								return;
 							}
 
@@ -262,7 +267,8 @@ module.exports.getPrice = function (req, res) {
 									var discount = _discount[0];
 
 									if(err){
-										sendJsonResponse(res, 404, err);
+										errors.print(err, 'Error getting dicounts: ');
+										sendJsonResponse(res, 404, 'Error getting dicounts');
 										return;
 									}
 
@@ -331,7 +337,8 @@ module.exports.paymentConfirm = function (req, res) {
 					var project = _project[0];
 						
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error getting projects to confirm token payment: ');
+						sendJsonResponse(res, 404, 'Error getting projects to confirm token payment');
 						return;
 					} else if (!project){
 						sendJsonResponse(res, 404, {"message": "Project not found"});
@@ -391,8 +398,8 @@ module.exports.paymentConfirm = function (req, res) {
 
 							project.save(function(err, project) {
 							    if (err) {
-							    	console.log(err);
-							        sendJsonResponse(res, 404, {"message": err});
+							    	errors.print(err, 'Error saving project with new token: ');
+							        sendJsonResponse(res, 404, {"message": 'Error saving project with new token'});
 							    } else {
 							    	tracking.paymentconfirmed(payment, 'token');
 							        sendJsonResponse(res, 200, payment);
@@ -424,7 +431,8 @@ var dealWithBalance = function(project, balance, res) {
 
 			project.save(function(err, project) {
 				if (err) {
-					sendJsonResponse(res, 404, {"message": err});
+					errors.print(err, 'Error saving project with balance: ');
+					sendJsonResponse(res, 404, {"message": 'Error saving project with balance'});
 				} else {
 					tracking.paymentfinalised(payment, 'token');
 					sendJsonResponse(res, 200, payment);
@@ -456,7 +464,8 @@ module.exports.paymentFinalise = function (req, res) {
 					var project = _project[0];
 						
 					if(err){
-						sendJsonResponse(res, 404, err);
+						errors.print(err, 'Error finding project to finalise payment: ');
+						sendJsonResponse(res, 404, 'Error finding project to finalise payment');
 						return;
 					} else if (!project){
 						sendJsonResponse(res, 404, {"message": "Project not found"});

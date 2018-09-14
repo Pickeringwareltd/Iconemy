@@ -141,10 +141,10 @@ module.exports.projectsCreate = function (req, res) {
 					         	// Create project creates a new document in the database if the JSON object passes validation in the schema
 								Project
 									.create(data, function(err, project) {
-										console.log(err);
 										// Callback is used to report an error or return project on successful save
 							    		if (err) {
-							      			sendJsonResponse(res, 400, err);
+							    			errors.print(err, 'Error when creating project');
+							      			sendJsonResponse(res, 400, 'Error when creating project');
 							    		} else {
 							    			tracking.newproject(project);
 							      			sendJsonResponse(res, 201, project);
@@ -176,7 +176,8 @@ module.exports.projectsListByStartTime = function (req, res) {
 		          	return;
 		          	// If an error was returned, return that message
 		        } else if (err) {
-		         	sendJsonResponse(res, 404, err);
+		        	errors.print(err , 'Error getting projects listed by start time: ');
+		         	sendJsonResponse(res, 404, 'Error getting projects listed by start time');
 		          	return;
 		      	} else {
 		      		// If project was found and no error returned then return the project
@@ -206,7 +207,8 @@ module.exports.projectsReadOne = function (req, res) {
 		          		return;
 		          		// If an error was returned, return that message
 		          	} else if (err) {
-		          		sendJsonResponse(res, 404, err);
+		          		errors.print(err , 'Error getting projects to read: ');
+		          		sendJsonResponse(res, 404, 'Error getting projects to read');
 		          		return;
 		      		} else {
 		      			// If project was found and no error returned then return the project
@@ -248,7 +250,8 @@ module.exports.projectssUpdateOne = function (req, res) {
 					    sendJsonResponse(res, 404, { "message": "Project ID not found" });
 					    return;
 					} else if (err) {
-					    sendJsonResponse(res, 400, err);
+						errors.print(err , 'Error getting projects to update: ');
+					    sendJsonResponse(res, 400, 'Error getting projects to update');
 						return; 
 					} else if (project.subdomain !== req.body.subdomain && project.token){
 						// Should reject changes to subdomain as this is how users find projects
@@ -273,8 +276,8 @@ module.exports.projectssUpdateOne = function (req, res) {
 					// Try to save the project, return any validation errors if necessary
 					project.save( function(err, project) {
 						if (err) {
-							console.log(err);
-						    sendJsonResponse(res, 404, err);
+							errors.print(err , 'Error saving project when updating: ');
+						    sendJsonResponse(res, 404, 'Error saving project when updating');
 						} else {
 						    sendJsonResponse(res, 200, project);
 						}
@@ -308,7 +311,8 @@ module.exports.projectsDeleteOne = function (req, res) {
 	      		} else {
 		      		Project.remove( function(err, project) {
 		      			if (err) {
-			            	sendJsonResponse(res, 404, err);
+		      				errors.print(err , 'Error removing project: ');
+			            	sendJsonResponse(res, 404, 'Error removing project');
 							return; 	
 						} else {
 			          		sendJsonResponse(res, 204, null);
