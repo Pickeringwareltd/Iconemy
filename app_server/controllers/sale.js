@@ -3,8 +3,8 @@
 var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
-var tracking = require('../../add-ons/tracking');
-const errors = require('../../add-ons/errors');
+var tracking = require('./add-ons/tracking');
+const errors = require('./add-ons/errors');
 
 var moment = require('moment');
 moment().format();
