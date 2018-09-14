@@ -2,6 +2,7 @@
 
 var express = require('express');
 var request = require('request');
+const errors = require('../../add-ons/errors');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -102,7 +103,7 @@ exports.create = function(req, res){
 			
 		});
 	} catch(e) {
-		console.log('Error on server-side controllers payment.js/create: ' + e);
+		errors.print(e, 'Error on server-side controllers payment.js/create: ');
 	}
 };
 
@@ -187,7 +188,7 @@ exports.confirm = function(req, res) {
 
 		});
 	} catch(e) {
-		console.log('Error on server-side controllers payment.js/confirm: ' + e);
+		errors.print(e, 'Error on server-side controllers payment.js/confirm: ');
 	}
 };
 
@@ -240,6 +241,6 @@ exports.finalise = function(req, res) {
 
 		});
 	} catch(e) {
-		console.log('Error on server-side controllers payment.js/finalise: ' + e);
+		errors.print(e, 'Error on server-side controllers payment.js/finalise: ');
 	}
 };

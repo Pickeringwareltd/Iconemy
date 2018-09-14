@@ -1,5 +1,7 @@
 'use strict';
 
+const errors = require('../../add-ons/errors');
+
 module.exports.requireHTTPS = function(req, res, next) {
 	try{
 		// The 'x-forwarded-proto' check is for Heroku
@@ -9,6 +11,6 @@ module.exports.requireHTTPS = function(req, res, next) {
 
 		next();
 	} catch(e) {
-		console.log('Error on server-side config https.js/requireHTTPS: ' + e);
+		errors.print(e, 'Error on server-side config https.js/requireHTTPS: ');
 	}
 }

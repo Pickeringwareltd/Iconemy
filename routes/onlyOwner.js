@@ -2,6 +2,7 @@
 
 var express = require('express');
 var request = require('request');
+const errors = require('../add-ons/errors');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
@@ -35,7 +36,7 @@ exports.require = function(req, res, next){
 		   	});
 		}
 	} catch(e) {
-		console.log('Error on server-side routes onlyOwner.js/require: ' + e);
+		errors.print(e, 'Error on server-side routes onlyOwner.js/require: ');
 	}
 };
 
@@ -57,7 +58,7 @@ var getRequestOptions = function(req, res){
 
 		return requestOptions;
 	} catch(e) {
-		console.log('Error on server-side routes onlyOwner.js/getRequestOptions: ' + e);
+		errors.print(e, 'Error on server-side routes onlyOwner.js/getRequestOptions: ');
 	}
 };
 
@@ -72,7 +73,7 @@ var checkOwner = function(req, res, body, next){
 			res.redirect('/projects');
 		}
 	} catch(e) {
-		console.log('Error on server-side routes onlyOwner.js/checkOwner: ' + e);
+		errors.print(e, 'Error on server-side routes onlyOwner.js/checkOwner: ');
 		res.redirect('/projects');
 	}
 };

@@ -7,6 +7,7 @@ var WAValidator = require('wallet-address-validator');
 var paymentJS = require('./payment_util');
 var request = require('request');
 var tracking = require('../../add-ons/tracking');
+var errors = require('../../add-ons/errors');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -46,7 +47,7 @@ module.exports.tokenCreate = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/tokenCreate: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/tokenCreate: ');
 	}
 };
 
@@ -79,7 +80,7 @@ var addToken = function(req, res, project) {
 	    	});
 		} 
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/addToken: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/addToken: ');
 	}
 };
 
@@ -105,7 +106,7 @@ var validateToken = function(token){
 
 		return passedTests;
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/validateToken: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/validateToken: ');
 	}
 }
 
@@ -126,7 +127,7 @@ var getToken = function(req) {
 
 		return token;
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/getToken: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/getToken: ');
 	}
 };
 
@@ -190,7 +191,7 @@ module.exports.tokenRead = function (req, res) {
 		   		sendJsonResponse(res, 404, { "message": "No projectID in request" });
 		   }
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/tokenRead: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/tokenRead: ');
 	}
 };
 
@@ -309,7 +310,7 @@ module.exports.getPrice = function (req, res) {
 		  	sendJsonResponse(res, 404, { "message": "Not found, project ID and/or item name is required" });
 		}
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/getPrice: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/getPrice: ');
 	}
 };
 
@@ -405,7 +406,7 @@ module.exports.paymentConfirm = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/paymentConfirm: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/paymentConfirm: ');
 	}
 };
 
@@ -434,7 +435,7 @@ var dealWithBalance = function(project, balance, res) {
 			sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
 		}
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/dealWithBalance: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/dealWithBalance: ');
 	}
 };
 
@@ -493,7 +494,7 @@ module.exports.paymentFinalise = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers tokens.js/paymentFinalise: ' + e);
+		errors.print(e, 'Error on API controllers tokens.js/paymentFinalise: ');
 	}
 };
 

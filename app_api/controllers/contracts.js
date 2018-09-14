@@ -1,5 +1,6 @@
 'use strict';
 
+const errors = require('../../add-ons/errors');
 const Web3 = require('web3');
 const rinkeby_ws = 'wss://rinkeby.infura.io/_ws';
 var provider = new Web3.providers.WebsocketProvider(rinkeby_ws);
@@ -24,7 +25,7 @@ var setNewProvider = function(){
 
 		web3.setProvider(provider);
 	} catch(e) {
-		console.log('Error on API controllers contracts.js/setNewProvider: ' + e);
+		errors.print(e, 'Error on API controllers contracts.js/setNewProvider: ');
 	}
 }
 
@@ -61,7 +62,7 @@ module.exports.basicSale = function (req, res) {
 		    }
 		);
 	} catch(e) {
-		console.log('Error on API controllers contracts.js/basicSale: ' + e);
+		errors.print(e, 'Error on API controllers contracts.js/basicSale: ');
 	}
 };
 
@@ -99,7 +100,7 @@ module.exports.tokenHolders = function (req, res) {
 		    }
 		);
 	} catch(e) {
-		console.log('Error on API controllers contracts.js/tokenHolders: ' + e);
+		errors.print(e, 'Error on API controllers contracts.js/tokenHolders: ');
 	}
 };
 
@@ -130,6 +131,6 @@ module.exports.tokenTransfers = function (req, res) {
 		    }
 		);
 	} catch(e) {
-		console.log('Error on API controllers contracts.js/tokenTransfers: ' + e);
+		errors.print(e, 'Error on API controllers contracts.js/tokenTransfers: ');
 	}
 };

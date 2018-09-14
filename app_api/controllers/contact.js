@@ -5,6 +5,7 @@ var validator = require('validator');
 var Subscription = mongoose.model('Subscription');
 var Contact = mongoose.model('Contact');
 var tracking = require('../../add-ons/tracking');
+const errors = require('../../add-ons/errors');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -22,7 +23,7 @@ var getSubscriptionData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers contact.js/getSubscriptionData: ' + e);
+		errors.print(e, 'Error on API controllers contact.js/getSubscriptionData: ');
 	}
 }
 
@@ -67,7 +68,7 @@ module.exports.subscribe = function (req, res) {
 				return;
 			}
 	} catch(e) {
-		console.log('Error on API controllers contact.js/subscribe: ' + e);
+		errors.print(e, 'Error on API controllers contact.js/subscribe: ');
 	}
 };
 
@@ -83,7 +84,7 @@ var getContactData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers contact.js/getContactData: ' + e);
+		errors.print(e, 'Error on API controllers contact.js/getContactData: ');
 	}
 }
 
@@ -128,6 +129,6 @@ module.exports.contact = function (req, res) {
 				return;
 			}
 	} catch(e) {
-		console.log('Error on API controllers contact.js/contact: ' + e);
+		errors.print(e, 'Error on API controllers contact.js/contact: ');
 	}
 };

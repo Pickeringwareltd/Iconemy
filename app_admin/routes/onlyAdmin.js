@@ -2,6 +2,7 @@
 
 var express = require('express');
 var request = require('request');
+const errors = require('../../add-ons/errors');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
@@ -30,7 +31,7 @@ exports.require = function(req, res, next){
 			res.redirect('/');
 		}
 	} catch(e) {
-		console.log('Error on admin routes onlyAdmin.js/require: ' + e);
+		errors.print(e, 'Error on admin routes onlyAdmin.js/require: ');
 	}
 };
 
@@ -55,7 +56,7 @@ var getRequestOptions = function(req, res){
 
 		return requestOptions;
 	} catch(e) {
-		console.log('Error on admin routes onlyAdmin.js/getRequestOptions: ' + e);
+		errors.print(e, 'Error on admin routes onlyAdmin.js/getRequestOptions: ');
 	}
 };
 
@@ -69,6 +70,6 @@ var checkAdmin = function(req, res, body, next){
 			res.redirect('/');
 		}
 	} catch(e) {
-		console.log('Error on admin routes onlyAdmin.js/checkAdmin: ' + e);
+		errors.print(e, 'Error on admin routes onlyAdmin.js/checkAdmin: ');
 	}
 };

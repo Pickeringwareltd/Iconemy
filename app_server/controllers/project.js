@@ -3,6 +3,7 @@
 var express = require('express');
 var request = require('request');
 var tracking = require('../../tracking/tracking');
+const errors = require('../../add-ons/errors');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -63,7 +64,7 @@ var renderProject = function(req, res, responseBody, subdomain){
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side project.js/renderProject: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderProject: ');
 	}
 }
 
@@ -78,7 +79,7 @@ var renderDate =  function(_date) {
 
 		return date;
 	} catch(e) {
-		console.log('Error on server-side project.js/renderDate: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderDate: ');
 	}
 }
 
@@ -110,7 +111,7 @@ exports.index = function(req, res){
 	      	renderProject(req, res, body, subdomain);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side project.js/index: ' + e);
+		errors.print(e, 'Error on server-side project.js/index: ');
 	}
 };
 
@@ -133,7 +134,7 @@ var renderCreateProject = function(req, res){
 			message: message
 		});
 	} catch(e) {
-		console.log('Error on server-side project.js/renderCreateProject: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderCreateProject: ');
 	}
 }
 
@@ -163,7 +164,7 @@ var renderUpdateProject = function(req, res, _data){
 			message: message
 		});
 	} catch(e) {
-		console.log('Error on server-side project.js/renderUpdateProject: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderUpdateProject: ');
 	}
 }
 
@@ -195,7 +196,7 @@ exports.update = function(req, res){
 	      	renderUpdateProject(req, res, body);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side project.js/update: ' + e);
+		errors.print(e, 'Error on server-side project.js/update: ');
 	}
 };
 
@@ -256,7 +257,7 @@ exports.doUpdate = function(req, res){
 			
 		}
 	} catch(e) {
-		console.log('Error on server-side project.js/doUpdate: ' + e);
+		errors.print(e, 'Error on server-side project.js/doUpdate: ');
 	}
 
 };
@@ -336,7 +337,7 @@ var validateProject = function(postdata){
 
 	  return error;
 	} catch(e) {
-		console.log('Error on server-side project.js/validateProject: ' + e);
+		errors.print(e, 'Error on server-side project.js/validateProject: ');
 	}
 };
 
@@ -350,7 +351,7 @@ var addHttps = function (url) {
 
 		return url;
 	} catch(e) {
-		console.log('Error on server-side project.js/addHttps: ' + e);
+		errors.print(e, 'Error on server-side project.js/addHttps: ');
 	}
 };
 
@@ -380,7 +381,7 @@ var getData = function(req) {
 
 		return postdata;
 	} catch(e) {
-		console.log('Error on server-side project.js/getData: ' + e);
+		errors.print(e, 'Error on server-side project.js/getData: ');
 	}
 }
 
@@ -440,7 +441,7 @@ exports.doCreation = function(req, res){
 			
 		}
 	} catch (e) {
-		console.log('Error on server-side project.js/doCreation: ' + e);
+		errors.print(e, 'Error on server-side project.js/doCreation: ');
 	}
 
 };
@@ -465,7 +466,7 @@ var renderMyProjects = function(req, res, responseBody){
 			message: message
 		});
 	} catch(e) {
-		console.log('Error on server-side project.js/renderMyProjects: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderMyProjects: ');
 	}
 };
 
@@ -491,7 +492,7 @@ exports.myprojects = function(req, res){
 	      	renderMyProjects(req, res, body);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side project.js/myProjects: ' + e);
+		errors.print(e, 'Error on server-side project.js/myProjects: ');
 	}
 };
 
@@ -539,7 +540,7 @@ var renderBuyNow = function(req, res, body){
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side project.js/renderBuyNow: ' + e);
+		errors.print(e, 'Error on server-side project.js/renderBuyNow: ');
 	}
 }
 
@@ -569,6 +570,6 @@ exports.buynow = function(req, res){
 	      	renderBuyNow(req, res, body);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side project.js/buynow: ' + e);
+		errors.print(e, 'Error on server-side project.js/buynow: ');
 	}
 };

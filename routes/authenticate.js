@@ -4,6 +4,7 @@ const express = require('express');
 const passport = require('passport');
 const request = require('request');
 const router = express.Router();
+const errors = require('../add-ons/errors');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
@@ -110,7 +111,7 @@ module.exports = function (app) {
 				}
 
 			} catch(e) {
-				console.log('Error on server-side routes authenticate.js/authenticate: ' + e);
+				errors.print(e, 'Error on server-side routes authenticate.js/authenticate: ');
 			}
 			
 	  	}

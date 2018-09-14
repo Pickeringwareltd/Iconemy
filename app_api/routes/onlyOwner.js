@@ -4,6 +4,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var jwt = require('jsonwebtoken');
+const errors = require('../../add-ons/errors');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -36,7 +37,7 @@ var checkOwner = function(req, res, userid, next){
 				}
 			});
 	} catch(e) {
-		console.log('Error on API routes onlyOwner.js/checkOwner: ' + e);
+		errors.print(e, 'Error on API routes onlyOwner.js/checkOwner: ');
 	}
 };
 
@@ -59,6 +60,6 @@ exports.require = function(req, res, next){
 			sendJsonResponse(401, {'message' : 'Not logged in'});
 		}
 	} catch(e) {
-		console.log('Error on API routes onlyOwner.js/require: ' + e);
+		errors.print(e, 'Error on API routes onlyOwner.js/require: ');
 	}
 };

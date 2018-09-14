@@ -4,6 +4,7 @@ var express = require('express');
 var ctrl = require('../app_server/controllers/main');
 const project = require('../app_server/controllers/project');
 const tracking = require('../add-ons/tracking');
+const errors = require('../add-ons/errors');
 const fs = require('fs');
 
 // Forward request onto the main controller
@@ -35,7 +36,7 @@ module.exports = function (app) {
 			  res.send(data);
 			});
 		} catch(e) {
-			console.log('Error on server-side routes main.js/privacy: ' + e);
+			errors.print(e, 'Error on server-side routes main.js/privacy: ');
 		}
 	}); 
 
@@ -48,7 +49,7 @@ module.exports = function (app) {
 		      res.send(data);
 		    });
 		} catch(e) {
-			console.log('Error on server-side routes main.js/terms: ' + e);
+			errors.print(e, 'Error on server-side routes main.js/terms: ');
 		}
 	}); 
 };

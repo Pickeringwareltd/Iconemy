@@ -3,6 +3,8 @@
 var mongoose = require('mongoose');
 var Project = mongoose.model('Project');
 var tracking = require('../../add-ons/tracking');
+const errors = require('../../add-ons/errors');
+
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -84,7 +86,7 @@ var validateProject = function(data){
 
 	  return error;
 	} catch(e) {
-		console.log('Error on API controllers projects.js/validateProject: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/validateProject: ');
 	}
 }
 
@@ -112,7 +114,7 @@ var getData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers projects.js/getData: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/getData: ');
 	}
 }
 
@@ -153,7 +155,7 @@ module.exports.projectsCreate = function (req, res) {
 			});
 
 	} catch (e) {
-		console.log('Error in API projects.js/projectsCreate: ' + e);
+		errors.print(e, 'Error in API projects.js/projectsCreate: ');
 	}
 };
  
@@ -182,7 +184,7 @@ module.exports.projectsListByStartTime = function (req, res) {
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers projects.js/projectsListByStartTime: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/projectsListByStartTime: ');
 	}
 };
 
@@ -216,7 +218,7 @@ module.exports.projectsReadOne = function (req, res) {
 		   		sendJsonResponse(res, 404, { "message": "No projectID in request" });
 		   }
 	} catch(e) {
-		console.log('Error on API controllers projects.js/projectsReadOne: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/projectsReadOne: ');
 	}
 };
 
@@ -283,7 +285,7 @@ module.exports.projectssUpdateOne = function (req, res) {
 	    	return;
 		}
 	} catch(e) {
-		console.log('Error on API controllers projects.js/projectssUpdateOne: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/projectssUpdateOne: ');
 	}
 };
 
@@ -318,6 +320,6 @@ module.exports.projectsDeleteOne = function (req, res) {
 	    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
 		}
 	} catch(e) {
-		console.log('Error on API controllers projects.js/projectsDeleteOne: ' + e);
+		errors.print(e, 'Error on API controllers projects.js/projectsDeleteOne: ');
 	}
 };

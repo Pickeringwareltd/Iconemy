@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var validator = require('validator');
 var User = mongoose.model('User');
 var tracking = require('../../add-ons/tracking');
+var errors = require('../../add-ons/errors');
 const sendEmail = require('../../add-ons/emails');
 
 // Send a JSON response with the status and content passed in via params
@@ -39,7 +40,7 @@ module.exports.checkRole = function (req, res) {
 				}
 			});
 	} catch(e) {
-		console.log('Error on API controllers user.js/checkRole: ' + e);
+		errors.print(e, 'Error on API controllers user.js/checkRole: ');
 	}
 };
 
@@ -52,7 +53,7 @@ var getUserData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers user.js/getUserData: ' + e);
+		errors.print(e, 'Error on API controllers user.js/getUserData: ');
 	}
 }
 
@@ -101,6 +102,6 @@ module.exports.checkLogIn = function (req, res) {
 			}
 
 	} catch(e) {
-		console.log('Error on API controllers user.js/checkLogIn: ' + e);
+		errors.print(e, 'Error on API controllers user.js/checkLogIn: ');
 	}
 };

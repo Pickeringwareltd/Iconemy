@@ -9,6 +9,7 @@ const paymentJS = require('./payment_util');
 const request = require('request');
 const tracking = require('../../add-ons/tracking');
 const sendEmails = require('../../add-ons/emails');
+const errors = require('../../add-ons/errors');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -70,7 +71,7 @@ module.exports.recordPurchaseEmail = function(req, res){
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/sendEmail: ');
 	}
 }
 
@@ -97,7 +98,7 @@ var addEmail = function(req, res, project, sale, purchaseObj) {
 	    	});
 		} 
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/sendEmail: ');
 	}
 };
 
@@ -153,7 +154,7 @@ module.exports.crowdsalesCreate = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/crowdsalesCreate: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/crowdsalesCreate: ');
 	}
 };
 
@@ -183,7 +184,7 @@ var addCrowdsale = function(req, res, project) {
 	    	});
 		} 
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/addCrowdsale: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/addCrowdsale: ');
 	}
 };
 
@@ -213,7 +214,7 @@ var getCrowdsale = function(req) {
 
 		return crowdsale;
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/getCrowdsale: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/getCrowdsale: ');
 	}
 };
 
@@ -301,7 +302,7 @@ module.exports.crowdsalesReadOne = function (req, res) {
 		   		sendJsonResponse(res, 404, { "message": "Not found, projectID and crowdsaleID required" });
 		   }
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/crowdsalesReadOne: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/crowdsalesReadOne: ');
 	}
 };
 
@@ -348,7 +349,7 @@ module.exports.toggleProgress = function (req, res) {
 	    	return;
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/toggleProgress: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/toggleProgress: ');
 	}
 };
 
@@ -466,7 +467,7 @@ module.exports.getPrice = function (req, res) {
 		  	sendJsonResponse(res, 404, { "message": "Not found, project ID and/or item name is required" });
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/getPrice: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/getPrice: ');
 	}
 };
 
@@ -583,7 +584,7 @@ module.exports.paymentConfirmOne = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/paymentConfirmOne: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/paymentConfirmOne: ');
 	}
 };
 
@@ -614,7 +615,7 @@ var dealWithBalance = function(project, balance, saleid, res) {
 			sendJsonResponse(res, 404, {"message": "Deposit amount not met"});
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/dealWithBalance: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/dealWithBalance: ');
 	}
 };
 
@@ -679,7 +680,7 @@ module.exports.paymentFinaliseOne = function (req, res) {
 				});
 		}
 	} catch(e) {
-		console.log('Error on API controllers crowdsales.js/paymentFinaliseOne: ' + e);
+		errors.print(e, 'Error on API controllers crowdsales.js/paymentFinaliseOne: ');
 	}
 };
 

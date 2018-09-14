@@ -4,6 +4,7 @@ var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
 var tracking = require('../../add-ons/tracking');
+const errors = require('../../add-ons/errors');
 
 var apiOptions = {
   server : "http://localhost:3000"
@@ -47,7 +48,7 @@ var getRequestOptions = function(req, res){
 
 		return requestOptions;
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/getRequestOptions: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/getRequestOptions: ');
 	}
 }
 
@@ -72,7 +73,7 @@ var renderToken = function(req, res, responseBody) {
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/renderToken: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/renderToken: ');
 	}
 }
 
@@ -85,7 +86,7 @@ exports.index = function(req, res){
 	      	renderToken(req, res, body);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/index: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/index: ');
 	}
 };
 
@@ -115,7 +116,7 @@ var renderCreateToken = function(req, res, responseBody){
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/renderCreateToken: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/renderCreateToken: ');
 	}
 }
 
@@ -128,7 +129,7 @@ exports.create = function(req, res){
 	      	renderCreateToken(req, res, body);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/create: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/create: ');
 	}
 };
 
@@ -183,6 +184,6 @@ exports.doCreation = function(req, res){
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers token.js/doCreation: ' + e);
+		errors.print(e, 'Error on server-side controllers token.js/doCreation: ');
 	}
 };

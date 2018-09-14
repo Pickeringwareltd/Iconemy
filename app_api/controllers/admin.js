@@ -6,6 +6,7 @@ var Message = mongoose.model('Contact');
 var Subscription = mongoose.model('Subscription');
 var tracking = require('../../add-ons/tracking');
 var WAValidator = require('wallet-address-validator');
+const errors = require('../../add-ons/errors');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -34,7 +35,7 @@ module.exports.getSubscriptions = function(req, res){
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getSubscriptions: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getSubscriptions: ');
 	}
 };
 
@@ -69,7 +70,7 @@ module.exports.respondToMessage = function(req, res){
 				});
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/respondToMessage: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/respondToMessage: ');
 	}
 };
 
@@ -94,7 +95,7 @@ module.exports.getMessages = function(req, res){
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getMessages: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getMessages: ');
 	}
 };
 
@@ -124,7 +125,7 @@ module.exports.getTokenContract = function(req, res) {
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getTokenContract: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getTokenContract: ');
 	}
 };
 
@@ -141,7 +142,7 @@ var getContractData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getContractData: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getContractData: ');
 	}
 }
 
@@ -162,7 +163,7 @@ var validateContract = function(data){
 
 		return error;
 	} catch(e) {
-		console.log('Error on API controllers admin.js/validateContract: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/validateContract: ');
 	}
 }
 
@@ -221,7 +222,7 @@ module.exports.setTokenContract = function(req, res) {
 	    	return;
 		}
 	} catch(e) {
-		console.log('Error on API controllers admin.js/setTokenContract: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/setTokenContract: ');
 	}
 };
 
@@ -253,7 +254,7 @@ module.exports.getCrowdsaleContract = function(req, res) {
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getCrowdsaleContract: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getCrowdsaleContract: ');
 	}
 };
 
@@ -312,7 +313,7 @@ module.exports.setCrowdsaleContract = function(req, res) {
 	    	return;
 		}
 	} catch(e) {
-		console.log('Error on API controllers admin.js/setCrowdsaleContract: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/setCrowdsaleContract: ');
 	}
 };
 
@@ -391,7 +392,7 @@ var validateProject = function(data){
 
 		  return error;
 	} catch(e) {
-		console.log('Error on API controllers admin.js/validateProject: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/validateProject: ');
 	}
 }
 
@@ -419,7 +420,7 @@ var getData = function(req){
 
 		return data;
 	} catch(e) {
-		console.log('Error on API controllers admin.js/getData: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/getData: ');
 	}
 }
  
@@ -444,7 +445,7 @@ module.exports.projectsListByCreationTime = function (req, res) {
 		      	}
 			});
 	} catch(e) {
-		console.log('Error on API controllers admin.js/projectsListByCreationTime: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/projectsListByCreationTime: ');
 	}
 };
 
@@ -509,7 +510,7 @@ module.exports.projectssUpdateOne = function (req, res) {
 	    	return;
 		}
 	} catch(e) {
-		console.log('Error on API controllers admin.js/projectssUpdateOne: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/projectssUpdateOne: ');
 	}
 };
 
@@ -544,6 +545,6 @@ module.exports.projectsDeleteOne = function (req, res) {
 	    	sendJsonResponse(res, 404, { "message": "No project ID" }); 
 		}
 	} catch(e) {
-		console.log('Error on API controllers admin.js/projectsDeleteOne: ' + e);
+		errors.print(e, 'Error on API controllers admin.js/projectsDeleteOne: ');
 	}
 };

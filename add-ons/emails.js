@@ -31,9 +31,7 @@ module.exports.sendEmail = function(_email){
 			html: '<p>Hello HTML world!</p>',
 			templateId: 'd-0fa622099d954e6fb33d49011048a04e'
 		};
-
-		console.log(JSON.stringify(msg));
-
+		
 		sgMail.send(msg);
 	} catch(e) {
 		console.log('Error on API controllers crowdsales.js/sendEmail: ' + e);

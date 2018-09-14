@@ -4,6 +4,8 @@ var express = require('express');
 var request = require('request');
 var WAValidator = require('wallet-address-validator');
 var tracking = require('../../add-ons/tracking');
+const errors = require('../../add-ons/errors');
+
 var moment = require('moment');
 moment().format();
 
@@ -41,7 +43,7 @@ exports.toggleProgress = function(req, res){
 	      	res.redirect('/projects/' + projectName + '/crowdsales/' + saleId);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/toggleProgress: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/toggleProgress: ');
 	}
 };
 
@@ -76,7 +78,7 @@ var renderSale = function(req, res, responseBody, saleID) {
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/renderSale: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/renderSale: ');
 	}
 }
 
@@ -90,7 +92,7 @@ var renderDate =  function(_date) {
 
 		return date;
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/renderDate: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/renderDate: ');
 	}
 }
 
@@ -119,7 +121,7 @@ exports.index = function(req, res){
 	      	renderSale(req, res, body, saleId);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/index: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/index: ');
 	}
 };
 
@@ -155,7 +157,7 @@ var renderCreateSale = function(req, res, responseBody) {
 			});
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/renderCreateSale: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/renderCreateSale: ');
 	}
 }
 
@@ -186,7 +188,7 @@ exports.create = function(req, res){
 			renderCreateSale(req, res, data);
 	   	});
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/create: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/create: ');
 	}
 };
 
@@ -221,7 +223,7 @@ var formatTime = function(_time){
 
 	  	return _time;
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/formatTime: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/formatTime: ');
 	}
 }
 
@@ -273,7 +275,7 @@ var formatData = function(req){
 
 		return postdata;
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/formatData: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/formatData: ');
 	}
 }
 
@@ -321,6 +323,6 @@ exports.doCreation = function(req, res){
 
 		}
 	} catch(e) {
-		console.log('Error on server-side controllers sale.js/doCreation: ' + e);
+		errors.print(e, 'Error on server-side controllers sale.js/doCreation: ');
 	}
 };

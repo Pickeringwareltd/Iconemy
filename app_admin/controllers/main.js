@@ -8,6 +8,8 @@ var WAValidator = require('wallet-address-validator');
 var time_ago = require('javascript-time-ago');
 var en_locale = require('javascript-time-ago/locale/en');
 
+const errors = require('../../add-ons/errors');
+
 var apiOptions = {
   server : "http://localhost:3000"
 };
@@ -38,7 +40,7 @@ exports.messageResponded = function(req, res) {
           res.redirect('/admin');
       });
   } catch(e) {
-    console.log('Error on admin controllers main.js/messageResponded: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/messageResponded: ');
   }
 };
 
@@ -61,7 +63,7 @@ exports.index = function(req, res){
           renderPortal(req, res, body);
       });
   } catch(e) {
-    console.log('Error on admin controllers main.js/index: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/index: ');
   } 
 };
 
@@ -130,7 +132,7 @@ var renderPortal = function(req, res, message_data){
 
     }); 
   } catch(e) {
-    console.log('Error on admin controllers main.js/renderPortal: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/renderPortal: ');
   }
 };
 
@@ -153,7 +155,7 @@ exports.projects = function(req, res){
         	renderProjects(req, res, body);
      	});
   } catch(e) {
-    console.log('Error on admin controllers main.js/projects: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/projects: ');
   }
 };
 
@@ -217,7 +219,7 @@ var renderProjects = function(req, res, body){
         res.render('admin_all_projects', data);
     });
   } catch(e) {
-    console.log('Error on admin controllers main.js/renderProjects: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/renderProjects: ');
   } 
 };
 
@@ -253,7 +255,7 @@ var getTokenStatus = function(_project){
 
       return status;
   } catch(e) {
-    console.log('Error on admin controllers main.js/getTokenStatus: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/getTokenStatus: ');
   } 
 };
 
@@ -285,7 +287,7 @@ var getSaleStatus = function(_project){
 
      return status;
   } catch(e) {
-    console.log('Error on admin controllers main.js/getSaleStatus: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/getSaleStatus: ');
   } 
 };
 
@@ -328,7 +330,7 @@ var getRevenue = function(_project, eth, btc){
       revenue = tokenrevenue + salerevenue;
       return revenue.toFixed(2);
   } catch(e) {
-    console.log('Error on admin controllers main.js/getRevenue: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/getRevenue: ');
   } 
 }
 
@@ -349,7 +351,7 @@ exports.projectReadOne = function(req, res){
           renderProject(req, res, body);
       });
   } catch(e) {
-    console.log('Error on admin controllers main.js/projectReadOne: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/projectReadOne: ');
   } 
 };
 
@@ -378,7 +380,7 @@ var renderProject = function(req, res, body) {
 
       res.render('admin_project', data);
   } catch(e) {
-    console.log('Error on admin controllers main.js/renderProject: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/renderProject: ');
   } 
 }
 
@@ -395,7 +397,7 @@ var formatTokenData = function(req){
 
       return postdata;
   } catch(e) {
-    console.log('Error on admin controllers main.js/formatTokenData: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/formatTokenData: ');
   } 
 };
 
@@ -442,7 +444,7 @@ exports.doTokenContractCreation = function(req, res){
         });
     }
   } catch(e) {
-    console.log('Error on admin controllers main.js/doTokenContractCreation: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/doTokenContractCreation: ');
   } 
 };
 
@@ -459,7 +461,7 @@ var formatSaleData = function(req){
 
       return postdata;
   } catch(e) {
-    console.log('Error on admin controllers main.js/formatSaleData: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/formatSaleData: ');
   } 
 };
 
@@ -507,6 +509,6 @@ exports.doSaleContractCreation = function(req, res){
           });
       }
   } catch(e) {
-    console.log('Error on admin controllers main.js/doSaleContractCreation: ' + e);
+    errors.print(e, 'Error on admin controllers main.js/doSaleContractCreation: ');
   } 
 };

@@ -6,6 +6,7 @@ const ethereum = require('ethereumjs-wallet');
 const request = require('request');
 const NodeRSA = require('node-rsa');
 const pub_key = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmqtODyKufEl107h8w/wZo6rB7+rgZyZz6L7JZv7i4SFZ2gQEqkguRT7ychYeHEdOYvNW4fnWYAwWPyd5WZiaxDylByS+5CYnVD7dagzAu5uJDZ8rqzbF4mPgzZjwfrqMzXyLtecqz/HWtD18GkKM6dbssACWWHUYrkIp6x6iTIQ3dTE7SAK/eZXlLdAbkBsd2j74FrPyX8yxZjOS3qi23ls7t5IFHYVQfjg/S5zG5b+fQV+BjzCcyY+MNuCftVjQxx1NdOb6lqqx/IyadAz1plAiAIDVdbqVV3bSzQD4QogCYs7lEgh9nat1XKhNZnRdFdpsTjTT6/b+KxjFcdsttQIDAQAB-----END PUBLIC KEY-----';
+const errors = require('../../add-ons/errors');
 
 // Generates a new Bitcoin wallet used for collecting payments
 var generateBTCWallet =  function() {
@@ -18,7 +19,7 @@ var generateBTCWallet =  function() {
 	    address: pair.getAddress()
 	  }
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/generateBTCWallet: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/generateBTCWallet: ');
 	}
 }
 
@@ -46,7 +47,7 @@ var getBTCBalances = function(address, project, crowdsaleid, res, callback) {
 			}
 		});
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/getBTCBalances: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/getBTCBalances: ');
 	}
 }
 
@@ -60,7 +61,7 @@ var generateETHWallet = function() {
 	    address: pair.getAddressString()
 	  }
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/generateETHWallet: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/generateETHWallet: ');
 	}
 }
 
@@ -91,7 +92,7 @@ var getEthBalances = function(address, project, crowdsaleid, res, callback) {
 			}
 		});
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/getEthBalances: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/getEthBalances: ');
 	}
 }
 
@@ -124,7 +125,7 @@ module.exports.createWallet = function(currency){
 		// Return wallet information to be stored in the DB
 		return wallet;
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/createWallet: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/createWallet: ');
 	}
 };
 
@@ -138,6 +139,6 @@ module.exports.getBalance = function(address, project, crowdsaleid, res, callbac
 			balance = getBTCBalances(address, project, crowdsaleid, res, callback);
 		}
 	} catch(e) {
-		console.log('Error on API controllers payment_util.js/getBalance: ' + e);
+		errors.print(e, 'Error on API controllers payment_util.js/getBalance: ');
 	}
 };
