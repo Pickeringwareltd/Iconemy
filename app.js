@@ -26,6 +26,9 @@ var admin_routes = require('./app_admin/routes/index');
 
 var app = express();
 
+// Different logging is required depending on the server it is on.
+require('./config/logging')(app);
+
 // Force the user to connect via HTTPS
 app.use(https.requireHTTPS);
 
@@ -90,7 +93,6 @@ app.set('views', [path.join(__dirname, '/app_server/views'), path.join(__dirname
 // view engine setup
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
