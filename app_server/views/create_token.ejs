@@ -16,7 +16,7 @@
 
 	<!-- For uploadcare CDN -->
 	<script>
-	  UPLOADCARE_PUBLIC_KEY = '02b13a5445396427d34c';
+	  UPLOADCARE_PUBLIC_KEY = '<%= upload_care_key %>';
 	</script>
 </head>
 
@@ -72,7 +72,7 @@
 
 										<div id="upload_section">
 											<input type="hidden" role="uploadcare-uploader" name="logo" 
-											data-public-key="02b13a5445396427d34c"
+											data-public-key="<%= upload_care_key %>"
 											data-images-only="true"
 											data-preview-step="true" 
 											data-crop="100:100" />

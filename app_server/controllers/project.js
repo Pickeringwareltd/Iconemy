@@ -131,6 +131,7 @@ var renderCreateProject = function(req, res){
 		// Render create project form with placeholders
 		res.render('create_project', { 
 			title: 'Create project',
+			upload_care_key: process.env.UPLOAD_CARE_API_KEY,
 			message: message
 		});
 	} catch(e) {

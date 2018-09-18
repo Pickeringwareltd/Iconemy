@@ -375,6 +375,7 @@ var renderProject = function(req, res, body) {
 
       var data = {
         project: this_project,
+        upload_care_key: process.env.UPLOAD_CARE_API_KEY,
         message: message
       };
 

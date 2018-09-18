@@ -105,6 +105,7 @@ var renderCreateToken = function(req, res, responseBody){
 			}
 			res.render('create_token', { 
 				title: 'Create token',
+				upload_care_key: process.env.UPLOAD_CARE_API_KEY,
 				message: message 
 			});
 		} else {
