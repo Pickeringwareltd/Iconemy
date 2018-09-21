@@ -11,6 +11,7 @@ const Auth0Strategy = require('passport-auth0');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const helmet = require('helmet');
 const tracking = require('./add-ons/tracking');
 const ether_socket = require('./app_api/websocket/ws');
 const https = require('./config/https');
@@ -25,6 +26,10 @@ var api_routes = require('./app_api/routes/index');
 var admin_routes = require('./app_admin/routes/index');
 
 var app = express();
+
+// Security
+app.use(helmet());
+app.disable('x-powered-by');
 
 // Different logging is required depending on the server it is on.
 require('./config/logging')(app);

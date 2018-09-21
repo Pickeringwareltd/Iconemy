@@ -25,6 +25,7 @@
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
+    "helmet": "^3.13.0",
     "http-errors": "~1.6.2",
     "javascript-time-ago": "^1.0.31",
     "jsonwebtoken": "^8.3.0",
