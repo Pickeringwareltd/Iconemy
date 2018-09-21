@@ -3,4 +3,4 @@ node_modules
 sendgrid.env
 .DS_Store
 npm-debug.log
-newrelic_agent
+newrelic_agent.log
