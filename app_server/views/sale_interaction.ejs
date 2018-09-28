@@ -92,7 +92,9 @@
 						<div class="token-box shadow">
 
 						<% if(data.crowdsale.deployed == 'Done') { %>
-							<a href="/projects/<%= data.project.id %>/crowdsales/<%= data.crowdsale.index %>/toggleProgress" id="toggle">toggle progress</a>
+							<% if(data.crowdsale.hardcap != null) { %>
+								<a href="/projects/<%= data.project.id %>/crowdsales/<%= data.crowdsale.index %>/toggleProgress" id="toggle">toggle progress</a>
+							<% } %>
 							<h6 class="small-text">Sale ends in:</h6>
 							<div class="token-countdown d-flex align-content-stretch" data-date="<%= data.crowdsale.end %>"></div>
 

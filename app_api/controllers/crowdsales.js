@@ -208,7 +208,8 @@ var getCrowdsale = function(req) {
 			created: Date.now(),
 			createdBy: req.body.createdBy,
 			discount_code: req.body.discount,
-			deployed: 'None'
+			deployed: 'None',
+			showprogress: false
 		}
 
 		if(parseInt(req.body.commission) === 5){
@@ -435,29 +436,40 @@ module.exports.getPrice = function (req, res) {
 									if(discount){
 										if(discount.type === 'percent'){
 											// Work out the new item price given the discount.
-											var discount_amount = discount.amount;									
-											var take_off = 100 - discount_amount;
-											take_off = take_off / 100;										
-											price = price * take_off;
-											price = price.toFixed(2);
+											var discount_amount =  parseInt(discount.amount);
+											
+											if(discount_amount !== 100){
+												var take_off = 100 - discount_amount;
+												take_off = take_off / 100;
+												price = price * take_off;
+												price = price.toFixed(2);										
+											} else {
+												price = 0;
+											}
 										} else {
 											var discount_amount = discount.amount;
 											price = price - discount_amount;
 										}
 									}
 
-									// Convert USD item price to ETH and BTC
-									eth = eth * price;
-									btc = btc * price;
+									// If price is 0 (free) then mark the product as paid for so we can deploy.
+									if(price === 0){
+										markAsPaid(req, res, project, req.body.crowdsaleid);
+									} else {
 
-									pricing = {
-											dollars: price,
-											eth: eth,
-											btc: btc,
-											item: req.body.item
-										};
-				  					
-				  					sendJsonResponse(res, 200, pricing);
+										// Convert USD item price to ETH and BTC
+										eth = eth * price;
+										btc = btc * price;
+
+										pricing = {
+												dollars: price,
+												eth: eth,
+												btc: btc,
+												item: req.body.item
+											};
+					  					
+					  					sendJsonResponse(res, 200, pricing);
+					  				}
 
 								});
 
@@ -479,6 +491,42 @@ module.exports.getPrice = function (req, res) {
 	}
 };
 
+// This function is used to mark items as paid IF the discount code or commission allows the item to be purchased for free
+var markAsPaid = function (req, res, project, crowdsaleid) {
+		var thisSale = project.crowdsales[crowdsaleid];
+
+		// Create a payment object if one doesnt already exist
+		if(!thisSale.payment){
+			thisSale.payment = {
+				currency: '',
+				paid: '',
+				amount: 0,
+				sentTo: '',
+				created: '',
+				createdBy: ''
+			};
+		}
+
+		var payment = thisSale.payment;
+
+		// Set the payment date and store in DB as PAID
+		payment.currency = 'none';
+		payment.amount = 0;
+		payment.created = Date.now();
+		payment.createdBy = 'Contract creator';
+		payment.paid = Date.now();
+		project.crowdsales[crowdsaleid].deployed = "Deploying";
+
+		project.save(function(err, project) {
+			if (err) {
+				errors.print(err, 'Error marking item as free');
+				sendJsonResponse(res, 404, 'Error creating project with price = 0');
+			} else {
+				tracking.paymentfinalised(payment, 'crowdsale');
+				sendJsonResponse(res, 201, payment);
+			} 
+		});
+};
 
 // As we are dealing with smart contracts, we cannot allow users to update and/or delete crowdsales as the smart contract will remain on the network
 module.exports.paymentConfirmOne = function (req, res) { 

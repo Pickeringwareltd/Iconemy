@@ -379,7 +379,13 @@ var renderProject = function(req, res, body) {
         message: message
       };
 
-      res.render('admin_project', data);
+      console.log('Got up to here! = ' + JSON.stringify(data));
+
+      try{
+        res.render('admin_project', data);
+      } catch(e){
+        console.log(e);
+      }
   } catch(e) {
     errors.print(e, 'Error on admin controllers main.js/renderProject: ');
   } 

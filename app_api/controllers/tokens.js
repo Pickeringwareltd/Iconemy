@@ -275,30 +275,41 @@ module.exports.getPrice = function (req, res) {
 									if(discount){
 										if(discount.type === 'percent'){
 											// Work out the new item price given the discount.
-											var discount_amount = discount.amount;									
-											var take_off = 100 - discount_amount;
-											take_off = take_off / 100;										
-											price = price * take_off;
-											price = price.toFixed(2);
+											var discount_amount = parseInt(discount.amount);	
+
+											if(discount_amount !== 100){
+												var take_off = 100 - discount_amount;
+												take_off = take_off / 100;
+												price = price * take_off;
+												price = price.toFixed(2);										
+											} else {
+												price = 0;
+											}
 										} else {
 											var discount_amount = discount.amount;
 											price = price - discount_amount;
 										}
 									}
 
-									// Convert USD item price to ETH and BTC
-									eth = eth * price;
-									btc = btc * price;
+									// If price is 0 (free) then mark the product as paid for so we can deploy.
+									if(price === 0){
+										markAsPaid(req, res, project);
+									} else {									
 
-									var pricing = {
-											dollars: price,
-											eth: eth,
-											btc: btc,
-											item: req.body.item,
-											discount: discount
-										};
-				  					
-				  					sendJsonResponse(res, 200, pricing);
+										// Convert USD item price to ETH and BTC
+										eth = eth * price;
+										btc = btc * price;
+
+										var pricing = {
+												dollars: price,
+												eth: eth,
+												btc: btc,
+												item: req.body.item,
+												discount: discount
+											};
+					  					
+					  					sendJsonResponse(res, 200, pricing);
+					  				}
 
 								});
 
@@ -318,6 +329,43 @@ module.exports.getPrice = function (req, res) {
 	} catch(e) {
 		errors.print(e, 'Error on API controllers tokens.js/getPrice: ');
 	}
+};
+
+// This function is used to mark items as paid IF the discount code allows the item to be purchased for free
+var markAsPaid = function (req, res, project) {
+		var token = project.token;
+
+		// Create a payment object if one doesnt already exist
+		if(!token.payment){
+			token.payment = {
+				currency: '',
+				paid: '',
+				amount: 0,
+				sentTo: '',
+				created: '',
+				createdBy: ''
+			};
+		}
+
+		var payment = token.payment;
+
+		// Set the payment date and store in DB as PAID
+		payment.currency = 'none';
+		payment.amount = 0;
+		payment.created = Date.now();
+		payment.createdBy = 'Contract creator';
+		payment.paid = Date.now();
+		project.token.deployed = "Deploying";
+
+		project.save(function(err, project) {
+			if (err) {
+				errors.print(err, 'Error marking item as free');
+				sendJsonResponse(res, 404, 'Error creating project with price = 0');
+			} else {
+				tracking.paymentfinalised(payment, 'crowdsale');
+				sendJsonResponse(res, 201, payment);
+			} 
+		});
 };
 
 // Confirming payments is necessary to store payments for later use, i.e. users may create a token and then pay a week later, confirming the payment optin allows us to create a wallet for deposit

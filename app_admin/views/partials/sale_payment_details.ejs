@@ -15,12 +15,23 @@
         <th>Paid</th>
         <td><%= sale.payment.paid %></td>
     </tr>
-    <tr>
-        <th>Wallet address</th>
-        <td><%= sale.payment.ethWallet.address %></td>
-    </tr>
-    <tr>
-        <th>Wallet seed</th>
-        <td id="seed_copy" data-seed="<%= sale.payment.ethWallet.seed %>" class="copy_btn">Copy here</td>
-    </tr>
+    <% if(sale.payment.ethWallet != null){ %>
+        <tr>
+            <th>Wallet address</th>
+            <td><%= sale.payment.ethWallet.address %></td>
+        </tr>
+        <tr>
+            <th>Wallet seed</th>
+            <td id="seed_copy" data-seed="<%= sale.payment.ethWallet.seed %>" class="copy_btn">Copy here</td>
+        </tr>
+    <% } else if(sale.payment.btcWallet != null){%>
+        <tr>
+            <th>Wallet address</th>
+            <td><%= sale.payment.btcWallet.address %></td>
+        </tr>
+        <tr>
+            <th>Wallet seed</th>
+            <td id="seed_copy" data-seed="<%= sale.payment.btcWallet.seed %>" class="copy_btn">Copy here</td>
+        </tr>
+    <% } %>
 </table>

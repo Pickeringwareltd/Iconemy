@@ -61,29 +61,27 @@ exports.create = function(req, res){
 		}; 
 
 		request( requestOptions, function(err, response, body) {
+			if(response.statusCode === 200){
+				var eth = body.eth;
+				var btc = body.btc;
+				var amount = body.dollars;
+				var item = body.item;
+				var discount = body.discount;
 
-			var eth = body.eth;
-			var btc = body.btc;
-			var amount = body.dollars;
-			var item = body.item;
-			var discount = body.discount;
-
-			if(item === 'token'){
-				item = {
-					name: 'ERC-20 Compliant Token',
-					quantity: '1',
-					price: amount
+				if(item === 'token'){
+					item = {
+						name: 'ERC-20 Compliant Token',
+						quantity: '1',
+						price: amount
+					}
+				} else {
+					item = {
+						name: 'ERC-20 Compliant Crowdsale',
+						quantity: '1',
+						price: amount,
+						id: id
+					}
 				}
-			} else {
-				item = {
-					name: 'ERC-20 Compliant Crowdsale',
-					quantity: '1',
-					price: amount,
-					id: id
-				}
-			}
-
-			if(amount != 0){
 
 				res.render('make_payment', { 
 					title: 'Pay',
@@ -96,8 +94,9 @@ exports.create = function(req, res){
 						discount: discount
 					}
 				});
-			} else {
-				// This is where we would deploy the contracts
+
+			} else if(response.statusCode === 201) {
+				// status code of 201 means the payment was created anyway as the price was 0 (free) so redirect to project page to wait for deployment
 				res.redirect('/projects/' + project);			
 			}
 			
