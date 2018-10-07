@@ -1,5 +1,6 @@
 .env
-node_modules
+.idea/
+node_modules/
 sendgrid.env
 .DS_Store
 npm-debug.log
