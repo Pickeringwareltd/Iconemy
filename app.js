@@ -12,6 +12,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const helmet = require('helmet');
+const csrf = require('csurf');
 const tracking = require('./add-ons/tracking');
 const ether_socket = require('./app_api/websocket/ws');
 const https = require('./config/https');
@@ -101,6 +102,23 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(csrf({ cookie: true }));
+app.use(function (req, res, next) {
+    res.locals = {
+        csrf : req.csrfToken()
+    };
+    next();
+});
+
+// // CSRF error response
+// app.use(function (err, req, res, next) {
+//     if (err.code !== 'EBADCSRFTOKEN') return next(err)
+//
+//     // handle CSRF token errors here
+//     res.status(403)
+//     res.send('form tampered with')
+// })
 
 // Specify where the static files are found
 app.use(express.static(path.join(__dirname, 'public')));
