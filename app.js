@@ -30,23 +30,14 @@ var app = express();
 
 // Security
 app.use(helmet());
-app.disable('x-powered-by');
+app.use(helmet.noCache());
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 // Different logging is required depending on the server it is on.
 require('./config/logging')(app);
 
 // Force the user to connect via HTTPS
 app.use(https.requireHTTPS);
-
-// Force the user to connect via HSTS (HTTP String Transport Security)
-app.use(function (req, res, next) {
-  var aYear = 60 * 60 * 24 * 365;
-  // Set the Strict Transport Security header for a year
-  // Also include subdomains
-  res.set('Strict-Transport-Security','max-age=' + aYear + ';includeSubdomains');
-
-  next();
-});
 
 // ******************************************* SESSION STORE ***********************************
 if (process.env.NODE_ENV !== 'production') {
@@ -80,15 +71,18 @@ session_store.on('error', function(error) {
 });
 
 // declare the use of sessions in the app in order to run authentication with OAuth
-app.use(session({ 
-  resave: true,
-  saveUninitialized: true,
-  secret: 'the super important secret for iconemy',
-  cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, //one week
-    httpOnly: true
-  },
-  store: session_store
+app.set('trust proxy', 1);
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'the super important secret for iconemy',
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, //one week
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: true
+    },
+    store: session_store
 }));
 
 app.use(passport.initialize());
@@ -105,20 +99,19 @@ app.use(cookieParser());
 
 app.use(csrf({ cookie: true }));
 app.use(function (req, res, next) {
-    res.locals = {
-        csrf : req.csrfToken()
-    };
+    res.locals.csrf = req.csrfToken();
+
     next();
 });
 
-// // CSRF error response
-// app.use(function (err, req, res, next) {
-//     if (err.code !== 'EBADCSRFTOKEN') return next(err)
-//
-//     // handle CSRF token errors here
-//     res.status(403)
-//     res.send('form tampered with')
-// })
+// CSRF error response
+app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+    // handle CSRF token errors here
+    res.status(403)
+    res.send('form tampered with')
+})
 
 // Specify where the static files are found
 app.use(express.static(path.join(__dirname, 'public')));

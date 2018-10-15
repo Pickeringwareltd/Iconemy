@@ -562,5 +562,10 @@
 		// Stop here.
       );
 	}
-	
+
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('csrf-token', document.head.querySelector('meta[name="csrf-token"]').content);
+        }
+    });
 })(jQuery);
