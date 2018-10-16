@@ -128,10 +128,12 @@ var tokenSchema = new mongoose.Schema({
 	contract: contractSchema
 });
 
-var emailSchema = new mongoose.Schema({
+var purchaseSchema = new mongoose.Schema({
 	email: {
-		type: String,
-		required: [true, 'Email is required']
+		type: String
+	},
+	introducer: {
+		type: String
 	},
 	hash: {
 		type: String,
@@ -218,7 +220,7 @@ var crowdsaleSchema = new mongoose.Schema({
 		type: Boolean,
 		"default": true
 	},
-	emails: [emailSchema],
+	purchases: [purchaseSchema],
 	payment: paymentSchema,
 	contract: contractSchema
 });

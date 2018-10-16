@@ -16,7 +16,9 @@ module.exports = function (app) {
 	// Use the submitted data from the form to do something
 	app.post('/projects/:projectname/crowdsales/create', needsLogIn, onlyOwner.require, sale.doCreation);
 
-	app.get('/projects/:projectname/crowdsales/:crowdsaleid', tracking.view, sale.index);  
+	app.get('/projects/:projectname/crowdsales/:crowdsaleid', tracking.view, sale.index);
+
+	app.get('/projects/:projectname/crowdsales/:crowdsaleid/admin', tracking.view, onlyOwner.require, sale.saleAdmin);    
 
 	app.get('/crowdsales/:crowdsaleid', tracking.view, function(req, res){
 		// If there is a subdomain attached, point to appropriate token

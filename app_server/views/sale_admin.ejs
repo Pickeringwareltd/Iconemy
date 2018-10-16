@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Iconemy">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Iconemy allows your to create your own ICO in less than 10 minutes!">
+
+    <meta property="og:title" content="Iconemy - We make ICOs easy."/>
+    <meta property="og:description" content="Create an ICO in less than 10 minutes."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.iconemy.io"/>
+    <meta property="og:image" content="https://www.iconemy.io/images/Iconemy_promo_img.png"/>
+
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="/images/Iconemy_just_logo_white_bg.png">
+    <!-- Site Title  -->
+    <title>Iconemy | ICOs made easy.</title>
+
+    <!-- Fontfaces CSS-->
+    <link href="/admin/css/font-face.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="/admin/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="/admin/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="/admin/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="/admin/css/theme.css" rel="stylesheet" media="all">
+    <link href="/admin/css/admin_all_projects.css" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" href="index.html">
+                            <img src="/images/Iconemy_logo_white_bg.png" alt="Iconemy" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="logo">
+                <a href="#">
+                    <img src="/images/Iconemy_logo_white_bg.png" alt="Iconemy" />
+                </a>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="title-1 m-b-25"><%= data.name %></h2>
+                                <div class="table-responsive table--no-card m-b-40">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-account-o"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="unique_visitors">...</h2>
+                                                <span>Unique visitors</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="unique_visitors_chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-shopping-cart"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="tokens_sold">...</h2>
+                                                <span>Tokens sold</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="orders_per_month"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <div class="overview-item overview-item--c4">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-money"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="earnings">...</h2>
+                                                <span>total earnings</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="earnings_by_month"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                                    <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            <i class="zmdi zmdi-account-calendar"></i>Purchases</h3>
+                                    </div>
+                                    <div class="au-task js-list-load">
+                                        <div class="au-task__title">
+                                             <p>There has been
+                                                    <span><b><%= today.purchases %></b></span>
+
+                                                    recorded purchases today
+                                                </p>
+                                        </div>
+                                        <div class="au-task-list js-scrollbar3">
+                                            <% data.purchases.forEach(function(purchase, i) { %>
+                                                <div class="au-task__item au-task__item--primary">
+                                                    <div class="au-task__item-inner">
+                                                        <% if(purchase.email != undefined){ %>                             
+                                                            <h5 class="task">
+                                                                <a href="#"><b>Email: </b><%= purchase.email %></a>
+                                                            </h5>
+                                                        <% } %>
+                                                        <% if(purchase.introducer != undefined){ %>
+                                                            <h5 class="task">
+                                                                <a href="#"><b>Intro: </b><%= purchase.introducer %></a>
+                                                            </h5>
+                                                        <% } %>
+                                                        <a href="https://rinkeby.etherscan.io/tx/<%= purchase.hash %>">Tx hash</a>
+                                                        <p class="time"><%= purchase.time %></p>
+                                                    </div>
+                                                </div>
+                                            <% }); %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                                    <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            <i class="zmdi zmdi-account-calendar"></i>Top introducers</h3>
+                                    </div>
+                                    <div class="au-task js-list-load">
+                                        <div class="au-task__title">
+                                             <p>There has been
+                                                    <span><b><%= today.introducers %></b></span>
+
+                                                    introductions today
+                                                </p>
+                                        </div>
+                                        <div class="au-task-list js-scrollbar3">
+                                            <% data.purchases.forEach(function(purchase, i) { %>
+                                                <div class="au-task__item au-task__item--primary">
+                                                    <div class="au-task__item-inner">
+                                                        <h5 class="task">
+                                                            <a href="#"><%= purchase.introducer %></a>
+                                                        </h5>
+                                                        <a href="https://rinkeby.etherscan.io/tx/<%= purchase.hash %>">Tx hash</a>
+                                                        <span class="time"><%= purchase.time %></span>
+                                                    </div>
+                                                </div>
+                                            <% }); %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="/admin/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="/admin/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="/admin/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="/admin/vendor/slick/slick.min.js"></script>
+    <script src="/admin/vendor/wow/wow.min.js"></script>
+    <script src="/admin/vendor/animsition/animsition.min.js"></script>
+    <script src="/admin/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="/admin/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="/admin/vendor/counter-up/jquery.counterup.min.js"></script>
+    <script src="/admin/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="/admin/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/admin/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="/admin/vendor/select2/select2.min.js"></script>
+
+    <!-- Main JS-->
+    <script src="/admin/js/main.js"></script>
+    <script src="https://ucarecdn.com/edc97b29-aad0-4fd0-8b74-d0f53076e75a/analytics.js"></script>
+    <script src="/admin/js/all_projects.js"></script>
+
+</body>
+
+</html>
+<!-- end document-->

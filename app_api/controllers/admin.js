@@ -13,7 +13,6 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
-
 module.exports.getSubscriptions = function(req, res){
 	try {
 		// Get all messages and sort by the date created in descending order (newest first)

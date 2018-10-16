@@ -17,6 +17,53 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
+// Find one crowdsale under a specific project
+module.exports.crowdsalesReadAdmin = function (req, res) { 
+	try{
+		// If the request parameters contains a project ID, then execute a query finding the object containing that id
+		if (req.params && req.params.projectid && req.params.crowdsaleid) {
+			// Call the Project model function to find the ID passed as a request parameter in the URL
+			// I.e. api/projects/123
+			// Execute the query and return a JSON response including the project found or an error
+			Project
+		    	.find({subdomain: req.params.projectid})
+		    	.select('name social token crowdsales')
+		    	.exec(function(err, _project) {
+		    		var project = _project[0];
+		    		// If no project is found, return custom error message
+		      		if (!project) {
+		          		sendJsonResponse(res, 404, { "message": "projectID not found" });
+		          		return;
+		          		// If an error was returned, return that message
+		          	} else if (err) {
+		          		errors.print(err, 'Error getting project to get crowdsale: ');
+		          		sendJsonResponse(res, 404, 'Error getting project to get crowdsale');
+		          		return;
+		      		} else {
+			      		if(project.crowdsales && project.crowdsales.length > 0){
+			      			var crowdsale = project.crowdsales[req.params.crowdsaleid];
+
+			      			if(!crowdsale || crowdsale.length === 0){
+			   					sendJsonResponse(res, 404, { "message": "No crowdsales found under this ID" });
+			   					return;
+			      			} else {
+			      				sendJsonResponse(res, 200, crowdsale);
+			      			}
+
+			      		} else {
+			   				sendJsonResponse(res, 404, { "message": "No crowdsales found" });
+			      		}
+		      		}
+		    	});
+		   } else {
+		   		// Else if no projectID was specified in the request, return custom error message
+		   		sendJsonResponse(res, 404, { "message": "Not found, projectID and crowdsaleID required" });
+		   }
+	} catch(e) {
+		errors.print(e, 'Error on API controllers crowdsales.js/crowdsalesReadAdmin: ');
+	}
+};
+
 /* This function is used by the web3 crowdsale function to record successful transactions made through the site
  * All that we will store is the email against the transaction hash, we can then work everything else out via the logs
  * I.e. we can match the tx hash to the logs, get the users eth address and use that eth address to work out other purchases on the same account
@@ -26,15 +73,24 @@ module.exports.recordPurchaseEmail = function(req, res){
 	try{
 		var json = JSON.parse(req.body.json);
 
+		console.log('json = ' + JSON.stringify(json));
+
 		var purchaseObj = {
 			email: json.email,
 			hash: json.hash.tx,
+			introducer: json.introducer,
 			time: Date.now()
 		}
 
-		if(!validator.isEmail(purchaseObj.email)){
-			sendJsonResponse(res, 400, {"message": "Email must be valid"});
-			return;						
+		console.log('PURCHASE = ' + JSON.stringify(purchaseObj));
+
+		if(purchaseObj.email != undefined){
+			console.log('called 1');
+			if(!validator.isEmail(purchaseObj.email)){
+				console.log('called 2');
+				sendJsonResponse(res, 400, {"message": "Email must be valid"});
+				return;		
+			}				
 		}
 
 		var projectid = req.params.projectid;
@@ -67,7 +123,7 @@ module.exports.recordPurchaseEmail = function(req, res){
 							return;
 						}
 
-						addEmail(req, res, project, crowdsaleid, purchaseObj);
+						addPurchase(req, res, project, crowdsaleid, purchaseObj);
 					}
 				});
 		}
@@ -76,14 +132,14 @@ module.exports.recordPurchaseEmail = function(req, res){
 	}
 }
 
-var addEmail = function(req, res, project, sale, purchaseObj) {
+var addPurchase = function(req, res, project, sale, purchaseObj) {
 	try{
 	  	if (!project || !sale) {
 	    	sendJsonResponse(res, 400, { "message": "You must supply both project and crowdsale ID" });
 	    	return;
 		} else {
 			// Push the new purchase object into the crowdsales emails array
-	    	project.crowdsales[sale].emails.push(purchaseObj);
+	    	project.crowdsales[sale].purchases.push(purchaseObj);
 
 	    	// Save the new parent document(project)
 	    	project.save(function(err, project) {
@@ -92,7 +148,9 @@ var addEmail = function(req, res, project, sale, purchaseObj) {
 	      			errors.print(err, 'Error adding email address: ');
 	        		sendJsonResponse(res, 400, 'Error adding email address');
 	     	 	} else {
-					sendEmails.sendEmail(purchaseObj.email);
+	     	 		if(purchaseObj.email != ''){
+						sendEmails.sendEmail(purchaseObj.email);
+					}
 	     	 		// only return the recently added crowdsale (which is the last one in the array)
 					sendJsonResponse(res, 201, purchaseObj);
 	    		} 

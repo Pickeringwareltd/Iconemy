@@ -40,6 +40,7 @@ router.put('/projects/:projectid/token/payment/finalise', needsLogIn, onlyOwner.
 // crowdsales
 router.post('/projects/:projectid/crowdsales', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesCreate);
 router.get('/projects/:projectid/crowdsales/:crowdsaleid', tracking.apicall, ctrlCrowdsales.crowdsalesReadOne);
+router.get('/projects/:projectid/crowdsales/:crowdsaleid/admin', tracking.apicall, onlyOwner.require, ctrlCrowdsales.crowdsalesReadAdmin);
 router.get('/projects/:projectid/crowdsales/:crowdsaleid/toggleprogress', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.toggleProgress);
 router.put('/projects/:projectid/crowdsales/:crowdsaleid', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesUpdateOne);
 router.delete('/projects/:projectid/crowdsales/:crowdsaleid', needsLogIn, onlyOwner.require, tracking.apicall, ctrlCrowdsales.crowdsalesDeleteOne);

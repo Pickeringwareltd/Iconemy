@@ -5,6 +5,8 @@ var request = require('request');
 var WAValidator = require('wallet-address-validator');
 var tracking = require('../../add-ons/tracking');
 const errors = require('../../add-ons/errors');
+var time_ago = require('javascript-time-ago');
+var en_locale = require('javascript-time-ago/locale/en');
 
 var moment = require('moment');
 moment().format();
@@ -17,6 +19,98 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = "https://www.iconemy.io";
 } else if (process.env.NODE_ENV === 'staging'){
   apiOptions.server = process.env.STAGING_URL;
+}
+
+// Render admin screen 
+// MUST BE SALE OWNER
+// Get sale data and display
+exports.saleAdmin = function(req, res){
+	try{
+		var requestOptions, path, projectName, saleId, access_token;
+
+		// Make sure we are using the correct subdomain
+		projectName =  req.params.projectname;
+		saleId = req.params.crowdsaleid;
+
+		if(projectName === undefined){
+			projectName = req.subdomains;
+		}
+
+		access_token = req.session.passport.user.tokens.access_token;
+
+	  	// Split the path from the url so that we can call the correct server in development/production
+	  	path = '/api/projects/' + projectName + '/crowdsales/' + saleId + '/admin';
+
+	  	requestOptions = {
+	  		url: apiOptions.server + path,
+	  		method : "GET",
+	  		json : {},
+	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+		};
+
+	   	request( requestOptions, function(err, response, body) {
+	      	renderSaleAdmin(req, res, body, saleId);
+	   	});
+	} catch(e) {
+		errors.print(e, 'Error on server-side controllers sale.js/saleOwner: ');
+	}
+};
+
+var renderSaleAdmin = function(req, res, responseBody, saleID) {
+	try{
+
+		if(!responseBody.message){
+
+			// Render date so timer can understand
+			time_ago.locale(en_locale);
+	        const timeAgo = new time_ago('en-US');
+
+	        var todays_purchases = 0;
+	        var todays_introductions = 0;
+        	var todaysDate = new Date();
+
+        	var purchases = responseBody.purchases.reverse();
+
+	        for(var i = 0 ; i < purchases.length ; i++){
+          	  var inputDate = new Date(purchases[i].time);
+
+          	  // call setHours to take the time out of the comparison
+	          if(inputDate.setHours(0,0,0,0) === todaysDate.setHours(0,0,0,0)) {
+	              todays_purchases++;
+	              if(purchases[i].introducer != undefined){
+	              	todays_introductions++;
+	              }
+	          }
+
+	          purchases[i].time = timeAgo.format(new Date(purchases[i].time), 'twitter');
+	        }
+
+	        var todayObj = {
+	        	purchases: todays_purchases,
+	        	introducers: todays_introductions
+	        }
+
+			responseBody.index = saleID;
+			responseBody.purchases = purchases;
+
+			res.render('sale_admin', { 
+				title: 'Admin',
+				data: responseBody,
+				today: todayObj
+			});
+
+		} else {
+			res.render('error', { 
+				title: 'error',
+				message: responseBody.message,
+				error: {
+					status: 404
+				}
+			});
+		}
+	} catch(e) {
+		errors.print(e, 'Error on server-side controllers sale.js/renderSaleAdmin: ');
+	}
 }
 
 exports.toggleProgress = function(req, res){
@@ -80,7 +174,7 @@ var renderSale = function(req, res, responseBody, saleID) {
 	} catch(e) {
 		errors.print(e, 'Error on server-side controllers sale.js/renderSale: ');
 	}
-}
+};
 
 var renderDate =  function(_date) {
 	try{
@@ -94,7 +188,7 @@ var renderDate =  function(_date) {
 	} catch(e) {
 		errors.print(e, 'Error on server-side controllers sale.js/renderDate: ');
 	}
-}
+};
 
 exports.index = function(req, res){
 	try{

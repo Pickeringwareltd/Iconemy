@@ -29,7 +29,7 @@ var getDates = function(){
 var getUniqueVisitors = function() {
   // Call the KEENAPI for data on unique visitors
   $.ajax({
-      url: 'https://api.keen.io/3.0/projects/' + apiOptions.keenProjectID + '/queries/count_unique?api_key=' + apiOptions.keenAPIkey + '&event_collection=pageviews&target_property=ip&interval=monthly&timezone=Europe%2FLondon&timeframe=this_6_months&filters=%5B%5D'
+      url: 'https://api.keen.io/3.0/projects/' + apiOptions.keenProjectID + '/queries/count_unique?api_key=' + apiOptions.keenAPIkey + '&event_collection=pageviews&target_property=ip&interval=monthly&timezone=Europe%2FLondon&timeframe=this_6_months&filters=%5B%5D';
   }).done(function(response) {
       var visitors_by_month = [];
 

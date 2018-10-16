@@ -8,6 +8,53 @@ const NodeRSA = require('node-rsa');
 const pub_key = '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmqtODyKufEl107h8w/wZo6rB7+rgZyZz6L7JZv7i4SFZ2gQEqkguRT7ychYeHEdOYvNW4fnWYAwWPyd5WZiaxDylByS+5CYnVD7dagzAu5uJDZ8rqzbF4mPgzZjwfrqMzXyLtecqz/HWtD18GkKM6dbssACWWHUYrkIp6x6iTIQ3dTE7SAK/eZXlLdAbkBsd2j74FrPyX8yxZjOS3qi23ls7t5IFHYVQfjg/S5zG5b+fQV+BjzCcyY+MNuCftVjQxx1NdOb6lqqx/IyadAz1plAiAIDVdbqVV3bSzQD4QogCYs7lEgh9nat1XKhNZnRdFdpsTjTT6/b+KxjFcdsttQIDAQAB-----END PUBLIC KEY-----';
 const errors = require('../../add-ons/errors');
 
+module.exports.createWallet = function(currency){
+	try{
+		var wallet;
+		var address;
+		var seed;
+
+		// Declare RSA modules ready for use
+		const key = new NodeRSA();
+		// import the public key declared at the top of the file
+		key.importKey(pub_key, 'pkcs8-public');
+
+		if(currency === 'eth'){
+			wallet = generateETHWallet();
+		} else {
+			wallet = generateBTCWallet();
+		}
+
+		const priv_key = wallet.seed;
+
+		// Encrypt the wallet seed with RSA public key declared at top of file. 
+		// These can be decrypted off the system at a later date when dealing with payments
+		address = wallet.address;
+		seed = key.encrypt(priv_key, 'base64');
+
+		wallet.seed = seed;
+
+		// Return wallet information to be stored in the DB
+		return wallet;
+	} catch(e) {
+		errors.print(e, 'Error on API controllers payment_util.js/createWallet: ');
+	}
+};
+
+module.exports.getBalance = function(address, project, crowdsaleid, res, callback){
+	try{
+		var balance = 0; 
+
+		if(address.substring(0,2) === '0x'){
+			balance = getEthBalances(address, project, crowdsaleid, res, callback);
+		} else {
+			balance = getBTCBalances(address, project, crowdsaleid, res, callback);
+		}
+	} catch(e) {
+		errors.print(e, 'Error on API controllers payment_util.js/getBalance: ');
+	}
+};
+
 // Generates a new Bitcoin wallet used for collecting payments
 var generateBTCWallet =  function() {
 	try{
@@ -73,7 +120,6 @@ var getEthBalances = function(address, project, crowdsaleid, res, callback) {
 		var testurl = 'http://api-rinkeby.etherscan.io/api?module=account&action=balance&address=' + address + '&tag=latest&apikey=' + apiKey;
 		var requestOptions;
 
-
 		requestOptions = {
 			url : testurl,
 			method : "GET",
@@ -96,49 +142,3 @@ var getEthBalances = function(address, project, crowdsaleid, res, callback) {
 	}
 }
 
-module.exports.createWallet = function(currency){
-	try{
-		var wallet;
-		var address;
-		var seed;
-
-		// Declare RSA modules ready for use
-		const key = new NodeRSA();
-		// import the public key declared at the top of the file
-		key.importKey(pub_key, 'pkcs8-public');
-
-		if(currency === 'eth'){
-			wallet = generateETHWallet();
-		} else {
-			wallet = generateBTCWallet();
-		}
-
-		const priv_key = wallet.seed;
-
-		// Encrypt the wallet seed with RSA public key declared at top of file. 
-		// These can be decrypted off the system at a later date when dealing with payments
-		address = wallet.address;
-		seed = key.encrypt(priv_key, 'base64');
-
-		wallet.seed = seed;
-
-		// Return wallet information to be stored in the DB
-		return wallet;
-	} catch(e) {
-		errors.print(e, 'Error on API controllers payment_util.js/createWallet: ');
-	}
-};
-
-module.exports.getBalance = function(address, project, crowdsaleid, res, callback){
-	try{
-		var balance = 0; 
-
-		if(address.substring(0,2) === '0x'){
-			balance = getEthBalances(address, project, crowdsaleid, res, callback);
-		} else {
-			balance = getBTCBalances(address, project, crowdsaleid, res, callback);
-		}
-	} catch(e) {
-		errors.print(e, 'Error on API controllers payment_util.js/getBalance: ');
-	}
-};
