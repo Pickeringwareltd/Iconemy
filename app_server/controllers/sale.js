@@ -68,6 +68,7 @@ var renderSaleAdmin = function(req, res, responseBody, saleID) {
 	        var todays_purchases = 0;
 	        var todays_introductions = 0;
         	var todaysDate = new Date();
+        	var intro_object = {};
 
         	var purchases = responseBody.purchases.reverse();
 
@@ -82,13 +83,25 @@ var renderSaleAdmin = function(req, res, responseBody, saleID) {
 	              }
 	          }
 
+	          if(purchases[i].introducer != undefined){
+	          	var introducer = purchases[i].introducer;
+	          	intro_object[introducer] = intro_object[introducer] ? intro_object[introducer] + 1 : 1;
+	          }
+
 	          purchases[i].time = timeAgo.format(new Date(purchases[i].time), 'twitter');
 	        }
+
+			const introducers_arr = Object.keys(intro_object).reduce((arr, key) => {
+			  arr.push({ key: key, value: intro_object[key] });
+
+			  return arr;
+			}, [])
+			.sort((a, b) => a.value - b.value)
 
 	        var todayObj = {
 	        	purchases: todays_purchases,
 	        	introducers: todays_introductions
-	        }
+	        } 
 
 			responseBody.index = saleID;
 			responseBody.purchases = purchases;
@@ -96,7 +109,8 @@ var renderSaleAdmin = function(req, res, responseBody, saleID) {
 			res.render('sale_admin', { 
 				title: 'Admin',
 				data: responseBody,
-				today: todayObj
+				today: todayObj,
+				introducers: introducers_arr
 			});
 
 		} else {
