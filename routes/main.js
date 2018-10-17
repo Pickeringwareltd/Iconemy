@@ -20,6 +20,14 @@ module.exports = function (app) {
 	  	res.render('index');
 	}); 
 
+	// Render home page if no subdomain added OR render project if one is added.
+	app.get('/googlead8304f00c758c64.html', function(req, res) {
+
+		console.log('called');
+
+	  	res.send('googlead8304f00c758c64.html');
+	}); 
+
 	app.get('/buynow', tracking.view, function(req, res) {
 		// If there is a subdomain attached, point to appropriate project
 		if (req.subdomain) {
