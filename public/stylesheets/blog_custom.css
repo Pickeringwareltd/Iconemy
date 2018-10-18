@@ -14,6 +14,10 @@
     visibility: visible !important;
 }
 
+.navbar-toggler {
+    background: transparent;
+}
+
 @media only screen and (max-width: 350px) { 
 	.site-header .navbar-brand img { max-height: 30px; }
 }
