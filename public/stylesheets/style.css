@@ -2282,3 +2282,10 @@ ul.social-center { margin: 2px auto; line-height: 1.4; padding-left: 0; }
 }
  
 /** END */
+@media only screen and (max-width: 350px) { 
+	.site-header .navbar-brand img { max-height: 30px; }
+}
+/* CUSTOM */
+
+
+/* END CUSTOM */
