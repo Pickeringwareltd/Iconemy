@@ -1,3 +1,19 @@
+#mainnav {
+    background-color: #4159FB;
+}
+
+#mainnav a {
+    color: #fff;
+}
+
+#mainnav .btn {
+    border-color: #fff;
+}
+
+.animated_header {
+    visibility: visible !important;
+}
+
 @media only screen and (max-width: 350px) { 
 	.site-header .navbar-brand img { max-height: 30px; }
 }

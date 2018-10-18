@@ -1844,18 +1844,3 @@ a img.aligncenter {
 
 
 /* CUSTOM */
-#mainnav {
-    background-color: #4159FB;
-}
-
-#mainnav a {
-    color: #fff;
-}
-
-#mainnav .btn {
-    border-color: #fff;
-}
-
-.animated_header {
-    visibility: visible !important;
-}
