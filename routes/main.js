@@ -20,6 +20,16 @@ module.exports = function (app) {
 	  	res.render('index');
 	}); 
 
+	// Render blog page
+	app.get('/blog', tracking.view, function(req, res) {
+	  	res.render('blog_home');
+	}); 
+
+	// Render blog single
+	app.get('/blog/single', tracking.view, function(req, res) {
+	  	res.render('blog_single');
+	}); 
+
 	app.get('/buynow', tracking.view, function(req, res) {
 		// If there is a subdomain attached, point to appropriate project
 		if (req.subdomain) {

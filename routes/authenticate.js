@@ -76,10 +76,15 @@ module.exports = function (app) {
 	// We must store the JWT access token so the user can access the API securely
 	// We must store the JWT ID token so we can identify a user when they come back to the site
 	// We must store the JWTs in a session and pass the session ID into a cookie so that we can keep users logged in
-	app.get('/authenticate', passport.authenticate('auth0', { failureRedirect: '/' }), 
+	app.get('/authenticate', passport.authenticate('auth0', function(err, user, info) {
+        console.log("authenticate");
+        console.log(err);
+        console.log(user);
+        console.log(info);
+    }, { failureRedirect: '/' }, ), 
 		function(req, res) {
+			console.log('called 4');
 			try{
-
 			 	if(req.query.code){
 
 			 		req.session.loggedIn = true;
