@@ -5,6 +5,8 @@
         <% include partials/google_tag_manager %>
         <% include partials/header %>
 
+        <link rel="stylesheet" href="stylesheets/vendor.bundle.css?ver=122">
+
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="/stylesheets/style.css?ver=122">
         <link rel="stylesheet" href="/stylesheets/theme.css?ver=122">
@@ -17,41 +19,32 @@
     <body>
     <% include partials/google_tag_manager_body %>
     
-    <!-- Header --> 
-    <header class="site-header is-sticky has-fixed">
-        <!-- Navbar -->
-        <div class="navbar navbar-expand-lg is-transparent" id="mainnav">
-            <nav class="container">
-                    
-            <a class="navbar-brand animated_header" data-animate="fadeInDown" data-delay=".65" href="/blog">
-                <img class="logo logo-light" alt="logo" src="/images/blog_logo.png">
-            </a>
-                        
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
-                    <span class="navbar-toggler-icon">
-                        <span class="ti ti-align-justify"></span>
-                    </span>
-                </button>
+        <!-- Header --> 
+        <header class="site-header is-sticky has-fixed">
+            <!-- Navbar -->
+            <div class="navbar navbar-expand-lg is-transparent" id="mainnav">
+                <nav class="container">    
+                    <a class="navbar-brand animated_header" data-animate="fadeInDown" data-delay=".65" href="/blog">
+                        <img class="logo logo-light" alt="logo" src="/images/blog_logo.png">
+                    </a>
+                            
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+                        <span class="navbar-toggler-icon">
+                            <span class="ti ti-align-justify"></span>
+                        </span>
+                    </button>
 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
-                    <ul class="navbar-nav animated_header remove-animation" data-animate="fadeInDown" data-delay=".9">
-                        <li class="nav-item"><a class="nav-link menu-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link menu-link" href="/projects">Projects</a></li>
-                        <li class="nav-item"><a class="nav-link menu-link" href="https://docs.iconemy.io">Docs</a></li>
-                    </ul>
-                    <ul class="navbar-nav navbar-btns animated_header remove-animation" data-animate="fadeInDown" data-delay="1.15">
-         
-                    <% if(loggedIn) { %>
-                        <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/logout">Log out</a></li>
-                    <% } else { %>
-                        <li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/login">Log in</a></li>
-                    <% } %>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- End Navbar -->
-    </header>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarToggle">
+                        <ul class="navbar-nav animated_header remove-animation" data-animate="fadeInDown" data-delay=".9">
+                            <li class="nav-item"><a class="nav-link menu-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link menu-link" href="/#subscribe">Subscribe</a></li>
+                            <li class="nav-item"><a class="nav-link menu-link" href="/#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!-- End Navbar -->
+        </header>
 
         <div class="main-wrapper">
             <section class="inner-page">

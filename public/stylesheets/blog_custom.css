@@ -6,16 +6,16 @@
     color: #fff;
 }
 
-#mainnav .btn {
-    border-color: #fff;
-}
-
 .animated_header {
     visibility: visible !important;
 }
 
 .navbar-toggler {
     background: transparent;
+}
+
+.navbar-toggler:hover {
+	background: transparent;
 }
 
 @media only screen and (max-width: 350px) { 
