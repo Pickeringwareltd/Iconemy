@@ -18,13 +18,15 @@ body {
 }
 
 section {
-	height: 100vh;
+	/*height: 100vh;*/
 	width: 100%;
 }
 
 /* -----------------------------   END GENERAL BODY ------------------------- */
 
 /* -----------------------------   START HEADER SECTION ------------------------- */
+
+/* DESKTOP */
 
 #header_section{
 	height: 110vh;
@@ -84,9 +86,174 @@ section {
 	margin-left: 30px;
 }
 
+/* END DESKTOP */
+
+/* DESKTOP SMALL */
+
+@media only screen and (max-width: 1330px) { 
+
+	#header_section{
+		height: 125vh;
+		background-image: url("/images/new_landing/header_desktop_small.png");
+	}
+
+	#logo {
+		max-height: 40px;
+	}
+
+	#header_section h1 {
+		font-size: 48px;
+	}
+
+}
+
+/* END DESKTOP SMALL */
+
+/* TABLET LARGE */
+
+@media only screen and (max-width: 1024px) { 
+
+	#header_section{
+		height: 100vh;
+		background-image: url("/images/new_landing/header_tablet_large.png");
+	}
+
+	#logo {
+		max-height: 30px;
+	}
+
+	#header_section h1 {
+		font-size: 48px;
+	}
+
+}
+
+/* END TABLET LARGE */
+
+/* TABLET */
+
+@media only screen and (max-width: 840px) { 
+
+	#header_section{
+		height: 100vh;
+		background-image: url("/images/new_landing/header_tablet.png");
+	}
+
+	#logo {
+		max-height: 25px;
+	}
+
+	#header_section h1 {
+		font-size: 36px;
+		line-height: 40px;
+	}
+
+}
+
+/* END TABLET */
+
+/* TABLET SMALL */
+
+@media only screen and (max-width: 700px) { 
+
+	#header_section{
+		height: 100vh;
+		background-image: url("/images/new_landing/header_tablet_small.png");
+	}
+
+	#logo {
+		max-height: 25px;
+	}
+
+	#header_section h1 {
+		font-size: 36px;
+		line-height: 40px;
+		width: 100%;
+		text-align: center;
+		padding-top: 0px;
+		padding-left: 0px;
+		margin-top: 100px;
+	}
+
+	.buttons {
+		width: 100%;
+		display: -webkit-box;
+	    display: -moz-box;
+	    display: -ms-flexbox;
+	    display: -webkit-flex;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+		padding-left: 0px;
+	}
+
+	#listing_button {
+		margin-left: 30px;
+	}
+
+}
+
+/* END TABLET SMALL */
+
+/* CHANGEOVER */
+
+@media only screen and (max-width: 550px) { 
+
+	#header_section{
+		height: 120vh;
+		background-image: url("/images/new_landing/header_mobile_large.png");
+	}
+
+	#logo {
+		max-height: 25px;
+	}
+
+	#header_section h1 {
+		font-size: 30px;
+		line-height: 35px;
+		width: 100%;
+		text-align: center;
+		padding-top: 0px;
+		padding-left: 0px;
+		margin-top: 100px;
+	}
+
+}
+
+/* END CHANGEOVER */
+
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 400px) { 
+
+	#header_section{
+		height: 120vh;
+		background-image: url("/images/new_landing/header_mobile_large.png");
+	}
+
+	#logo {
+		max-height: 25px;
+	}
+
+	#header_section h1 {
+		font-size: 30px;
+		line-height: 35px;
+		width: 100%;
+		text-align: center;
+		padding-top: 0px;
+		padding-left: 0px;
+		margin-top: 100px;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
 /* -----------------------------   END HEADER SECTION ------------------------- */
 
 /* -----------------------------   START EASY AS 1..2..3 SECTION ------------------------- */
+
+/* DESKTOP */
 
 #easy123_section {
 	padding-top: 10%;
@@ -121,9 +288,28 @@ section {
 	text-align: center;
 }
 
+/* END DESKTOP */
+
+/* TABLET */
+
+@media only screen and (max-width: 840px) { 
+
+	#easy123_numbers h4 {
+		font-size: 36px;
+	}
+
+	#easy123_numbers p {
+		font-size: 22px;
+	}
+}
+
+/* END TABLET */
+
 /* -----------------------------   END EASY AS 1..2..3 SECTION ------------------------- */
 
 /* -----------------------------   START KYC/AML SECTION ------------------------- */
+
+/* DESKTOP */
 
 #kyc_section {
 	height: 110vh;
@@ -146,9 +332,82 @@ section {
 	color: #4F6BF2;
 }
 
+/* END DESKTOP */
+
+/* DESKTOP SMALL */
+
+@media only screen and (max-width: 1330px) { 
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_desktop_small.png");
+	}
+
+	#kyc_text {
+	  	margin-top: 70%;
+	}	
+}
+
+/* END DESKTOP SMALL */
+
+/* TABLET LARGE */
+
+@media only screen and (max-width: 1024px) { 
+
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_tablet_large.png");
+		height: 125vh;
+	}
+
+	#kyc_text {
+	  	margin-top: 110%;
+	  	width: 100%;
+	}	
+
+}
+
+/* END TABLET LARGE */
+
+/* TABLET */
+
+@media only screen and (max-width: 840px) { 
+
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_tablet.png");
+		height: 140vh;
+	}
+
+	#kyc_text {
+	  	margin-top: 100%;
+	  	width: 100%;
+	}	
+
+}
+
+/* END TABLET */
+
+/* TABLET SMALL */
+
+@media only screen and (max-width: 700px) { 
+
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_tablet_small.png");
+		height: 125vh;
+	}
+
+	#kyc_text {
+	  	margin-top: 120%;
+	  	width: 100%;
+	}	
+
+}
+
+/* END TABLET SMALL */
+
+
 /* -----------------------------   END KYC/AML SECTION ------------------------- */
 
 /* -----------------------------   START COMMUNITY SECTION ------------------------- */
+
+/* DESKTOP */
 
 #community_section {
 	height: 110vh;
@@ -168,9 +427,76 @@ section {
 	font-size: 45px;
 }
 
+/* END DESKTOP */
+
+/* DESKTOP SMALL */
+
+@media only screen and (max-width: 1330px) { 
+	#community_section {
+		background-image: url("/images/new_landing/community_desktop_small.png");
+	}
+
+	#community_text {
+	  	position: relative;
+	  	margin-top: 70%;
+	}	
+}
+
+/* END DESKTOP SMALL */
+
+/* TABLET LARGE */
+
+@media only screen and (max-width: 1024px) { 
+
+	#community_section {
+		background-image: url("/images/new_landing/community_tablet_large.png");
+	}
+
+	#community_text {
+	  	margin-top: 150%;
+	}	
+
+}
+
+/* END TABLET LARGE */
+
+/* TABLET */
+
+@media only screen and (max-width: 840px) { 
+
+	#community_section {
+		background-image: url("/images/new_landing/community_tablet.png");
+	}
+
+	#community_text {
+	  	margin-top: 120%;
+	}	
+
+}
+
+/* END TABLET */
+
+/* TABLET SMALL */
+
+@media only screen and (max-width: 700px) { 
+
+	#community_section {
+		background-image: url("/images/new_landing/community_tablet_small.png");
+	}
+
+	#community_text {
+	  	margin-top: 150%;
+	}	
+
+}
+
+/* END TABLET SMALL */
+
 /* -----------------------------   END COMMUNITY SECTION ------------------------- */
 
 /* -----------------------------   START LOST SECTION ------------------------- */
+
+/* DESKTOP */
 
 #lost_section {
 	height: 110vh;
@@ -190,10 +516,78 @@ section {
 	font-size: 45px;
 }
 
+/* END DESKTOP */
+
+/* DESKTOP SMALL */
+
+@media only screen and (max-width: 1330px) { 
+	#lost_section {
+		height: 120vh;
+		background-image: url("/images/new_landing/lost_desktop_small.png");
+	}
+
+	#lost_text {
+	  	position: relative;
+	  	margin-top: 130%;
+	}	
+}
+
+/* END DESKTOP SMALL */
+
+/* TABLET LARGE */
+
+@media only screen and (max-width: 1024px) { 
+
+	#lost_section {
+		background-image: url("/images/new_landing/lost_tablet_large.png");
+	}
+
+	#lost_text {
+	  	margin-top: 180%;
+	}	
+
+}
+
+/* END TABLET LARGE */
+
+/* TABLET */
+
+@media only screen and (max-width: 840px) { 
+
+	#lost_section {
+		background-image: url("/images/new_landing/lost_tablet.png");
+	}
+
+	#lost_text {
+	  	margin-top: 125%;
+	}	
+
+}
+
+/* END TABLET */
+
+/* TABLET SMALL */
+
+@media only screen and (max-width: 700px) { 
+
+	#lost_section {
+		background-image: url("/images/new_landing/lost_tablet_small.png");
+	}
+
+	#lost_text {
+	  	margin-top: 170%;
+	}		
+
+}
+
+/* END TABLET SMALL */
+
+
 /* -----------------------------   END LOST SECTION ------------------------- */
 
 /* -----------------------------   START FOOTER SECTION ------------------------- */
 
+/* DESKTOP */
 #footer {
 	height: 110vh;
 	background-image: url("/images/new_landing/footer_image.png");
@@ -269,7 +663,56 @@ section {
 	left: 25px; 
 }
 
+/* END DESKTOP */
+
+/* DESKTOP SMALL */
+
+@media only screen and (max-width: 1330px) { 
+	#footer {
+		background-image: url("/images/new_landing/footer_desktop_small.png");
+		height: 90vh;
+	}	
+
+	#footer_container {
+		height: 55vh;
+	}
+
+
+	#footer_logo_image {
+		max-height: 50px;
+	}
+}
+
+/* END DESKTOP SMALL */
+
+/* TABLET LARGE */
+
+@media only screen and (max-width: 1024px) { 
+
+	#footer {
+		background-image: url("/images/new_landing/footer_tablet_large.png");
+		height: 80vh;
+	}
+
+	#footer_container {
+		margin-top: 35%;
+		height: 38vh;
+	}
+
+}
+
+/* END TABLET LARGE */
+
+/* TABLET SMALL */
+
+@media only screen and (max-width: 840px) { 
+
+	#footer {
+		background-image: url("/images/new_landing/footer_tablet.png");
+	}
+
+}
+
+/* END TABLET SMALL */
+
 /* -----------------------------   END FOOTER SECTION ------------------------- */
-
-
-
