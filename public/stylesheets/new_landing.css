@@ -265,7 +265,7 @@ section {
 @media only screen and (max-width: 320px) { 
 
 	#header_section{
-		height: 90vh;
+		height: 130vh;
 		background-image: url("/images/new_landing/header_mobile.png");
 	}
 
