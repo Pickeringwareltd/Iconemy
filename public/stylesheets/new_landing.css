@@ -70,7 +70,6 @@ section {
 	border-width: 0px;
 	padding: 10px 45px 40px 45px;
 	background-image: linear-gradient(0deg, #A63A00 0%, #FF940B 76%);
-	/*box-shadow: 0 2px 30px 0 rgba(0,0,0,0.50);*/
 }
 
 #header_section button:hover {
@@ -206,6 +205,8 @@ section {
 
 	#logo {
 		max-height: 25px;
+		top: 20px;
+		left: 20px;
 	}
 
 	#header_section h1 {
@@ -224,10 +225,10 @@ section {
 
 /* MOBILE LARGE */
 
-@media only screen and (max-width: 400px) { 
+@media only screen and (max-width: 420px) { 
 
 	#header_section{
-		height: 120vh;
+		height: 100vh;
 		background-image: url("/images/new_landing/header_mobile_large.png");
 	}
 
@@ -245,9 +246,54 @@ section {
 		margin-top: 100px;
 	}
 
+	.buttons {
+		display: block;
+	}
+
+	#subscribe_button, #listing_button {
+		display: block;
+		margin: 0 auto;
+		margin-top: 20px;
+	}
+
 }
 
 /* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+
+	#header_section{
+		height: 90vh;
+		background-image: url("/images/new_landing/header_mobile.png");
+	}
+
+	#logo {
+		max-height: 25px;
+	}
+
+	#header_section h1 {
+		font-size: 26px;
+		line-height: 30px;
+	}
+
+}
+
+/* END MOBILE */
+
+/* MOBILE SMALL */
+
+@media only screen and (max-width: 270px) { 
+
+	#header_section h1 {
+		font-size: 22px;
+		line-height: 25px;
+	}
+
+}
+
+/* END MOBILE SMALL */
 
 /* -----------------------------   END HEADER SECTION ------------------------- */
 
@@ -304,6 +350,53 @@ section {
 }
 
 /* END TABLET */
+
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 420px) { 
+	
+	#easy123_numbers h4 {
+		font-size: 30px;
+	}
+
+	#easy123_numbers p {
+		font-size: 20px;
+	}
+
+	#easy_title_container {
+		padding-right: 0px;
+	}
+
+	#easy_title_row {
+		margin-right: 0px;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+	
+	#easy123_numbers h4 {
+		font-size: 24px;
+	}
+
+	#easy123_numbers p {
+		font-size: 14px;
+	}
+
+	#easy123_title {
+		font-size: 26px;
+		text-align: center;
+		margin: auto;
+		padding-bottom: 20px;
+	}
+
+}
+
+/* END MOBILE */
 
 /* -----------------------------   END EASY AS 1..2..3 SECTION ------------------------- */
 
@@ -402,6 +495,61 @@ section {
 
 /* END TABLET SMALL */
 
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 420px) { 
+	
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_mobile_large.png");
+		height: 100vh;
+	}
+
+	#kyc_text {
+	  	margin-top: 120%;
+	  	width: 100%;
+	}
+
+	#kyc_text h4 {
+		font-size: 30px;
+		text-align: center;
+	}
+
+	#kyc_text p {
+		font-size: 16px;
+		text-align: center;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+	
+	#kyc_section {
+		background-image: url("/images/new_landing/kyc_mobile.png");
+		height: 90vh;
+	}
+
+	#kyc_text {
+	  	margin-top: 150%;
+	}
+
+	#kyc_text h4 {
+		font-size: 24px;
+		text-align: center;
+	}
+
+	#kyc_text p {
+		font-size: 14px;
+		text-align: center;
+	}
+
+}
+
+/* END MOBILE */
+
 
 /* -----------------------------   END KYC/AML SECTION ------------------------- */
 
@@ -492,6 +640,58 @@ section {
 
 /* END TABLET SMALL */
 
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 420px) { 
+	
+	#community_section {
+		height: 70vh;
+		background-image: url("/images/new_landing/community_mobile_large.png");
+	}
+
+	#community_text {
+	  	margin-top: 110%;
+	}
+
+	#community_text h4 {
+		font-size: 30px;
+		text-align: center;
+	}
+
+	#community_text p {
+		font-size: 16px;
+		text-align: center;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+	
+	#community_section {
+		background-image: url("/images/new_landing/community_mobile.png");
+		height: 70vh;
+	}
+
+	#community_text {
+	  	margin-top: 150%;
+	}
+
+	#community_text h4 {
+		font-size: 24px;
+	}
+
+	#community_text p {
+		font-size: 14px;
+	}
+
+}
+
+/* END MOBILE */
+
 /* -----------------------------   END COMMUNITY SECTION ------------------------- */
 
 /* -----------------------------   START LOST SECTION ------------------------- */
@@ -581,6 +781,59 @@ section {
 }
 
 /* END TABLET SMALL */
+
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 420px) { 
+	
+	#lost_section {
+		background-image: url("/images/new_landing/lost_mobile_large.png");
+	}
+
+	#lost_text {
+	  	margin-top: 170%;
+	}	
+
+	#lost_section h4 {
+		font-size: 30px;
+		text-align: center;
+	}
+
+	#lost_section p {
+		font-size: 16px;
+		text-align: center;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+	
+	#lost_section {
+		background-image: url("/images/new_landing/lost_mobile_large.png");
+		height: 80vh;
+	}
+
+	#lost_text {
+	  	margin-top: 170%;
+	}	
+
+	#lost_section h4 {
+		font-size: 24px;
+		text-align: center;
+	}
+
+	#lost_section p {
+		font-size: 14px;
+		text-align: center;
+	}
+
+}
+
+/* END MOBILE */
 
 
 /* -----------------------------   END LOST SECTION ------------------------- */
@@ -677,7 +930,6 @@ section {
 		height: 55vh;
 	}
 
-
 	#footer_logo_image {
 		max-height: 50px;
 	}
@@ -714,5 +966,98 @@ section {
 }
 
 /* END TABLET SMALL */
+
+/* MOBILE LARGE */
+
+@media only screen and (max-width: 420px) { 
+	
+	#footer {
+		background-image: url("/images/new_landing/footer_mobile_large.png");
+	}
+
+	#footer_title {
+		font-size: 30px;
+	}
+
+	#footer_container {
+		margin-top: 55%;
+		height: 50vh;
+	}
+
+	.form_items{
+		display: block;
+	}
+
+	.form-inline {
+	    display: block;
+	    -ms-flex-flow: block;
+	    flex-flow: block;
+	    -ms-flex-align: block;
+	    align-items: center;
+	}
+
+	#form_input_div {
+		width: 80%;
+		margin-top: 15%;
+		margin-right: 20px;
+	}
+
+	#footer_input {
+		max-width: 100%;
+		padding-left: 20px;
+		border-radius: 20px;
+	}
+
+	#footer_input button {
+		width: 100%;
+	}
+
+	#footer_submit {
+		display: block;
+		border-radius: 20px;
+ 		width: 50%;
+ 		margin: 15% auto;
+	}
+
+	#footer_form_col {
+		padding-right: 0px !important;
+		padding-left: 0px !important;
+	}
+
+}
+
+/* END MOBILE LARGE */
+
+/* MOBILE */
+
+@media only screen and (max-width: 320px) { 
+	
+	#footer {
+		height: 60vh;
+		background-image: url("/images/new_landing/footer_mobile.png");
+	}
+
+	#footer_container {
+		margin-top: 55%;
+		height: 40vh;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	#footer_input {
+		font-size: 12px;
+	}
+
+	#footer_title {
+		font-size: 24px;
+	}
+
+	#footer_logo_image {
+		max-height: 30px;
+	}
+
+}
+
+/* END MOBILE */
 
 /* -----------------------------   END FOOTER SECTION ------------------------- */
