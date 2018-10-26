@@ -20,6 +20,11 @@ module.exports = function (app) {
 	  	res.render('index');
 	}); 
 
+	// Render new landing
+	app.get('/new', function(req, res) {
+	  	res.render('new_landing');
+	}); 
+
 	// Render blog page
 	app.get('/blog', tracking.view, function(req, res) {
 	  	res.render('blog_home');
