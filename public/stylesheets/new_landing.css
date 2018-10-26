@@ -529,7 +529,7 @@ section {
 	
 	#kyc_section {
 		background-image: url("/images/new_landing/kyc_mobile.png");
-		height: 90vh;
+		height: 150vh;
 	}
 
 	#kyc_text {
@@ -673,7 +673,7 @@ section {
 	
 	#community_section {
 		background-image: url("/images/new_landing/community_mobile.png");
-		height: 70vh;
+		height: 100vh;
 	}
 
 	#community_text {
@@ -814,7 +814,7 @@ section {
 	
 	#lost_section {
 		background-image: url("/images/new_landing/lost_mobile_large.png");
-		height: 80vh;
+		height: 120vh;
 	}
 
 	#lost_text {
@@ -1033,13 +1033,13 @@ section {
 @media only screen and (max-width: 320px) { 
 	
 	#footer {
-		height: 60vh;
+		height: 100vh;
 		background-image: url("/images/new_landing/footer_mobile.png");
 	}
 
 	#footer_container {
 		margin-top: 55%;
-		height: 40vh;
+		height: 70vh;
 		margin-left: 0px;
 		margin-right: 0px;
 	}
