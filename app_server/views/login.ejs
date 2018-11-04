@@ -85,12 +85,19 @@
 				<div class="row justify-content-center text-center sale-box">
 					<div class="col-lg-12">
 						<div class="token-box shadow">
-							<form id="token-form" class="form-message text-left">
-								
+							<form id="js-login-form" class="form-message text-left">
+								<div id="js-errors" class="d-none">
+									<div class="alert alert-danger form-errors text-left">
+										<ul></ul>
+									</div>
+								</div>
+
+                                <%- locals.flash %>
+
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-8 col-sm-12">
 										<div class="input-field animated text-left" data-animate="fadeInUp" data-delay=".5">
-											<input name="username_form" type="text" id="username_form" class="input-line required">
+											<input name="username" type="text" id="username_form" class="input-line required">
 											<label class="input-title">Username</label>
 										</div>
 									</div>
@@ -99,7 +106,7 @@
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-8 col-sm-12">
 										<div class="input-field animated text-left" data-animate="fadeInUp" data-delay=".7">
-											<input name="password_form" type="password" class="input-line required" id="password_form">
+											<input name="password" type="password" class="input-line required" id="password_form">
 											<label class="input-title">Password</label>
 										</div>
 									</div>
@@ -116,7 +123,7 @@
 
 								<div class="row">
 									<div class="col-12">
-										<a class="animated forgot_password" data-animate="fadeInUp" data-delay="1.50" id="forgot_password">Forgot password</a>
+										<a class="animated forgot_password" data-animate="fadeInUp" data-delay="1.50" href="/forgot-password">Forgot password</a>
 									</div>
 								</div>
 							</form>
@@ -137,7 +144,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="javascripts/jquery.bundle.js?ver=122"></script>
 	<script src="javascripts/script_sale.js?ver=122"></script>
-	<script src="javascripts/script_token_form.js?ver=122"></script>
+	<script src="javascripts/script_auth.js?ver=122"></script>
 
 </body>
 </html>

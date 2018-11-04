@@ -47,7 +47,7 @@ exports.create = function(req, res){
 			path = '/api/projects/' + project + '/token/payment';
 		} 
 
-		access_token = req.session.passport.user.tokens.access_token;
+		access_token = req.cookies.jwt;
 
 		requestOptions = {
 			url : apiOptions.server + path,
@@ -99,10 +99,9 @@ exports.create = function(req, res){
 				// status code of 201 means the payment was created anyway as the price was 0 (free) so redirect to project page to wait for deployment
 				res.redirect('/projects/' + project);			
 			}
-			
-		});
+        });
 	} catch(e) {
-		errors.print(e, 'Error on server-side controllers payment.js/create: ');
+        errors.print(e, 'Error on server-side controllers payment.js/create: ');
 	}
 };
 
@@ -140,7 +139,7 @@ exports.confirm = function(req, res) {
 			path = '/api/projects/' + project + '/token/payment/confirm';
 		}
 
-		access_token = req.session.passport.user.tokens.access_token;
+		access_token = req.cookies['jwt'];
 
 		requestOptions = {
 			url : apiOptions.server + path,
@@ -148,7 +147,7 @@ exports.confirm = function(req, res) {
 			json : {
 				currency: currency,
 				amount: amount,
-				createdBy: req.session.passport.user.user.id
+				createdBy: req.user._id
 			},
 	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
 		};
@@ -220,7 +219,7 @@ exports.finalise = function(req, res) {
 			path = '/api/projects/' + project + '/crowdsales/' + sale_id + '/payment/finalise';
 		}
 
-		access_token = req.session.passport.user.tokens.access_token;
+		access_token = req.cookies['jwt'];
 
 		// Send any empty request, the api will then check the wallet and do the rest.
 		requestOptions = {

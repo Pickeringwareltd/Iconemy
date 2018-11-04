@@ -1,75 +1,132 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-var jwt = require('jsonwebtoken');
-require('dotenv').load();
+const mongoose = require('mongoose');
+const moment = require('moment');
+const owasp = require('owasp-password-strength-test');
+const jwt = require('jsonwebtoken');
+
+owasp.config({ minLength : 8 });
 
 var userSchema = new mongoose.Schema({
-  email: {
-     type: String,
-     unique: true,
-     required: true
-   }, 
-   nickname: {
-     type: String
-   },
-   firstname: {
-   	 type: String
-   },
-   surname: {
-   	 type: String
-   },
-   userid: {
-    type: String,
-    unique: true,
-    required: true
-   },
-   role: {
-   	type: String,
-   	"default": "user"
-   }
+    email : {
+        type : String,
+        default : '',
+        required : [true, 'Please provide an email address'],
+        index : { unique : true },
+        lowercase : true,
+        trim : true,
+        validate : [
+            {
+                validator : (value) => {
+                    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return regex.test(value);
+                },
+                message : 'Please provide a valid email address.'
+            }, {
+                validator : function (value) {
+                    return new Promise(function (resolve, reject) {
+                        User.find({ email : value }).exec((err, users) => {
+                            if (err) reject();
+
+                            resolve(users.length === 0);
+                        });
+                    });
+                },
+                message : 'Please choose a different email.'
+            }
+        ]
+    },
+    name: {
+        type: String,
+        default: '',
+        required: [true, 'Please provide your full name.']
+    },
+    role : { type : String, default : 'user' },
+    email_token : { type : String, default : '' },
+    reset_token : { type : String, default : '' },
+    created_at : {
+        type: Date,
+        default : moment().utc(),
+        get (value) {
+            return moment(value);
+        }
+    }
 });
 
-mongoose.model('User', userSchema);
+userSchema.methods.generateJWT = function() {
+    return jwt.sign({
+        email: this.email,
+        id: this._id,
+    }, '_iconemy_secret_secret', {
+        expiresIn: '1d',
+        algorithm: 'HS256'
+    });
+}
+
+userSchema.methods.toAuthJSON = function() {
+    return {
+        id: this._id,
+        email: this.email,
+        token: this.generateJWT(),
+    };
+};
+
+userSchema.methods.isAdmin = function () {
+    return 'admin' === this.role;
+}
+
+userSchema.methods.isOwner = function () {
+    return 'owner' === this.role;
+}
+
+userSchema.methods.isUser = function () {
+    return 'user' === this.role;
+}
+
+userSchema.plugin(require('mongoose-bcrypt'));
+userSchema.plugin(require('passport-local-mongoose'));
+const User = mongoose.model('User', userSchema);
 
 var subscriptionSchema = new mongoose.Schema({
-  email: {
-     type: String,
-     unique: true,
-     required: true
-   }, 
-   time: {
-     type: Date,
-     required: true
-   },
-   mailing_list: {
-     type: Boolean
-   }
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    time: {
+        type: Date,
+        required: true
+    },
+    mailing_list: {
+        type: Boolean
+    }
 });
 
-mongoose.model('Subscription', subscriptionSchema);
+const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 var contactSchema = new mongoose.Schema({
-  email: {
-     type: String,
-     unique: true,
-     required: true
-   },
-   name: {
-     type: String,
-     required: true
-   }, 
-   message: {
-     type: String,
-     required: true
-   },
-   time: {
-     type: Date,
-     required: true
-   },
-   responded: {
-     type: Boolean
-   }
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    },
+    time: {
+        type: Date,
+        required: true
+    },
+    responded: {
+        type: Boolean
+    }
 });
 
-mongoose.model('Contact', contactSchema);
+const Contact = mongoose.model('Contact', contactSchema);
+
+module.exports = User;

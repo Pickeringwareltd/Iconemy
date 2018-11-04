@@ -27,13 +27,11 @@ exports.messageResponded = function(req, res) {
       // Split the path from the url so that we can call the correct server in development/production
       path = '/api/admin/messages/' + req.params.messageid + '/responded';
     
-      access_token = req.session.passport.user.tokens.access_token;
-    
       requestOptions = {
         url: apiOptions.server + path,
         method : "POST",
         json : {},
-        headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+        headers: { authorization: 'Bearer ' + req.cookies['jwt'], 'content-type': 'application/json' }
       };
 
       request( requestOptions, function(err, response, body) { 
@@ -50,13 +48,14 @@ exports.index = function(req, res){
 
       // Split the path from the url so that we can call the correct server in development/production
       path = '/api/admin/messages';
-      access_token = req.session.passport.user.tokens.access_token;
-    
+
       requestOptions = {
         url: apiOptions.server + path,
         method : "GET",
         json : {},
-        headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+          auth: {
+            bearer : req.cookies['jwt']
+          }
       };
 
       request( requestOptions, function(err, response, body) { 
@@ -70,17 +69,18 @@ exports.index = function(req, res){
 var renderPortal = function(req, res, message_data){
   try{
 
-    var requestOptions, path, access_token;
+    var requestOptions, path;
 
     // Split the path from the url so that we can call the correct server in development/production
     path = '/api/admin/subscriptions';
-    access_token = req.session.passport.user.tokens.access_token;
-    
+
     requestOptions = {
         url: apiOptions.server + path,
         method : "GET",
         json : {},
-        headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+        auth : {
+            bearer: req.cookies['jwt']
+        }
     };
 
     request( requestOptions, function(err, response, subscribe_data) { 
@@ -136,27 +136,28 @@ var renderPortal = function(req, res, message_data){
   }
 };
 
-exports.projects = function(req, res){
-  try{
-  	 var requestOptions, path, access_token;
+exports.projects = function (req, res) {
+    try {
+        var requestOptions, path;
 
-    	// Split the path from the url so that we can call the correct server in development/production
-    	path = '/api/admin/projects';
-      access_token = req.session.passport.user.tokens.access_token;
-    
-      requestOptions = {
-        url: apiOptions.server + path,
-        method : "GET",
-        json : {},
-        headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
-      };
+        // Split the path from the url so that we can call the correct server in development/production
+        path = '/api/admin/projects';
 
-     	request( requestOptions, function(err, response, body) { 
-        	renderProjects(req, res, body);
-     	});
-  } catch(e) {
-    errors.print(e, 'Error on admin controllers main.js/projects: ');
-  }
+        requestOptions = {
+            url: apiOptions.server + path,
+            method: "GET",
+            json: {},
+            auth: {
+                bearer: req.cookies['jwt']
+            }
+        };
+
+        request(requestOptions, function (err, response, body) {
+            renderProjects(req, res, body);
+        });
+    } catch (e) {
+        errors.print(e, 'Error on admin controllers main.js/projects: ');
+    }
 };
 
 var renderProjects = function(req, res, body){
@@ -340,14 +341,15 @@ exports.projectReadOne = function(req, res){
 
       // Split the path from the url so that we can call the correct server in development/production
       path = '/api/projects/' + req.params.projectname;
-    
+
       requestOptions = {
-        url: apiOptions.server + path,
-        method : "GET",
-        json : {}
+          url: apiOptions.server + path,
+          method: "GET",
+          json: {},
+          headers: { authorization: 'Bearer ' + req.cookies['jwt'], 'content-type': 'application/json' }
       };
 
-      request( requestOptions, function(err, response, body) { 
+      request( requestOptions, function(err, response, body) {
           renderProject(req, res, body);
       });
   } catch(e) {
@@ -418,14 +420,15 @@ exports.doTokenContractCreation = function(req, res){
     path = "/api/admin/projects/" + projectname + '/token/contract';
 
     postdata = formatTokenData(req);
-    access_token = req.session.passport.user.tokens.access_token;
 
-    requestOptions = {
-      url : apiOptions.server + path,
-      method : "POST",
-      json : postdata,
-      headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
-    }; 
+      requestOptions = {
+          url: apiOptions.server + path,
+          method: "POST",
+          json: postdata,
+          auth: {
+              bearer: req.cookies['jwt']
+          }
+      };
 
     // Check the fields are present
     if (!postdata.address || !postdata.abi || !postdata.bytecode || !postdata.network || !postdata.jsFileURL || !postdata.compiler) {
@@ -483,13 +486,12 @@ exports.doSaleContractCreation = function(req, res){
       path = "/api/admin/projects/" + projectname + '/crowdsale/' + saleid + '/contract';
 
       postdata = formatSaleData(req);
-      access_token = req.session.passport.user.tokens.access_token;
 
       requestOptions = {
         url : apiOptions.server + path,
         method : "POST",
         json : postdata,
-        headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+        headers: { authorization: 'Bearer ' + req.cookies['jwt'], 'content-type': 'application/json' }
       }; 
 
       // Check the fields are present

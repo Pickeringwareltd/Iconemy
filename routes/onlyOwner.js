@@ -68,7 +68,7 @@ var checkOwner = function(req, res, body, next){
 		var project = body[0];
 		var owner = project.createdBy;
 
-		if(owner === req.session.passport.user.user.id){
+		if(owner === req.user._id){
 			req.projectowner = true;
 			console.log('Logged in: TRUE');
 			next();
@@ -110,7 +110,7 @@ var checkOwnerOrRevoke = function(req, res, body, next){
 		var project = body[0];
 		var owner = project.createdBy;
 
-		if(owner === req.session.passport.user.user.id){
+		if(owner === req.user._id){
 			next();
 		} else {
 			res.redirect('/projects');

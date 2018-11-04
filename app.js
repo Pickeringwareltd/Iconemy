@@ -7,8 +7,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
-const Auth0Strategy = require('passport-auth0');
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+const flash = require('express-flash-notification');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const helmet = require('helmet');
@@ -16,17 +20,10 @@ const csrf = require('csurf');
 const tracking = require('./add-ons/tracking');
 const ether_socket = require('./app_api/websocket/ws');
 const https = require('./config/https');
+var app = express();
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
-
-// Require passport configuration
-require('./config/passport');
-
-var api_routes = require('./app_api/routes/index');
-var admin_routes = require('./app_admin/routes/index');
-
-var app = express();
 
 // Security
 app.use(helmet());
@@ -69,7 +66,9 @@ session_store.on('connected', function() {
 session_store.on('error', function(error) {
   console.log('Session store ERROR: ' + error);
 });
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 // declare the use of sessions in the app in order to run authentication with OAuth
 app.set('trust proxy', 1);
 app.use(session({
@@ -84,34 +83,25 @@ app.use(session({
     },
     store: session_store
 }));
+app.use(flash(app));
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport')
 // ******************************************* END SESSION STORE ***********************************
 // Specify where the views are found
 app.set('views', [path.join(__dirname, '/app_server/views'), path.join(__dirname, '/app_admin/views')]);
 // view engine setup
 app.set('view engine', 'ejs');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
-app.use(csrf({ cookie: true }));
+
+// app.use(csrf({ cookie: true }));
 app.use(function (req, res, next) {
-    res.locals.csrf = req.csrfToken();
+    res.locals.csrf = '';
 
     next();
 });
-
-// CSRF error response
-app.use(function (err, req, res, next) {
-    if (err.code !== 'EBADCSRFTOKEN') return next(err)
-
-    // handle CSRF token errors here
-    res.status(403)
-    res.send('form tampered with')
-})
 
 // Specify where the static files are found
 app.use(express.static(path.join(__dirname, 'public')));
@@ -132,8 +122,9 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
   res.locals.loggedIn = false;
 
-  if(req.session.loggedIn){ 
+  if(req.cookies['jwt']){
       res.locals.loggedIn = true;
+      res.locals.jwt = req.cookies['jwt'];
   } else {
     // If user has not logged in yet, set the 'return to' session path to previous url
     if(req.path != '/authenticate' && req.path != '/login'){
@@ -145,12 +136,14 @@ app.use(function(req, res, next) {
 
 // require that the app sends requests to the routes folder (index.js)
 require('./routes')(app);
+var api_routes = require('./app_api/routes/index');
+var admin_routes = require('./app_admin/routes/index');
 app.use('/api', api_routes);
 app.use('/admin', admin_routes);
 
 // Catch unauthorised errors and redirect users to log in page
 app.use(function (err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
+  if (err.name === 'UnauthorizedError' || err.name === 'Unauthorized') {
     res.redirect('/login');
   }
 });

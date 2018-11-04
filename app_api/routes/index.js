@@ -13,12 +13,39 @@ const needsLogIn = require('./auth');
 const onlyOwner = require('./onlyOwner');
 const onlyAdmin = require('./onlyAdmin');
 const tracking = require('../../add-ons/tracking');
+const { check, validationResult } = require('express-validator/check');
+const owasp = require('owasp-password-strength-test');
+owasp.config({ minLength : 6 });
 
 // All routes in this file will be prepended with /api as this is what calls this file from app.js
 // This is used for adding users contact forms and subscriptions to the DB
+router.post('/login', tracking.apicall, ctrlUser.login)
+router.post('/register', [
+    tracking.apicall,
+    check("password", "Passwords don't match")
+        .custom((value,{req, loc, path}) => {
+            if (value !== req.body.repeat_password) {
+                // trow error if passwords do not match
+                throw new Error("Passwords don't match");
+            } else {
+                return value;
+            }
+        }),
+    check("password", "invalid password")
+        .custom((value,{req, loc, path}) => {
+            let result = owasp.test(value);
+
+            if (! result.strong) {
+                throw new Error(result.errors.join('<br>'));
+            } else {
+                return value;
+            }
+        })
+], ctrlUser.register)
 router.post('/contact', tracking.apicall, ctrlContact.contact);
 router.post('/subscribe', tracking.apicall, ctrlContact.subscribe);
 router.post('/user', needsLogIn, tracking.apicall, ctrlUser.checkLogIn);
+router.get('/user/me', needsLogIn, tracking.apicall, ctrlUser.show);
 router.get('/user/:userid', needsLogIn, tracking.apicall, ctrlUser.checkRole);
 
 // projects

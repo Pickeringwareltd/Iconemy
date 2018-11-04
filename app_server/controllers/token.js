@@ -36,7 +36,7 @@ var getRequestOptions = function(req, res){
 	  	if(!req.session.loggedIn){
 	  		access_token = '';
 	  	} else {
-	  		access_token = req.session.passport.user.tokens.access_token;
+	  		access_token = req.cookies['jwt'];
 	  	}
 
 	  	requestOptions = {
@@ -149,11 +149,11 @@ exports.doCreation = function(req, res){
 	    	decimals: parseInt(req.body.token_decimals),
 	    	owner: req.body.owner_address,
 	    	logo: req.body.logo,
-	    	createdBy: req.session.passport.user.user.id,
+	    	createdBy: req.user._id,
 	    	discount: req.body.discount
 		};
 
-		access_token = req.session.passport.user.tokens.access_token;
+		access_token = req.cookies['jwt'];
 
 		requestOptions = {
 	  		url : apiOptions.server + path,

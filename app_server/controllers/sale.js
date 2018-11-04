@@ -36,7 +36,7 @@ exports.saleAdmin = function(req, res){
 			projectName = req.subdomains;
 		}
 
-		access_token = req.session.passport.user.tokens.access_token;
+		access_token = req.cookies['jwt'];
 
 	  	// Split the path from the url so that we can call the correct server in development/production
 	  	path = '/api/projects/' + projectName + '/crowdsales/' + saleId + '/admin';
@@ -135,7 +135,7 @@ exports.toggleProgress = function(req, res){
 		projectName =  req.params.projectname;
 		saleId = req.params.crowdsaleid;
 
-	  	access_token = req.session.passport.user.tokens.access_token;
+	  	access_token = req.cookies['jwt']
 
 	  	// Split the path from the url so that we can call the correct server in development/production
 	  	path = '/api/projects/' + projectName + '/crowdsales/' + saleId + '/toggleprogress';
@@ -283,7 +283,7 @@ exports.create = function(req, res){
 	  	// Split the path from the url so that we can call the correct server in development/production
 	  	path = '/api/projects/' + projectName + '/token';
 
-	  	access_token = req.session.passport.user.tokens.access_token;
+	  	access_token = req.cookies['jwt'];
 
 	  	requestOptions = {
 	  		url: apiOptions.server + path,
@@ -376,7 +376,7 @@ var formatData = function(req){
 	    	commission: parseInt(req.body.commission),
 	    	admin: req.body.admin_wallet,
 			beneficiary: req.body.beneficiary_wallet,
-	    	createdBy: req.session.passport.user.user.id,
+	    	createdBy: req.user._id,
 	    	discount: req.body.discount,
 	    	deployed: 'None'
 		};
@@ -397,7 +397,7 @@ exports.doCreation = function(req, res){
 
 	  	postdata = formatData(req);
 
-	  	access_token = req.session.passport.user.tokens.access_token;
+	  	access_token = req.cookies['jwt']
 
 	  	requestOptions = {
 	  		url : apiOptions.server + path,

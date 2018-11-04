@@ -60,3 +60,6 @@
 .form-message .input-field.input-focused .txtarea + label + .input-title { top: -10px; transform: scale(0.8); }
 
 
+#js-signup-form input, #js-reset-form input {
+	color: #524F4F !important;
+}

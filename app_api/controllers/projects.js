@@ -162,8 +162,11 @@ module.exports.projectsCreate = function (req, res) {
 module.exports.projectsListByStartTime = function (req, res) { 
 	try{
 		// Get the user obejct from the request in order to find their projects
-		var user = req.body.user;
-		var userID = user.sub;
+        let userID = null;
+
+        if (req.body.user) {
+            userID = req.body.user._id
+        }
 
 		// Get all projects and sort by the date created in descending order (newest first)
 		Project

@@ -26,8 +26,8 @@ var renderProject = function(req, res, responseBody, subdomain){
 			data = responseBody[0];
 			data.usingSubdomain = subdomain;
 
-			if(req.session.passport != undefined){
-				if(req.session.passport.user.user.id === data.createdBy){
+            if(req.session.passport != undefined){
+				if(req.user._id === data.createdBy){
 					isOwner = true;
 				}
 			} 	
@@ -184,13 +184,12 @@ exports.update = function(req, res){
 
 	  	// Split the path from the url so that we can call the correct server in development/production
 	  	path = '/api/projects/' + projectName;
-	  	access_token = req.session.passport.user.tokens.access_token;
-	  
+
 	  	requestOptions = {
 	  		url: apiOptions.server + path,
 	  		method : "GET",
 	  		json : {},
-	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+	  		headers: { authorization: 'Bearer ' + req.cookies.jwt, 'content-type': 'application/json' }
 		};
 
 	   	request( requestOptions, function(err, response, body) {
@@ -210,13 +209,12 @@ exports.doUpdate = function(req, res){
 	  	subdomain = postdata.subdomain;
 
 	  	path = "/api/projects/" + subdomain;
-	  	access_token = req.session.passport.user.tokens.access_token;
 
 		requestOptions = {
 	  		url : apiOptions.server + path,
 	  		method : "PUT",
 	  		json : postdata,
-	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+	  		headers: { authorization: 'Bearer ' + req.cookies.jwt, 'content-type': 'application/json' }
 		}; 
 
 		var error = validateProject(postdata);
@@ -369,7 +367,7 @@ var getData = function(req) {
 			website: req.body.website,
 			subdomain: subdomain,
 			logo: req.body.logo,
-			createdBy: req.session.passport.user.user.id,
+			createdBy: req.user._id,
 			facebook: addHttps(req.body.facebook),
 			twitter: addHttps(req.body.twitter),
 			youtube: addHttps(req.body.youtube),
@@ -395,13 +393,12 @@ exports.doCreation = function(req, res){
 	  	
 	  	postdata = getData(req);
 	  	subdomain = postdata.subdomain;
-	  	access_token = req.session.passport.user.tokens.access_token;
 
 		requestOptions = {
 	  		url : apiOptions.server + path,
 	  		method : "POST",
 	  		json : postdata,
-	  		headers: { authorization: 'Bearer ' + access_token, 'content-type': 'application/json' }
+	  		headers: { authorization: 'Bearer ' + req.cookies.jwt, 'content-type': 'application/json' }
 		}; 
 
 		var error = validateProject(postdata);
@@ -478,7 +475,7 @@ exports.myprojects = function(req, res){
 	  	// Split the path from the url so that we can call the correct server in development/production
 	  	path = '/api/projects';
 
-	  	access_token = req.session.passport.user.tokens.access_token;
+	  	access_token = req.cookies.jwt;
 
 	  	requestOptions = {
 	  		url: apiOptions.server + path,
