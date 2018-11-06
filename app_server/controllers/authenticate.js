@@ -64,14 +64,17 @@ exports.send = (req, res) => {
     User.findOne(
         { email : req.body.email },
         (err, user) => {
-            if (!user || err) return res.redirect('/forgot-password');;
+            if (!user || err) {
+                return res.redirect('/forgot-password');
+            }
 
             const token = md5(moment().unix());
 
             user.reset_token = token;
             user.save({ validateBeforeSave: false });
 
-            sendEmail.sendResetPassword(user.email, {token: token})
+            // THIS NOW EXPECTS EMAIL, USERNAME AND URL
+            sendEmail.sendResetPassword(user.email, user.username, token);
 
             return res.redirect('/forgot-password');
         })

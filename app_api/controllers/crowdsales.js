@@ -73,8 +73,6 @@ module.exports.recordPurchaseEmail = function(req, res){
 	try{
 		var json = JSON.parse(req.body.json);
 
-		console.log('json = ' + JSON.stringify(json));
-
 		var purchaseObj = {
 			email: json.email,
 			hash: json.hash.tx,
@@ -82,12 +80,8 @@ module.exports.recordPurchaseEmail = function(req, res){
 			time: Date.now()
 		}
 
-		console.log('PURCHASE = ' + JSON.stringify(purchaseObj));
-
 		if(purchaseObj.email != undefined){
-			console.log('called 1');
 			if(!validator.isEmail(purchaseObj.email)){
-				console.log('called 2');
 				sendJsonResponse(res, 400, {"message": "Email must be valid"});
 				return;		
 			}				
