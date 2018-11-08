@@ -17,6 +17,12 @@ exports.showRegisterForm = (req, res) => {
 exports.showLoginForm = (req, res) => {
     if (res.locals.loggedIn) {
         return request.get('http://localhost:3000/api/user/me', { auth: { bearer: req.cookies['jwt'] } }, (err, response, body) => {
+            if ('Unauthorized' === body) {
+                res.clearCookie('jwt');
+
+                return res.redirect('/login');
+            }
+
             const user = JSON.parse(body);
 
             if (user.role === 'admin') return res.redirect('/admin')
