@@ -25,6 +25,41 @@ module.exports = function (app) {
 	  	res.render('new_landing');
 	}); 
 
+	// Render new landing
+	app.get('/new2', function(req, res) {
+	  	res.render('index_investors');
+	});
+
+	// Render new landing
+	app.get('/new_dark', function(req, res) {
+	  	res.render('index_investors_dark');
+	});
+
+	// Render new landing
+	app.get('/experts', function(req, res) {
+	  	res.render('experts_dark');
+	});
+
+	// Render blog page
+	app.get('/blog_dark', tracking.view, function(req, res) {
+	  	res.render('blog_archive_dark');
+	}); 
+
+	// Render blog page
+	app.get('/blog_dark/single', tracking.view, function(req, res) {
+	  	res.render('blog_single_dark');
+	}); 
+
+	// Render blog page
+	app.get('/blog_light', tracking.view, function(req, res) {
+	  	res.render('blog_archive_light');
+	}); 
+
+	// Render blog page
+	app.get('/blog_light/single', tracking.view, function(req, res) {
+	  	res.render('blog_single_light');
+	}); 
+
 	// Render blog page
 	app.get('/blog', tracking.view, function(req, res) {
 	  	res.render('blog_home');
