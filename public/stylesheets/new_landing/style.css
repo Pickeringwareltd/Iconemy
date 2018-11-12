@@ -111,7 +111,9 @@ a:hover, a:focus, a:active { outline: 0; color: #8255fd; }
 .theme-light .section-bg { background: #eff6ff; }
 .io-azure .section-bg { background: #0d42b2; }
 
-.section-bg-alt { background: #0b0c22; }
+/*.section-bg-alt { background: #0b0c22; }*/
+.section-bg-alt { background: #12164a; }
+
 .theme-light .section-bg-alt { background: #fff; }
 .io-azure .section-bg-alt { background: #1b30a4; }
 
@@ -119,13 +121,15 @@ a:hover, a:focus, a:active { outline: 0; color: #8255fd; }
 .theme-light .section-bg-dark { background: #e5f0ff; }
 .io-azure .section-bg-dark { background: #15257b; }
 
-.section-bg-blend { background-image: linear-gradient(to bottom, #0c0f2a 0%, #0b0c22 70%); }
+/*.section-bg-blend { background-image: linear-gradient(to bottom, #0c0f2a 0%, #0b0c22 70%); }*/
+.section-bg-blend { background-image: linear-gradient(to bottom, #12164a 0%, #12164a 70%); }
+
 .theme-light .section-bg-blend { background-image: linear-gradient(to bottom, #eef4fe 0%, #fff 70%); }
 
 .section-bg-atob { background-image: linear-gradient(to bottom, #10122d 0%, #0b0c22 70%); }
 .theme-light .section-bg-atob { background-image: linear-gradient(to bottom, #eff6ff 0%, #fff 70%); }
 
-.section-bg-btoa { background-image: linear-gradient(to bottom, #0b0c22 0%, #10122d 70%); }
+.section-bg-btoa { background-image: linear-gradient(to bottom, #12164a 0%, #10122d 70%); }
 .theme-light .section-bg-btoa { background-image: linear-gradient(to bottom, #fff 0%, #eff6ff 70%); }
 
 .section-pro, .section-light { background: #fff !important; }
@@ -785,7 +789,8 @@ select:focus { outline: none; border: none; }
 .banner.banner-full { min-height: 100vh; }
 .banner.banner-particle { background: url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #08091b; background-size: auto, auto, auto; }
 .banner.banner-curb { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, #08091b; background-size: 100%; }
-.banner.banner-curb.banner-particle { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #08091b; background-size: 100%, auto, auto, auto; }
+/*.banner.banner-curb.banner-particle { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #08091b; background-size: 100%, auto, auto, auto; }*/
+.banner.banner-curb.banner-particle { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #12164a; background-size: 100%, auto, auto, auto; }
 .banner.banner-curb.banner-particle.just-curve { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, #08091b; background-size: 100%, auto, auto, auto; }
 
 .theme-light .banner.banner-particle { background: url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #eff6ff; background-size: auto, auto, auto; }

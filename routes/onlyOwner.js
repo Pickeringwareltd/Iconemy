@@ -49,6 +49,8 @@ exports.check = function(req, res, next){
 		// Need to get the user object from the request (if none, redirect to log in)
 		// Need to search the token in the request and get the 'createdBy' variable
 		// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
+		
+		// THIS IS NEVER CALLED - Do you store the users loggedin status somewhere else? This check needs to be taken out if so.
 		if(req.session.loggedIn){
 			var requestOptions = getRequestOptions(req, res);
 
@@ -77,6 +79,8 @@ var checkOwner = function(req, res, body, next){
 		} else {
 			req.projectowner = false;
 			console.log('Logged in: FALSE');
+			console.log('owner: ' + owner);
+			console.log('you:' + req.user._id);
 			next();
 		}
 	} catch(e) {
