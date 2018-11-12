@@ -49,7 +49,7 @@ exports.create = function(req, res){
 
 		access_token = req.cookies.jwt;
 
-		requestOptions = {
+        requestOptions = {
 			url : apiOptions.server + path,
 			method : "POST",
 			json : {
@@ -61,7 +61,7 @@ exports.create = function(req, res){
 		}; 
 
 		request( requestOptions, function(err, response, body) {
-			if(response.statusCode === 200){
+            if(response.statusCode === 200){
 				var eth = body.eth;
 				var btc = body.btc;
 				var amount = body.dollars;

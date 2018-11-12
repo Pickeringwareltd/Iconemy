@@ -22,18 +22,20 @@ if (process.env.USING_STAGING === 'true'){
 }
 
 exports.require = function(req, res, next){
-	try {
+    try {
 		// The user being logged is checked by the needsLogIn middleware
 		// The user MUST be logged in and MUST be the owner of the resource
 		// Need to get the user object from the request (if none, redirect to log in)
 		// Need to search the token in the request and get the 'createdBy' variable
 		// If the userID is equal to the createdBy then grant access, if not, return error to project page saying must be owner
-		if(req.session.loggedIn){
+		if (req.cookies['jwt']) {
 			var requestOptions = getRequestOptions(req, res);
 
 		   	request( requestOptions, function(err, response, body) {
-		      	checkOwnerOrRevoke(req, res, body, next);
+                checkOwnerOrRevoke(req, res, body, next);
 		   	});
+		} else {
+			return res.redirect('/projects');
 		}
 	} catch(e) {
 		errors.print(e, 'Error on server-side routes onlyOwner.js/require: ');
@@ -108,12 +110,12 @@ var getRequestOptions = function(req, res){
 var checkOwnerOrRevoke = function(req, res, body, next){
 	try{
 		var project = body[0];
-		var owner = project.createdBy;
+        var owner = project.createdBy;
 
-		if(owner === req.user._id){
-			next();
+        if(owner == req.user._id){
+			return next();
 		} else {
-			res.redirect('/projects');
+			return res.redirect('/projects');
 		}
 	} catch(e) {
 		errors.print(e, 'Error on server-side routes onlyOwner.js/checkOwner: ');

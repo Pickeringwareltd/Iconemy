@@ -209,10 +209,9 @@ module.exports.tokenUpdate = function (req, res) {
  * It then applies the discount to the item for the code and/or commission selected and stores in the DB
  * It then returns an object containing the price of the item in USD/ETH/BTC and the discount that has been applied
  */
-module.exports.getPrice = function (req, res) { 
-	try{
-
-		// If the request parameters contains a project ID, then execute a query finding the object containing that id
+module.exports.getPrice = function (req, res) {
+    try{
+        // If the request parameters contains a project ID, then execute a query finding the object containing that id
 		if (req.body && req.body.projectid && req.body.item) {
 
 			if(req.body.item === 'token'){
