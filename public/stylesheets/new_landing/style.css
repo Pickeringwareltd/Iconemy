@@ -745,7 +745,7 @@ select:focus { outline: none; border: none; }
 .site-header .navbar.is-transparent { background: transparent; position: absolute; top: 0; left: 0; width: 100%; }
 .site-header .navbar.is-transparent .navbar-brand .logo-dark { display: none; }
 .site-header .navbar.is-transparent .navbar-brand .logo-light { display: block; }
-.site-header.has-fixed .navbar { position: fixed; width: 100%; z-index: 9; top: 0; background: #020207; border-bottom-color: rgba(0, 0, 0, 0.04); }
+.site-header.has-fixed .navbar { position: fixed; width: 100%; z-index: 9; top: 0; background: #111548; border-bottom-color: rgba(0, 0, 0, 0.04); }
 .site-header .is-transparent + .banner .banner-content { padding-top: 50px; }
 .site-header .navbar-brand { margin-top: 20px; margin-bottom: 20px; margin-left: 0; z-index: 6; }
 .site-header .scroll-down { color: #fff; font-size: 10px; display: inline-block; text-transform: uppercase; position: absolute; bottom: 120px; right: 20px; transform: rotate(-90deg); z-index: 5; }
