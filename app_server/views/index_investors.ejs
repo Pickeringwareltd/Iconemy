@@ -252,12 +252,19 @@
 			<div class="row text-center">
 				<div class="col-md-6 offset-md-3">
 					<h4 class="section-title-md">Don't miss out, Sign up early</h4>
-					<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form inline-form">
-						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" >
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
-						<button type="submit" class="btn btn-plane">Sign up</button>
-						<div class="subscribe-results"></div>
-					</form>
+					<div class="subscription-form inline-form">
+						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input_mid" data-page="investors">
+						
+						<button type="submit" class="btn btn-plane" id="signup_btn_mid">Sign up</button>
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box_mid" style="display: none;">
+								 <p id="success_message_mid"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box_mid" style="display: none;">
+							  <p id="error_message_mid"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -366,25 +373,32 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2">
-					<form id="contact-form" class="form-message text-center" action="form/contact.php" method="post">
-						<div class="form-results"></div>
+					<div id="contact_form" class="form-message text-center">
+						<div class="form-results">
+							<div class="alert alert-success" id="form_success_box" style="display: none;">
+								 <p id="form_success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="form_error_box" style="display: none;">
+							  <p id="form_error_message"></p>
+							</div>
+						</div>
 						<div class="input-field">
-							<input name="contact-name" type="text" class="input-line required">
+							<input name="contact-name" type="text" class="input-line required" id="form_name" data-page="investors">
 							<label class="input-title">Your Name</label>
 						</div>
 						<div class="input-field">
-							<input name="contact-email" type="email" class="input-line required email">
+							<input name="contact-email" type="email" class="input-line required email" id="form_email">
 							<label class="input-title">Your Email</label>
 						</div>
 						<div class="input-field">
-							<textarea name="contact-message" class="txtarea input-line required"></textarea>
+							<textarea name="contact-message" class="txtarea input-line required" id="form_message"></textarea>
 							<label class="input-title">Your Message</label>
 						</div>
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
+						
 						<div class="input-field">
-							<button type="submit" class="btn">Submit</button>
+							<button type="submit" class="btn" id="form_submit_btn">Submit</button>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -398,12 +412,19 @@
 			<div class="row text-center">
 				<div class="col-md-6 offset-md-3">
 					<h4 class="section-title-md">Don't miss out, Sign up early</h4>
-					<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form inline-form">
-						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" >
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
+					<div class="subscription-form inline-form">
+						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input" data-page="investors">
+						
 						<button type="submit" class="btn btn-plane" id="signup_btn">Sign up</button>
-						<div class="subscribe-results"></div>
-					</form>
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box" style="display: none;">
+								 <p id="success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box" style="display: none;">
+							  <p id="error_message"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -444,6 +465,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/javascripts/new_landing/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/new_landing/script.js?ver=122"></script>
+	<script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
 
 </body>
 </html>

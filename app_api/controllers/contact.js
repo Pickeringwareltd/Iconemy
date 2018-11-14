@@ -16,10 +16,10 @@ var sendJsonResponse = function(res, status, content) {
 var getSubscriptionData = function(req){
 	try{
 		var data = {
-					email: req.body.youremail,
-					time: Date.now(),
-					mailing_list: false
-					};
+					email: req.body.email,
+					page: req.body.page,
+					time: Date.now()
+				};
 
 		return data;
 	} catch(e) {
@@ -34,7 +34,7 @@ module.exports.subscribe = function (req, res) {
 		if(validator.isEmail(data.email)){
 
 			Subscription
-				.find({email: req.body.youremail})
+				.find({email: data.email})
 				.exec( function(err, subscription) {
 
 					if(subscription.length != 0){
@@ -79,6 +79,7 @@ var getContactData = function(req){
 					name: req.body.name,
 					email: req.body.email,
 					message: req.body.message,
+					page: req.body.page,
 					time: Date.now(),
 					responded: false
 					};

@@ -99,6 +99,9 @@ var subscriptionSchema = new mongoose.Schema({
     },
     mailing_list: {
         type: Boolean
+    },
+    page: {
+        type: String
     }
 });
 
@@ -117,6 +120,9 @@ var contactSchema = new mongoose.Schema({
     message: {
         type: String,
         required: true
+    },
+    page: {
+        type: String
     },
     time: {
         type: Date,
