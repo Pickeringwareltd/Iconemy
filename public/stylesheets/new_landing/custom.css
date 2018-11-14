@@ -23,6 +23,11 @@
 	margin-top: 25px;
 }
 
+.contact-info {
+	margin-left: auto;
+	margin-right: auto;	
+}
+
 @media only screen and (max-width: 991px) {
 	
 	.site-header .navbar-brand img {
@@ -87,4 +92,10 @@
 		max-width: 50% !important;
 	}
 
+}
+
+@media only screen and (max-width: 480px) {
+	.site-header .is-transparent + .banner .banner-content {
+	    padding-top: 25%;
+	}
 }
