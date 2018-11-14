@@ -1,0 +1,55 @@
+.blog-item, .blog-photo, .blog-photo img , .blog-photo a {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.blog-photo a:after {
+	background: none !important;
+}
+
+.blog-texts {
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;	
+}
+
+.subscription-form .btn {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	margin-top: 25px;
+}
+
+#iconemy_ad {
+	border-radius: 15px;
+}
+
+.tags ul li a {
+	border-radius: 25px !important;
+}
+
+/* To disable auto-zoom on iOS inputs */
+input[type='text'],
+input[type='number'],
+textarea {
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 991px) {
+	
+	.site-header .navbar-brand img {
+		max-width: 50%;
+	}	
+
+	.navbar-toggler, .navbar-toggler:hover {
+		background: transparent;
+		color: #111548;
+	}
+
+	.theme-light .navbar-collapse:after {
+		background-image: linear-gradient(to bottom, #eff6ff 100%, #eff6ff 100%);
+	}
+
+	.inline-form .input-round {
+		padding-left: 0px;
+	}
+}

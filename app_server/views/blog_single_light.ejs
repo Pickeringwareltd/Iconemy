@@ -14,6 +14,7 @@
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/stylesheets/new_landing/style.css?ver=122">
 	<link rel="stylesheet" href="/stylesheets/new_landing/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/new_landing/blog_single_custom.css?ver=122">
 	
 </head>
 
@@ -41,7 +42,6 @@
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#intro">What is Iconemy<span class="sr-only">(current)</span></a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#apps">Mobile app</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/blog_light">Blog</a></li>
-						<li class="nav-item"><a class="nav-link menu-link" href="/experts">Experts & partners</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#faqs">FAQs</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#contact">Contact</a></li>
 					</ul>
@@ -78,14 +78,14 @@
 				<div class="col-lg-8">
 					<div class="blog-content">
 						<div class="blog-photo">
-							<img src="/images/new_landing/blog-large-a.jpg" alt="blog-large">
+							<img src="/images/new_landing/cover-photo-blog.png" alt="blog-large">
 						</div>
 						<ul class="blog-meta">
 							<li><span>Posted</span><a href="#">26 Feb, 2018</a></li>
-							<li><span>By</span><a href="#">Admin</a></li>
+							<li><span>By</span><a href="#">Jack Pickering</a></li>
 							<li><span>In</span><a href="#">Cryptocurrency</a></li>
 						</ul>
-						<h3 class="blog-title"><a href="blog-single-light.html">The Intersection Where Blockchain Meets Energy</a></h3>
+						<h3 class="blog-title"><a href="blog-single-light.html">Whats the difference between ICOs, ITOs, STOs and TGEs?</a></h3>
 						<p>Blockchain Meets Energy Surplus of electrical energy is sometimes ut perspiciatis unde omnis iste naat vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
 						<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
 						<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
@@ -185,18 +185,12 @@
 				<div class="col-lg-4">
 				
 					<div class="sidebar-section">
-						<div class="sidebar-widget search">
-							<form action="#" class="search-form">
-								<input type="text" placeholder="Search Keyword">
-								<button><em class="ti ti-search"></em></button>
-							</form>
-						</div><!-- .sidebar-widget -->
 						<div class="sidebar-widget category">
 							<h5 class="sidebar-widget-title">Category</h5>
 							<ul>
-								<li><a href="#">Blockchain</a></li>
-								<li><a href="#">Cryptocurrency</a></li>
-								<li class="active"><a href="#">Technology</a></li>
+								<li><a href="#">Academy</a></li>
+								<li class="active"><a href="#">Articles</a></li>
+								<li><a href="#">Reports</a></li>
 							</ul>
 						</div><!-- .sidebar-widget -->
 						<div class="sidebar-widget tags">
@@ -209,7 +203,7 @@
 							</ul>
 						</div><!-- .sidebar-widget -->
 						
-						<div class="sidebar-widget cta-widget text-center">
+						<div class="sidebar-widget cta-widget text-center" id="iconemy_ad">
 							<h5 class="cta-head">We make ICOs easy!</h5>
 							<p>Sign up to Iconemy, do KYC once and invest in ICO/ITOs in minutes!</p>
 							<a href="#" class="btn btn-plane btn-alt">Subscribe now</a>
@@ -224,17 +218,24 @@
 	<!-- Start Section -->
 
 	<!-- Start Section -->
-	<div class="section subscribe-section section-pad-md section-bg">
+	<div class="section subscribe-section section-pad-md section-bg" id="subscribe">
 		<div class="container">
 			<div class="row text-center">
 				<div class="col-md-6 offset-md-3">
 					<h4 class="section-title-md">Don't miss out, Stay updated</h4>
-					<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form inline-form">
-						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" >
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
-						<button type="submit" class="btn btn-plane">Subscribe</button>
-						<div class="subscribe-results"></div>
-					</form>
+					<div class="subscription-form inline-form">
+						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input" data-page="investors-blog">
+						
+						<button type="submit" class="btn btn-plane" id="signup_btn">Sign up</button>
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box" style="display: none;">
+								 <p id="success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box" style="display: none;">
+							  <p id="error_message"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -275,6 +276,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/javascripts/new_landing/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/new_landing/script.js?ver=122"></script>
+	<script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
 
 </body>
 </html>

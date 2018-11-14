@@ -14,6 +14,7 @@
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/stylesheets/new_landing/style.css?ver=122">
 	<link rel="stylesheet" href="/stylesheets/new_landing/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/new_landing/blog_custom.css?ver=122">
 	
 </head>
 
@@ -40,7 +41,6 @@
 						<li class="nav-item"><a class="nav-link menu-link" href="/new_dark">What is Iconemy</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new_dark#apps">Mobile app</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/blog_dark">Blog<span class="sr-only">(current)</span></a></li>
-						<li class="nav-item"><a class="nav-link menu-link" href="/experts">Experts & partners</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="#contact">Contact</a></li>
 					</ul>
 					<ul class="navbar-nav navbar-btns">
@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="page-head">
-							<h2 class="page-heading">BLOG<span class="dark-sub-title"> | Academy</span></h2>
+							<h2 class="page-heading">BLOG</h2>
 						</div>
 					</div>
 				</div>
@@ -145,12 +145,6 @@
 				<div class="col-lg-4">
 				
 					<div class="sidebar-section">
-						<div class="sidebar-widget search">
-							<form action="#" class="search-form">
-								<input type="text" placeholder="Search Keyword">
-								<button><em class="ti ti-search"></em></button>
-							</form>
-						</div><!-- .sidebar-widget -->
 						<div class="sidebar-widget category">
 							<h5 class="sidebar-widget-title">Category</h5>
 							<ul>
@@ -172,7 +166,7 @@
 							</ul>
 						</div><!-- .sidebar-widget -->
 						
-						<div class="sidebar-widget cta-widget text-center">
+						<div class="sidebar-widget cta-widget text-center" id="iconemy_ad">
 							<h5 class="cta-head">We make ICOs easy!</h5>
 							<p>Sign up to Iconemy, do KYC once and invest in ICO/ITOs in minutes!</p>
 							<a href="#" class="btn btn-plane btn-alt">Subscribe now</a>
@@ -188,17 +182,24 @@
 
 
 	<!-- Start Section -->
-	<div class="section subscribe-section section-pad-md section-bg">
+	<div class="section subscribe-section section-pad-md section-bg" id="subscribe">
 		<div class="container">
 			<div class="row text-center">
 				<div class="col-md-6 offset-md-3">
 					<h4 class="section-title-md">Don't miss out, Stay updated</h4>
-					<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form inline-form">
-						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" >
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
-						<button type="submit" class="btn btn-plane">Subscribe</button>
-						<div class="subscribe-results"></div>
-					</form>
+					<div class="subscription-form inline-form">
+						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input" data-page="investors-blog">
+						
+						<button type="submit" class="btn btn-plane" id="signup_btn">Sign up</button>
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box" style="display: none;">
+								 <p id="success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box" style="display: none;">
+							  <p id="error_message"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -240,6 +241,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/javascripts/new_landing/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/new_landing/script.js?ver=122"></script>
+	<script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
 
 </body>
 </html>

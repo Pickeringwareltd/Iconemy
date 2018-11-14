@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="zxx" class="js">
 <head>
-	<meta charset="utf-8">
-	<meta name="author" content="Softnio">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="ICO Crypto is a modern and elegant landing page, created for ICO Agencies and digital crypto currency investment website.">
-	<!-- Fav Icon  -->
-	<link rel="shortcut icon" href="/images/favicon.png">
-	<!-- Site Title  -->
-	<title>ICO Crypto - Bitcoin &amp; Cryptocurrency Landing Page Template</title>
+	<!-- Header -->
+	<% include partials/google_tag_manager %>
+	<% include partials/header %>
+
 	<!-- Vendor Bundle CSS -->
 	<link rel="stylesheet" href="/stylesheets/new_landing/vendor.bundle.css?ver=122">
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/stylesheets/new_landing/style.css?ver=122">
 	<link rel="stylesheet" href="/stylesheets/new_landing/theme.css?ver=122">
+	<link rel="stylesheet" href="/stylesheets/new_landing/blog_custom.css?ver=122">
 	
 </head>
 
 <body class="theme-light" data-spy="scroll" data-target="#mainnav" data-offset="80">
+	<% include partials/google_tag_manager_body %>
+	<% include partials/hubspot_chatbot %>
 
 	<!-- Header --> 
 	<header class="site-header is-sticky">
@@ -41,7 +40,6 @@
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#intro">What is Iconemy<span class="sr-only">(current)</span></a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#apps">Mobile app</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/blog_light">Blog</a></li>
-						<li class="nav-item"><a class="nav-link menu-link" href="/experts">Experts & partners</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#faqs">FAQs</a></li>
 						<li class="nav-item"><a class="nav-link menu-link" href="/new2#contact">Contact</a></li>
 					</ul>
@@ -60,7 +58,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="page-head">
-							<h2 class="page-heading">BLOG<span class="dark-sub-title"> | Academy</span></h2>
+							<h2 class="page-heading">BLOG</h2>
 						</div>
 					</div>
 				</div>
@@ -106,7 +104,7 @@
 							</div><!-- .col -->
 							<div class="col-lg-6 offset-lg-0 col-sm-6">
 								<div class="blog-item">
-									<div class="blog-photo"><a href="blog-single-light.html"><img src="images/new_landing/blog-thumb-c.jpg" alt="blog-photo"></a></div>
+									<div class="blog-photo"><a href="blog-single-light.html"><img src="images/new_landing/ico_exit_scams_image_small.png" alt="blog-photo"></a></div>
 									<div class="blog-texts">
 										<ul class="blog-meta">
 											<li><a href="#">05 Nov, 2018</a></li>
@@ -147,12 +145,6 @@
 				<div class="col-lg-4">
 				
 					<div class="sidebar-section">
-						<div class="sidebar-widget search">
-							<form action="#" class="search-form">
-								<input type="text" placeholder="Search Keyword">
-								<button><em class="ti ti-search"></em></button>
-							</form>
-						</div><!-- .sidebar-widget -->
 						<div class="sidebar-widget category">
 							<h5 class="sidebar-widget-title">Category</h5>
 							<ul>
@@ -164,19 +156,19 @@
 						<div class="sidebar-widget tags">
 							<h5 class="sidebar-widget-title">Tags</h5>
 							<ul>
-								<li><a href="#">ethereum</a></li>
-								<li><a href="#">blockchain</a></li>
-								<li><a href="#">tokens</a></li>
-								<li><a href="#">ICO</a></li>
-								<li><a href="#">ITO</a></li>
-								<li><a href="#">smart-contracts</a></li>
+								<li><a href="#" class="tag">ethereum</a></li>
+								<li><a href="#" class="tag">blockchain</a></li>
+								<li><a href="#" class="tag">tokens</a></li>
+								<li><a href="#" class="tag">ICO</a></li>
+								<li><a href="#" class="tag">ITO</a></li>
+								<li><a href="#" class="tag">smart-contracts</a></li>
 							</ul>
 						</div><!-- .sidebar-widget -->
 						
-						<div class="sidebar-widget cta-widget text-center">
+						<div class="sidebar-widget cta-widget text-center" id="iconemy_ad">
 							<h5 class="cta-head">We make ICOs easy!</h5>
 							<p>Sign up to Iconemy, do KYC once and invest in ICO/ITOs in minutes!</p>
-							<a href="#" class="btn btn-plane btn-alt">Subscribe now</a>
+							<a href="#subscribe" class="btn btn-plane btn-alt">Subscribe now</a>
 						</div><!-- .sidebar-widget -->
 						
 					</div><!-- .sidebar-section -->
@@ -189,17 +181,24 @@
 
 
 	<!-- Start Section -->
-	<div class="section subscribe-section section-pad-md section-bg">
+	<div class="section subscribe-section section-pad-md section-bg" id="subscribe">
 		<div class="container">
 			<div class="row text-center">
 				<div class="col-md-6 offset-md-3">
 					<h4 class="section-title-md">Don't miss out, Stay updated</h4>
-					<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form inline-form">
-						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" >
-						<input type="text" class="d-none" name="form-anti-honeypot" value="">
-						<button type="submit" class="btn btn-plane">Subscribe</button>
-						<div class="subscribe-results"></div>
-					</form>
+					<div class="subscription-form inline-form">
+						<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input" data-page="investors-blog">
+						
+						<button type="submit" class="btn btn-plane" id="signup_btn">Sign up</button>
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box" style="display: none;">
+								 <p id="success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box" style="display: none;">
+							  <p id="error_message"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -241,6 +240,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/javascripts/new_landing/jquery.bundle.js?ver=122"></script>
 	<script src="/javascripts/new_landing/script.js?ver=122"></script>
+	<script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
 
 </body>
 </html>
