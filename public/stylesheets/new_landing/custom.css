@@ -53,6 +53,7 @@ textarea {
 	.main_image {
 		margin-top: 50px;
 		max-width: 50%;
+		padding-bottom: 50px;
 	}
 
 	img {
