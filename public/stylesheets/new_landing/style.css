@@ -791,7 +791,7 @@ select:focus { outline: none; border: none; }
 .banner.banner-curb { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, #08091b; background-size: 100%; }
 /*.banner.banner-curb.banner-particle { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #08091b; background-size: 100%, auto, auto, auto; }*/
 .banner.banner-curb.banner-particle { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #12164a; background-size: 100%, auto, auto, auto; }
-.banner.banner-curb.banner-particle.just-curve { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, #08091b; background-size: 100%, auto, auto, auto; }
+.banner.banner-curb.banner-particle.just-curve { background: url(/images/new_landing/images/header-bottom.png) bottom center no-repeat, #111548; background-size: 100%, auto, auto, auto; }
 
 .theme-light .banner.banner-particle { background: url(/images/new_landing/images/particle-left.png) top left no-repeat, url(/images/new_landing/images/particle-right.png) top right no-repeat, #eff6ff; background-size: auto, auto, auto; }
 .theme-light .banner.banner-curb { background: url(/images/new_landing/images/header-bottom-light.png) bottom center no-repeat, #eff6ff; background-size: 100%; }
