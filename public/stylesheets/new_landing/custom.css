@@ -28,6 +28,11 @@
 	margin-right: auto;	
 }
 
+.btn {
+	background-image: none !important;
+	background-color: #7052FB !important;
+}
+
 /* To disable auto-zoom on iOS inputs */
 input[type='text'],
 input[type='number'],
