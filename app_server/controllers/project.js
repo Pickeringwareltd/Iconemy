@@ -28,11 +28,9 @@ var renderProject = function(req, res, responseBody, subdomain){
 
 			// THIS IS WHERE WE NEED TO CHECK IF THE OWNER Is LOGGED IN
 
-            if(req.session.passport != undefined){
-				if(req.user._id === data.createdBy){
-					isOwner = true;
-				}
-			} 	
+			if(req.user._id == data.createdBy){
+				isOwner = true;
+			}
 
 			var active = -1;
 
