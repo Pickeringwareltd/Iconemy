@@ -1,0 +1,114 @@
+.blog-item, .blog-photo, .blog-photo img , .blog-photo a {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.blog-photo a:after {
+	background: none !important;
+}
+
+.blog-texts {
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;	
+}
+
+.mobile_image {
+	max-width: 75% !important;
+}
+
+.subscription-form .btn {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	margin-top: 25px;
+}
+
+.contact-info {
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+.btn {
+	background-image: none !important;
+	background-color: #2A58F5 !important;
+}
+
+/* To disable auto-zoom on iOS inputs */
+input[type='text'],
+input[type='number'],
+textarea {
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 991px) {
+	
+	.site-header .navbar-brand img {
+		max-width: 50%;
+	}	
+
+	.navbar-toggler, .navbar-toggler:hover {
+		background: transparent;
+		color: #ffffff;
+	}
+
+	.theme-light .navbar-collapse:after {
+		background-image: linear-gradient(to bottom, #111548 100%, #111548 100%);
+	}
+
+	.main_image {
+		margin-top: 50px;
+		max-width: 100%;
+		padding-bottom: 50px;
+	}
+
+	img {
+		max-width: 75%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.inline-form .input-round {
+		padding-left: 0px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+
+	.main_area_text {
+		text-align: center;
+		padding-bottom: 50px;
+		max-width: 75%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	p.lead {
+		font-size: 1em;
+	}
+
+	.navbar-brand {
+		margin-left: 0px;
+	}
+
+	.logo {
+		margin-left: 15px;
+		margin-right: 0px;
+	}
+
+	img {
+		max-width: 75%;
+	}
+
+	.mobile_image {
+		max-width: 50% !important;
+	}
+
+}
+
+@media only screen and (max-width: 480px) {
+	.site-header .is-transparent + .banner .banner-content {
+	    padding-top: 25%;
+	}
+}
