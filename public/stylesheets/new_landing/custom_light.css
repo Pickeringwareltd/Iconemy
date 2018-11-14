@@ -33,6 +33,15 @@
 	background-color: #7052FB !important;
 }
 
+#owners_mid {
+	background-color: #111548;
+}
+
+#owners_mid p, #owners_mid h4 {
+	color: #fff;
+}
+
+
 /* To disable auto-zoom on iOS inputs */
 input[type='text'],
 input[type='number'],
