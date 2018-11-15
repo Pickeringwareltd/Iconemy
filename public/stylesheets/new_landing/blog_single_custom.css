@@ -34,6 +34,15 @@
 	border-radius: 50%;
 }
 
+.blog_post_image {
+	padding-top: 0px;
+	padding-bottom: 50px;
+}
+
+.banner {
+	min-height: 35vh !important;
+}
+
 /* To disable auto-zoom on iOS inputs */
 input[type='text'],
 input[type='number'],

@@ -13,6 +13,9 @@ module.exports = function (app) {
 	app.get('/owners/blog/how_to_stop_ico_exit_scams', function(req, res) {
 	  	res.render('articles/dark_how_to_stop_ico_exit_scams');
 	}); 
+	app.get('/owners/blog/why_do_we_need_cryptocurrencies', function(req, res) {
+	  	res.render('articles/dark_why_we_need_cryptocurrencies');
+	}); 
 	app.get('/investors/blog', function(req, res) {
 	  	res.render('blog_archive_light');
 	});   
@@ -22,4 +25,7 @@ module.exports = function (app) {
 	app.get('/investors/blog/how_to_stop_ico_exit_scams', function(req, res) {
 	  	res.render('articles/light_how_to_stop_ico_exit_scams');
 	});  
+	app.get('/investors/blog/why_do_we_need_cryptocurrencies', function(req, res) {
+	  	res.render('articles/light_why_we_need_cryptocurrencies');
+	}); 
 };
