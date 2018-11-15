@@ -8,4 +8,5 @@ module.exports = function(app){
 	require('./token')(app);
 	require('./sale')(app);
 	require('./payment')(app);
+	require('./blog')(app);
 };
