@@ -41,6 +41,14 @@
 	color: #111548;
 }
 
+.align-items-center {
+	text-align: center !important;
+}
+
+.banner {
+	min-height: 97vh !important;
+}
+
 /* To disable auto-zoom on iOS inputs */
 input[type='text'],
 input[type='number'],
