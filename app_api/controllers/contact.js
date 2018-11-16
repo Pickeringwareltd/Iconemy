@@ -6,6 +6,7 @@ var Subscription = mongoose.model('Subscription');
 var Contact = mongoose.model('Contact');
 var tracking = require('../../add-ons/tracking');
 const errors = require('../../add-ons/errors');
+var emails = require('../../add-ons/emails');
 
 // Send a JSON response with the status and content passed in via params
 var sendJsonResponse = function(res, status, content) {
@@ -46,7 +47,7 @@ module.exports.subscribe = function (req, res) {
 					} else {
 
 						Subscription
-						    .find({email: req.body.email})
+						    .find({email: data.email})
 						    .exec(function(err, subscription) {
 						         	// Create subscription creates a new document in the database
 									Subscription
@@ -58,6 +59,7 @@ module.exports.subscribe = function (req, res) {
 								      			return;
 								    		} else {
 								    			tracking.subscribe(req);
+								    			emails.sendSignUpEmail(data.email);
 								      			sendJsonResponse(res, 201, { "result": "success", "message": "Thank you for subscribing! We will be in touch shortly." });
 								    		}
 										}); 

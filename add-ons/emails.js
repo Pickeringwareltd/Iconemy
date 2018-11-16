@@ -51,9 +51,9 @@ module.exports.sendSignUpEmail = function(_email){
 		const msg = {
 		  to: email,
 		  from: 'jp@iconemy.io',
-		  subject: 'Hello world',
-		  text: 'Hello plain world!',
-		  html: '<p>Hello HTML world!</p>',
+		  subject: 'Thanks for signing up!',
+		  text: '',
+		  html: '',
 		  templateId: 'd-a863d706bc2a48d59b76150a51aa7048'
 		};
 
