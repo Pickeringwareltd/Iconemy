@@ -76,8 +76,6 @@ module.exports.sendInvestorSignUpEmail = function(_email){
           to: email,
           from: 'jp@iconemy.io',
           subject: 'Thanks for signing up!',
-          text: '',
-          html: '',
           templateId: 'd-a863d706bc2a48d59b76150a51aa7048'
         };
 
@@ -100,8 +98,6 @@ module.exports.sendOwnerSignUpEmail = function(_email){
           to: email,
           from: 'jp@iconemy.io',
           subject: 'Thanks for signing up!',
-          text: '',
-          html: '',
           templateId: 'd-8dfe46a66f714e3ca2957301e1a468a7'
         };
 
@@ -124,8 +120,6 @@ module.exports.sendListingEmail = function(_email){
           to: email,
           from: 'jp@iconemy.io',
           subject: 'Thanks for listing!',
-          text: '',
-          html: '',
           templateId: 'd-260a46077a1b4d57b609015132aca8fb'
         };
 
@@ -148,8 +142,6 @@ module.exports.sendContactEmail = function(_email){
           to: email,
           from: 'jp@iconemy.io',
           subject: 'Thanks getting in touch!',
-          text: '',
-          html: '',
           templateId: 'd-e49bb19610b5447b9e48cb8e64159b47'
         };
 
