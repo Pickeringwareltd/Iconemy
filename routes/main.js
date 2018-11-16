@@ -17,65 +17,23 @@ module.exports = function (app) {
 	  		project.index(req, res);
 		}
 
-	  	res.render('index');
+	  	res.render('index_investors');
 	}); 
 
 	// Render new landing
-	app.get('/new', function(req, res) {
-	  	res.render('new_landing');
-	}); 
-
-	// Render new landing
-	app.get('/new2', function(req, res) {
+	app.get('/investors', function(req, res) {
 	  	res.render('index_investors');
 	});
 
 	// Render new landing
-	app.get('/new_dark', function(req, res) {
-	  	res.render('index_investors_dark');
+	app.get('/owners', function(req, res) {
+	  	res.render('index_owners');
 	});
 
 	// Render new landing
 	app.get('/experts', function(req, res) {
 	  	res.render('experts_dark');
 	});
-
-	// Render blog page
-	app.get('/blog_dark', tracking.view, function(req, res) {
-	  	res.render('blog_archive_dark');
-	}); 
-
-	// Render blog page
-	app.get('/blog_dark/single', tracking.view, function(req, res) {
-	  	res.render('blog_single_dark');
-	}); 
-
-	// Render blog page
-	app.get('/blog_light', tracking.view, function(req, res) {
-	  	res.render('blog_archive_light');
-	}); 
-
-	// Render blog page
-	app.get('/blog_light/single', tracking.view, function(req, res) {
-	  	res.render('blog_single_light');
-	}); 
-
-	// Render blog page
-	app.get('/blog', tracking.view, function(req, res) {
-	  	res.render('blog_home');
-	}); 
-
-	// Render blog single
-	app.get('/blog/single', tracking.view, function(req, res) {
-	  	res.render('blog_single');
-	}); 
-
-	app.get('/buynow', tracking.view, function(req, res) {
-		// If there is a subdomain attached, point to appropriate project
-		if (req.subdomain) {
-	  		project.buynow(req, res);
-		}
-	}); 
 
 	app.get('/privacy', tracking.view, function(req, res) {
 		try{
