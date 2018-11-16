@@ -59,7 +59,11 @@ module.exports.subscribe = function (req, res) {
 								      			return;
 								    		} else {
 								    			tracking.subscribe(req);
-								    			emails.sendSignUpEmail(data.email);
+								    			if(data.page == "owners" || data.page == "owners-blog"){
+								    				emails.sendOwnerSignUpEmail(data.email);
+								    			} else {
+								    				emails.sendInvestorSignUpEmail(data.email);
+								    			}
 								      			sendJsonResponse(res, 201, { "result": "success", "message": "Thank you for subscribing! We will be in touch shortly." });
 								    		}
 										}); 
@@ -124,6 +128,11 @@ module.exports.contact = function (req, res) {
 								      			return;
 								    		} else {
 								    			tracking.contact(req);
+								    			if(data.page == "owners"){
+								    				emails.sendListingEmail(data.email);
+								    			} else {
+								    				emails.sendContactEmail(data.email);
+								    			}
 								      			sendJsonResponse(res, 201, { "result": "success", "message": "Thank you for reaching out! We will be in touch shortly." });
 								    		}
 										}); 

@@ -63,6 +63,104 @@ module.exports.sendSignUpEmail = function(_email){
 	}
 };
 
+module.exports.sendInvestorSignUpEmail = function(_email){
+    try{
+        // using SendGrid's v3 Node.js Library
+        // https://github.com/sendgrid/sendgrid-nodejs
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        // This allows us to send jack the emails in development mode
+        var email = checkEnv(_email);
+
+        const msg = {
+          to: email,
+          from: 'jp@iconemy.io',
+          subject: 'Thanks for signing up!',
+          text: '',
+          html: '',
+          templateId: 'd-a863d706bc2a48d59b76150a51aa7048'
+        };
+
+        sgMail.send(msg);
+    } catch(e) {
+        console.log('Error on API controllers user.js/sendEmail: ' + e);
+    }
+};
+
+module.exports.sendOwnerSignUpEmail = function(_email){
+    try{
+        // using SendGrid's v3 Node.js Library
+        // https://github.com/sendgrid/sendgrid-nodejs
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        // This allows us to send jack the emails in development mode
+        var email = checkEnv(_email);
+
+        const msg = {
+          to: email,
+          from: 'jp@iconemy.io',
+          subject: 'Thanks for signing up!',
+          text: '',
+          html: '',
+          templateId: 'd-8dfe46a66f714e3ca2957301e1a468a7'
+        };
+
+        sgMail.send(msg);
+    } catch(e) {
+        console.log('Error on API controllers user.js/sendEmail: ' + e);
+    }
+};
+
+module.exports.sendListingEmail = function(_email){
+    try{
+        // using SendGrid's v3 Node.js Library
+        // https://github.com/sendgrid/sendgrid-nodejs
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        // This allows us to send jack the emails in development mode
+        var email = checkEnv(_email);
+
+        const msg = {
+          to: email,
+          from: 'jp@iconemy.io',
+          subject: 'Thanks for listing!',
+          text: '',
+          html: '',
+          templateId: 'd-260a46077a1b4d57b609015132aca8fb'
+        };
+
+        sgMail.send(msg);
+    } catch(e) {
+        console.log('Error on API controllers user.js/sendEmail: ' + e);
+    }
+};
+
+module.exports.sendContactEmail = function(_email){
+    try{
+        // using SendGrid's v3 Node.js Library
+        // https://github.com/sendgrid/sendgrid-nodejs
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        // This allows us to send jack the emails in development mode
+        var email = checkEnv(_email);
+
+        const msg = {
+          to: email,
+          from: 'jp@iconemy.io',
+          subject: 'Thanks getting in touch!',
+          text: '',
+          html: '',
+          templateId: 'd-e49bb19610b5447b9e48cb8e64159b47'
+        };
+
+        sgMail.send(msg);
+    } catch(e) {
+        console.log('Error on API controllers user.js/sendEmail: ' + e);
+    }
+};
+
+
+
 // This function expects the username of the account and the link used to reset the password. 
 module.exports.sendResetPassword = function(_email, _username, _link){
     try{
