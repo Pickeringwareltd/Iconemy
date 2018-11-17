@@ -23,7 +23,7 @@ exports.showLoginForm = (req, res) => {
         if (process.env.NODE_ENV === 'production') {
             apiOptions.server = "https://www.iconemy.io";
         } else if (process.env.NODE_ENV === 'staging'){
-            apiOptions.server = 'https://iconemy-start.herokuapp.com';
+            apiOptions.server = process.env.STAGING_URL;
         }
 
         return request.get(apiOptions.server+'/api/user/me', { auth: { bearer: req.cookies['jwt'] } }, (err, response, body) => {
