@@ -23,7 +23,7 @@ module.exports = function (app) {
 	  	res.render('ico_dashboard/signup');
 	}); 
 	app.get('/ico/dashboard/confirm', function(req, res) {
-	  	res.render('ico_dashboard/signup-successful');
+	  	res.render('ico_dashboard/signup-success');
 	});  
 	app.get('/ico/dashboard/reset', function(req, res) {
 	  	res.render('ico_dashboard/recovery');
