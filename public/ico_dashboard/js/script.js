@@ -100,15 +100,13 @@
         }
 	});
 
-    
-    
     // Countdown Clock
-    var $count_token_clock = $('.token-countdown-clock');
+    var $count_token_clock = $('.countdown-clock');
 	if ($count_token_clock.length > 0 ) {
 		$count_token_clock.each(function() {
 			var $self = $(this), datetime = $self.attr("data-date");
 			$self.countdown(datetime).on('update.countdown', function(event) {
-				$(this).html(event.strftime('' + '<div class="col"><span class="countdown-time countdown-time-first">%D</span><span class="countdown-text">Days</span></div>' + '<div class="col"><span class="countdown-time">%H</span><span class="countdown-text">Hours</span></div>' + '<div class="col"><span class="countdown-time countdown-time-last">%M</span><span class="countdown-text">Minutes</span></div>'));
+				$(this).html(event.strftime('%D d ' + ' %H h' + ' %M m ' + ' %S s'));
 			});
 		});
 	}

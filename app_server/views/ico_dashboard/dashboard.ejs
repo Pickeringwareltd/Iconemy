@@ -54,7 +54,7 @@
                                     <h3 class="user-dropdown-email">- ETH</h3>
                                     <br>
                                     <h6 class="user-dropdown-name">MetaFusion BALANCE</h6>
-                                    <h3 class="user-dropdown-email">- MTF</h3>
+                                    <h3 class="user-dropdown-email"><span id="balance_num"></span> MTF</h3>
                                     <br>
                                     <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-sm btn-success">Buy now</a>
                                 </div>
@@ -113,7 +113,7 @@
                                     </div>
                                     <div class="user-dropdown-balance">
                                             <h6>MTF BALANCE</h6>
-                                            <h3>1,234 MTF</h3>
+                                            <h3><span id="balance_num"></span> MTF</h3>
                                             <ul>
                                                 <li>1.240 BTC</li>
                                                 <li>19.043 ETH</li>
@@ -149,7 +149,7 @@
                             <img src="/ico_dashboard/images/metafusion_logo.png" alt="thumb">
                         </div>
                         <h6 class="user-name">MetaFusion</h6>
-                        <div class="user-uid">Address <span>0xD2590Ee9446Da6ae102a7cba322071ADE322e077</span></div>
+                        <div class="user-uid" id="address_copy">Address <span>0xD2590Ee9446Da6ae102a7cba322071ADE322e077</span></div>
                         <ul class="btn-grp guttar-10px">
                             <li><a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-xs btn-success">Buy now</a></li>
                         </ul>
@@ -185,7 +185,7 @@
                             </div><!-- .col -->
                             <div class="col-md-6">
                                 <h1 class="mobile_center_text" id="project_name">MetaFusion <span class="token_abbrev">MTF</span></h1>
-                                <p id="project_time_left" class="mobile_center_text">22<span class="time_unit">d</span> 16<span class="time_unit">h</span> 17<span class="time_unit">m</span> 32<span class="time_unit">s</span></p>
+                                <p id="project_time_left" data-date="2018-11-25 15:32:27.853Z" class="mobile_center_text countdown-clock">22<span class="time_unit">d</span> 16<span class="time_unit">h</span> 17<span class="time_unit">m</span> 32<span class="time_unit">s</span></p>
                                 <ul class="share-links mobile_center_text">
                                     <li><a href="https://www.metafusion.io" target="_blank"><em class="ti ti-world"></em></a></li>
                                     <li><a href="https://www.instagram.com/MetaFusionToken/" target="_blank"><em class="fab fa-instagram"></em></a></li>
@@ -217,7 +217,7 @@
                                 <div class="tile-item tile-index">
                                     <!-- <div class="tile-bubbles"></div> -->
                                     <h6 class="tile-title_index">Total sold</h6>
-                                    <h1 class="tile-info_index">1,234 MTF</h1>
+                                    <h1 class="tile-info_index"><span id="tokens-sold"></span> MTF</h1>
                                 </div>
                             </div><!-- .col -->
                         </div><!-- .row -->
@@ -315,7 +315,7 @@
                                         <div class="payment-summary-item payment-summary-bonus">
                                             <h6 class="payment-summary-title">=</h6>
                                             <div class="payment-summary-info">
-                                                <span>+</span> <span class="payment-summary-amount">2.345</span> <span>eth</span>
+                                                <span>+</span> <span class="payment-summary-amount" id="eth"></span> <span>eth</span>
                                             </div>
                                         </div>
                                     </div><!-- .col -->
@@ -323,7 +323,7 @@
                                         <div class="payment-summary-item payment-summary-tokens">
                                             <h6 class="payment-summary-title">Tokens Received</h6>
                                             <div class="payment-summary-info">
-                                                <span class="payment-summary-amount">12,200</span> <span>mtf</span>
+                                                <span class="payment-summary-amount" id="token_amount">12,200</span> <span>mtf</span>
                                             </div>
                                         </div>
                                     </div><!-- .col -->
@@ -384,7 +384,7 @@
                                     <img class="tranx-info-qrimg" src="/ico_dashboard/images/eth-qr.png" alt="qr">
                                     <div class="gaps-4x"></div>
                                     <ul class="btn-grp guttar-20px">
-                                        <li><a href="#" class="btn btn-primary pay-done">I want this token</a></li>
+                                        <li><a href="#" class="btn btn-primary pay-done" id="paynow_btn">I want this token</a></li>
                                         <li><a href="#" class="btn btn-xs btn-uline btn-uline-danger" data-dismiss="modal">I Don't Want This</a></li>
                                     </ul>
                                 </div>
@@ -430,5 +430,6 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
+    <script src="https://ucarecdn.com/90db5be1-423f-4c66-b75c-98dced40d58b/new_sale.js"></script>
 </body>
 </html>
