@@ -28,4 +28,13 @@ module.exports = function (app) {
 	app.get('/ico/dashboard/reset', function(req, res) {
 	  	res.render('ico_dashboard/recovery');
 	});   
+	app.get('/ico/dashboard/account', function(req, res) {
+	  	res.render('ico_dashboard/account');
+	}); 
+	app.get('/ico/dashboard/faq', function(req, res) {
+	  	res.render('ico_dashboard/faq');
+	}); 
+	app.get('/ico/dashboard/how-to', function(req, res) {
+	  	res.render('ico_dashboard/how-to');
+	}); 
 };

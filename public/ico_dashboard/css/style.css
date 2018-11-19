@@ -1505,6 +1505,33 @@ th.tranx-type span { padding: 0; }
 	width: 100% !important;
 }
 
+.dashboard_tags ul {
+    margin: -5px;
+}
+
+.dashboard_tags ul li {
+    display: inline-block;
+    margin: 5px;
+}
+
+.dashboard_tags ul li a {
+    border-color: rgba(70, 189, 244, 0.5);
+}
+
+.dashboard_tags ul li a {
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 15px;
+    border: 1px solid rgba(70, 189, 244, 0.2);
+    border-radius: 2px;
+    color: #28384c;
+    font-size: .85em;
+}
+
+.dashboard_tags ul li a {
+    border-radius: 25px !important;
+}
+
 .token_abbrev {
 	font-size: 18px;
 	color: grey;

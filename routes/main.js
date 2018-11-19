@@ -35,6 +35,11 @@ module.exports = function (app) {
 	  	res.render('experts_dark');
 	});
 
+	// Render new landing
+	app.get('/listing', function(req, res) {
+	  	res.render('listing');
+	});
+
 	app.get('/privacy', tracking.view, function(req, res) {
 		try{
 			var privacyFile = "./public/privacy_policy.pdf";
