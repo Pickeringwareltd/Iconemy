@@ -10,4 +10,5 @@ module.exports = function(app){
 	require('./payment')(app);
 	require('./blog')(app);
 	require('./dashboard')(app);
+	
 };
