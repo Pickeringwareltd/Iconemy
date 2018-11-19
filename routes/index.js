@@ -9,4 +9,5 @@ module.exports = function(app){
 	require('./sale')(app);
 	require('./payment')(app);
 	require('./blog')(app);
+	require('./dashboard')(app);
 };
