@@ -100,16 +100,19 @@
         }
 	});
 
-    // Countdown Clock
-    var $count_token_clock = $('.countdown-clock');
-	if ($count_token_clock.length > 0 ) {
-		$count_token_clock.each(function() {
-			var $self = $(this), datetime = $self.attr("data-date");
-			$self.countdown(datetime).on('update.countdown', function(event) {
-				$(this).html(event.strftime('%D d ' + ' %H h' + ' %M m ' + ' %S s'));
-			});
-		});
-	}
+ //    // Countdown Clock
+ //    var $count_token_clock = $('.countdown-clock');
+	// if ($count_token_clock.length > 0 ) {
+	// 	$count_token_clock.each(function() {
+	// 		var $self = $(this), datetime = $self.attr("data-date");
+
+ //            datetime = new Date(datetime.replace(/-/g, '/'));
+
+	// 		$self.countdown(datetime).on('update.countdown', function(event) {
+	// 			$(this).html(event.strftime('%D d ' + ' %H h' + ' %M m ' + ' %S s'));
+	// 		});
+	// 	});
+	// }
     
     // Transation Data Table
     var $tranx_table = $('.tranx-table');

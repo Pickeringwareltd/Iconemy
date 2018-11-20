@@ -1559,11 +1559,16 @@ th.tranx-type span { padding: 0; }
 	text-align: center;
 }
 
+.team_panel {
+	margin-bottom: 20px !important;
+}
+
 @media (max-width: 768px) { 
 	#metafusion_cover {
 		display: block;
 		margin: 0 auto;
 	}
+
 	.mobile_center_text {
 		text-align: center;
 	}

@@ -19,8 +19,12 @@ const helmet = require('helmet');
 const csrf = require('csurf');
 const tracking = require('./add-ons/tracking');
 const ether_socket = require('./app_api/websocket/ws');
+const cors = require('cors');
 const https = require('./config/https');
 var app = express();
+
+// use it before all route definitions
+app.use(cors());
 
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
@@ -93,8 +97,6 @@ require('./config/passport')
 app.set('views', [path.join(__dirname, '/app_server/views'), path.join(__dirname, '/app_admin/views')]);
 // view engine setup
 app.set('view engine', 'ejs');
-
-
 
 // app.use(csrf({ cookie: true }));
 app.use(function (req, res, next) {
