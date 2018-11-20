@@ -42,35 +42,27 @@
                         <a href="#" data-toggle="dropdown"> <img class="icon" src="/ico_dashboard/images/user-thumb-sm.png" alt="thumb"> </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="user-dropdown">
-                                <!-- <div class="user-dropdown-head"> -->
-                                    <!-- <h6 class="user-dropdown-name">Stefan Harary <span>(IXIA1A105)</span></h6> -->
-                                    <!-- <span class="user-dropdown-email">useremail@example.com</span> -->
-                                <!-- </div> -->
-                                <div class="user-dropdown-head">                                  
-                                    <h6 class="user-dropdown-name">Wallet address</h6>
-                                    <h3 class="user-dropdown-email">Wallet not connected!</h3>
-                                    <br>
-                                    <h6 class="user-dropdown-name">Ether BALANCE</h6>
-                                    <h3 class="user-dropdown-email">- ETH</h3>
-                                    <br>
-                                    <h6 class="user-dropdown-name">MetaFusion BALANCE</h6>
-                                    <h3 class="user-dropdown-email"><span id="balance_num"></span> MTF</h3>
-                                    <br>
-                                    <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-sm btn-success">Buy now</a>
-                                </div>
-<!--                                 <ul class="user-dropdown-btns btn-grp guttar-10px">
-                                    <li><a href="#" class="btn btn-xs btn-warning">Confirm Email</a></li>
-                                    <li><a href="kyc.html" class="btn btn-xs btn-warning">KYC Pending</a></li>
-                                </ul>
-                                <div class="gaps-1x"></div>
-                                <ul class="user-dropdown-links">
-                                    <li><a href="account.html"><i class="ti ti-id-badge"></i>My Profile</a></li>
-                                    <li><a href="security.html"><i class="ti ti-lock"></i>Security</a></li>
-                                    <li><a href="activity.html"><i class="ti ti-eye"></i>Activity</a></li>
-                                </ul>
-                                <ul class="user-dropdown-links">
-                                    <li><a href="login.html"><i class="ti ti-power-off"></i>Logout</a></li>
-                                </ul> -->
+                                    <div class="user-dropdown-head">
+                                            <h6 class="user-dropdown-name">Jack Pickering</h6>
+                                            <span class="user-dropdown-email">jp@iconemy.io</span>
+                                    </div>
+                                    <div class="user-dropdown-balance">
+                                            <h6>MTF BALANCE</h6>
+                                            <h3><span id="balance_num"></span> MTF</h3>
+                                            <ul>
+                                                <li>1.240 BTC</li>
+                                                <li>19.043 ETH</li>
+                                                <li>6,500.13 USD</li>
+                                            </ul>
+                                    </div>
+                                    <div class="gaps-1x"></div>
+                                    <ul class="user-dropdown-links">
+                                        <li><a href="/ico/dashboard/account"><i class="ti ti-id-badge"></i>My Profile</a></li>
+                                        <li><a href="/"><i class="ti ti-lock"></i>Iconemy home</a></li>
+                                    </ul>
+                                    <ul class="user-dropdown-links">
+                                        <li><a href="/logout"><i class="ti ti-power-off"></i>Logout</a></li>
+                                    </ul>
                             </div>
                         </div>
                     </div>
@@ -119,15 +111,15 @@
                                                 <li>19.043 ETH</li>
                                                 <li>6,500.13 USD</li>
                                             </ul>
-                                        </div>
-                                        <div class="gaps-1x"></div>
-                                        <ul class="user-dropdown-links">
-                                            <li><a href="/ico/dashboard/account"><i class="ti ti-id-badge"></i>My Profile</a></li>
-                                            <li><a href="/"><i class="ti ti-lock"></i>Iconemy home</a></li>
-                                        </ul>
-                                        <ul class="user-dropdown-links">
-                                            <li><a href="/logout"><i class="ti ti-power-off"></i>Logout</a></li>
-                                        </ul>
+                                    </div>
+                                    <div class="gaps-1x"></div>
+                                    <ul class="user-dropdown-links">
+                                        <li><a href="/ico/dashboard/account"><i class="ti ti-id-badge"></i>My Profile</a></li>
+                                        <li><a href="/"><i class="ti ti-lock"></i>Iconemy home</a></li>
+                                    </ul>
+                                    <ul class="user-dropdown-links">
+                                        <li><a href="/logout"><i class="ti ti-power-off"></i>Logout</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </li><!-- .topbar-action-item -->
@@ -144,12 +136,12 @@
             <div class="d-flex">
                 <div class="user-sidebar">
                     <div class="user-sidebar-overlay"></div>
-                    <div class="user-box d-none d-lg-block">
+                    <div class="user-box d-lg-block mobile_menu">
                         <div class="user-image">
                             <img src="/ico_dashboard/images/metafusion_logo.png" alt="thumb">
                         </div>
-                        <h6 class="user-name">MetaFusion</h6>
-                        <div class="user-uid" id="address_copy">Address <span>0xD2590Ee9446Da6ae102a7cba322071ADE322e077</span></div>
+                        <h6 class="user-name token-name">MetaFusion</h6>
+                        <div class="user-uid" id="address_copy">Address <span class="token_address">0xD2590Ee9446Da6ae102a7cba322071ADE322e077</span></div>
                         <ul class="btn-grp guttar-10px">
                             <li><a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-xs btn-success">Buy now</a></li>
                         </ul>

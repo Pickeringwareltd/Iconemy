@@ -1572,4 +1572,17 @@ th.tranx-type span { padding: 0; }
 		margin-top: 25px;
 	}
 
+	.mobile_menu {
+		margin-top: 10%;
+	}
+
+	.token_address {
+		font-size: 12px;
+		word-wrap: break-word;
+	}
+
+	.token-name {
+		font-size: 20px;
+	}
+
 }
