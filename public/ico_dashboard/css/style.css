@@ -1470,6 +1470,14 @@ th.tranx-type span { padding: 0; }
 
 
 /* CUSTOM */
+
+/* To disable auto-zoom on iOS inputs */
+input[type='text'],
+input[type='number'],
+textarea {
+  font-size: 16px;
+}
+
 #metafusion_cover {
 	border-radius: 4px;
 	max-height: 80%;
