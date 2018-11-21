@@ -1563,6 +1563,10 @@ th.tranx-type span { padding: 0; }
 	margin-bottom: 20px !important;
 }
 
+.token_address {
+	word-wrap: break-word;
+}
+
 @media (max-width: 768px) { 
 	#metafusion_cover {
 		display: block;
@@ -1583,7 +1587,6 @@ th.tranx-type span { padding: 0; }
 
 	.token_address {
 		font-size: 12px;
-		word-wrap: break-word;
 	}
 
 	.token-name {
