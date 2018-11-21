@@ -1604,4 +1604,12 @@ th.tranx-type span { padding: 0; }
         white-space: nowrap;
 	}
 
+	.tile-item {
+		margin-bottom: 0px;
+	}
+
+	.tags_section {
+		margin-top: 30px;
+	}
+
 }
