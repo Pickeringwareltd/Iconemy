@@ -359,46 +359,48 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="tranx-popup">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h1>Purchase Details ETH</h1>
-                    <div class="tranx-payment-details">
-                        <p>Hi, Your transaction <strong>ICIYOW0102</strong> is <strong>Pending Payment</strong><br> You will receive <strong>5,470 MTF</strong> tokens (incl. bonus of 450 MTF) once paid.</p>
-                        <h6>Please make your Payment to the below Address</h6>
-                        <div class="tranx-payment-info">
-                            <span class="tranx-copy-feedback copy-feedback"></span>
-                            <em class="fab fa-ethereum"></em>
-                            <input type="text" class="tranx-payment-address" value="0x4156d3342d5c385a87d264f90653733592000581" disabled>
-                            <button class="tranx-payment-copy copy-clipboard-modal" data-clipboard-text="0x4156d3342d5c385a87d264f90653733592000581"><em class="ti ti-files"></em></button>
-                        </div><!-- .tranx-payment-info --><!-- @updated on v1.0.1 -->
-                        <ul class="tranx-info-list">
-                            <li><span>GAS LIMIT:</span> 120 000</li>
-                            <li><span>GAS PRICE:</span> 95 Gwei</li>
-                        </ul><!-- .tranx-info-list -->
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <div class="tranx-info-qr">
-                                    <span>OR Scan bellow QR Code to pay</span>
-                                    <img class="tranx-info-qrimg" src="/ico_dashboard/images/eth-qr.png" alt="qr">
-                                    <div class="gaps-4x"></div>
-                                    <ul class="btn-grp guttar-20px">
-                                        <li><a href="#" class="btn btn-primary pay-done" id="paynow_btn">I want this token</a></li>
-                                        <li><a href="#" class="btn btn-xs btn-uline btn-uline-danger" data-dismiss="modal">I Don't Want This</a></li>
-                                    </ul>
-                                </div>
-                            </div><!-- .col -->
-                            <div class="col-sm-7">
-                                <div class="note note-info">
-                                    <em class="fas fa-info-circle"></em>
-                                    <p>Do not make payment through exchange (Kraken, Bitfinex). You can use MetaMask, MayEtherWallet, Mist wallets etc.</p>
-                                </div>
-                                <div class="gaps-1x"></div>
-                                <div class="note note-danger">
-                                    <em class="fas fa-info-circle"></em>
-                                    <p>In case you send a different amount ETH, the number of MTF tokens will update accordingly.</p>
-                                </div>
-                            </div><!-- .col -->
-                        </div><!-- .row -->
-                    </div><!-- .tranx-payment-details -->
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1>Confirm payment</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="total_tokens">1234.45 <span class="currency">MTF</span></h4>
+                            <p class="dollar_per_token">$0.23 / MTF</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="row_title">Tokens</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="row_data">$234.56</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="row_title">Network fee</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="row_data">$0.50</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="row_title total_title">Total</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="row_data total_price">$235.06</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="#" class="btn btn-primary payment-btn final_confirm_btn" data-dismiss="modal" id="paynow_btn">Continue</a>
+                        </div>
+                    </div>
                 </div><!-- .tranx-popup -->
             </div><!-- .modal-content -->
         </div><!-- .modal-dialog -->
