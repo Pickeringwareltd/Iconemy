@@ -1468,7 +1468,6 @@ th.tranx-type span { padding: 0; }
   .footer-copyright { padding: 15px 0; } }
 /** END */
 
-
 /* CUSTOM */
 
 /* To disable auto-zoom on iOS inputs */
@@ -1509,7 +1508,7 @@ textarea {
 	font-size: 30px;
 }
 
-#big_buynow_btn {
+.stretched_button {
 	width: 100% !important;
 }
 
@@ -1575,6 +1574,19 @@ textarea {
 	word-wrap: break-word;
 }
 
+/* How to buy screen */
+.list_image {
+	max-height: 40px;
+	width: auto;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+#mobile_pay_btn {
+	display: none;
+}
+
 @media (max-width: 768px) { 
 	#metafusion_cover {
 		display: block;
@@ -1618,6 +1630,14 @@ textarea {
 
 	.tags_section {
 		margin-top: 30px;
+	}
+
+	#mobile_pay_btn {
+		display: block;
+	}
+
+	#desktop_pay_btn {
+		display: none;
 	}
 
 }

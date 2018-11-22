@@ -176,22 +176,72 @@
                 
                 <div class="user-content">
                     <div class="user-panel">
-                        <h2 class="user-panel-title">How to Buy token</h2>
+                        <h2 class="user-panel-title">How to use Iconemy</h2>
                         <div class="user-panel-content">
-                            <p><strong>Investors really are spoiled for choice. There are a lot of serious ICOs raising funds for important and useful projects, At the same time.</strong></p>
+                            <p><strong>Investing into ICOs has never been easier. All you need to do is create and fund an ERC-20 compatible wallet and click buy tokens!</strong></p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/nO8RRutn8uo?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                             </div>
-                            <h6>Step 1 : Register for an ICO through the project’s website </h6>
-                            <p>Every legitimate project that sources funds through an ICO has a website, where they specify what the project is all about, its goals, the amount of money needed, how long the funding campaign will go on for and so forth.</p>
+                            <h3>Step 1 : Create a compatible ERC-20 wallet</h3>
+                            <p>In order to keep the tokens you collect from your favourite campaigns, you must use an ERC-20 compatibale wallet. A few recomendations from the Iconemy team are:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><a href="https://metamask.io" target="_blank"><span><img src="/images/metamask_list_image.png" class="list_image"></span>MetaMask (Desktop)</a></li>
+                                        <li><a href="https://wallet.coinbase.com/" target="_blank"><span><img src="/images/coinbase_wallet_image.png" class="list_image"></span>Coinbase wallet (Mobile)</a></li>
+                                        <li><a href="https://trustwallet.com" target="_blank"><span><img src="/images/trust_wallet_image.png" class="list_image"></span>Trust wallet (Mobile)</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><a href="https://mewconnect.myetherwallet.com/#/" target="_blank"><span><img src="/images/mew_wallet_image.png" class="list_image"></span>MEW Connect (Mobile)</a></li>
+                                        <li><a href="https://trezor.io/" target="_blank"><span><img src="/images/trezor_wallet_image.png" class="list_image"></span>Trezor (Hardware)</a></li>
+                                        <li><a href="https://www.ledger.com/" target="_blank"><span><img src="/images/ledger_wallet_image.png" class="list_image"></span>Ledger (Hardware)</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="gaps-3x"></div>
+                            <p>Create a wallet and enter your new wallet address here:</p>
+                            <div class="tranx-payment-info">
+                                <span class="tranx-copy-feedback copy-feedback"></span>
+                                <em class="fab fa-ethereum"></em>
+                                <input type="text" class="tranx-payment-address" placeholder="0x4156d3342d5c385a87d264f90653733592000581">
+                            </div><!-- .tranx-payment-info --><!-- @updated on v1.0.1 -->
+                            <br>
+                            <button class="btn btn-lg btn-success stretched_button">Submit</button>
+                            <div class="gaps-3x"></div>
+                            <h3>Step 2 : Buy Ether</h3>
+                            <p>Ether is the currency used by the Ethereum Blockchain, you will need to purchase this in order to purchase tokens from ICOs on Iconemy.</p>
+                            <p>Make sure to copy your ETH address before you click exchange to speed up your buying process!</p>
 
-                            <img src="/ico_dashboard/images/human-a.jpg" alt="human">
+                            <div class="tranx-payment-info">
+                                <span class="tranx-copy-feedback copy-feedback"></span>
+                                <em class="fab fa-ethereum"></em>
+                                <input type="text" class="tranx-payment-address" value="0x4156d3342d5c385a87d264f90653733592000581" disabled>
+                                <button class="tranx-payment-copy copy-clipboard-modal" data-clipboard-text="0x4156d3342d5c385a87d264f90653733592000581"><em class="ti ti-files"></em></button>
+                            </div><!-- .tranx-payment-info --><!-- @updated on v1.0.1 -->
+                            <br><br>
 
-                            <h6>Step 2 : Get Bitcoin, Etheriam or any kind of Cryptocurrency </h6>
-                            <p>Bitcoin, still being the single most dominant cryptocurrency, is accepted pretty much anywhere in the crypto world. However, as Ethereum offers a stable and convenient Blockchain platform for developers to set up their projects.</p>
+                            <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=38x0pi1xviqkj2hq&address=0xCcAafb81A643F636D6df882c1Ea5f7f964efb7fF&amount=25&ref_id=38x0pi1xviqkj2hq&color=006edd" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" id="desktop_pay_btn"> Can't load widget </iframe>
 
-                            <h6>Step 3 : Buy tokens from active ICO</h6>
-                            <p>Bitcoin, still being the single most dominant cryptocurrency, is accepted pretty much anywhere in the crypto world. However, as Ethereum offers a stable and convenient Blockchain platform for developers to set up their projects.</p>
+
+                            <script type="text/javascript">
+                                function open_widget(a, e) {
+                                    e.preventDefault();
+                                    var link = a.href;
+                                    window.open(link, 'Changelly', 'width=600,height=470,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=0,left=0,top=0');
+                                    return false;
+                                }
+                            </script>
+                            <a onclick="open_widget(this, event);" href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=38x0pi1xviqkj2hq&address=&amount=25&ref_id=38x0pi1xviqkj2hq&color=0528fd" id="mobile_pay_btn">
+                                <img src="https://changelly.com/pay_button_buy_sell.png" alt="Changelly" />
+                            </a>
+    
+                            <div class="gaps-3x"></div>
+                            <div class="gaps-3x"></div>
+                            <h3>Step 3 : Buy tokens from an ICO</h3>
+                            <p>All set! Now all you have to do is click 'Buy now' on the token sales listed on Iconemy! As you were looking at metafusion, would you like to buy those tokens now?</p>
+                            <a href="/ico/dashboard" class="btn btn-lg btn-success stretched_button">Click here to buy MTF</a>
 
                         </div>
 

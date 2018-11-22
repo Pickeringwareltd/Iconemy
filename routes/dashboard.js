@@ -16,6 +16,9 @@ module.exports = function (app) {
 	app.get('/ico/dashboard/transactions', function(req, res) {
 	  	res.render('ico_dashboard/transactions');
 	});  
+	app.get('/ico/dashboard/smartdrop', function(req, res) {
+	  	res.render('ico_dashboard/smartdrop');
+	});  
 	app.get('/ico/dashboard/login', function(req, res) {
 	  	res.render('ico_dashboard/login');
 	});  
