@@ -1647,19 +1647,14 @@ textarea {
 
 #footers {
     position: relative;
-    margin-top: 50px !important;
+    margin-top: 0px !important;
     padding-top: 60px;
     padding-bottom: 60px;
-    background-color: #eff6ff;
 }
 
 .footer-brand {
     display: inline-block;
     margin-bottom: 25px;
-}
-
-.footer_container {
-	width: 100% !important;
 }
 
 ul.social-center {
@@ -1680,6 +1675,7 @@ ul.social-center {
 
 .footer-subscription {
     position: relative;
+    margin-right: 90px;
     margin-left: -30px;
 }
 
@@ -1688,7 +1684,7 @@ ul.social-center {
 }
 
 .footer-subscription .input-round {
-    color: #000;
+    color: #fff;
     background: rgba(57, 169, 255, 0.5);
     border: 1px solid transparent;
     border-radius: 5px;
@@ -1702,13 +1698,11 @@ ul.social-center {
 .footer-subscription .btn.btn-plane {
     min-width: 110px;
     border-radius: 23px;
-    display: block; 
-    margin: 20px auto;
 }
 
 .btn.btn-plane {
-    background: #4159FB;
-    color: #fff;
+    background: #fff;
+    color: #3455ff;
 }
 
 .subscribe-results {
@@ -1754,20 +1748,8 @@ ul.social-center {
     color: black;
 }
 
-.footer_social {
-	padding-top: 20px;
-	padding-right: 10px;
-	font-size: 20px;
-}
-
 @media only screen and (max-width: 1200px){
 	.res-l-bttm {
     	margin-bottom: 60px;
-	}
-}
-
-@media only screen and (max-width: 576px){
-	.footer-subscription {
-	     margin-left: 0px; 
 	}
 }

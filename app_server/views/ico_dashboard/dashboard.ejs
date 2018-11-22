@@ -13,12 +13,9 @@
 	<link rel="stylesheet" href="/ico_dashboard/css/vendor.bundle.css?ver=101">
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/ico_dashboard/css/style.css?ver=101">
-	
 </head>
 
 <body class="user-dashboard">
-    
-    
     <div class="topbar">
         <div class="topbar-md d-lg-none">
             <div class="container">
@@ -150,6 +147,8 @@
                         <li><a href="/ico/dashboard"><em class="ti ti-dashboard"></em>Dashboard</a></li>
                         <li><a href="/ico/dashboard/team"><em class="ti ti-user"></em>Team</a></li>
                         <li><a href="/ico/dashboard/community#disqus_thread""><em class="ti ti-comments"></em>Community</a></li>
+                        <li><a href="/ico/dashboard/smartdrop"><em class="ti ti-star"></em>Bounty campaign</a></li>
+                        <li><a href="/ico/dashboard/smartdrop"><em class="ti ti-package"></em>Airdrop</a></li>
                         <li><a href="/ico/dashboard/transactions"><em class="ti ti-wallet"></em>Your transactions</a></li>
                     </ul><!-- .user-icon-nav -->
                     <div class="user-sidebar-sap"></div><!-- .user-sidebar-sap -->
@@ -405,10 +404,13 @@
         </div><!-- .modal-dialog -->
     </div>
     <!-- Modal End -->
+
+    <% include ico_dashboard/partials/footer %>
     
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
+    <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
     <script src="https://ucarecdn.com/b3ac3ee1-bbd1-4585-87b5-d2f1cfa438e1/new_sale.js"></script>
 </body>
 </html>

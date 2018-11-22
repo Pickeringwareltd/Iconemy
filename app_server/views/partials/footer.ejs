@@ -19,12 +19,29 @@
 				<div class="col-sm-6 col-xl-4 res-l-bttm">
 					<div class="footer-subscription">
 						<h6>Create your own crowdsale now</h6>
-						<form id="subscribe-form" action="form/subscribe.php" method="post" class="subscription-form">
-							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email" >
-							<input type="text" class="d-none" name="form-anti-honeypot" value="">
-							<button type="submit" class="btn btn-plane">Subscribe</button>
-							<div class="subscribe-results"></div>
-						</form>
+						<div id="subscribe-form" class="subscription-form">
+							<input type="text" name="youremail" class="input-round required email" placeholder="Enter your email address" id="email_input" data-page="investors">
+							<button type="submit" class="btn btn-plane" id="signup_btn">Sign up</button>
+							<div class="subscribe-results">
+								<div class="alert alert-success" id="success_box" style="display: none;">
+									 <p id="success_message"></p>
+								</div>
+								<div class="alert alert-danger" id="error_box" style="display: none;">
+								  <p id="error_message"></p>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="subscribe-results">
+							<div class="alert alert-success" id="success_box" style="display: none;">
+								 <p id="success_message"></p>
+							</div>
+							<div class="alert alert-danger" id="error_box" style="display: none;">
+							  <p id="error_message"></p>
+							</div>
+						</div>
+
 					</div>
 				</div><!-- .col  -->
 				<div class="col-xl-4">
