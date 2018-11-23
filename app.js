@@ -23,9 +23,6 @@ const cors = require('cors');
 const https = require('./config/https');
 var app = express();
 
-// use it before all route definitions
-app.use(cors());
-
 // Require the connection to the database (mongoose)
 require('./app_api/models/db');
 
