@@ -1839,4 +1839,12 @@ ul.social-center {
 	.footer-subscription {
 	     margin-left: 0px; 
 	}
+
+	body {
+		background-color: #4159FB;
+	}
+
+	.share-links li a {
+		color: #4159FB;
+	}
 }
