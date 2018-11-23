@@ -326,7 +326,7 @@
                                     </div><!-- .col -->
                                 </div><!-- .row -->
                             </div><!-- .payment-summary -->
-                            <a href="#" class="btn btn-primary payment-btn" data-dismiss="modal" data-toggle="modal" data-target="#tranxETHs">Purchase Tokens</a>
+                            <a href="#" class="btn btn-primary payment-btn" data-dismiss="modal" data-toggle="modal" data-target="#tranxETHs" id="purchase_tokens_btn">Purchase Tokens</a>
                         </form><!-- form -->
                 </div><!-- .tranx-popup -->
             </div><!-- .modal-content -->
@@ -367,8 +367,8 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="total_tokens">1234.45 <span class="currency">MTF</span></h4>
-                            <p class="dollar_per_token">$0.23 / MTF</p>
+                            <h4 class="total_tokens"><span id="tokens_summary">1234.45</span><span class="currency"> MTF</span></h4>
+                            <p class="dollar_per_token">$<span id="usd_per_token">0.23</span> / MTF</p>
                         </div>
                     </div>
                     <div class="row">
@@ -376,7 +376,7 @@
                             <p class="row_title">Tokens</p>
                         </div>
                         <div class="col-6">
-                            <p class="row_data">$234.56</p>
+                            <p class="row_data">$<span id="tokens_in_usd">234.56</span></p>
                         </div>
                     </div>
                     <div class="row">
@@ -384,7 +384,7 @@
                             <p class="row_title">Network fee</p>
                         </div>
                         <div class="col-6">
-                            <p class="row_data">$0.50</p>
+                            <p class="row_data">$<span id="gas_cost">0.50</span></p>
                         </div>
                     </div>
                     <hr />
@@ -393,7 +393,7 @@
                             <p class="row_title total_title">Total</p>
                         </div>
                         <div class="col-6">
-                            <p class="row_data total_price">$235.06</p>
+                            <p class="row_data total_price">$<span id="total_cost_summary">235.06</span></p>
                         </div>
                     </div>
                     <div class="row">
@@ -413,6 +413,6 @@
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
     <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
-    <script src="https://ucarecdn.com/b3ac3ee1-bbd1-4585-87b5-d2f1cfa438e1/new_sale.js"></script>
+    <script src="https://ucarecdn.com/890ccd62-c585-49cc-8f5a-b6a6d7175d98/new_sale.js"></script>
 </body>
 </html>
