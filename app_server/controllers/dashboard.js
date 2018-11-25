@@ -23,6 +23,7 @@ var metafusion_object = {
 		description: 'MetaFusion combines all of the top 100 cryptocurrecniess on https://coinmarketcap.com (except those screened-out as scams or for other investment analysis reasons - see Whitepaper for details) plus many of those outside of the top 100 that have certain “growth” characteristics or other unique or special features. MetaFusion therefore provides a COMPLETE cryptocurrency investment solution. By investing in MetaFusion you have the asset class fully covered in just one token.',
 		video_url: '',
 		js_file_url: 'https://ucarecdn.com/727ffd84-febd-4ab4-9c07-f126d6572afc/new_sale.js',
+		current_sale_index: null,
 		social_links: {
 			twitter: 'https://twitter.com/MetaFusionToken',
 			instagram: 'https://www.instagram.com/MetaFusionToken/'
@@ -35,7 +36,8 @@ var metafusion_object = {
 			 	start_date: '2018-12-22 12:00:00.853Z',
 			 	end_date: '2019-1-22 12:00:00.853Z',
 			 	total_tokens: 100000000,
-			 	token_price: 0.0012
+			 	token_price: 0.0012,
+			 	has_introducer: true,
 			 }
 		],
 		token: {
@@ -90,7 +92,8 @@ var pov_object = {
 		tag_line: 'A PLANET FOR ADULTS WITH ITS OWN RULES AND A NEW LEVEL OF PERCEPTION',
 		description: 'While doing creative work and implementing their ideas via innovative IT technologies, each participant gets an opportunity to earn money. Using the growing VR market with the purpose to integrate it in POV and adult content by developing responsive adult toys. Sales promotion and preventing distribution of pirated content through engaging all the participants of the service, stealing does not make any sense, if one can earn by that',
 		video_url: 'https://www.youtube.com/embed/gx9Tc_Nd-QY',
-		js_file_url: 'https://ucarecdn.com/ac880f13-d3b7-4471-9544-5a20757ee551/pov.js',
+		js_file_url: 'https://ucarecdn.com/b3b205bb-1b77-42da-901f-ceec2e5952fb/pov.js',
+		current_sale_index: 0,
 		social_links: {
 			telegram: 'https://t.me/povcoin',
 			twitter: 'https://twitter.com/povr_',
@@ -107,7 +110,8 @@ var pov_object = {
 			 	start_date: '2018-12-22 12:00:00.853Z',
 			 	end_date: '2019-1-22 12:00:00.853Z',
 			 	total_tokens: 100000000,
-			 	token_price: 0.0012
+			 	token_price: 0.00004,
+			 	has_introducer: false,
 			 }
 		],
 		token: {

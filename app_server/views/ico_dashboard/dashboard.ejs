@@ -98,7 +98,12 @@
                                             <div class="progress-percent" style="width:25%"></div>
                                         </div> -->
                                     <!-- </div> -->
-                                    <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                    <% if(crowdsales[current_sale_index].has_introducer) { %>
+                                        <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                    <% } else { %>
+                                        <a href="#" data-toggle="modal" data-target="#tranxETH2" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                    <% } %>
+
                                     <br><br>
                                     <h2 class="user-panel-title">Description</h2>
 
@@ -131,11 +136,11 @@
                                           </tr>
                                           <tr>
                                             <td>Total supply</td>
-                                            <td>100,000,000 MTF</td>
+                                            <td>100,000,000 <%= token.abbreviation %></td>
                                           </tr>
                                           <tr>
                                             <td>Token price</td>
-                                            <td>1 MTF = <%= crowdsales[0].token_price %> ETH</td>
+                                            <td>1 <%= token.abbreviation %> = <%= crowdsales[current_sale_index].token_price %> ETH</td>
                                           </tr>
                                         </tbody>
                                       </table>

@@ -16,15 +16,15 @@
                                         <div class="payment-get">
                                             <label for="paymentGet">Tokens to Purchase</label>
                                             <div class="payment-input">
-                                                <input class="input-bordered" type="text" id="tokens" value="1200">
-                                                <span class="payment-get-cur payment-cal-cur">mtf</span>    
+                                                <input class="input-bordered" type="text" id="tokens" value="5000">
+                                                <span class="payment-get-cur payment-cal-cur"><%= token.abbreviation %></span>    
                                             </div>
                                         </div>
                                         <em class="ti ti-exchange-vertical"></em>
                                         <div class="payment-from">
                                             <label for="paymentFrom">Payment Amount</label>
                                             <div class="payment-input">
-                                                <input class="input-bordered" type="text" id="eth" data-price="0.00004" value="1.234">
+                                                <input class="input-bordered" type="text" id="eth" data-price="0.00004" value="0.2">
                                                 <span class="payment-from-cur payment-cal-cur">eth</span>    
                                             </div>
                                         </div>
@@ -33,7 +33,7 @@
                                 </div><!-- .col -->
                             </div><!-- .row -->
                             <div class="gaps-1x"></div>
-                            <div class="payment-calculator-note"><i class="fas fa-info-circle"></i>The calculator helps you to convert required currency to MTF tokens.</div>
+                            <div class="payment-calculator-note"><i class="fas fa-info-circle"></i>The calculator helps you to convert required currency to <%= token.abbreviation %> tokens.</div>
                             <div class="gaps-3x"></div>
                             <div class="payment-summary">
                                 <div class="row">
@@ -49,7 +49,7 @@
                                         <div class="payment-summary-item payment-summary-bonus">
                                             <h6 class="payment-summary-title">Bonus</h6>
                                             <div class="payment-summary-info">
-                                                <span>+</span> <span class="payment-summary-amount" id="bonus">23.4</span> <span>mtf</span>
+                                                <span>+</span> <span class="payment-summary-amount" id="bonus">23.4</span> <span><%= token.abbreviation %></span>
                                             </div>
                                         </div>
                                     </div><!-- .col -->
@@ -57,7 +57,7 @@
                                         <div class="payment-summary-item payment-summary-tokens">
                                             <h6 class="payment-summary-title">Tokens Received</h6>
                                             <div class="payment-summary-info">
-                                                <span class="payment-summary-amount" id="total_tokens">12,200</span> <span>mtf</span>
+                                                <span class="payment-summary-amount" id="total_tokens">12,200</span> <span><%= token.abbreviation %></span>
                                             </div>
                                         </div>
                                     </div><!-- .col -->
@@ -102,40 +102,53 @@
                             <h1>Confirm payment</h1>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h4 class="total_tokens"><span id="tokens_summary">1234.45</span><span class="currency"> MTF</span></h4>
-                            <p class="dollar_per_token">$<span id="usd_per_token">0.23</span> / MTF</p>
+                    <div id="order_summary_text">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="total_tokens"><span id="tokens_summary">1234.45</span><span class="currency"> <%= token.abbreviation %></span></h4>
+                                <p class="dollar_per_token">$<span id="usd_per_token">0.23</span> / <%= token.abbreviation %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="row_title">Tokens</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="row_data">$<span id="tokens_in_usd">234.56</span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="row_title">Network fee</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="row_data">$<span id="gas_cost">0.50</span></p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="row_title total_title">Total</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="row_data total_price">$<span id="total_cost_summary">235.06</span></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="#" class="btn btn-primary payment-btn final_confirm_btn" id="paynow_btn">Continue</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="row_title">Tokens</p>
-                        </div>
-                        <div class="col-6">
-                            <p class="row_data">$<span id="tokens_in_usd">234.56</span></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="row_title">Network fee</p>
-                        </div>
-                        <div class="col-6">
-                            <p class="row_data">$<span id="gas_cost">0.50</span></p>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="row_title total_title">Total</p>
-                        </div>
-                        <div class="col-6">
-                            <p class="row_data total_price">$<span id="total_cost_summary">235.06</span></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <a href="#" class="btn btn-primary payment-btn final_confirm_btn" data-dismiss="modal" id="paynow_btn">Continue</a>
+                    <div id="order_summary_loading" style="display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <img src="/ico_dashboard/images/loading_img.gif" id="tx_loading_img">
+                                <img src="/ico_dashboard/images/success_img.png" id="tx_success_img" style="display: none;">
+                                <img src="/ico_dashboard/images/error_img.png" id="tx_error_img" style="display: none;">
+                                <a href="#" class="btn btn-primary payment-btn final_confirm_btn" data-dismiss="modal" id="paynow_btn">Continue</a>
+                            </div>
                         </div>
                     </div>
                 </div><!-- .tranx-popup -->
