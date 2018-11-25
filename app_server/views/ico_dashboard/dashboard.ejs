@@ -32,109 +32,114 @@
                 <% include ico_dashboard/partials/sidebar %>
                 
                 <div class="user-content">
+                    <div class="mobile_cover">
+                        <img src="<%= cover_photo %>" id="metafusion_cover_mobile">
+                    </div>
                     <div class="user-panel">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="<%= cover_photo %>" id="metafusion_cover">
-                            </div><!-- .col -->
-                            <div class="col-md-6">
-                                <h1 class="mobile_center_text" id="project_name"><%= name %> <span class="token_abbrev"><%= token.abbreviation %></span></h1>
-                                <p id="project_time_left" data-date="<%= crowdsales[0].start_date %>" class="mobile_center_text countdown-clock">22<span class="time_unit">d</span> 16<span class="time_unit">h</span> 17<span class="time_unit">m</span> 32<span class="time_unit">s</span></p>
-                                <ul class="share-links mobile_center_text">
-                                    <li><a href="<%= website_url %>" target="_blank"><em class="ti ti-world"></em></a></li>
-                                    <li><a href="<%= social_links.instagram %>" target="_blank"><em class="fab fa-instagram"></em></a></li>
-                                    <li><a href="<%= social_links.twitter %>" target="_blank"><em class="fab fa-twitter"></em></a></li>
-                                    <li><a href="" target="_blank"><em class="fab fa-github"></em></a></li>
-                                    <li><a target="_blank" href="<%= whitepaper_url %>"><em class="ti ti-files"></em></a></li>
-                                </ul><!-- .share-links -->
-                            </div><!-- .col -->
-                        </div><!-- .row -->
-                        <div class="row">
-                            <div class="col-12 tags_section">
-                                <div class="dashboard_tags">
-                                    <ul>
-                                        <% tags.forEach(function(tag) { %>
-                                            <li><a href="#" class="tag"><%= tag %></a></li>
-                                        <% }) %>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="tile-item tile-index">
-                                    <div class="tile-bubbles"></div>
-                                    <h6 class="tile-title_index">Total supply</h6>
-                                    <h1 class="tile-info_index">100,000,000 <%= token.abbreviation %></h1>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="tile-item tile-index">
-                                    <div class="tile-bubbles"></div>
-                                    <h6 class="tile-title_index">Total sold</h6>
-                                    <h1 class="tile-info_index"><span id="tokens-sold"></span> <%= token.abbreviation %></h1>
-                                </div>
-                            </div>
-                        </div><!-- .row -->
-                        <div class="row">
-                            <div class="col-12">
-<!--                                 <div class="progress-card" style="border: none; margin-bottom: 50px; margin-top: 50px;">
-                                    <ul class="progress-info">
-                                        <li><span>Raised -</span> 2,758 ICOX</li>
-                                        <li><span>TOTAL -</span> 1,500,000 ICOX</li>
-                                    </ul>
-                                    <div class="progress-bar">
-                                        <div class="progress-hcap" style="width:90%">
-                                            <div>Hard cap <span>1,400,000</span></div>
-                                        </div>
-                                        <div class="progress-scap" style="width:34%">
-                                            <div>Soft cap <span>40,000</span></div>
-                                        </div>
-                                        <div class="progress-psale" style="width:12%">
-                                            <div>Pre Sale <span>10,000</span></div>
-                                        </div>
-                                        <div class="progress-percent" style="width:25%"></div>
-                                    </div> -->
-                                <!-- </div> -->
-                                <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-lg btn-success stretched_button">Buy now</a>
-                                <br><br>
-                                <h2 class="user-panel-title">Description</h2>
-
-                                <% if(video_url != '') { %>
-                                   
-                                    <div class="dashboard_video">
-                                        <iframe width="560" height="315" src="<%= video_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="user_body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="<%= cover_photo %>" id="metafusion_cover">
+                                </div><!-- .col -->
+                                <div class="col-md-6">
+                                    <h1 class="mobile_center_text" id="project_name"><%= name %> <span class="token_abbrev"><%= token.abbreviation %></span></h1>
+                                    <p id="project_time_left" data-date="<%= crowdsales[0].start_date %>" class="mobile_center_text countdown-clock">22<span class="time_unit">d</span> 16<span class="time_unit">h</span> 17<span class="time_unit">m</span> 32<span class="time_unit">s</span></p>
+                                    <ul class="share-links mobile_center_text">
+                                        <li><a href="<%= website_url %>" target="_blank"><em class="ti ti-world"></em></a></li>
+                                        <li><a href="<%= social_links.instagram %>" target="_blank"><em class="fab fa-instagram"></em></a></li>
+                                        <li><a href="<%= social_links.twitter %>" target="_blank"><em class="fab fa-twitter"></em></a></li>
+                                        <li><a href="" target="_blank"><em class="fab fa-github"></em></a></li>
+                                        <li><a target="_blank" href="<%= whitepaper_url %>"><em class="ti ti-files"></em></a></li>
+                                    </ul><!-- .share-links -->
+                                </div><!-- .col -->
+                            </div><!-- .row -->
+                            <div class="row">
+                                <div class="col-12 tags_section">
+                                    <div class="dashboard_tags">
+                                        <ul>
+                                            <% tags.forEach(function(tag) { %>
+                                                <li><a href="#" class="tag"><%= tag %></a></li>
+                                            <% }) %>
+                                        </ul>
                                     </div>
-                                    
-                                <% } %>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tile-item tile-index">
+                                        <div class="tile-bubbles"></div>
+                                        <h6 class="tile-title_index">Total supply</h6>
+                                        <h1 class="tile-info_index">100,000,000 <%= token.abbreviation %></h1>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tile-item tile-index">
+                                        <div class="tile-bubbles"></div>
+                                        <h6 class="tile-title_index">Total sold</h6>
+                                        <h1 class="tile-info_index"><span id="tokens-sold"></span> <%= token.abbreviation %></h1>
+                                    </div>
+                                </div>
+                            </div><!-- .row -->
+                            <div class="row">
+                                <div class="col-12">
+    <!--                                 <div class="progress-card" style="border: none; margin-bottom: 50px; margin-top: 50px;">
+                                        <ul class="progress-info">
+                                            <li><span>Raised -</span> 2,758 ICOX</li>
+                                            <li><span>TOTAL -</span> 1,500,000 ICOX</li>
+                                        </ul>
+                                        <div class="progress-bar">
+                                            <div class="progress-hcap" style="width:90%">
+                                                <div>Hard cap <span>1,400,000</span></div>
+                                            </div>
+                                            <div class="progress-scap" style="width:34%">
+                                                <div>Soft cap <span>40,000</span></div>
+                                            </div>
+                                            <div class="progress-psale" style="width:12%">
+                                                <div>Pre Sale <span>10,000</span></div>
+                                            </div>
+                                            <div class="progress-percent" style="width:25%"></div>
+                                        </div> -->
+                                    <!-- </div> -->
+                                    <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                    <br><br>
+                                    <h2 class="user-panel-title">Description</h2>
 
-                                <h5 class="user-panel-subtitle"><%= tag_line %></h5>
-                                <p><%= description %></p>
+                                    <% if(video_url != '') { %>
+                                       
+                                        <div class="dashboard_video">
+                                            <iframe width="560" height="315" src="<%= video_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        
+                                    <% } %>
 
-                                <h2 class="user-panel-title">Table of details</h2>
+                                    <h5 class="user-panel-subtitle"><%= tag_line %></h5>
+                                    <p><%= description %></p>
 
-                                  <table class="table table-hover">
-                                    <tbody>
-                                      <tr>
-                                        <td>Token Type</td>
-                                        <td>ERC-20</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Sale start time</td>
-                                        <td>22nd Dec 2018</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Sale end time</td>
-                                        <td>22nd Jan 2019</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Total supply</td>
-                                        <td>100,000,000 MTF</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Token price</td>
-                                        <td>1 MTF = <%= crowdsales[0].token_price %> ETH</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                                    <h2 class="user-panel-title">Table of details</h2>
+
+                                      <table class="table table-hover">
+                                        <tbody>
+                                          <tr>
+                                            <td>Token Type</td>
+                                            <td>ERC-20</td>
+                                          </tr>
+                                          <tr>
+                                            <td>Sale start time</td>
+                                            <td>22nd Dec 2018</td>
+                                          </tr>
+                                          <tr>
+                                            <td>Sale end time</td>
+                                            <td>22nd Jan 2019</td>
+                                          </tr>
+                                          <tr>
+                                            <td>Total supply</td>
+                                            <td>100,000,000 MTF</td>
+                                          </tr>
+                                          <tr>
+                                            <td>Token price</td>
+                                            <td>1 MTF = <%= crowdsales[0].token_price %> ETH</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                </div>
                             </div>
                         </div>     
                     </div><!-- .user-panel -->

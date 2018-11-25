@@ -1482,6 +1482,12 @@ textarea {
 	max-height: 80%;
 }
 
+#metafusion_cover_mobile {
+	display: none;
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px
+}
+
 .tile-index {
 	/*background: #E5EFFE !important;*/
 	/*border: 1px solid grey;*/
@@ -1705,18 +1711,62 @@ textarea {
 }
 
 @media only screen and (max-width: 576px){
+	.footer-subscription {
+	     margin-left: 0px; 
+	}
+
+	body {
+		background-color: #4159FB;
+	}
+
+	.share-links li a {
+		color: #304073;
+	}
+
+	.dashboard_tags ul {
+	    text-align: center;
+	}
+
 	#tranxETHs .total_tokens {
 	    font-size: 50px; 
 	}
 
+	#project_name {
+	    font-family: 'Avenir next';
+	    font-weight: 900;
+	    color: #3E3E3F;
+	}
+
+	.token_abbrev {
+	    display: block;
+	    font-weight: 400;
+	}
+
 	.dashboard_video iframe {
 		height: auto;
+	}
+
+	#metafusion_cover_mobile {
+		display: block;
+	}
+
+	#metafusion_cover {
+		display: none;
+	}
+
+	.user-panel {
+		border-top-right-radius: 0px;
+		border-top-left-radius: 0px;
 	}
 }
 
 @media only screen and (max-width: 360px){
 	#tranxETHs .total_tokens {
 	    font-size: 40px; 
+	}
+
+	.tags_section {
+	    margin-top: 5px;
 	}
 }
 
@@ -1843,16 +1893,3 @@ ul.social-center {
 	}
 }
 
-@media only screen and (max-width: 576px){
-	.footer-subscription {
-	     margin-left: 0px; 
-	}
-
-	body {
-		background-color: #4159FB;
-	}
-
-	.share-links li a {
-		color: #4159FB;
-	}
-}
