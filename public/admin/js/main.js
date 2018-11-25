@@ -1637,4 +1637,23 @@
     console.log(error);
   }
 
+  if ($.fn.summernote) {
+      $('.summernote').summernote({
+          toolbar: [
+              // [groupName, [list of button]]
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['strikethrough', 'superscript', 'subscript']],
+              ['fontsize', ['fontsize']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['height', ['height']],
+              ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+              ['float', ['floatLeft', 'floatRight', 'floatNone']],
+              ['remove', ['removeMedia']],
+              ['insert', ['link', 'picture']],
+              ['codeview', ['codeview']]
+          ]
+      });
+  }
+
 })(jQuery);

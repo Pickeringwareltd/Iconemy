@@ -74,58 +74,21 @@
 				<div class="col-lg-8">
 					<div class="blog-list">
 						<div class="row">
+							<% for (let article of articles) { %>
 							<div class="col-lg-6 offset-lg-0 col-sm-6">
 								<div class="blog-item">
-									<div class="blog-photo"><a href="/investors/blog/why_is_it_so_hard_to_invest_in_icos"><img src="/images/new_landing/blog/giving_up_cover.png" alt="blog-photo"></a></div>
+									<div class="blog-photo"><a href="/blog/<%= article.slug %>"><img src="/images/new_landing/blog/giving_up_cover.png" alt="blog-photo"></a></div>
 									<div class="blog-texts">
 										<ul class="blog-meta">
-											<li><a href="#">16 Nov, 2018</a></li>
+											<li><a href="#"><%= article.getDate() %></a></li>
 											<li><a href="#">Article</a></li>
 										</ul>
-										<h5 class="blog-title"><a href="/investors/blog/why_is_it_so_hard_to_invest_in_icos">Why is it so hard to invest into ICOs?</a></h5>
-										<p>Heres a satirical story of the average user journey when investing in their first ICO. Highlighting the need for Iconemy.</p>
+										<h5 class="blog-title"><a href="/blog/<%= article.slug %>"><%= article.title %></a></h5>
+										<p><%= article.intro %></p>
 									</div>
 								</div>
 							</div><!-- .col -->
-							<div class="col-lg-6 offset-lg-0 col-sm-6">
-								<div class="blog-item">
-									<div class="blog-photo"><a href="/owners/blog/why_do_we_need_cryptocurrencies"><img src="/images/new_landing/why_crypto_cover_pic.png" alt="blog-photo"></a></div>
-									<div class="blog-texts">
-										<ul class="blog-meta">
-											<li><a href="#">9 Nov, 2018</a></li>
-											<li><a href="#">Academy</a></li>
-										</ul>
-										<h5 class="blog-title"><a href="/owners/blog/why_do_we_need_cryptocurrencies">Why do we need cryptocurrencies?</a></h5>
-										<p>An introductory story explaining the need for traditional currencies, the introduction of the banking system and why we might be moving passed it.</p>
-									</div>
-								</div>
-							</div><!-- .col -->
-							<div class="col-lg-6 offset-lg-0 col-sm-6">
-								<div class="blog-item">
-									<div class="blog-photo"><a href="/owners/blog/icos_arent_dead_stos_not_a_replacement"><img src="/images/new_landing/cover-photo-blog.png" alt="blog-photo"></a></div>
-									<div class="blog-texts">
-										<ul class="blog-meta">
-											<li><a href="#">7 Nov, 2018</a></li>
-											<li><a href="#">Academy</a></li>
-										</ul>
-										<h5 class="blog-title"><a href="/owners/blog/icos_arent_dead_stos_not_a_replacement">Whats the difference between ICOs, ITOs, STOs and TGEs?</a></h5>
-										<p>Here we dissect the confusing acronyms being thrown around the industry, they're not as complicated as they're made out to be!</p>
-									</div>
-								</div>
-							</div><!-- .col -->
-							<div class="col-lg-6 offset-lg-0 col-sm-6">
-								<div class="blog-item">
-									<div class="blog-photo"><a href="/owners/blog/how_to_stop_ico_exit_scams"><img src="/images/new_landing/ico_exit_scams_image_small.png" alt="blog-photo"></a></div>
-									<div class="blog-texts">
-										<ul class="blog-meta">
-											<li><a href="#">05 Nov, 2018</a></li>
-											<li><a href="#">Article</a></li>
-										</ul>
-										<h5 class="blog-title"><a href="/owners/blog/how_to_stop_ico_exit_scams">Working together to improve the traditional ICO model</a></h5>
-										<p>In this article we discuss how we can come together and self-regulate the community to reduce the risk of exit-scams!</p>
-									</div>
-								</div>
-							</div><!-- .col -->
+							<% } %>
 						</div><!-- .row -->
 					</div><!-- .news-list -->
 					<!-- <div class="row res-m-bttm"> -->

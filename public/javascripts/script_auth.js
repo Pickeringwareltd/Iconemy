@@ -16,8 +16,10 @@ $(function() {
                 $signupForm.trigger('reset');
                 $('#js-success').slideDown();
             }
+        }).fail(function(response) {
+            $loginForm.find('button').text('Log In').attr('disabled', false);
         });
-    })
+    });
 
     var $loginForm = $('#js-login-form');
 
@@ -37,6 +39,8 @@ $(function() {
             } else {
                 window.location.reload();
             }
+        }).fail(function(response) {
+            $loginForm.find('button').text('Log In').attr('disabled', false);
         });
-    })
+    });
 });

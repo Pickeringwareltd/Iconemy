@@ -73,6 +73,9 @@
                             <a href="/admin/users">
                                 <i class="fas fa-table"></i>Users</a>
                         </li>
+                        <li>
+                            <a href="/admin/blog"><i class="fas fa-pencil"></i>Users</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -80,31 +83,7 @@
         <!-- END HEADER MOBILE-->
 
         <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="#">
-                    <img src="/images/Iconemy_logo_white_bg.png" alt="Iconemy" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="/admin/projects">
-                                <i class="fas fa-chart-bar"></i>Projects</a>
-                        </li>
-                        <li>
-                            <a href="/admin/users">
-                                <i class="fas fa-table"></i>Users</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
+        <%- include('partials/_menu') %>
         <!-- END MENU SIDEBAR-->
 
         <!-- PAGE CONTAINER-->

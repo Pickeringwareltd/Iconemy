@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var ctrlMain = require('../controllers/main');
+var blog = require('../controllers/blogController');
 var needsLogIn = require('./auth');
 var onlyAdmin = require('./onlyAdmin');
 
@@ -15,5 +16,11 @@ router.get('/projects/:projectname', needsLogIn, onlyAdmin.require, ctrlMain.pro
 router.post('/messages/:messageid', needsLogIn, onlyAdmin.require,  ctrlMain.messageResponded);
 router.post('/projects/:projectname/token/contract', needsLogIn, onlyAdmin.require,  ctrlMain.doTokenContractCreation);
 router.post('/projects/:projectname/crowdsales/:saleid/contract', needsLogIn, onlyAdmin.require,  ctrlMain.doSaleContractCreation);
+router.get('/blog', needsLogIn, onlyAdmin.require, blog.index);
+router.get('/blog/create', needsLogIn, onlyAdmin.require, blog.create);
+router.post('/blog/create', needsLogIn, onlyAdmin.require, blog.create);
+router.get('/blog/:id', needsLogIn, onlyAdmin.require, blog.edit);
+router.post('/blog/:id', needsLogIn, onlyAdmin.require, blog.edit);
+router.get('/blog/:id/delete', needsLogIn, onlyAdmin.require, blog.delete);
 
 module.exports = router;
