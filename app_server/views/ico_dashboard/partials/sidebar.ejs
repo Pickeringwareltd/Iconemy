@@ -1,0 +1,43 @@
+                <div class="user-sidebar">
+                    <div class="user-sidebar-overlay"></div>
+                    <div class="user-box d-lg-block mobile_menu">
+                        <div class="user-image">
+                            <img src="<%= token.logo_url %>" alt="thumb">
+                        </div>
+                        <h6 class="user-name token-name"><%= token.name %></h6>
+                        <div class="user-uid" id="address_copy">Address <span class="token_address"><%= token.contract_address %></span></div>
+                        <ul class="btn-grp guttar-10px">
+                            <li><a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-xs btn-success">Buy now</a></li>
+                        </ul>
+                    </div><!-- .user-box -->
+                    <ul class="user-icon-nav">
+                        <li><a href="/ico/dashboard"><em class="ti ti-dashboard"></em>Dashboard</a></li>
+                        <li><a href="/ico/dashboard/team"><em class="ti ti-user"></em>Team</a></li>
+                        <li><a href="/ico/dashboard/community#disqus_thread""><em class="ti ti-comments"></em>Community</a></li>
+                        <li><a href="/ico/dashboard/smartdrop"><em class="ti ti-star"></em>Bounty campaign</a></li>
+                        <li><a href="/ico/dashboard/smartdrop"><em class="ti ti-package"></em>Airdrop</a></li>
+                        <li><a href="/ico/dashboard/transactions"><em class="ti ti-wallet"></em>Your transactions</a></li>
+                        <div id="google_translate_element"></div>
+                    </ul><!-- .user-icon-nav -->
+                    <div class="user-sidebar-sap"></div><!-- .user-sidebar-sap -->
+                    <ul class="user-nav">
+                        <li><a href="/ico/dashboard/how-to">How to buy?</a></li>
+                        <li><a href="/ico/dashboard/faq">Faqs</a></li>
+                        <li><a target="_blank" href="<%= whitepaper_url %>">Whitepaper</a></li>
+                    </ul><!-- .user-nav -->
+                    <div class="user-sidebar-sap"></div><!-- .user-sidebar-sap -->
+                    <ul class="user-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/listing">Projects</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                    </ul><!-- .user-nav -->
+                    <div class="d-lg-none">
+                        <div class="user-sidebar-sap"></div>
+                        <div class="gaps-1x"></div>
+                        <ul class="topbar-action-list">
+                            <li class="topbar-action-item topbar-action-link">
+                                <a href="#"><em class="ti ti-home"></em>Back to main site</a>
+                            </li><!-- .topbar-action-item -->
+                        </ul><!-- .topbar-action-list -->
+                    </div>
+                </div><!-- .user-sidebar -->

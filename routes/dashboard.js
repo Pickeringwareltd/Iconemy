@@ -1,15 +1,15 @@
 'use strict';
 
 var express = require('express');
+var dashboard = require('../app_server/controllers/dashboard');
+var tracking = require('../add-ons/tracking');
 
 // Forward request onto the main controller
 module.exports = function (app) {
-	app.get('/ico/dashboard', function(req, res) {
-	  	res.render('ico_dashboard/dashboard');
-	}); 
-	app.get('/ico/dashboard/team', function(req, res) {
-	  	res.render('ico_dashboard/team');
-	});   
+	app.get('/ico/dashboard', dashboard.index);
+	 
+	app.get('/ico/dashboard/team', dashboard.team);   
+	
 	app.get('/ico/dashboard/community', function(req, res) {
 	  	res.render('ico_dashboard/community');
 	});  

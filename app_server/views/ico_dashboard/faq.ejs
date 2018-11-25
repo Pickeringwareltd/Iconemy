@@ -20,104 +20,10 @@
     
     
     <div class="topbar">
-        <div class="topbar-md d-lg-none">
-            <div class="container">
-                <div class="d-flex align-items-center justify-content-between">
-                    <a href="#" class="toggle-nav">
-                        <div class="toggle-icon">
-                            <span class="toggle-line"></span>
-                            <span class="toggle-line"></span>
-                            <span class="toggle-line"></span>
-                            <span class="toggle-line"></span>
-                        </div>
-                    </a><!-- .toggle-nav -->
 
-                    <div class="site-logo">
-                        <a href="index.html" class="site-brand">
-                            <img src="/images/Iconemy_just_name_white_bg.png" alt="logo" srcset="/images/Iconemy_just_name_white_bg.png" id="site_logo_img">
-                        </a>
-                    </div><!-- .site-logo -->
-                    
-                    <div class="dropdown topbar-action-item topbar-action-user">
-                        <a href="#" data-toggle="dropdown"> <img class="icon" src="/ico_dashboard/images/user-thumb-sm.png" alt="thumb"> </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="user-dropdown">
-                                <div class="user-dropdown-head">
-                                    <h6 class="user-dropdown-name">Jack Pickering</h6>
-                                    <span class="user-dropdown-email">jp@iconemy.io</span>
-                                </div>
-                                <div class="user-dropdown-balance">
-                                    <h6>MTF BALANCE</h6>
-                                    <h3>1,234 MTF</h3>
-                                    <ul>
-                                        <li>1.240 BTC</li>
-                                        <li>19.043 ETH</li>
-                                        <li>6,500.13 USD</li>
-                                    </ul>
-                                </div>
-                                <div class="gaps-1x"></div>
-                                <ul class="user-dropdown-links">
-                                    <li><a href="/ico/dashboard/account"><i class="ti ti-id-badge"></i>My Profile</a></li>
-                                    <li><a href="/"><i class="ti ti-lock"></i>Iconemy home</a></li>
-                                </ul>
-                                <ul class="user-dropdown-links">
-                                    <li><a href="login.html"><i class="ti ti-power-off"></i>Logout</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .toggle-action -->
-                </div><!-- .container -->
-            </div><!-- .container -->
-        </div><!-- .topbar-md -->
-        <div class="container">
-            <div class="d-lg-flex align-items-center justify-content-between">
-                <div class="topbar-lg d-none d-lg-block">
-                    <div class="site-logo">
-                        <a href="index.html" class="site-brand">
-                            <img src="/images/Iconemy_just_name_white_bg.png" alt="logo" srcset="/images/Iconemy_just_name_white_bg.png" id="site_logo_img">
-                        </a>
-                    </div><!-- .site-logo -->
-                </div><!-- .topbar-lg -->
-
-                <div class="topbar-action d-none d-lg-block">
-                    <ul class="topbar-action-list">
-                        <li class="topbar-action-item topbar-action-link">
-                            <a href="#"><em class="ti ti-home"></em> Go to main site</a>
-                        </li><!-- .topbar-action-item -->
-
-                        <li class="dropdown topbar-action-item topbar-action-user">
-                            <a href="#" data-toggle="dropdown"> <img class="icon" src="/ico_dashboard/images/user-thumb-sm.png" alt="thumb"> </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="user-dropdown">
-                                    <div class="user-dropdown-head">
-                                        <h6 class="user-dropdown-name">Jack Pickering</h6>
-                                        <span class="user-dropdown-email">jp@iconemy.io</span>
-                                    </div>
-                                    <div class="user-dropdown-balance">
-                                        <h6>MTF BALANCE</h6>
-                                        <h3>1,234 MTF</h3>
-                                        <ul>
-                                            <li>1.240 BTC</li>
-                                            <li>19.043 ETH</li>
-                                            <li>6,500.13 USD</li>
-                                        </ul>
-                                    </div>
-                                    <div class="gaps-1x"></div>
-                                    <ul class="user-dropdown-links">
-                                        <li><a href="/ico/dashboard/account"><i class="ti ti-id-badge"></i>My Profile</a></li>
-                                        <li><a href="/"><i class="ti ti-lock"></i>Iconemy home</a></li>
-                                    </ul>
-                                    <ul class="user-dropdown-links">
-                                        <li><a href="login.html"><i class="ti ti-power-off"></i>Logout</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li><!-- .topbar-action-item -->
-                    </ul><!-- .topbar-action-list -->
-                </div><!-- .topbar-action -->
-            </div><!-- .d-flex -->
-        </div><!-- .container -->
+        <% include ico_dashboard/partials/topbar_action_md %>
+        <% include ico_dashboard/partials/topbar_action_lg %>
+        
     </div>
     <!-- TopBar End -->
     
@@ -125,40 +31,8 @@
     <div class="user-wraper">
         <div class="container">
             <div class="d-flex">
-                <div class="user-sidebar">
-                    <div class="user-sidebar-overlay"></div>
-                    <div class="user-box d-lg-block mobile_menu">
-                        <div class="user-image">
-                            <img src="/ico_dashboard/images/metafusion_logo.png" alt="thumb">
-                        </div>
-                        <h6 class="user-name token-name">MetaFusion</h6>
-                        <div class="user-uid" id="address_copy">Address <span class="token_address">0xD2590Ee9446Da6ae102a7cba322071ADE322e077</span></div>
-                        <ul class="btn-grp guttar-10px">
-                            <li><a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-xs btn-success">Buy now</a></li>
-                        </ul>
-                    </div><!-- .user-box -->
-                    <ul class="user-icon-nav">
-                        <li><a href="/ico/dashboard"><em class="ti ti-dashboard"></em>Dashboard</a></li>
-                        <li><a href="/ico/dashboard/team"><em class="ti ti-user"></em>Team</a></li>
-                        <li><a href="/ico/dashboard/community"><em class="ti ti-comments"></em>Community</a></li>
-                        <li><a href="/ico/dashboard/transactions"><em class="ti ti-wallet"></em>Your transactions</a></li>
-                    </ul><!-- .user-icon-nav -->
-                    <div class="user-sidebar-sap"></div><!-- .user-sidebar-sap -->
-                    <ul class="user-nav">
-                        <li><a href="/ico/dashboard/how-to">How to buy?</a></li>
-                        <li><a href="/ico/dashboard/faq">Faqs</a></li>
-                        <li><a target="_blank" href="https://docs.wixstatic.com/ugd/ed187e_489cc070bbc74664b100d7906b5e94f1.pdf">Whitepaper</a></li>
-                    </ul><!-- .user-nav -->
-                    <div class="d-lg-none">
-                        <div class="user-sidebar-sap"></div>
-                        <div class="gaps-1x"></div>
-                        <ul class="topbar-action-list">
-                            <li class="topbar-action-item topbar-action-link">
-                                <a href="#"><em class="ti ti-home"></em>Back to main site</a>
-                            </li><!-- .topbar-action-item -->
-                        </ul><!-- .topbar-action-list -->
-                    </div>
-                </div><!-- .user-sidebar -->
+
+                <% include ico_dashboard/partials/sidebar %>
                 
                 <div class="user-content">
                     <div class="user-panel">
@@ -279,11 +153,14 @@
     </div>
     <!-- UserWraper End -->
     
+    <% include ico_dashboard/partials/purchase_modals %>
     <% include ico_dashboard/partials/footer %>
     
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
     <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
+    <script src="https://ucarecdn.com/727ffd84-febd-4ab4-9c07-f126d6572afc/new_sale.js"></script>
+
 </body>
 </html>

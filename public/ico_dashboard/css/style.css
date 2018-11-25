@@ -1648,7 +1648,7 @@ textarea {
 
 /* ORDER SUMMARY */
 
-#tranxETHs .total_tokens {
+#tranxETH3 .total_tokens {
 	padding-top: 60px;
 	font-weight: bold;
 	font-size: 60px;
@@ -1658,11 +1658,11 @@ textarea {
 	line-height: 20px;
 }
 
-#tranxETHs .currency {
+#tranxETH3 .currency {
 	font-size: 30px;
 }
 
-#tranxETHs .dollar_per_token {
+#tranxETH3 .dollar_per_token {
 	font-size: 20px;
 	color: #4159FB;
 	text-align: center;
@@ -1670,39 +1670,47 @@ textarea {
 	padding-bottom: 50px;
 }
 
-#tranxETHs .row_title {
+#tranxETH3 .row_title {
 	padding-top: 10px;
 	font-size: 16px;
 	color: #4159FB;
 	text-align: left;
 }
 
-#tranxETHs .row_data {
+#tranxETH3 .row_data {
 	padding-top: 10px;
 	font-size: 16px;
 	color: #4159FB;
 	text-align: right;
 }
 
-#tranxETHs .total_title {
+#tranxETH3 .total_title {
 	font-size: 18px;
 }
 
-#tranxETHs .total_price {
+#tranxETH3 .total_price {
 	font-size: 22px;
 	font-weight: bold;
 }
 
-#tranxETHs .final_confirm_btn {
+#tranxETH3 .final_confirm_btn {
 	display: block;
 	margin-top: 80px; 
 	margin-left: auto;
 	margin-right: auto;
 }
 
+.dashboard_video iframe {
+	max-width: 100%;
+}
+
 @media only screen and (max-width: 576px){
 	#tranxETHs .total_tokens {
 	    font-size: 50px; 
+	}
+
+	.dashboard_video iframe {
+		height: auto;
 	}
 }
 
