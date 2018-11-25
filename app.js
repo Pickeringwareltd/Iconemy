@@ -85,6 +85,7 @@ app.use(session({
     store: session_store
 }));
 app.use(flash(app));
+app.use(cors())
 
 app.use(passport.initialize());
 app.use(passport.session());
