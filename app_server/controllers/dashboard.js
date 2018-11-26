@@ -92,7 +92,7 @@ var pov_object = {
 		tag_line: 'A PLANET FOR ADULTS WITH ITS OWN RULES AND A NEW LEVEL OF PERCEPTION',
 		description: 'While doing creative work and implementing their ideas via innovative IT technologies, each participant gets an opportunity to earn money. Using the growing VR market with the purpose to integrate it in POV and adult content by developing responsive adult toys. Sales promotion and preventing distribution of pirated content through engaging all the participants of the service, stealing does not make any sense, if one can earn by that',
 		video_url: 'https://www.youtube.com/embed/gx9Tc_Nd-QY',
-		js_file_url: 'https://ucarecdn.com/f4f4b37b-dfd9-45e0-aee7-3b2ececc23d7/pov.js',
+		js_file_url: 'https://ucarecdn.com/a49a406b-981a-4ef9-85b9-a0e61956a3c8/pov.js',
 		current_sale_index: 0,
 		social_links: {
 			telegram: 'https://t.me/povcoin',
