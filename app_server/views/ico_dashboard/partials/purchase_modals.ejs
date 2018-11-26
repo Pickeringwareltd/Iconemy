@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-12">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h1>Confirm payment</h1>
+                            <!-- <h1>Confirm payment</h1> -->
                         </div>
                     </div>
                     <div id="order_summary_text">
@@ -144,10 +144,33 @@
                     <div id="order_summary_loading" style="display: none;">
                         <div class="row">
                             <div class="col-12">
-                                <img src="/ico_dashboard/images/loading_img.gif" id="tx_loading_img">
-                                <img src="/ico_dashboard/images/success_img.png" id="tx_success_img" style="display: none;">
-                                <img src="/ico_dashboard/images/error_img.png" id="tx_error_img" style="display: none;">
-                                <a href="#" class="btn btn-primary payment-btn final_confirm_btn" data-dismiss="modal" id="paynow_btn">Continue</a>
+
+                                <div class="status status-empty" id="tx_loading_img">
+                                    <span class="status-text">Please wait for your transaction to process...</span>
+
+                                    <div class="status-icon">
+                                        <em class="ti ti-more"></em>
+                                    </div>
+                                </div>
+
+                                <!-- if there is no transaction you can use this code -->
+                                <div class="status status-empty" id="tx_success_img" style="display: none;">
+                                    <span class="status-text">Success! Your tokens are in your wallet.</span>
+                                    <div class="status-icon">
+                                        <em class="ti ti-wallet"></em>
+                                    </div>
+                                    <a href="tokens.html" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2">Buy more</a>
+                                </div>
+
+                                <!-- if there is no transaction you can use this code -->
+                                <div class="status status-empty" id="tx_error_img" style="display: none;">
+                                    <span class="status-text">Oops! Somethings gone wrong.</span>
+                                    <div class="status-icon">
+                                        <em class="ti ti-close"></em>
+                                    </div>
+                                    <a href="tokens.html" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2">Try again</a>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

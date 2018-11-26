@@ -92,7 +92,7 @@ var pov_object = {
 		tag_line: 'A PLANET FOR ADULTS WITH ITS OWN RULES AND A NEW LEVEL OF PERCEPTION',
 		description: 'While doing creative work and implementing their ideas via innovative IT technologies, each participant gets an opportunity to earn money. Using the growing VR market with the purpose to integrate it in POV and adult content by developing responsive adult toys. Sales promotion and preventing distribution of pirated content through engaging all the participants of the service, stealing does not make any sense, if one can earn by that',
 		video_url: 'https://www.youtube.com/embed/gx9Tc_Nd-QY',
-		js_file_url: 'https://ucarecdn.com/b3b205bb-1b77-42da-901f-ceec2e5952fb/pov.js',
+		js_file_url: 'https://ucarecdn.com/f4f4b37b-dfd9-45e0-aee7-3b2ececc23d7/pov.js',
 		current_sale_index: 0,
 		social_links: {
 			telegram: 'https://t.me/povcoin',
@@ -109,7 +109,7 @@ var pov_object = {
 			 	name: 'Public sale 1',
 			 	start_date: '2018-12-22 12:00:00.853Z',
 			 	end_date: '2019-1-22 12:00:00.853Z',
-			 	total_tokens: 100000000,
+			 	total_tokens: 300000000,
 			 	token_price: 0.00004,
 			 	has_introducer: false,
 			 }
@@ -117,7 +117,7 @@ var pov_object = {
 		token: {
 			name: 'POV Coin',
 			abbreviation: 'POV',
-			total_supply: 100000000,
+			total_supply: 300000000,
 			contract_address: '0XD2590EE9446DA6AE102A7CBA322071ADE322E077',
 			type: 'erc-20',
 			logo_url: '/ico_dashboard/images/povcoin.png'
