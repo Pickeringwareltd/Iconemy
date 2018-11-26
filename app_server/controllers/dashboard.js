@@ -187,3 +187,19 @@ exports.team = function(req, res){
 		errors.print(e, 'Error on server-side dashboard.js/team: ');
 	}
 };
+
+exports.community = function(req, res){
+	try{
+		res.render('ico_dashboard/community', pov_object);
+	} catch(e) {
+		res.render('error', { 
+			title: 'error',
+			message: 'We couldnt find what you were looking for!',
+			error: {
+				status: 404
+			}
+		});
+		
+		errors.print(e, 'Error on server-side dashboard.js/team: ');
+	}
+};

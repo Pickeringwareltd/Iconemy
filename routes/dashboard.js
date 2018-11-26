@@ -9,10 +9,8 @@ module.exports = function (app) {
 	app.get('/ico/dashboard', dashboard.index);
 	 
 	app.get('/ico/dashboard/team', dashboard.team);   
-	
-	app.get('/ico/dashboard/community', function(req, res) {
-	  	res.render('ico_dashboard/community');
-	});  
+
+	app.get('/ico/dashboard/community', dashboard.community);  
 	app.get('/ico/dashboard/transactions', function(req, res) {
 	  	res.render('ico_dashboard/transactions');
 	});  
