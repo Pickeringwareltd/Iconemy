@@ -11,10 +11,8 @@ module.exports = function (app) {
 	app.get('/ico/dashboard/team', dashboard.team);   
 
 	app.get('/ico/dashboard/community', dashboard.community);
-	  
-	app.get('/ico/dashboard/transactions', function(req, res) {
-	  	res.render('ico_dashboard/transactions');
-	});  
+
+	app.get('/ico/dashboard/transactions', dashboard.transactions);  
 	app.get('/ico/dashboard/smartdrop', function(req, res) {
 	  	res.render('ico_dashboard/smartdrop');
 	});  
@@ -36,7 +34,5 @@ module.exports = function (app) {
 	app.get('/ico/dashboard/faq', function(req, res) {
 	  	res.render('ico_dashboard/faq');
 	}); 
-	app.get('/ico/dashboard/how-to', function(req, res) {
-	  	res.render('ico_dashboard/how-to');
-	}); 
+	app.get('/ico/dashboard/how-to', dashboard.how_to); 
 };

@@ -13,11 +13,11 @@
 	<link rel="stylesheet" href="/ico_dashboard/css/vendor.bundle.css?ver=101">
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/ico_dashboard/css/style.css?ver=101">
+    <link rel="stylesheet" href="/ico_dashboard/css/transactions.css?ver=101">
 	
 </head>
 
 <body class="user-dashboard">
-    
     
     <div class="topbar">
 
@@ -40,13 +40,8 @@
                             <div class="col-md-6">
                                 <div class="tile-item tile-primary">
                                     <div class="tile-bubbles"></div>
-                                    <h6 class="tile-title">METAFUSION BALANCE</h6>
-                                    <h1 class="tile-info">0 MTF</h1>
-                                    <ul class="tile-list-inline">
-                                        <li>0 BTC</li>
-                                        <li>0 ETH</li>
-                                        <li>0 USD</li>
-                                    </ul>
+                                    <h6 class="tile-title"><%= project.token.name %> BALANCE</h6>
+                                    <h1 class="tile-info"><span class="balance_num" data-price="<%= crowdsales[current_sale_index].token_price %>"></span> <%= project.token.abbreviation %></h1>
                                 </div>
                             </div><!-- .col -->
                             <div class="col-md-6">
@@ -54,8 +49,8 @@
                                     <div class="tile-bubbles"></div>
                                     <h6 class="tile-title">YOUR CONTRIBUTION</h6>
                                     <ul class="tile-info-list">
-                                        <li><span>0</span>ETH</li>
-                                        <li><span>0</span>USD</li>
+                                        <li><span class="balance_eth"></span>ETH</li>
+                                        <li><span class="balance_usd"></span>USD</li>
                                     </ul>
                                 </div>
                             </div><!-- .col -->
@@ -121,7 +116,7 @@
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
     <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
-    <script src="https://ucarecdn.com/727ffd84-febd-4ab4-9c07-f126d6572afc/new_sale.js"></script>
+    <script src="<%= js_file_url %>"></script>
 
 </body>
 </html>

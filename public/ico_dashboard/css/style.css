@@ -1584,6 +1584,24 @@ textarea {
 	word-wrap: break-word;
 }
 
+/*  */
+
+.wallet_card {
+	border-radius: 5px;
+	padding: 30px;
+	text-align: center;
+}
+
+.wallet_card p {
+	font-size: 16px;
+}
+
+.wallet_card img {
+	width: 100%;
+	height: auto;
+}
+
+
 /* How to buy screen */
 .list_image {
 	max-height: 40px;

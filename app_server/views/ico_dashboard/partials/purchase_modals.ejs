@@ -2,7 +2,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="tranx-popup">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-modalid="tranxETH2">&times;</button>
                     <h1>Buy tokens</h1>
                         <form action="#">
                             <h5 class="user-panel-subtitle">01. Read our disclaimer</h5>
@@ -75,7 +75,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="tranx-popup">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-modalid="tranxETH">&times;</button>
                     <h1>Have you been introduced?</h1>
                     <p>Introducers in this project allow you to earn a bonus of 1% on your tokens.</p>
                     <div class="gaps-1x"></div>
@@ -98,15 +98,15 @@
                 <div class="tranx-popup">
                     <div class="row">
                         <div class="col-12">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <button type="button" class="close" data-modalid="tranxETH3">&times;</button>
                             <!-- <h1>Confirm payment</h1> -->
                         </div>
                     </div>
                     <div id="order_summary_text">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="total_tokens"><span id="tokens_summary">1234.45</span><span class="currency"> <%= token.abbreviation %></span></h4>
-                                <p class="dollar_per_token">$<span id="usd_per_token">0.23</span> / <%= token.abbreviation %></p>
+                                <h4 class="total_tokens"><span id="tokens_summary">-/span><span class="currency"> <%= token.abbreviation %></span></h4>
+                                <p class="dollar_per_token">$<span id="usd_per_token">-</span> / <%= token.abbreviation %></p>
                             </div>
                         </div>
                         <div class="row">
@@ -147,10 +147,9 @@
 
                                 <div class="status status-empty" id="tx_loading_img">
                                     <span class="status-text">Please wait for your transaction to process...</span>
-
-                                    <div class="status-icon">
-                                        <em class="ti ti-more"></em>
-                                    </div>
+                                    <span class="status-text">This could be up to 1 minute.</span>
+                                    
+                                    <img src="/ico_dashboard/images/tx_loading.gif" id="tx_loading">
                                 </div>
 
                                 <!-- if there is no transaction you can use this code -->
@@ -159,7 +158,7 @@
                                     <div class="status-icon">
                                         <em class="ti ti-wallet"></em>
                                     </div>
-                                    <a href="tokens.html" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2">Buy more</a>
+                                    <a href="/ico/dashboard/transactions" class="btn btn-primary">View balance</a>
                                 </div>
 
                                 <!-- if there is no transaction you can use this code -->
@@ -168,12 +167,100 @@
                                     <div class="status-icon">
                                         <em class="ti ti-close"></em>
                                     </div>
-                                    <a href="tokens.html" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2">Try again</a>
+                                    <a href="" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2" id="reset_tx">Try again</a>
                                 </div>
                                 
                             </div>
                         </div>
                     </div>
+                </div><!-- .tranx-popup -->
+            </div><!-- .modal-content -->
+        </div><!-- .modal-dialog -->
+    </div>
+    <!-- Modal End -->
+
+    <div class="modal fade" id="no_wallet" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="tranx-popup">
+                    <button type="button" class="close" data-modalid="no_wallet">&times;</button>
+
+                    <div class="status status-empty">
+                        <span class="status-text">Oh no! We can't find your wallet.</span>
+
+                        <div class="status-icon">
+                            <em class="ti ti-wallet"></em>
+                            <div class="status-icon-sm">
+                                <em class="ti ti-close"></em>
+                            </div>
+                        </div>
+
+                        <a href="/ico/dashboard/how-to" class="btn btn-primary" id="create_wallet_btn">Create a wallet</a>
+                        <a href="#" class="btn btn-primary" id="connect_wallet_btn">Connect a wallet</a>
+                    </div>
+
+                </div><!-- .tranx-popup -->
+            </div><!-- .modal-content -->
+        </div><!-- .modal-dialog -->
+    </div>
+    <!-- Modal End -->
+
+    <div class="modal fade" id="wallet_locked" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="tranx-popup">
+
+                    <button type="button" class="close" data-modalid="wallet_locked">&times;</button>
+
+                    <div class="status status-empty">
+                        <span class="status-text">Oh no! Your wallet is locked.</span>
+
+                        <div class="status-icon">
+                            <em class="ti ti-wallet"></em>
+                            <div class="status-icon-sm">
+                                <em class="ti ti-close"></em>
+                            </div>
+                        </div>
+
+                        <a href="#" class="btn btn-primary" id="unlock_wallet_btn">Unlock wallet</a>
+                    </div>
+
+                </div><!-- .tranx-popup -->
+            </div><!-- .modal-content -->
+        </div><!-- .modal-dialog -->
+    </div>
+    <!-- Modal End -->
+
+    <div class="modal fade" id="connect_wallet" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="tranx-popup">
+
+                    <button type="button" class="close" data-modalid="connect_wallet">&times;</button>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card wallet_card">
+                                <p class="card-title">MetaMask</p>
+                                <img src="/images/metamask_list_image.png">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card wallet_card">
+                                <p class="card-title">Trezor</p>
+                                <img src="/images/trezor_wallet_image.png">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card wallet_card">
+                                <p class="card-title">Ledger</p>
+                                <img src="/images/ledger_wallet_image.png">
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" id="unlock_wallet_btn">Connect wallet</a>
+
+
                 </div><!-- .tranx-popup -->
             </div><!-- .modal-content -->
         </div><!-- .modal-dialog -->

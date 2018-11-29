@@ -18,7 +18,7 @@
                         </script>
                         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
                         <li class="topbar-action-item topbar-action-link">
-                            <a href="#"><em class="ti ti-home"></em> Go to main site</a>
+                            <a href="/listing"><em class="ti ti-home"></em> Go to listing site</a>
                         </li><!-- .topbar-action-item -->
 
                         <!-- <li class="dropdown topbar-action-item topbar-action-language"> -->
@@ -39,12 +39,11 @@
                                             <span class="user-dropdown-email">jp@iconemy.io</span>
                                     </div>
                                     <div class="user-dropdown-balance">
-                                            <h6>MTF BALANCE</h6>
-                                            <h3><span id="balance_num"></span> MTF</h3>
+                                            <h6><%= token.abbreviation %> BALANCE</h6>
+                                            <h3><span data-price="<%= crowdsales[current_sale_index].token_price %>"  class="balance_num"></span> <%= token.abbreviation %></h3>
                                             <ul>
-                                                <li>1.240 BTC</li>
-                                                <li>19.043 ETH</li>
-                                                <li>6,500.13 USD</li>
+                                                <li><span class="balance_eth"></span> ETH</li>
+                                                <li><span class="balance_usd"></span> USD</li>
                                             </ul>
                                     </div>
                                     <div class="gaps-1x"></div>

@@ -16,6 +16,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 var metafusion_object = {
+	user: {
+		userid: '12345678',
+		
+	},
+	project: {
 		name: 'MetaFusion',
 		cover_photo: '/ico_dashboard/images/metafusion_cover.png',
 		website_url: 'https://www.metafusion.io',
@@ -84,6 +89,7 @@ var metafusion_object = {
 			}
 		]
 	}
+}
 
 var pov_object = {
 		name: 'POV Coin',
@@ -92,7 +98,7 @@ var pov_object = {
 		tag_line: 'A PLANET FOR ADULTS WITH ITS OWN RULES AND A NEW LEVEL OF PERCEPTION',
 		description: 'While doing creative work and implementing their ideas via innovative IT technologies, each participant gets an opportunity to earn money. Using the growing VR market with the purpose to integrate it in POV and adult content by developing responsive adult toys. Sales promotion and preventing distribution of pirated content through engaging all the participants of the service, stealing does not make any sense, if one can earn by that',
 		video_url: 'https://www.youtube.com/embed/gx9Tc_Nd-QY',
-		js_file_url: 'https://ucarecdn.com/a49a406b-981a-4ef9-85b9-a0e61956a3c8/pov.js',
+		js_file_url: 'https://ucarecdn.com/360fe536-9319-4fc7-8961-6e89b504e8f2/pov.js',
 		current_sale_index: 0,
 		social_links: {
 			telegram: 'https://t.me/povcoin',
@@ -191,6 +197,38 @@ exports.team = function(req, res){
 exports.community = function(req, res){
 	try{
 		res.render('ico_dashboard/community', pov_object);
+	} catch(e) {
+		res.render('error', { 
+			title: 'error',
+			message: 'We couldnt find what you were looking for!',
+			error: {
+				status: 404
+			}
+		});
+		
+		errors.print(e, 'Error on server-side dashboard.js/team: ');
+	}
+};
+
+exports.transactions = function(req, res){
+	try{
+		res.render('ico_dashboard/transactions', pov_object);
+	} catch(e) {
+		res.render('error', { 
+			title: 'error',
+			message: 'We couldnt find what you were looking for!',
+			error: {
+				status: 404
+			}
+		});
+		
+		errors.print(e, 'Error on server-side dashboard.js/team: ');
+	}
+};
+
+exports.how_to = function(req, res){
+	try{
+		res.render('ico_dashboard/how-to', pov_object);
 	} catch(e) {
 		res.render('error', { 
 			title: 'error',

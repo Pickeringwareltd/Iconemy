@@ -24,13 +24,11 @@
     </div>
     <!-- TopBar End -->
     
-    
     <div class="user-wraper">
         <div class="container">
             <div class="d-flex">
 
-                <% include ico_dashboard/partials/sidebar %>
-                
+                <% include ico_dashboard/partials/sidebar %> 
                 <div class="user-content">
                     <div class="mobile_cover">
                         <img src="<%= cover_photo %>" id="metafusion_cover_mobile">
@@ -99,9 +97,9 @@
                                         </div> -->
                                     <!-- </div> -->
                                     <% if(crowdsales[current_sale_index].has_introducer) { %>
-                                        <a href="#" data-toggle="modal" data-target="#tranxETH" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                        <a href="#" class="btn btn-lg btn-success stretched_button buynow_btn">Buy now</a>
                                     <% } else { %>
-                                        <a href="#" data-toggle="modal" data-target="#tranxETH2" class="btn btn-lg btn-success stretched_button">Buy now</a>
+                                        <a href="#" class="btn btn-lg btn-success stretched_button buynow_btn">Buy now</a>
                                     <% } %>
 
                                     <br><br>
