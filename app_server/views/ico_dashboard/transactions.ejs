@@ -83,7 +83,11 @@
                                 <tbody>
                                     <% transactions.forEach(function(tx) { %>
                                         <tr>
-                                            <td class="tranx-status tranx-status-approved"><span class="d-none">Approved</span><em class="ti ti-check"></em></td>
+                                            <% if( tx.successful === true ) { %>
+                                                <td class="tranx-status tranx-status-approved"><span class="d-none">Approved</span><em class="ti ti-check"></em></td>
+                                            <% } else { %>
+                                                <td class="tranx-status tranx-status-cancled"><span class="d-none">Declined</span><em class="ti ti-close"></em></td>
+                                            <% } %>
                                             <td class="tranx-no"><span class="long_number"><%= tx.tx_id %></span>08 Jul, 18  10:20PM</td>
                                             <td class="tranx-token"><span>+<%= tx.tokens %></span><%= token.abbreviation %></td>
                                             <td class="tranx-amount"><span><%= tx.ether %></span>ETH</td>
@@ -109,7 +113,7 @@
                     <a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em class="ti ti-close"></em></a>
                     <div class="tranx-popup">
                         <h5>View Transaction Details</h5>
-                        <% if( transactions.status === true ) { %>
+                        <% if( tx.successful === true ) { %>
                             <p>Transaction <strong><%= tx.tx_id %></strong> was place on <strong>24-Jul-2018, 12:10 am</strong> and <br> it’s  <strong>Successfully Paid.</strong></p>
                         <% } else { %>
                             <p>Transaction <strong><%= tx.tx_id %></strong> was place on <strong>24-Jul-2018, 12:10 am</strong> and <br> it was <strong>Not Successful.</strong></p>
