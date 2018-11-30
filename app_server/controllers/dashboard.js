@@ -237,9 +237,63 @@ exports.community = function(req, res){
 	}
 };
 
+var renderTransactions = function(req, res, responseBody, transactions){
+	try{
+		var data;
+
+		if(responseBody[0]){
+			// Need to render crowdsale dates properly
+			data = responseBody[0];
+
+			data.transactions = [];
+
+			for(var i = 0; i < transactions.length ; i++){
+				if(transactions[i].campaign_id == data.domain){
+					data.transactions.push(transactions[i]);
+				}
+			}
+			
+			res.render('ico_dashboard/transactions', data);
+		} else {
+			res.render('error', { 
+				title: 'error',
+				message: 'We couldnt find what you were looking for!',
+				error: {
+					status: 404
+				}
+			});
+		}
+	} catch(e) {
+		errors.print(e, 'Error on server-side campaign.js/renderTeam: ');
+	}
+}
+
+
 exports.transactions = function(req, res){
 	try{
-		res.render('ico_dashboard/transactions', pov_object);
+
+		var user = req.user;
+		var transactions = user.transactions;
+
+		var requestOptions, path, campaignName;
+		// Make sure we are using the correct subdomain
+		campaignName =  req.params.campaignName;
+
+	  	// Split the path from the url so that we can call the correct server in development/production
+	  	path = '/api/campaigns/' + campaignName;
+	  
+	  	requestOptions = {
+	  		url: apiOptions.server + path,
+	  		method : "GET",
+	  		json : {
+	  			user: req.user
+	  		}
+		};
+
+	   	request( requestOptions, function(err, response, body) {
+	      	renderTransactions(req, res, body, transactions);
+	   	});
+		
 	} catch(e) {
 		res.render('error', { 
 			title: 'error',

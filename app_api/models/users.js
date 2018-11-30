@@ -7,6 +7,40 @@ const jwt = require('jsonwebtoken');
 
 owasp.config({ minLength : 8 });
 
+var transactionSchema = new mongoose.Schema({
+    tx_id: {
+        type: String,
+        required: [true, 'Please provide TX ID.']
+    },
+    timestamp: {
+        type: Date,
+        required: [true, 'Please provide TX time.']
+    },
+    campaign_id: {
+        type: String,
+        required: [true, 'Please provide a campaign ID.']
+    },
+    successful: {
+        type: Boolean,
+        required: [true, 'We need to know if it was successful.']
+    },
+    tokens: {
+        type: Number,
+        required: [true, 'Please provide the token amount']
+    },
+    bonus_tokens: Number,
+    ether: {
+        type: Number,
+        required: [true, 'Please provide ETH.']
+    },
+    address: {
+        type: String,
+        required: [true, 'Please provide address.']
+    },
+    introducer: String,
+    index: 0
+});
+
 var userSchema = new mongoose.Schema({
     email : {
         type : String,
@@ -50,7 +84,8 @@ var userSchema = new mongoose.Schema({
         get (value) {
             return moment(value);
         }
-    }
+    },
+    transactions: [transactionSchema]
 });
 
 userSchema.methods.generateJWT = function() {

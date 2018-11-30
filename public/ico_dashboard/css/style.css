@@ -1601,6 +1601,13 @@ textarea {
 	height: auto;
 }
 
+/* Transaction screen */
+.tranx-table .long_number {
+     width: 100px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
 
 /* How to buy screen */
 .list_image {

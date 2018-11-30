@@ -40,8 +40,8 @@
                             <div class="col-md-6">
                                 <div class="tile-item tile-primary">
                                     <div class="tile-bubbles"></div>
-                                    <h6 class="tile-title"><%= project.token.name %> BALANCE</h6>
-                                    <h1 class="tile-info"><span class="balance_num" data-price="<%= crowdsales[current_sale_index].token_price %>"></span> <%= project.token.abbreviation %></h1>
+                                    <h6 class="tile-title"><%= token.name %> BALANCE</h6>
+                                    <h1 class="tile-info"><span class="balance_num" data-price="<%= crowdsales[current_sale_index].token_price %>"></span> <%= token.abbreviation %></h1>
                                 </div>
                             </div><!-- .col -->
                             <div class="col-md-6">
@@ -55,59 +55,112 @@
                                 </div>
                             </div><!-- .col -->
                         </div><!-- .row -->
-
-                        <!-- if there is no transaction you can use this code -->
-<!--                         <div class="status status-empty">
-                            <div class="status-icon">
-                                <em class="ti ti-wallet"></em>
-                                <div class="status-icon-sm">
-                                    <em class="ti ti-close"></em>
+                        <% if( transactions.length === 0 ) { %>
+                            <!-- if there is no transaction you can use this code -->
+                            <div class="status status-empty">
+                                <div class="status-icon">
+                                    <em class="ti ti-wallet"></em>
+                                    <div class="status-icon-sm">
+                                        <em class="ti ti-close"></em>
+                                    </div>
                                 </div>
+                                <span class="status-text">You have no transactions! Make one here.</span>
+                                <a href="tokens.html" class="btn btn-primary" data-toggle="modal" data-target="#tranxETH" >Contribute Now</a>
                             </div>
-                            <span class="status-text">You have no transactions! Make one here.</span>
-                            <a href="tokens.html" class="btn btn-primary" data-toggle="modal" data-target="#tranxETH" >Contribute Now</a>
-                        </div> -->
+                        <% } else { %>
                         
-                        <table class="data-table tranx-table">
-                            <thead>
-                                <tr>
-                                    <th class="tranx-status"></th>
-                                    <th class="tranx-no"><span>TNX NO</span></th>
-                                    <th class="tranx-token"><span>Tokens</span></th>
-                                    <th class="tranx-amount"><span>Amount</span></th>
-                                    <th class="tranx-from"><span>From</span></th>
-                                    <th class="tranx-action"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="tranx-status tranx-status-approved"><span class="d-none">Approved</span><em class="ti ti-check"></em></td>
-                                    <td class="tranx-no"><span>ICIYOW0102</span>08 Jul, 18  10:20PM</td>
-                                    <td class="tranx-token"><span>+5,600</span>ICOX</td>
-                                    <td class="tranx-amount"><span>56.00</span>ETH <em class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="1 ETH = 100 ICOX"></em></td>
-                                    <td class="tranx-from"><span>1F1t....4xqX</span>08 Jul, 18  10:20PM</td>
-                                    <td class="tranx-action">
-                                        <a href="#" data-toggle="modal" data-target="#tranxApproved"><em class="ti ti-more-alt"></em></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tranx-status tranx-status-pending"><span class="d-none">Pending</span><em class="ti ti-alert"></em></td>
-                                    <td class="tranx-no"><span>IDIYOW0102</span>08 Jul, 18  10:20PM</td>
-                                    <td class="tranx-token"><span>+5,600</span>ICOX</td>
-                                    <td class="tranx-amount"><span>56.00</span>ETH <em class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="1 ETH = 100 ICOX"></em></td>
-                                    <td class="tranx-from"><span>1F1t....4xqX</span>08 Jul, 18  10:20PM</td>
-                                    <td class="tranx-action">
-                                        <a href="#" data-toggle="modal" data-target="#tranxPending"><em class="ti ti-more-alt"></em></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>                        
+                            <table class="data-table tranx-table">
+                                <thead>
+                                    <tr>
+                                        <th class="tranx-status"></th>
+                                        <th class="tranx-no"><span>TNX NO</span></th>
+                                        <th class="tranx-token"><span>Tokens</span></th>
+                                        <th class="tranx-amount"><span>Amount</span></th>
+                                        <th class="tranx-from"><span>From</span></th>
+                                        <th class="tranx-action"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% transactions.forEach(function(tx) { %>
+                                        <tr>
+                                            <td class="tranx-status tranx-status-approved"><span class="d-none">Approved</span><em class="ti ti-check"></em></td>
+                                            <td class="tranx-no"><span class="long_number"><%= tx.tx_id %></span>08 Jul, 18  10:20PM</td>
+                                            <td class="tranx-token"><span>+<%= tx.tokens %></span><%= token.abbreviation %></td>
+                                            <td class="tranx-amount"><span><%= tx.ether %></span>ETH</td>
+                                            <td class="tranx-from"><span class="long_number"><%= tx.address %></span>08 Jul, 18  10:20PM</td>
+                                            <td class="tranx-action">
+                                                <a href="#" data-toggle="modal" data-target="#tranx<%= tx.index %>"><em class="ti ti-more-alt"></em></a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table> 
+                        <% } %>                       
                     </div><!-- .user-panel -->
                 </div><!-- .user-content -->
             </div><!-- .d-flex -->
         </div><!-- .container -->
     </div>
     <!-- UserWraper End -->
+    <% transactions.forEach(function(tx) { %>
+        <div class="modal fade" id="tranx<%= tx.index %>" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em class="ti ti-close"></em></a>
+                    <div class="tranx-popup">
+                        <h5>View Transaction Details</h5>
+                        <% if( transactions.status === true ) { %>
+                            <p>Transaction <strong><%= tx.tx_id %></strong> was place on <strong>24-Jul-2018, 12:10 am</strong> and <br> it’s  <strong>Successfully Paid.</strong></p>
+                        <% } else { %>
+                            <p>Transaction <strong><%= tx.tx_id %></strong> was place on <strong>24-Jul-2018, 12:10 am</strong> and <br> it was <strong>Not Successful.</strong></p>
+                        <% } %>
+                        <div class="tranx-purchase-details">
+                            <h6>Purchase Details</h6>
+                            <ul class="tranx-purchase-info">
+                                <li>
+                                    <div class="tranx-purchase-head">Campaign Name</div>
+                                    <div class="tranx-purchase-des"><%= tx.campaign_id %></div>
+                                </li><!-- li -->
+                                <li>
+                                    <div class="tranx-purchase-head">Payment Method</div>
+                                    <div class="tranx-purchase-des">ETH</div>
+                                </li><!-- li -->
+                                <li>
+                                    <div class="tranx-purchase-head">Your Contribution</div>
+                                    <div class="tranx-purchase-des"><%= tx.ether %></div>
+                                </li><!-- li -->
+                                <li>
+                                    <div class="tranx-purchase-head">Token (T)</div>
+                                    <div class="tranx-purchase-des">
+                                        <span><%= tx.tokens %></span>
+                                    </div>
+                                </li><!-- li -->
+                                <li>
+                                    <div class="tranx-purchase-head">Bonus Tokens (B)</div>
+                                    <div class="tranx-purchase-des">
+                                        <span><%= tx.bonus_tokens %></span>
+                                    </div>
+                                </li><!-- li -->
+                                <li>
+                                    <div class="tranx-purchase-head">Total Tokens</div>
+                                    <div class="tranx-purchase-des">
+                                        <span><%= tx.tokens + tx.bonus_tokens %></span>
+                                        <span>(T+B)</span>
+                                    </div>
+                                </li><!-- li -->
+                            </ul><!-- .tranx-purchase-info -->
+                            
+                            <h6>Payment Deposit From <em class="ti ti-arrow-right"></em> <span>Ethereum Address</span></h6>
+                            <div class="tranx-payment-info">
+                                <em class="fab fa-ethereum"></em>
+                                <input type="text" class="tranx-payment-address" value="<%= tx.address %>" disabled="">
+                            </div><!-- .tranx-payment-info -->
+                        </div><!-- .tranx-payment-details -->
+                    </div><!-- .tranx-popup -->
+                </div><!-- .modal-content -->
+            </div><!-- .modal-dialog -->
+        </div>
+    <% }); %>
 
     <% include ico_dashboard/partials/purchase_modals %>
     <% include ico_dashboard/partials/footer %>    
