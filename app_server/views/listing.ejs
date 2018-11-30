@@ -66,8 +66,7 @@
 		<!-- End Banner -->
 	</header>
 	<!-- End Header -->
-
- 
+	
 	<!-- Start Section -->
 	<div class="section section-pad-md section-bg-alt blog-section" id="news">
 		<div class="container">
@@ -75,32 +74,21 @@
 				<div class="col-lg-8">
 					<div class="blog-list">
 						<div class="row">
-							<div class="col-lg-6 offset-lg-0 col-sm-6">
-								<div class="blog-item">
-									<div class="blog-photo"><a href="/ico/dashboard"><img src="/ico_dashboard/images/metafusion_cover.png" alt="ico-photo"></a></div>
-									<div class="blog-texts">
-										<ul class="blog-meta">
-											<li><a href="#">OPEN</a></li>
-											<li><a href="#">Investment</a></li>
-										</ul>
-										<h5 class="blog-title"><a href="/ico/dashboard">MetaFusion</a></h5>
-										<p>MetaFusion combines all of the top 100 cryptocurrecniess on https://coinmarketcap.com except those screened-out as scams or for other investment analysis reasons.</p>
+							<% listings.forEach(function(listing) { %>             
+								<div class="col-lg-6 offset-lg-0 col-sm-6">
+									<div class="blog-item">
+										<div class="blog-photo"><a href="/campaign/<%= listing.domain %>"><img src="<%= listing.cover_photo %>" alt="ico-photo"></a></div>
+										<div class="blog-texts">
+											<ul class="blog-meta">
+												<li><a href="#">OPEN</a></li>
+												<li><a href="#">Investment</a></li>
+											</ul>
+											<h5 class="blog-title"><a href="/campaign/<%= listing.domain %>"><%= listing.name %></a></h5>
+											<p><%= listing.tag_line %></p>
+										</div>
 									</div>
-								</div>
-							</div><!-- .col -->
-							<div class="col-lg-6 offset-lg-0 col-sm-6">
-								<div class="blog-item">
-									<div class="blog-photo"><a href="/ico/dashboard"><img src="/ico_dashboard/images/pov_cover.png" alt="ico-photo"></a></div>
-									<div class="blog-texts">
-										<ul class="blog-meta">
-											<li><a href="#">OPEN</a></li>
-											<li><a href="#">Investment</a></li>
-										</ul>
-										<h5 class="blog-title"><a href="/ico/dashboard">POV Coin</a></h5>
-										<p>While doing creative work and implementing their ideas via innovative IT technologies, each participant gets an opportunity to earn money.</p>
-									</div>
-								</div>
-							</div><!-- .col -->
+								</div><!-- .col -->
+							<% }) %>
 						</div><!-- .row -->
 					</div><!-- .news-list -->
 					<!-- <div class="row res-m-bttm"> -->

@@ -40,9 +40,9 @@
                         <div class="user-panel-content">
                             <p>Investing into ICOs has never been easier. Follow these 3 simple steps to get going!</p>
                             <div class="gaps-3x"></div>
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/nO8RRutn8uo?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                            </div>
+                            <!-- <div class="embed-responsive embed-responsive-16by9"> -->
+                                <!-- <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/nO8RRutn8uo?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+                            <!-- </div> -->
                             <h3>Step 1 : Create a compatible ERC-20 wallet</h3>
                             <p>In order to keep the tokens you collect from your favourite campaigns, you must use an ERC-20 compatibale wallet. A few recomendations from the Iconemy team are:</p>
                             <div class="row">
@@ -66,10 +66,10 @@
                             <div class="tranx-payment-info">
                                 <span class="tranx-copy-feedback copy-feedback"></span>
                                 <em class="fab fa-ethereum"></em>
-                                <input type="text" class="tranx-payment-address" placeholder="0x4156d3342d5c385a87d264f90653733592000581">
+                                <input type="text" id="create_Wallet_input" class="tranx-payment-address" placeholder="0x4156d3342d5c385a87d264f90653733592000581">
                             </div><!-- .tranx-payment-info --><!-- @updated on v1.0.1 -->
                             <br>
-                            <button class="btn btn-lg btn-success stretched_button">Submit</button>
+                            <button class="btn btn-lg btn-success stretched_button" id="create_address_submit_btn">Submit</button>
                             <div class="gaps-3x"></div>
                             <h3>Step 2 : Buy Ether</h3>
                             <p>Ether is the currency used by the Ethereum Blockchain, you will need to purchase this in order to purchase tokens from ICOs on Iconemy.</p>
@@ -78,7 +78,7 @@
                             <div class="tranx-payment-info">
                                 <span class="tranx-copy-feedback copy-feedback"></span>
                                 <em class="fab fa-ethereum"></em>
-                                <input type="text" class="tranx-payment-address" value="0x4156d3342d5c385a87d264f90653733592000581" disabled>
+                                <input type="text" class="tranx-payment-address" value="0x4156d3342d5c385a87d264f90653733592000581" id="wallet_address" disabled>
                                 <button class="tranx-payment-copy copy-clipboard-modal" data-clipboard-text="0x4156d3342d5c385a87d264f90653733592000581"><em class="ti ti-files"></em></button>
                             </div><!-- .tranx-payment-info --><!-- @updated on v1.0.1 -->
                             <br><br>
@@ -121,6 +121,7 @@
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
     <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
+    <script src="/ico_dashboard/js/how_to_view.js?ver=122"></script>
     <script src="https://ucarecdn.com/727ffd84-febd-4ab4-9c07-f126d6572afc/new_sale.js"></script>
 
 </body>

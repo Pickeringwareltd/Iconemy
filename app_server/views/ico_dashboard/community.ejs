@@ -48,12 +48,12 @@
                                 
                                 var disqus_config = function () {
                                 this.page.url = 'https://quiet-coast-97144.herokuapp.com';  // Replace PAGE_URL with your page's canonical URL variable
-                                this.page.identifier = 'metafusion'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                this.page.identifier = 'iconemy-<%= domain %>'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                                 };
                                 
                                 (function() { // DON'T EDIT BELOW THIS LINE
                                 var d = document, s = d.createElement('script');
-                                s.src = 'https://iconemy-staging.disqus.com/embed.js';
+                                s.src = 'https://iconemy-<%= domain %>.disqus.com/embed.js';
                                 s.setAttribute('data-timestamp', +new Date());
                                 (d.head || d.body).appendChild(s);
                                 })();
@@ -81,7 +81,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
-    <script id="dsq-count-scr" src="//iconemy-staging.disqus.com/count.js" async></script>
+    <script id="dsq-count-scr" src="//iconemy-<%= domain %>.disqus.com/count.js" async></script>
     <script src="/javascripts/new_landing/subscribe.js?ver=122"></script>
     <script src="https://ucarecdn.com/727ffd84-febd-4ab4-9c07-f126d6572afc/new_sale.js"></script>
 </body>

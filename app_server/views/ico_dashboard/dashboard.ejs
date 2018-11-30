@@ -44,8 +44,8 @@
                                     <p id="project_time_left" data-date="<%= crowdsales[0].start_date %>" class="mobile_center_text countdown-clock">22<span class="time_unit">d</span> 16<span class="time_unit">h</span> 17<span class="time_unit">m</span> 32<span class="time_unit">s</span></p>
                                     <ul class="share-links mobile_center_text">
                                         <li><a href="<%= website_url %>" target="_blank"><em class="ti ti-world"></em></a></li>
-                                        <li><a href="<%= social_links.instagram %>" target="_blank"><em class="fab fa-instagram"></em></a></li>
-                                        <li><a href="<%= social_links.twitter %>" target="_blank"><em class="fab fa-twitter"></em></a></li>
+                                        <li><a href="<%= social.instagram %>" target="_blank"><em class="fab fa-instagram"></em></a></li>
+                                        <li><a href="<%= social.twitter %>" target="_blank"><em class="fab fa-twitter"></em></a></li>
                                         <li><a href="" target="_blank"><em class="fab fa-github"></em></a></li>
                                         <li><a target="_blank" href="<%= whitepaper_url %>"><em class="ti ti-files"></em></a></li>
                                     </ul><!-- .share-links -->
@@ -56,7 +56,7 @@
                                     <div class="dashboard_tags">
                                         <ul>
                                             <% tags.forEach(function(tag) { %>
-                                                <li><a href="#" class="tag"><%= tag %></a></li>
+                                                <li><a href="#" class="tag"><%= tag.name %></a></li>
                                             <% }) %>
                                         </ul>
                                     </div>
@@ -105,7 +105,7 @@
                                     <br><br>
                                     <h2 class="user-panel-title">Description</h2>
 
-                                    <% if(video_url != '') { %>
+                                    <% if(video_url != null) { %>
                                        
                                         <div class="dashboard_video">
                                             <iframe width="560" height="315" src="<%= video_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

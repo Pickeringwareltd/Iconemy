@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var ctrlProjects = require('../controllers/projects');
+var ctrlCampaigns = require('../controllers/campaign');
 var ctrlTokens = require('../controllers/tokens');
 var ctrlCrowdsales = require('../controllers/crowdsales');
 var ctrlContact = require('../controllers/contact');
@@ -91,5 +92,11 @@ router.post('/contracts/crowdsale/basic', ctrlContracts.basicSale);
 router.post('/contracts/token/transfers', ctrlContracts.tokenTransfers);
 router.post('/contracts/token/holders', ctrlContracts.tokenHolders);
 
+// Campaigns
+router.get('/campaigns', tracking.apicall, ctrlCampaigns.campaignsListByStartTime);
+router.get('/campaigns/:campaignid', tracking.apicall, ctrlCampaigns.campaignsReadOne);
+router.get('/campaigns/:campaignid/team', tracking.apicall, ctrlCampaigns.teamReadOne);
+router.get('/campaigns/:campaignid/community', tracking.apicall, ctrlCampaigns.communityReadOne);
+router.get('/campaigns/:campaignid/transactions', tracking.apicall, ctrlCampaigns.transactionsReadOne);
 
 module.exports = router;

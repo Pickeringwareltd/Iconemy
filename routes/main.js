@@ -3,6 +3,7 @@
 var express = require('express');
 var ctrl = require('../app_server/controllers/main');
 const project = require('../app_server/controllers/project');
+const dashboard = require('../app_server/controllers/dashboard');
 const tracking = require('../add-ons/tracking');
 const errors = require('../add-ons/errors');
 const fs = require('fs');
@@ -36,9 +37,7 @@ module.exports = function (app) {
 	});
 
 	// Render new landing
-	app.get('/listing', function(req, res) {
-	  	res.render('listing');
-	});
+	app.get('/listing', dashboard.listing);
 
 	app.get('/privacy', tracking.view, function(req, res) {
 		try{

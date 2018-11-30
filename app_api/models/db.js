@@ -73,3 +73,4 @@ require('./projects');
 require('./discounts');
 require('./article');
 require('./users');
+require('./campaigns');
