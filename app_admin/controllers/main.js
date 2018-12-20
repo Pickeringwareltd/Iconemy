@@ -11,7 +11,7 @@ var en_locale = require('javascript-time-ago/locale/en');
 const errors = require('../../add-ons/errors');
 
 var apiOptions = {
-  server : "http://localhost:3000"
+  server : "http://127.0.0.1:3000"
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -58,7 +58,7 @@ exports.index = function(req, res){
           }
       };
 
-      request( requestOptions, function(err, response, body) { 
+      request( requestOptions, function(err, response, body) {
           renderPortal(req, res, body);
       });
   } catch(e) {

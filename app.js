@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
-var dbURI = 'mongodb://localhost/iconemy';
+var dbURI = 'mongodb://127.0.0.1/iconemy';
 
 // If we are running on production, use the production server
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {

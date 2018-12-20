@@ -8,7 +8,7 @@ const md5 = require('md5')
 const moment = require('moment')
 
 exports.showRegisterForm = (req, res) => {
-    return res.render('signup', {
+    return res.render('ico_dashboard/signup', {
         user: new User(),
         errors: []
     });
@@ -17,7 +17,7 @@ exports.showRegisterForm = (req, res) => {
 exports.showLoginForm = (req, res) => {
     if (res.locals.loggedIn) {
         var apiOptions = {
-            server : "http://localhost:3000"
+            server : "http://127.0.0.1:3000"
         };
 
         if (process.env.NODE_ENV === 'production') {
@@ -35,13 +35,13 @@ exports.showLoginForm = (req, res) => {
 
             const user = JSON.parse(body);
 
-            if (user.role === 'admin') return res.redirect('/admin')
+            if (user.role === 'admin') return res.redirect('/listing')
 
-            return res.redirect('/projects')
+            return res.redirect('/listing')
         })
     }
 
-    return res.render('login', {
+    return res.render('ico_dashboard/login', {
         user: new User()
     });
 };
@@ -133,5 +133,8 @@ exports.reset = (req, res) => {
 
 exports.logout = (req, res) => {
     res.clearCookie('jwt');
-    res.redirect('/');
+
+    req.session.destroy(function (err) {
+        res.redirect('/'); //Inside a callback… bulletproof!
+    });
 };

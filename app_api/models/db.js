@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost/iconemy';
+var dbURI = 'mongodb://127.0.0.1/iconemy';
 var db_account = 'development';
 
 // If we are running on production, use the production server
@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'production') {
 	db_account = 'staging';
 }
 
+//mongoose.set('debug', true);
 mongoose.connect(dbURI);
 
 // Events that will log to console when fired
@@ -30,12 +31,19 @@ mongoose.connection.on('connected', function () {
 // Error in connection
 mongoose.connection.on('error',function (err) {
  console.log('Mongoose connection error: ' + err);
+ setTimeout(connectWithRetry, 5000)
 });
 
 // Connection disabled
 mongoose.connection.on('disconnected', function () {
  console.log('Mongoose disconnected');
 }); 
+
+// Retry connection
+const connectWithRetry = () => {
+  console.log('MongoDB connection with retry')
+  return mongoose.connect(dbURI);
+}
 
 // Graceful shutdown is necessary to shutdown redundant DB connections after the server shuts down/restarts
 var gracefulShutdown = function (msg, callback) {

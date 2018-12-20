@@ -38,7 +38,8 @@ var transactionSchema = new mongoose.Schema({
         required: [true, 'Please provide address.']
     },
     introducer: String,
-    index: 0
+    index: 0,
+    error: String
 });
 
 var userSchema = new mongoose.Schema({
@@ -56,17 +57,6 @@ var userSchema = new mongoose.Schema({
                     return regex.test(value);
                 },
                 message : 'Please provide a valid email address.'
-            }, {
-                validator : function (value) {
-                    return new Promise(function (resolve, reject) {
-                        User.find({ email : value }).exec((err, users) => {
-                            if (err) reject();
-
-                            resolve(users.length === 0);
-                        });
-                    });
-                },
-                message : 'Please choose a different email.'
             }
         ]
     },

@@ -25,7 +25,9 @@ router.post('/register', [
     tracking.apicall,
     check("password", "Passwords don't match")
         .custom((value,{req, loc, path}) => {
+            console.log(value + ' -- ' + req.body.repeat_password);
             if (value !== req.body.repeat_password) {
+
                 // trow error if passwords do not match
                 throw new Error("Passwords don't match");
             } else {
@@ -98,5 +100,8 @@ router.get('/campaigns/:campaignid', tracking.apicall, ctrlCampaigns.campaignsRe
 router.get('/campaigns/:campaignid/team', tracking.apicall, ctrlCampaigns.teamReadOne);
 router.get('/campaigns/:campaignid/community', tracking.apicall, ctrlCampaigns.communityReadOne);
 router.get('/campaigns/:campaignid/transactions', tracking.apicall, ctrlCampaigns.transactionsReadOne);
+
+router.post('/campaigns/:campaignid/purchase', tracking.apicall, ctrlCampaigns.recordPurchase);
+
 
 module.exports = router;

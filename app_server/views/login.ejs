@@ -85,7 +85,7 @@
 				<div class="row justify-content-center text-center sale-box">
 					<div class="col-lg-12">
 						<div class="token-box shadow">
-							<form id="js-login-form" class="form-message text-left">
+							<form id="js-login-form" class="form-message text-left user-ath-form">
 								<div id="js-errors" class="d-none">
 									<div class="alert alert-danger form-errors text-left">
 										<ul></ul>
@@ -96,18 +96,18 @@
 
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-8 col-sm-12">
-										<div class="input-field animated text-left" data-animate="fadeInUp" data-delay=".5">
-											<input name="username" type="text" id="username_form" class="input-line required">
-											<label class="input-title">Username</label>
+										<div class="input-field animated text-left input-item" data-animate="fadeInUp" data-delay=".5">
+											<input type="text" placeholder="Your Username" id="username_form" class="input-line required" value="<%= user.username %>" name="username_form">
+											<label class="input-title" for="username">Username</label>
 										</div>
 									</div>
 								</div>
 
 								<div class="form-row justify-content-center">
 									<div class="form-group col-lg-8 col-sm-12">
-										<div class="input-field animated text-left" data-animate="fadeInUp" data-delay=".7">
-											<input name="password" type="password" class="input-line required" id="password_form">
-											<label class="input-title">Password</label>
+										<div class="input-field animated text-left input-item" data-animate="fadeInUp" data-delay=".7">
+											<input type="password" class="input-line required" id="password_form" value="<%= user.password %>" name="password_form" >
+											<label class="input-title" for="password">Password</label>
 										</div>
 									</div>
 								</div>
@@ -116,7 +116,7 @@
 									<div class="form-group col-12">
 										<input type="text" class="d-none" name="form-anti-honeypot" value="">
 										<div class="input-field animated" data-animate="fadeInUp" data-delay=".8">
-											<button type="submit" class="btn btn-outline" id="login_btn">Log in</button>
+											<button class="btn btn-outline" id="login_btn">Log in</button>
 										</div>
 									</div>
 								</div>

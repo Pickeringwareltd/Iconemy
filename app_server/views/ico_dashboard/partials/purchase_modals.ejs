@@ -24,7 +24,7 @@
                                         <div class="payment-from">
                                             <label for="paymentFrom">Payment Amount</label>
                                             <div class="payment-input">
-                                                <input class="input-bordered" type="text" id="eth" data-price="0.00004" value="0.2">
+                                                <input class="input-bordered" type="text" id="eth" data-price="<%= crowdsales[current_sale_index].token_price %>" value="0.2">
                                                 <span class="payment-from-cur payment-cal-cur">eth</span>    
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                     </div><!-- .col -->
                                 </div><!-- .row -->
                             </div><!-- .payment-summary -->
-                            <a href="#" class="btn btn-primary payment-btn" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH3" id="purchase_tokens_btn">Purchase Tokens</a>
+                            <a href="#" class="btn btn-primary payment-btn" data-dismiss="modal" id="purchase_tokens_btn">Purchase Tokens</a>
                         </form><!-- form -->
                 </div><!-- .tranx-popup -->
             </div><!-- .modal-content -->
@@ -84,7 +84,7 @@
                         <input class="input-bordered" type="text" id="introducer_input" placeholder="intro123">    
                     </div>
                     <div class="gaps-1x"></div>
-                    <a href="#" class="btn btn-primary payment-btn" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2" id="introducer_submit_button">Continue</a>
+                    <a href="#" class="btn btn-primary payment-btn" id="introducer_submit_button">Continue</a>
 
                 </div><!-- .tranx-popup -->
             </div><!-- .modal-content -->
@@ -114,7 +114,7 @@
                                 <p class="row_title">Tokens</p>
                             </div>
                             <div class="col-6">
-                                <p class="row_data">$<span id="tokens_in_usd">234.56</span></p>
+                                <p class="row_data">$<span id="tokens_in_usd">...</span></p>
                             </div>
                         </div>
                         <div class="row">
@@ -122,7 +122,7 @@
                                 <p class="row_title">Network fee</p>
                             </div>
                             <div class="col-6">
-                                <p class="row_data">$<span id="gas_cost">0.50</span></p>
+                                <p class="row_data">$<span id="gas_cost">...</span></p>
                             </div>
                         </div>
                         <hr />
@@ -131,7 +131,7 @@
                                 <p class="row_title total_title">Total</p>
                             </div>
                             <div class="col-6">
-                                <p class="row_data total_price">$<span id="total_cost_summary">235.06</span></p>
+                                <p class="row_data total_price">$<span id="total_cost_summary">...</span></p>
                             </div>
                         </div>
 
@@ -167,7 +167,7 @@
                                     <div class="status-icon">
                                         <em class="ti ti-close"></em>
                                     </div>
-                                    <a href="" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#tranxETH2" id="reset_tx">Try again</a>
+                                    <a href="" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" id="reset_tx">Try again</a>
                                 </div>
                                 
                             </div>

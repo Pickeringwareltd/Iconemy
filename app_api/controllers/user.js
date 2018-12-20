@@ -120,6 +120,7 @@ module.exports.checkLogIn = function (req, res) {
 module.exports.login = (req, res, next) => {
     passport.authenticate('local', async (err, user, info) => {
         if (err || !user) {
+            console.log(info);
             return res.status(200).json({
                 success: false,
                 message: 'Please enter your username/password correctly',
@@ -147,6 +148,7 @@ module.exports.register = (req, res, next) => {
     const { validationResult } = require('express-validator/check');
 
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         return res.json({
             success:false,
@@ -174,13 +176,13 @@ module.exports.register = (req, res, next) => {
             return res.json({
                 success: false,
                 errors
-            })
+            });
         }
 
         tracking.registration(user.email, user.userid);
-        sendEmail.sendSignUpEmail(user.email, {
-            '[token]' : user.email_token
-        });
+        var signup_url = 'https://www.iconemy.io/confirm?code=' + user.email_token;
+
+        sendEmail.sendSignUpEmail(user.email, signup_url);
 
         return res.json({
             success: true,

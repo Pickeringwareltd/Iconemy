@@ -29,26 +29,27 @@
                     </div>
                     <div class="gaps-2x"></div>
                     <div class="form-note">
-                        Not a member? <a href="/ico/dashboard/signup">Sign up now</a>
+                        Not a member? <a href="/signup">Sign up now</a>
                     </div>
                     <div class="gaps-2x"></div>
                     <div class="user-ath-box">
                         <h4>Login to Your Account</h4>
-                        <form action="/ico/dashboard" class="user-ath-form">
-<!--
-                            <div class="note note-lg note-no-icon note-danger">
-                                <p>Your email and password is invalid.</p>
-                            </div>
--->
+                            <form id="js-login-form" class="user-ath-form">
+                                <div id="js-errors" class="d-none">
+                                    <div class="alert alert-danger form-errors text-left">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                            <%- locals.flash %>
                             <div class="input-item">
-                                <input type="text" placeholder="Your Email" class="input-bordered">
+                                <input type="text" placeholder="Your Username" id="username_form" class="input-bordered">
                             </div>
                             <div class="input-item">
-                                <input type="password" placeholder="Password" class="input-bordered">
+                                <input type="password" placeholder="Password" id="password_form" class="input-bordered">
                             </div>
                             <div class="gaps"></div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-primary">Log in</button>
+                                <button class="btn btn-primary" id="login_btn">Log in</button>
                                 <a href="recovery.html" class="simple-link">Forgot password?</a>
                             </div>
                         </form>
@@ -69,7 +70,7 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
-    <script src="javascripts/script_auth.js?ver=122"></script>
+    <script src="/javascripts/script_auth.js"></script>
     
 </body>
 </html>

@@ -5,7 +5,7 @@ var request = require('request');
 const errors = require('../../add-ons/errors');
 
 var apiOptions = {
-  server : "http://localhost:3000"
+  server : "http://127.0.0.1:3000"
 };
 
 if (process.env.NODE_ENV === 'production') {

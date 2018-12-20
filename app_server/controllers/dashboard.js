@@ -6,7 +6,7 @@ var tracking = require('../../add-ons/tracking');
 const errors = require('../../add-ons/errors');
 
 var apiOptions = {
-  server : "http://localhost:3000"
+  server : "http://127.0.0.1:3000"
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -39,6 +39,7 @@ var renderCampaign = function(req, res, responseBody){
 
 exports.index = function(req, res){
 	try{
+
 		var requestOptions, path, campaignName;
 
 		// Make sure we are using the correct subdomain

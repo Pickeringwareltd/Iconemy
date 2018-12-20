@@ -29,37 +29,45 @@
                     </div>
                     <div class="gaps-2x"></div>
                         <div class="form-note">
-                            Already a member? <a href="/ico/dashboard/login">Login</a>
+                            Already a member? <a href="/login">Login</a>
                         </div>
                     <div class="gaps-2x"></div>
                     <div class="user-ath-box">
                         <h4>Creat New Account</h4>
-                        <form action="/ico/dashboard/confirm" class="user-ath-form">
-                            <!--
-                            <div class="note note-lg note-no-icon note-danger">
-                                <p>Please check your submited information for error.</p>
+                        <div id="js-errors" class="d-none">
+                            <div class="alert alert-danger form-errors text-left">
+                                <ul></ul>
                             </div>
-                            <div class="note note-lg note-no-icon note-success">
-                                <p>Your registration is succesfull, please check you email to confirm.</p>
+                        </div>
+                        <div id="js-success" style="display: none;">
+                            <div class="alert alert-success form-errors text-left">
+                                Thank your for signing up. Please confirm your accoung by checking your email.
                             </div>
-                            -->
+                        </div>
+                        <form id="js-signup-form" class="user-ath-form" method="post">
+                            <input type="hidden" name="_csrf" value="<%= csrf %>">
+
                             <div class="input-item input-with-label">
-                                <label for="full-name" class="input-item-label">Full name</label>
-                                <input type="text" class="input-bordered" name="full-name" placeholder="John Smith">
+                                <label for="username" class="input-item-label">Username</label>
+                                <input type="text" class="input-bordered" name="username" id="username" placeholder="JohnSmith">
                             </div>
                             <div class="input-item input-with-label">
-                                <label for="email-address" class="input-item-label">Email address</label>
-                                <input type="text" class="input-bordered" name="email-address" placeholder="thisisme@example.com">
+                                <label for="name" class="input-item-label">Full name</label>
+                                <input type="text" class="input-bordered" name="name" id="first_name" value="<%= user.first_name %>" placeholder="John Smith">
                             </div>
                             <div class="input-item input-with-label">
-                                <label for="mobile-number" class="input-item-label">Phone number</label>
-                                <input class="input-bordered" type="text" id="mobile-number" name="mobile-number" placeholder="+44 7123 456 789">
-                            </div><!-- .input-item -->
-                            <div class="input-item input-with-label">
-                                <label for="date-of-birth" class="input-item-label">Date of birth</label>
-                                <input class="input-bordered date-picker" type="text" id="date-of-birth" name="date-of-birth">
-                            </div><!-- .input-item -->
-                            <div class="input-item input-with-label">
+                                <label for="email" class="input-item-label">Email address</label>
+                                <input type="text" class="input-bordered" name="email" id="email" placeholder="thisisme@example.com" value="<%= user.email %>">
+                            </div>
+                            <!-- <div class="input-item input-with-label"> -->
+                                <!-- <label for="mobile-number" class="input-item-label">Phone number</label> -->
+                                <!-- <input class="input-bordered" type="text" id="mobile-number" name="mobile-number" placeholder="+44 7123 456 789"> -->
+                            <!-- </div> -->
+                            <!-- <div class="input-item input-with-label"> -->
+                                <!-- <label for="date-of-birth" class="input-item-label">Date of birth</label> -->
+                                <!-- <input class="input-bordered date-picker" type="text" id="date-of-birth" name="date-of-birth"> -->
+                            <!-- </div> -->
+ <!--                            <div class="input-item input-with-label">
                                 <label for="Nationality" class="input-item-label">Country of residence</label>
                                 <select class="country-select" name="Nationality" id="Nationality">
                                     <option value="us">United State</option>
@@ -69,12 +77,12 @@
                                     <option value="cr">Czech Republic</option>
                                     <option value="cb">Colombia</option>
                                 </select>
-                            </div><!-- .input-item -->
+                            </div>
                             <div class="input-item input-with-label">
                                 <label for="token-address" class="input-item-label">Your Address for tokens:</label>
                                 <input class="input-bordered" type="text" id="token-address" name="token-address" placeholder="0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae">
                                 <span class="input-note">Note: Address should be ERC-20 compliant.</span>
-                            </div><!-- .input-item -->
+                            </div> -->
                             <div class="gaps-1x"></div>
                             <div class="note note-plane note-danger">
                                 <em class="fas fa-info-circle"></em>
@@ -82,18 +90,18 @@
                             </div>
                             <div class="gaps-2x"></div>
                             <div class="input-item">
-                                <input type="password" placeholder="Password" class="input-bordered">
+                                <input name="password" type="password" placeholder="Password" id="password" class="input-bordered">
                             </div>
                             <div class="input-item">
-                                <input type="password" placeholder="Repeat Password" class="input-bordered">
+                                <input name="repeat_password" type="password" placeholder="Repeat Password" id="repeat_password" class="input-bordered">
                             </div>
-                            <div class="input-item text-left">
+<!--                             <div class="input-item text-left">
                                 <input class="input-checkbox" id="term-condition" type="checkbox">
                                 <label for="term-condition">I agree to <a href="#">Terms</a> and <a href="#"> Policy.</a></label>
-                            </div>
+                            </div> -->
                             <div class="gaps"></div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-primary" id="signup_btn">Sign Up</button>
                             </div>
                         </form>
                         <!--
@@ -115,5 +123,6 @@
 	<!-- JavaScript (include all script here) -->
 	<script src="/ico_dashboard/js/jquery.bundle.js?ver=101"></script>
 	<script src="/ico_dashboard/js/script.js?ver=101"></script>
+    <script src="/javascripts/script_auth.js?ver=122"></script>
 </body>
 </html>

@@ -39,25 +39,40 @@ module.exports.sendEmail = function(_email, substitutions){
 	}
 }; 
 
-module.exports.sendSignUpEmail = function(_email){
+module.exports.sendSignUpEmail = function(_email, url){
 	try{
 		// using SendGrid's v3 Node.js Library
 		// https://github.com/sendgrid/sendgrid-nodejs
 		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        sgMail.setSubstitutionWrappers("{{", "}}");
 
 		// This allows us to send jack the emails in development mode
-		var email = checkEnv(_email);
+		var _email = checkEnv(_email);
+
+        var substitutions = {
+            'confirm_url': url
+        }
 
 		const msg = {
-		  to: email,
 		  from: 'jp@iconemy.io',
-		  subject: 'Thanks for signing up!',
-		  text: '',
-		  html: '',
-		  templateId: 'd-a863d706bc2a48d59b76150a51aa7048'
+		  subject: 'Confirm email address',
+		  templateId: 'd-9db9f5bb588645f0a834675bb14ce30b',
+          personalizations: [
+            {
+                to: [
+                        {
+                            email: _email
+                        }
+                    ],
+        
+                dynamic_template_data: {
+                    confirm_url: url
+                }
+            }
+          ]
 		};
 
-		sgMail.send(msg);
+		sgMail.send(msg).catch(err => console.error(err.message));
 	} catch(e) {
 		console.log('Error on API controllers user.js/sendEmail: ' + e);
 	}
