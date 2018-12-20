@@ -22,6 +22,7 @@ var renderCampaign = function(req, res, responseBody){
 		if(responseBody[0] != ''){
 			// Need to render crowdsale dates properly
 			data = responseBody[0];
+
 			res.render('ico_dashboard/dashboard', data);
 		} else {
 			res.render('error', { 

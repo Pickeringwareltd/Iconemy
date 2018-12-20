@@ -120,7 +120,7 @@ module.exports.checkLogIn = function (req, res) {
 module.exports.login = (req, res, next) => {
     passport.authenticate('local', async (err, user, info) => {
         if (err || !user) {
-            console.log(info);
+            
             return res.status(200).json({
                 success: false,
                 message: 'Please enter your username/password correctly',
@@ -137,7 +137,7 @@ module.exports.login = (req, res, next) => {
         let response = user.toAuthJSON();
 
         req.session.token = response.token;
-        res.cookie('jwt', response.token)
+        res.cookie('jwt', response.token);
         response.success = true;
 
         return res.json(response);

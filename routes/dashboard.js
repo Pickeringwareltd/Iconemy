@@ -4,15 +4,14 @@ var express = require('express');
 var dashboard = require('../app_server/controllers/dashboard');
 var tracking = require('../add-ons/tracking');
 var needsLogIn = require('./auth');
-var js = '';
 
 // Forward request onto the main controller
 module.exports = function (app) {
-	app.get('/campaign/:campaignName', dashboard.index);
+	app.get('/campaign/:campaignName',  dashboard.index);
 	 
-	app.get('/campaign/:campaignName/team', dashboard.team);   
+	app.get('/campaign/:campaignName/team',  dashboard.team);   
 
-	app.get('/campaign/:campaignName/community', dashboard.community);
+	app.get('/campaign/:campaignName/community',  dashboard.community);
 
 	app.get('/campaign/:campaignName/transactions', needsLogIn, dashboard.transactions);  
 	

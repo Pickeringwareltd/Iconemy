@@ -44,7 +44,7 @@
 						<li class="nav-item"><a class="nav-link menu-link" href="#contact">Contact</a></li>
 					</ul>
 					<ul class="navbar-nav navbar-btns">
-						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="#signup">Sign up</a></li>
+						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/login">Log in or Sign up</a></li>
 						<li class="nav-item"><a class="nav-link btn btn-sm btn-outline menu-link" href="/owners">List ICO/ITO</a></li>
 					</ul>
 				</div>
@@ -62,7 +62,7 @@
 								<h1>We make ICO/ITO investment easy.</h1>
 								<p class="lead">Iconemy is an ICO/ITO listing platform allowing you to buy tokens directly from the listing!</p>
 								<ul class="btns">
-									<li><a href="#signup" class="btn">Sign up to Join</a></li>
+									<li><a href="/login" class="btn">Log in or sign up</a></li>
 									<li><a href="/owners" class="btn btn-alt">List your ICO/ITO</a></li>
 								</ul>
 								<ul class="social">
@@ -88,7 +88,6 @@
 		<!-- End Banner/Slider -->
 	</header>
 	<!-- End Header -->
-
 
 	<!-- Start Section -->
 	<div class="section section-pad section-bg-alt nopb" id="intro">
@@ -141,6 +140,42 @@
 				</div><!-- .col  -->
 			</div><!-- .row  -->
 		</div><!-- .container  -->
+	</div>
+	<!-- Start Section -->
+
+	<!-- Start Section -->
+	<div class="section section-pad section-bg-dark blog-section" id="blogs">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col">
+					<div class="section-head">
+						<h2 class="section-title">ICOs LIVE NOW
+							<span>LIVE ICO</span>
+						</h2>
+					</div>
+				</div>
+			</div><!-- .row -->
+			<div class="blog-list">
+				<div class="row">
+					<% listings.forEach(function(listing) { %> 
+						<div class="col-lg-4 offset-lg-0 col-sm-8 offset-sm-2">
+							<div class="blog-item">
+								<div class="blog-photo"><a href="/campaign/<%= listing.domain %>"><img src="<%= listing.cover_photo %>" alt="blog-photo"></a></div>
+								<div class="blog-texts">
+									<h5 class="blog-title"><a href="/campaign/<%= listing.domain %>"><%= listing.name %></a></h5>
+									<p><%= listing.tag_line %></p>
+								</div>
+							</div>
+						</div><!-- .col -->
+					<% }) %>
+				</div><!-- .row -->
+			</div><!-- .blog-list -->
+			<div class="row text-center">
+				<div class="col-md-12">
+					<a href="/listing" class="btn-more">View all ICOs<em class="ti ti-angle-right"></em></a>
+				</div>
+			</div>
+		</div><!-- .container -->
 	</div>
 	<!-- Start Section -->
 
