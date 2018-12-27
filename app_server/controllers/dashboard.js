@@ -362,3 +362,57 @@ exports.how_to = function(req, res){
       	renderHowTo(req, res, body);
    	});
 };
+
+function renderFaq(req, res, responseBody){
+	try{
+		var data;
+
+		if(responseBody[0]){
+			// Need to render crowdsale dates properly
+			data = responseBody[0];
+			
+			res.render('ico_dashboard/faq', data);
+		} else {
+			res.render('error', { 
+				title: 'error',
+				message: 'We couldnt find what you were looking for!',
+				error: {
+					status: 404
+				}
+			});
+		}
+	} catch(e) {
+		res.render('error', { 
+			title: 'error',
+			message: 'We couldnt find what you were looking for!',
+			error: {
+				status: 404
+			}
+		});
+	
+		errors.print(e, 'Error on server-side dashboard.js/team: ');
+	}
+}
+
+exports.faq = function(req, res){
+	var user = req.user;
+
+	var requestOptions, path, campaignName;
+	// Make sure we are using the correct subdomain
+	campaignName =  req.params.campaignName;
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/campaigns/' + campaignName;
+  
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {
+  			user: req.user
+  		}
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	renderFaq(req, res, body);
+   	});
+};

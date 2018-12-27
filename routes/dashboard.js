@@ -15,6 +15,10 @@ module.exports = function (app) {
 
 	app.get('/campaign/:campaignName/transactions', needsLogIn, dashboard.transactions);  
 	
+	app.get('/campaign/:campaignName/faq', dashboard.faq); 
+
+	app.get('/campaign/:campaignName/how-to', dashboard.how_to);
+	
 	app.get('/ico/dashboard/smartdrop', function(req, res) {
 	  	res.render('ico_dashboard/smartdrop');
 	});  
@@ -32,9 +36,5 @@ module.exports = function (app) {
 	});   
 	app.get('/ico/dashboard/account', function(req, res) {
 	  	res.render('ico_dashboard/account');
-	}); 
-	app.get('/campaign/:campaignName/faq', function(req, res) {
-	  	res.render('ico_dashboard/faq');
-	}); 
-	app.get('/campaign/:campaignName/how-to', dashboard.how_to); 
+	});  
 };
