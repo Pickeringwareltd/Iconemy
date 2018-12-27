@@ -309,9 +309,24 @@ exports.transactions = function(req, res){
 	}
 };
 
-function renderHowTo(req, res, data){
+function renderHowTo(req, res, responseBody){
 	try{
-		res.render('ico_dashboard/how-to');
+		var data;
+
+		if(responseBody[0]){
+			// Need to render crowdsale dates properly
+			data = responseBody[0];
+			
+			res.render('ico_dashboard/how-to', data);
+		} else {
+			res.render('error', { 
+				title: 'error',
+				message: 'We couldnt find what you were looking for!',
+				error: {
+					status: 404
+				}
+			});
+		}
 	} catch(e) {
 		res.render('error', { 
 			title: 'error',
@@ -320,7 +335,7 @@ function renderHowTo(req, res, data){
 				status: 404
 			}
 		});
-		
+	
 		errors.print(e, 'Error on server-side dashboard.js/team: ');
 	}
 }
