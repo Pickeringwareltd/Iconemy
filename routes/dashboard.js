@@ -33,8 +33,8 @@ module.exports = function (app) {
 	app.get('/ico/dashboard/account', function(req, res) {
 	  	res.render('ico_dashboard/account');
 	}); 
-	app.get('/ico/dashboard/faq', function(req, res) {
+	app.get('/campaign/:campaignName/faq', function(req, res) {
 	  	res.render('ico_dashboard/faq');
 	}); 
-	app.get('/ico/dashboard/how-to', dashboard.how_to); 
+	app.get('/campaign/:campaignName/how-to', dashboard.how_to); 
 };

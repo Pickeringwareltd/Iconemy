@@ -309,9 +309,9 @@ exports.transactions = function(req, res){
 	}
 };
 
-exports.how_to = function(req, res){
+function renderHowTo(req, res, data){
 	try{
-		res.render('ico_dashboard/how-to', pov_object);
+		res.render('ico_dashboard/how-to');
 	} catch(e) {
 		res.render('error', { 
 			title: 'error',
@@ -323,4 +323,27 @@ exports.how_to = function(req, res){
 		
 		errors.print(e, 'Error on server-side dashboard.js/team: ');
 	}
+}
+
+exports.how_to = function(req, res){
+	var user = req.user;
+
+	var requestOptions, path, campaignName;
+	// Make sure we are using the correct subdomain
+	campaignName =  req.params.campaignName;
+
+  	// Split the path from the url so that we can call the correct server in development/production
+  	path = '/api/campaigns/' + campaignName;
+  
+  	requestOptions = {
+  		url: apiOptions.server + path,
+  		method : "GET",
+  		json : {
+  			user: req.user
+  		}
+	};
+
+   	request( requestOptions, function(err, response, body) {
+      	renderHowTo(req, res, body);
+   	});
 };
