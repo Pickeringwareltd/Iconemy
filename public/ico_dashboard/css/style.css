@@ -1917,4 +1917,9 @@ ul.social-center {
     	margin-bottom: 60px;
 	}
 }
+@media only screen and (max-width: 576px){
+	.footer-subscription {
+	    margin-left: 0px;
+	}
+}
 
